@@ -24,7 +24,9 @@ main splash of the app.
             - address and contact information is accessible.
             - manufacturer type is accessible.
 
-As a first-time user, I want to be able to look at the data without logging in so I can check out the site without hassle or commitment.
+As a first-time user, I want to be able to view the manufacturer data
+without logging in so I can check out the site without entering a 
+password or any personal information.
   -- Verify that the main splash is not a login page.
   -- View the map as a new user (or logged out) user, check that: 
             - manufacturer locations are visible on the map.
