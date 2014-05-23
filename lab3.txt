@@ -41,6 +41,38 @@ password or any personal information.
             - store a route.
             - perform other user-profile related actions.
             (buttons not available OR prompt to login)
+
+As a manufacturer, I want to be able to add my brewery/winery/distillery 
+to the app so that customers can find my establishment.
+   -- NOTE: I think this is an unnecessary option. We are now getting the up to date list of licensed establishments, so there should be no one legal off the list.
+   -- NOTE 2: I need help with this one if we are using it. It seems
+ super complicated and my acceptance criteria would all end up as big 
+user stories with verification and stuff =(.
+   -- Create a manufacturer account. 
+
+As a manufacturer, I want to be able to add a description or website link
+to the app so I can give my customers more information about my business.
+   -- NOTE: Again I need help. Two classes of users seems really hard 
+given that we are expecting to use google or facebook or twitter logins 
+as our accounts so we don?t need to know too much about it.
+
+As a moderator, I want to be able to review the user additions so I can get rid of spam in manufacturer information.
+   -- NOTE: Help again!
+
+As a frequent user, I want to be able to log in with Google, Facebook, 
+Twitter so I can save my preferences, notes, ratings and routes without
+creating a new account. (Could be modified to be as a gmail user or facebook user).
+   -- NOTE: Too tired to continue. Help pls.
+
+As a logged in user with a lot of friends, I want to share my personal reviews and ratings and manufacturers visited with my social networks.
+   -- Verify that sharing is not accessible to not logged in users.
+   -- Create a review for a selected manufacturer, then confirm that a 
+share with Facebook, Twitter, 4Square?, G+, etc. button is available.
+- Verify that the sharing button actually pushes review to the network.
+   -- Create a rating for a selected manufacturer, then confirm that a 
+share button is available.
+- Verify that the sharing button works.
+   -- NOTE: Probably moar halp pls, so sleepy...
   
 As a map user, I want to be able to choose to see only my chosen
 manufacturer type on the map so I can narrow the amount information
@@ -65,13 +97,24 @@ As a logged in user, I want to be able to create, store and name a route
 to one or more manufacturers so that I can view the route at a later time.
    -- Verify that a create route system is available to the user.
    -- Create a route between a location and a manufacturer?s location.
-   -- Verify that a save route system is available after creating a route.
+   -- Log in, verify that a save route system is available after creating a route.
    -- Check that the route can be named in the save route system.
    -- Log out, confirm that the route is not available.
    -- Log in, confirm that the route is again available.
-   -- Verify that route creation is not available to logged out users (do
-we want this? Or only have storage restricted to registered user, not 
-restricted route creation?).
+   -- Verify that route saving and naming is not available to logged out users.
+
+As a first time user and wine connoisseur, I want to create a route from 
+a list of (wine) manufacturer locations so I can view a driving route 
+from my location or a specified location to the selected manufacturers.
+   -- Verify that a new user can create and display a list of manufacturers.
+   -- Check that a driving route can be created from the list of manufacturers.
+        - Confirm that a start and end location can be entered.
+        - Confirm that the user may use ?my location? as a start and/or end location.
+        - Check that route takes a logical (shortest?) path to all locations.
+   -- Note: Multiple ways to implement here. The build-a-list way, a
+ ?route creator? wizard that has you select the start and each winery you 
+want to visit then the end, etc. The story could be slightly different 
+for other implementations.
   
 As a text user, I want to be able to hide/minimize the map or expand the 
 list view from the main page so that I can better/primarily 
@@ -91,9 +134,6 @@ the list view is visible and usable by the user.
 
 As a person who lives in <particular location>, I want to be able to see only locations nearby.
 
-As a user, i want to be able to search for my favorite winery so i can get it's
-location
-
 as a user who has visited a winery, i want to be able to rate it and see other
 ratings (involves searching for it)
 
@@ -105,14 +145,10 @@ as a user, i want to keep track of my favorite beers so i can buy them again
 
 as user, filter by rating? so i can see only good/bad places
 
-as a person with a lot of friends, i want to share my personal review and rating
-with 
 
 As a wine connoisseur, I want to search for wineries in a particular region so I
 can plan a wine tour 
 
-as a connoisseur, i want to get a route from a list of locations so I can go on
-my wine tour
 
 as a thirsty person, i want to get directions to a particular brewery so i can
 go there
@@ -130,16 +166,3 @@ As a lover of local craft beers, I want to be able to keep track of the
 breweries I have been to and my favorite beers and perhaps share them with
 friends via (twitter? facebook?)
 
-As a manufacturer, I want to be able to add my brewery/winery to the app and
- customers can find me
-
-As a manufacturer, I  want to be able to add a description or website link
-to the app so i can give my customers more info
-
-As a moderator, i want to be able to review the user add-ons so i can get rid of
-spam
-
-As a user, i want to be able to log in with google, facebook, twitter so i don't
-need to make a new account
-
-log in with google - facebook option?
