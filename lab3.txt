@@ -1,0 +1,112 @@
+
+
+As a first-time user, I want to first see a map of all liquor manufacturers in BC so I can 
+know what's available and where they are located.
+  -- Verify that a map is visible in the main splash of the app.
+  -- Verify that manufacturer locations are visible on the map.
+  -- View the names and addresses of manufacturers when I hover/click an icon located at the
+  manufacturer's location.
+  -- Identify a manufacturer's type by visual identifier (color or different icon
+for brewery (beer mug? wheat?) winery (wine glass? grapes?) or other [I think we have distillery 
+now (shot glass? potato?).
+  -- Verify that default maps functionality is present (e.g. zoom, scroll).
+
+As a text-preferring user, I want to be able to easily see a list of all liquor manufacturers
+in BC so I can browse and view information on available manufacturers.
+  -- Verify that a list view option is clearly marked and visible in the main splash
+     of the app.
+  -- Verify that the list view shows each manufacturer.
+  -- Check that the manufacturer information is shown in the list
+            - Check that manufacturer website accessible if available
+            - Check that address and contact information is accessible
+            - Check that manufacturer type is accessible
+  
+  up after search with all search results
+As a user, i want to be able to choose to see only wineries
+(/breweries/distilleries) on the map so i don't have to look at places i'm not
+interested in
+  -- way to select types (one click). (option to show all or one type)
+  -- after click, only display that type
+
+
+As a first-time user, I want to be able to look at the data without logging in so I can
+check out the site without hassle or commitment.
+  -- Verify that the main splash is not a login page.
+  -- View the map as a new user (or logged out user), check that: 
+            - manufacturer locations are visible on the map.
+            - the names and addresses are visible when I hover/click.
+            - the manufacturer type is identifiable.
+  -- View the main site as a new user, check that cannot:
+            - comment on manufacturers.
+            - rate manufacturers.
+            - store a route.
+            - perform other user-profile related actions.
+            (buttons not available OR prompt to login)
+
+As a logged in user, I want to be able to store and name a route between manufacturers
+so that I can view the route at a later time.
+  -- 
+
+
+
+  
+As a user who hates maps, i want to be able to hide the map
+
+As a user who loves maps, i want to be able to hide the table
+  
+
+As a person who lives in <particular location>, I want to be able to see only
+locations nearby
+
+As a user, i want to be able to search for my favorite winery so i can get it's
+location
+
+as a user who has visited a winery, i want to be able to rate it and see other
+ratings (involves searching for it)
+
+as a forgetful person, i want to see which places i have rated so i can go back to the good
+ones and avoid the bad ones
+
+as a user, i want to keep track of my favorite beers so i can buy them again
+
+
+as user, filter by rating? so i can see only good/bad places
+
+as a person with a lot of friends, i want to share my personal review and rating
+with 
+
+As a wine connoisseur, I want to search for wineries in a particular region so I
+can plan a wine tour 
+
+as a connoisseur, i want to get a route from a list of locations so I can go on
+my wine tour
+
+as a thirsty person, i want to get directions to a particular brewery so i can
+go there
+
+As a very thirsty person, i want to get a route to multiple breweries so i
+can go on a brew pub crawl
+
+As a thirsty person, I want to find liquor manufacturers nearest to me so I can
+try some new local brews.
+
+As a person who is new to local wine, i want to see reviews of the wineries near
+me so I can choose a good one
+
+As a lover of local craft beers, I want to be able to keep track of the
+breweries I have been to and my favorite beers and perhaps share them with
+friends via (twitter? facebook?)
+
+As a manufacturer, I want to be able to add my brewery/winery to the app and
+ customers can find me
+
+As a manufacturer, I  want to be able to add a description or website link
+to the app so i can give my customers more info
+
+As a moderator, i want to be able to review the user add-ons so i can get rid of
+spam
+
+As a user, i want to be able to log in with google, facebook, twitter so i don't
+need to make a new account
+
+log in with google - facebook option?
