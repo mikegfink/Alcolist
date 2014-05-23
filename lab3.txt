@@ -1,25 +1,45 @@
+User Stories
 
-
-As a first-time user, I want to first see a map of all liquor manufacturers in BC so I can 
-know what's available and where they are located.
+As a visual-preferring user, I want to first see a map of all liquor
+manufacturers in BC so I can know what's available and where they are 
+located.
   -- Verify that a map is visible in the main splash of the app.
   -- Verify that manufacturer locations are visible on the map.
-  -- View the names and addresses of manufacturers when I hover/click an icon located at the
-  manufacturer's location.
-  -- Identify a manufacturer's type by visual identifier (color or different icon
-for brewery (beer mug? wheat?) winery (wine glass? grapes?) or other [I think we have distillery 
-now (shot glass? potato?).
-  -- Verify that default maps functionality is present (e.g. zoom, scroll).
+  -- View the names and addresses of manufacturers when I hover/click an
+icon located at the manufacturer's location.
+  -- Identify a manufacturer's type by visual identifier (color or
+different icon for brewery (beer mug? wheat?) winery (wine glass?
+grapes?) or other [I think we have distillery now (shot glass? potato?).
+  -- Verify that default maps functionality is present (e.g. zoom,
+scroll).
 
-As a text-preferring user, I want to be able to easily see a list of all liquor manufacturers
-in BC so I can browse and view information on available manufacturers.
-  -- Verify that a list view option is clearly marked and visible in the main splash
-     of the app.
+As a text-preferring user, I want to be able to easily see a list of all
+liquor manufacturers in BC so I can browse and view information on 
+available manufacturers.
+  -- Verify that a list view option is clearly marked and visible in the
+main splash of the app.
   -- Verify that the list view shows each manufacturer.
   -- Check that the manufacturer information is shown in the list
-            - Check that manufacturer website accessible if available
-            - Check that address and contact information is accessible
-            - Check that manufacturer type is accessible
+            - manufacturer website accessible if available.
+            - address and contact information is accessible.
+            - manufacturer type is accessible.
+
+As a first-time user, I want to be able to look at the data without logging in so I can check out the site without hassle or commitment.
+  -- Verify that the main splash is not a login page.
+  -- View the map as a new user (or logged out) user, check that: 
+            - manufacturer locations are visible on the map.
+            - the names and addresses are visible when I hover/click.
+            - the manufacturer type is identifiable.
+  -- View the list view as a new (or logged out) user, check that:
+            - manufacturer website accessible if available.
+            - address and contact information is accessible.
+            - manufacturer type is accessible.
+  -- Check that cannot, as a new (or logged out) user:
+            - comment on manufacturers.
+            - rate manufacturers.
+            - store a route.
+            - perform other user-profile related actions.
+            (buttons not available OR prompt to login)
   
   up after search with all search results
 As a user, i want to be able to choose to see only wineries
@@ -29,19 +49,6 @@ interested in
   -- after click, only display that type
 
 
-As a first-time user, I want to be able to look at the data without logging in so I can
-check out the site without hassle or commitment.
-  -- Verify that the main splash is not a login page.
-  -- View the map as a new user (or logged out user), check that: 
-            - manufacturer locations are visible on the map.
-            - the names and addresses are visible when I hover/click.
-            - the manufacturer type is identifiable.
-  -- View the main site as a new user, check that cannot:
-            - comment on manufacturers.
-            - rate manufacturers.
-            - store a route.
-            - perform other user-profile related actions.
-            (buttons not available OR prompt to login)
 
 As a logged in user, I want to be able to store and name a route between manufacturers
 so that I can view the route at a later time.
