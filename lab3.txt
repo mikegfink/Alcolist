@@ -1,8 +1,7 @@
 User Stories
 
-As a visual-preferring user, I want to first see a map of all liquor
-manufacturers in BC so I can know what's available and where they are 
-located.
+As a map user, I want to first see a map of all liquor manufacturers in 
+BC so I can know what's available and where they are located.
   -- Verify that a map is visible in the main splash of the app.
   -- Verify that manufacturer locations are visible on the map.
   -- View the names and addresses of manufacturers when I hover/click an
@@ -13,9 +12,9 @@ grapes?) or other [I think we have distillery now (shot glass? potato?).
   -- Verify that default maps functionality is present (e.g. zoom,
 scroll).
 
-As a text-preferring user, I want to be able to easily see a list of all
-liquor manufacturers in BC so I can browse and view information on 
-available manufacturers.
+As a list preferring user, I want to be able to easily see a list of all
+liquor manufacturers in BC from the home page so I can browse and view
+information on available manufacturers.
   -- Verify that a list view option is clearly marked and visible in the
 main splash of the app.
   -- Verify that the list view shows each manufacturer.
@@ -43,29 +42,54 @@ password or any personal information.
             - perform other user-profile related actions.
             (buttons not available OR prompt to login)
   
-  up after search with all search results
-As a user, i want to be able to choose to see only wineries
-(/breweries/distilleries) on the map so i don't have to look at places i'm not
-interested in
-  -- way to select types (one click). (option to show all or one type)
-  -- after click, only display that type
+As a map user, I want to be able to choose to see only my chosen
+manufacturer type on the map so I can narrow the amount information
+presented to me. 
+   -- Verify that there is a way to select one, more than one, or all
+types (one click). 
+   -- Check that the selection narrows the manufacturers visible on the
+map to the selected type.
 
+As a first time user, I want to be able to search for a particular 
+manufacturer (such as my favourite winery) from the main page so I can 
+view information about that manufacturer (e.g. location, address, contact 
+information) both in list format and on the map.
+   -- Verify that a search bar is visible from the main page.
+   -- Check that searching for a particular manufacturer shows that
+manufacturer in text format and on the map (if the manufacturer exists).
+   -- Check that filtering options are reset by the search.
+   -- Confirm that searching for a manufacturer does not display other
+manufacturers.
 
-
-As a logged in user, I want to be able to store and name a route between manufacturers
-so that I can view the route at a later time.
-  -- 
-
-
-
+As a logged in user, I want to be able to create, store and name a route 
+to one or more manufacturers so that I can view the route at a later time.
+   -- Verify that a create route system is available to the user.
+   -- Create a route between a location and a manufacturer?s location.
+   -- Verify that a save route system is available after creating a route.
+   -- Check that the route can be named in the save route system.
+   -- Log out, confirm that the route is not available.
+   -- Log in, confirm that the route is again available.
+   -- Verify that route creation is not available to logged out users (do
+we want this? Or only have storage restricted to registered user, not 
+restricted route creation?).
   
-As a user who hates maps, i want to be able to hide the map
+As a text user, I want to be able to hide/minimize the map or expand the 
+list view from the main page so that I can better/primarily 
+view the list information.
+   -- Verify that the list display can be expanded to cover more than
+half of the display area.
+   -- Verify that the list display can be minimized to cover less than 
+half of the display area.
 
-As a user who loves maps, i want to be able to hide the table
-  
+As a map user, I want to be able to hide the list view from the main page
+so that I can better/primarily view the map.
+   -- Verify that the list view can be minimized so that no list 
+information is visible to the user.
+   -- Check that the list view can be restored after minimization so that 
+the list view is visible and usable by the user.
+  	
 
-As a person who lives in <particular location>, I want to be able to see only
-locations nearby
+As a person who lives in <particular location>, I want to be able to see only locations nearby.
 
 As a user, i want to be able to search for my favorite winery so i can get it's
 location
