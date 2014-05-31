@@ -1,65 +1,138 @@
+User Stories
 
-
-As a first-time user, I want to first see a map of all liquor manufacturers in BC so I can 
-know what's available and where they are located.
+As a map user, I want to first see a map of all liquor manufacturers in 
+BC so I can know what's available and where they are located.
   -- Verify that a map is visible in the main splash of the app.
   -- Verify that manufacturer locations are visible on the map.
-  -- View the names and addresses of manufacturers when I hover/click an icon located at the
-  manufacturer's location.
-  -- Identify a manufacturer's type by visual identifier (color or different icon
-for brewery (beer mug? wheat?) winery (wine glass? grapes?) or other [I think we have distillery 
-now (shot glass? potato?).
-  -- Verify that default maps functionality is present (e.g. zoom, scroll).
+  -- View the names and addresses of manufacturers when I hover/click an
+icon located at the manufacturer's location.
+  -- Identify a manufacturer's type by visual identifier (color or
+different icon for brewery (beer mug? wheat?) winery (wine glass?
+grapes?) or other [I think we have distillery now (shot glass? potato?).
+  -- Verify that default maps functionality is present (e.g. zoom,
+scroll).
 
-As a text-preferring user, I want to be able to easily see a list of all liquor manufacturers
-in BC so I can browse and view information on available manufacturers.
-  -- Verify that a list view option is clearly marked and visible in the main splash
-     of the app.
+As a list preferring user, I want to be able to easily see a list of all
+liquor manufacturers in BC from the home page so I can browse and view
+information on available manufacturers.
+  -- Verify that a list view option is clearly marked and visible in the
+main splash of the app.
   -- Verify that the list view shows each manufacturer.
   -- Check that the manufacturer information is shown in the list
-            - Check that manufacturer website accessible if available
-            - Check that address and contact information is accessible
-            - Check that manufacturer type is accessible
-  
-  up after search with all search results
-As a user, i want to be able to choose to see only wineries
-(/breweries/distilleries) on the map so i don't have to look at places i'm not
-interested in
-  -- way to select types (one click). (option to show all or one type)
-  -- after click, only display that type
+            - manufacturer website accessible if available.
+            - address and contact information is accessible.
+            - manufacturer type is accessible.
 
-
-As a first-time user, I want to be able to look at the data without logging in so I can
-check out the site without hassle or commitment.
+As a first-time user, I want to be able to view the manufacturer data
+without logging in so I can check out the site without entering a 
+password or any personal information.
   -- Verify that the main splash is not a login page.
-  -- View the map as a new user (or logged out user), check that: 
+  -- View the map as a new user (or logged out) user, check that: 
             - manufacturer locations are visible on the map.
             - the names and addresses are visible when I hover/click.
             - the manufacturer type is identifiable.
-  -- View the main site as a new user, check that cannot:
+  -- View the list view as a new (or logged out) user, check that:
+            - manufacturer website accessible if available.
+            - address and contact information is accessible.
+            - manufacturer type is accessible.
+  -- Check that cannot, as a new (or logged out) user:
             - comment on manufacturers.
             - rate manufacturers.
             - store a route.
             - perform other user-profile related actions.
             (buttons not available OR prompt to login)
 
-As a logged in user, I want to be able to store and name a route between manufacturers
-so that I can view the route at a later time.
-  -- 
+As a manufacturer, I want to be able to add my brewery/winery/distillery 
+to the app so that customers can find my establishment.
+   -- NOTE: I think this is an unnecessary option. We are now getting the up to date list of licensed establishments, so there should be no one legal off the list.
+   -- NOTE 2: I need help with this one if we are using it. It seems
+ super complicated and my acceptance criteria would all end up as big 
+user stories with verification and stuff =(.
+   -- Create a manufacturer account. 
 
+As a manufacturer, I want to be able to add a description or website link
+to the app so I can give my customers more information about my business.
+   -- NOTE: Again I need help. Two classes of users seems really hard 
+given that we are expecting to use google or facebook or twitter logins 
+as our accounts so we don?t need to know too much about it.
 
+As a moderator, I want to be able to review the user additions so I can get rid of spam in manufacturer information.
+   -- NOTE: Help again!
 
+As a frequent user, I want to be able to log in with Google, Facebook, 
+Twitter so I can save my preferences, notes, ratings and routes without
+creating a new account. (Could be modified to be as a gmail user or facebook user).
+   -- NOTE: Too tired to continue. Help pls.
+
+As a logged in user with a lot of friends, I want to share my personal reviews and ratings and manufacturers visited with my social networks.
+   -- Verify that sharing is not accessible to not logged in users.
+   -- Create a review for a selected manufacturer, then confirm that a 
+share with Facebook, Twitter, 4Square?, G+, etc. button is available.
+- Verify that the sharing button actually pushes review to the network.
+   -- Create a rating for a selected manufacturer, then confirm that a 
+share button is available.
+- Verify that the sharing button works.
+   -- NOTE: Probably moar halp pls, so sleepy...
   
-As a user who hates maps, i want to be able to hide the map
+As a map user, I want to be able to choose to see only my chosen
+manufacturer type on the map so I can narrow the amount information
+presented to me. 
+   -- Verify that there is a way to select one, more than one, or all
+types (one click). 
+   -- Check that the selection narrows the manufacturers visible on the
+map to the selected type.
 
-As a user who loves maps, i want to be able to hide the table
+As a first time user, I want to be able to search for a particular 
+manufacturer (such as my favourite winery) from the main page so I can 
+view information about that manufacturer (e.g. location, address, contact 
+information) both in list format and on the map.
+   -- Verify that a search bar is visible from the main page.
+   -- Check that searching for a particular manufacturer shows that
+manufacturer in text format and on the map (if the manufacturer exists).
+   -- Check that filtering options are reset by the search.
+   -- Confirm that searching for a manufacturer does not display other
+manufacturers.
+
+As a logged in user, I want to be able to create, store and name a route 
+to one or more manufacturers so that I can view the route at a later time.
+   -- Verify that a create route system is available to the user.
+   -- Create a route between a location and a manufacturer?s location.
+   -- Log in, verify that a save route system is available after creating a route.
+   -- Check that the route can be named in the save route system.
+   -- Log out, confirm that the route is not available.
+   -- Log in, confirm that the route is again available.
+   -- Verify that route saving and naming is not available to logged out users.
+
+As a first time user and wine connoisseur, I want to create a route from 
+a list of (wine) manufacturer locations so I can view a driving route 
+from my location or a specified location to the selected manufacturers.
+   -- Verify that a new user can create and display a list of manufacturers.
+   -- Check that a driving route can be created from the list of manufacturers.
+        - Confirm that a start and end location can be entered.
+        - Confirm that the user may use ?my location? as a start and/or end location.
+        - Check that route takes a logical (shortest?) path to all locations.
+   -- Note: Multiple ways to implement here. The build-a-list way, a
+ ?route creator? wizard that has you select the start and each winery you 
+want to visit then the end, etc. The story could be slightly different 
+for other implementations.
   
+As a text user, I want to be able to hide/minimize the map or expand the 
+list view from the main page so that I can better/primarily 
+view the list information.
+   -- Verify that the list display can be expanded to cover more than
+half of the display area.
+   -- Verify that the list display can be minimized to cover less than 
+half of the display area.
 
-As a person who lives in <particular location>, I want to be able to see only
-locations nearby
+As a map user, I want to be able to hide the list view from the main page
+so that I can better/primarily view the map.
+   -- Verify that the list view can be minimized so that no list 
+information is visible to the user.
+   -- Check that the list view can be restored after minimization so that 
+the list view is visible and usable by the user.
+  	
 
-As a user, i want to be able to search for my favorite winery so i can get it's
-location
+As a person who lives in <particular location>, I want to be able to see only locations nearby.
 
 as a user who has visited a winery, i want to be able to rate it and see other
 ratings (involves searching for it)
@@ -72,14 +145,10 @@ as a user, i want to keep track of my favorite beers so i can buy them again
 
 as user, filter by rating? so i can see only good/bad places
 
-as a person with a lot of friends, i want to share my personal review and rating
-with 
 
 As a wine connoisseur, I want to search for wineries in a particular region so I
 can plan a wine tour 
 
-as a connoisseur, i want to get a route from a list of locations so I can go on
-my wine tour
 
 as a thirsty person, i want to get directions to a particular brewery so i can
 go there
@@ -97,16 +166,3 @@ As a lover of local craft beers, I want to be able to keep track of the
 breweries I have been to and my favorite beers and perhaps share them with
 friends via (twitter? facebook?)
 
-As a manufacturer, I want to be able to add my brewery/winery to the app and
- customers can find me
-
-As a manufacturer, I  want to be able to add a description or website link
-to the app so i can give my customers more info
-
-As a moderator, i want to be able to review the user add-ons so i can get rid of
-spam
-
-As a user, i want to be able to log in with google, facebook, twitter so i don't
-need to make a new account
-
-log in with google - facebook option?
