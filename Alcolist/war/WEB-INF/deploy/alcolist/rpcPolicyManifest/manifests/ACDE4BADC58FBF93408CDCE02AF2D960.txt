@@ -1,0 +1,2 @@
+serviceClass: com.lamchop.alcolist.client.GreetingService
+path: 72C080125F5A86B917B455E462D8373C.gwt.rpc
