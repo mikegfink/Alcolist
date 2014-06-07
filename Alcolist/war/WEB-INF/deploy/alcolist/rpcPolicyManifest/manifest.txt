@@ -1,2 +1,3 @@
 # Module alcolist
 # RPC service class, partial path of RPC policy file
+com.lamchop.alcolist.client.GreetingService, 72C080125F5A86B917B455E462D8373C.gwt.rpc

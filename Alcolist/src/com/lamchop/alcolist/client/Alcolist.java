@@ -44,6 +44,16 @@ public class Alcolist implements EntryPoint {
 		nameField.setText("GWT User");
 		final Label errorLabel = new Label();
 
+		// Adds a button to the page that asks for authentication from Facebook.
+		// Note that Facebook does not allow localhost as a redirect URL, so while
+		// this code will work when hosted, it will not work when testing locally.
+		// Since the auth flow requires opening a popup window, it must be started
+		// as a direct result of a user action, such as clicking a button or link.
+		// Otherwise, a browser's popup blocker may block the popup.
+		final Button facebookButton = new Button("Authenticate with Facebook");
+		facebookButton.addClickHandler(new FacebookLoginHandler());
+		
+		
 		// We can add style names to widgets
 		sendButton.addStyleName("sendButton");
 
@@ -53,6 +63,8 @@ public class Alcolist implements EntryPoint {
 		RootPanel.get("sendButtonContainer").add(sendButton);
 		RootPanel.get("errorLabelContainer").add(errorLabel);
 
+		
+		
 		// Focus the cursor on the name field when the app loads
 		nameField.setFocus(true);
 		nameField.selectAll();
@@ -74,7 +86,10 @@ public class Alcolist implements EntryPoint {
 		dialogVPanel.add(serverResponseLabel);
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
 		dialogVPanel.add(closeButton);
+		dialogVPanel.add(facebookButton);
 		dialogBox.setWidget(dialogVPanel);
+		
+		
 
 		// Add a handler to close the DialogBox
 		closeButton.addClickHandler(new ClickHandler() {
