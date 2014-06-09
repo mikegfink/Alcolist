@@ -1,2 +1,3 @@
 *.class
-Alcolist/gwt-unitCache/*
+Alcolist/gwt-unitCache/
+.gwt/
