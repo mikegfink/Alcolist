@@ -17,14 +17,8 @@
   <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
-<<<<<<< HEAD
-  <!-- Other module inherits  
-  																-->
-  <inherits name="com.google.api.gwt.oauth2.OAuth2" />            
-=======
   <!-- Other module inherits                                      -->
   <inherits name='com.google.gwt.maps.Maps' /> 
->>>>>>> refs/remotes/origin/master
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='com.lamchop.alcolist.client.Alcolist'/>
