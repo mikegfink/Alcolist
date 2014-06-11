@@ -1,16 +1,17 @@
 *.class
 
 # caches
-war/WEB-INF/deploy/
-war/WEB-INF/classes/
-gwt-unitCache/
-war/gwt_bree/
+Alcolist/war/WEB-INF/deploy/
+Alcolist/war/WEB-INF/classes/
+Alcolist/gwt-unitCache/
+Alcolist/war/gwt_bree/
 
 # compilation logs
 .gwt/
 
 # boilerplate generated classes 
 .apt_generated/
+
 
 # gwt junit compilation files
 www-test/
