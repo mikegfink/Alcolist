@@ -5,17 +5,21 @@ import java.util.ArrayList;
 import com.google.gwt.maps.client.LoadApi;
 import com.google.gwt.maps.client.LoadApi.LoadLibrary;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.LayoutPanel;
 
 public class MapsLoader {
-
-	private AbsolutePanel mapPanel;
+	
+	private LayoutPanel theMap;
 	
 	public MapsLoader() {
-		mapPanel = new AbsolutePanel();
+		theMap = new LayoutPanel();
 	}
 	
+	public LayoutPanel getMap() {
+		return theMap;
+	}
 	
-	public AbsolutePanel loadMapApi() {
+	public void loadMapApi() {
 	    
 		
 		boolean sensor = true;
@@ -33,17 +37,16 @@ public class MapsLoader {
 	    Runnable onLoad = new Runnable() {
 	      @Override
 	      public void run() {
-	        draw();
+	    	  draw();
 	      }
 	    };
 
 	    LoadApi.go(onLoad, loadLibraries, sensor);
 	    
-	    return mapPanel;
 	  }
-	
-	private void draw() {
-		BasicMapWidget basicMap = new BasicMapWidget();
-	    mapPanel.add(basicMap);;
+	public void draw() {
+		
+		theMap.add(new BasicMapWidget());	
+		
 	}
 }
