@@ -12,7 +12,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.lamchop.alcolist.shared.FieldVerifier;
@@ -46,13 +45,12 @@ public class GWTBase {
 		// Since the auth flow requires opening a popup window, it must be started
 		// as a direct result of a user action, such as clicking a button or link.
 		// Otherwise, a browser's popup blocker may block the popup.
-		/*
+		
 		final Button facebookLoginButton = new Button("Authenticate with Facebook");
 		final Button facebookLogoutButton = new Button("Logout of Facebook");
 		FacebookHandler facebookHandler = new FacebookHandler(facebookLoginButton, facebookLogoutButton);
 		facebookLoginButton.addClickHandler(facebookHandler);
 		facebookLogoutButton.addClickHandler(facebookHandler);
-		*/
 
 		// We can add style names to widgets
 		sendButton.addStyleName("sendButton");
@@ -86,8 +84,8 @@ public class GWTBase {
 		dialogVPanel.add(serverResponseLabel);
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
 		dialogVPanel.add(closeButton);
-		//dialogVPanel.add(facebookLoginButton);
-		//dialogVPanel.add(facebookLogoutButton);
+		dialogVPanel.add(facebookLoginButton);
+		dialogVPanel.add(facebookLogoutButton);
 		dialogBox.setWidget(dialogVPanel);
 
 
