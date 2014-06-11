@@ -15,5 +15,8 @@ public class Alcolist implements EntryPoint {
 	public void onModuleLoad() {
 		GWTBase gwtBase = new GWTBase();
 		RootPanel.get("baseContainer").add(gwtBase.setupBase());
+		
+		MapsLoader mapLoader = new MapsLoader();
+		RootPanel.get("baseContainer").add(mapLoader.loadMapApi());
 	}
 }
