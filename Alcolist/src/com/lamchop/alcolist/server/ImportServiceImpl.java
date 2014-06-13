@@ -1,8 +1,11 @@
 package com.lamchop.alcolist.server;
 
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.lamchop.alcolist.client.ImportService;
 
-public class ImportServiceImpl implements ImportService {
+@SuppressWarnings("serial")
+public class ImportServiceImpl extends RemoteServiceServlet implements 
+			ImportService {
 
 	@Override
 	public void importData() {

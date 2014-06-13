@@ -1,4 +1,4 @@
-package com.lamchop.alcolist.server;
+package com.lamchop.alcolist.shared;
 
 import java.io.Serializable;
 

@@ -1,0 +1,89 @@
+package com.lamchop.alcolist.client;
+
+import java.util.List;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.lamchop.alcolist.shared.Manufacturer;
+
+public class AppDataController {
+
+	private ManufacturerServiceAsync manufacturerService;
+	private AppData appData;
+	private UIUpdateInterface theUI;
+	private UserDataServiceAsync userDataService;
+	
+	public AppDataController(UIUpdateInterface theUI) {
+		manufacturerService = GWT.create(ManufacturerService.class);
+		appData = new AppData();
+		this.theUI = theUI;
+		userDataService = null;
+	}
+	
+	public void initUserData(int userID) {
+		userDataService = GWT.create(UserDataService.class);
+		userDataService.getUserData(userID, (new AsyncCallback<UserData>() {
+			public void onFailure(Throwable error) {
+				handleError(error);
+			}
+
+			public void onSuccess(UserData result) {
+				updateAppDataUserData(result);
+				sendUserDataToUI();
+			}
+		}));	
+	}
+	
+	public void initManufacturers() {
+		
+		manufacturerService.getManufacturers(new AsyncCallback<List<Manufacturer>>() {
+			public void onFailure(Throwable error) {
+				handleError(error);
+			}
+
+			public void onSuccess(List<Manufacturer> result) {
+				updateAppDataManufacturers(result);
+				sendManufacturersToUI();
+			}
+		});
+		
+		
+	}
+	
+	public void clearManufacturers() {
+		updateAppDataManufacturers(null);
+	}
+
+	private void updateAppDataManufacturers(List<Manufacturer> manufacturers) {
+		
+		appData.add(manufacturers);
+
+	}
+	
+	private void updateAppDataUserData(UserData userData) {
+		
+		appData.setUserData(userData);
+
+	}
+	
+	public void sendManufacturersToUI() {		
+		theUI.update(appData.getManufacturers());
+	}
+	
+	public void sendUserDataToUI() {
+		theUI.update(appData.getUserData());	
+	}
+
+	public void clearUserData() {
+		
+		appData.setUserData(null);	
+	}
+	
+	private void handleError(Throwable error) {
+		Window.alert(error.getMessage());
+		/*if (error instanceof NotLoggedInException) {
+			Window.Location.replace(loginInfo.getLogoutUrl());*/
+	}
+
+}
