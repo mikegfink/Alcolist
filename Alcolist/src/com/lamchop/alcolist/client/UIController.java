@@ -26,7 +26,7 @@ public class UIController implements UIUpdateInterface {
 	private UI uiPanel;
 	private MapsLoader mapsLoader;
 	private LayoutPanel mapPanel;
-	private DataGrid<Manufacturer> listPanel;
+	private ListPanel listPanel;
 	private List<Manufacturer> manufacturers;
 	private Label title;
 	private LayoutPanel mainPanel;
@@ -55,105 +55,14 @@ public class UIController implements UIUpdateInterface {
 		mapsLoader = new MapsLoader();
 		mapsLoader.loadMapApi();
 		mapPanel = mapsLoader.getMap();
-		listPanel = new DataGrid<Manufacturer>(5, resource);
+		listPanel = new ListPanel();
 		mainPanel = new LayoutPanel();
 		
 		title.addStyleName("title");
 		title.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		
-		listPanel.setEmptyTableWidget(new Label("Empty"));
+		listPanel.addData(manufacturers);
 		
-		ListDataProvider<Manufacturer> dataProvider = new ListDataProvider<Manufacturer>();
-		dataProvider.addDataDisplay(listPanel);
-		
-		List<Manufacturer> list = dataProvider.getList();
-	    for (Manufacturer m : manufacturers) {
-	      list.add(m);
-	    }
-	    
-	    ListHandler<Manufacturer> sortHandler = new ListHandler<Manufacturer>(list);
-		listPanel.addColumnSortHandler(sortHandler);
-		
-		// Make main column
-		Column<Manufacturer, Manufacturer> visibleColumn = 
-				new Column<Manufacturer, Manufacturer>(new ManufacturerCell()) {
-				@Override
-	            public Manufacturer getValue(Manufacturer object) {
-	              return object;
-	            }
-			};
-			
-		// add sort function to main column
-		visibleColumn.setSortable(true);
-		sortHandler.setComparator(visibleColumn, new Comparator<Manufacturer>() {
-			public int compare(Manufacturer m1, Manufacturer m2) {
-		        return m1.getName().compareTo(m2.getName());
-		}
-		});
-			
-		// Make city column
-		Column<Manufacturer, String> city = 
-				new Column<Manufacturer, String>(new TextCell()) {
-					@Override
-					public String getValue(Manufacturer object) {
-						return object.getAddress().getCity();
-					}
-			
-		};
-		city.setVerticalAlignment(HasVerticalAlignment.ALIGN_BOTTOM);
-		
-		// add sort function to city column
-		city.setSortable(true);
-		sortHandler.setComparator(city, new Comparator<Manufacturer>() {
-			public int compare(Manufacturer m1, Manufacturer m2) {
-				return m1.getAddress().getCity().compareTo(m2.getAddress().getCity());
-			}
-		});
-		
-		// Make type column
-		Column<Manufacturer, String> type = 
-				new Column<Manufacturer, String>(new TextCell()) {
-					@Override
-					public String getValue(Manufacturer object) {
-						return object.getType();
-					}
-			
-		};
-		type.setVerticalAlignment(HasVerticalAlignment.ALIGN_BOTTOM);
-		
-		// add sort function to type column
-		type.setSortable(true);
-		sortHandler.setComparator(type, new Comparator<Manufacturer>() {
-			public int compare(Manufacturer m1, Manufacturer m2) {
-				return m1.getType().compareTo(m2.getType());
-			}
-		});
-		
-		
-		listPanel.addColumn(visibleColumn, "Manufacturer");
-		listPanel.addColumn(type, "Type");
-		listPanel.addColumn(city, "City");
-		
-		listPanel.setRowCount(manufacturers.size());
-		listPanel.setColumnWidth(0,  "50%");
-		
-		listPanel.getColumnSortList().push(visibleColumn);
-		ColumnSortEvent.fire(listPanel, listPanel.getColumnSortList());
-		
-		listPanel.getColumnSortList().push(type);
-		ColumnSortEvent.fire(listPanel,  listPanel.getColumnSortList());
-		
-		listPanel.setRowStyles(new RowStyles<Manufacturer>() {
-
-			@Override
-			public String getStyleNames(Manufacturer row, int rowIndex) {
-				return "list";
-			}
-		    
-		});
-
-
-
 		mainPanel.add(listPanel);
 		mainPanel.add(mapPanel);
 		
@@ -176,7 +85,6 @@ public class UIController implements UIUpdateInterface {
 
 	@Override
 	public void update(List<Manufacturer> manufacturers) {
-		// TODO Auto-generated method stub
 		
 	}
 
