@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+
+.dataGridHeader {
+  border-bottom: none;
+  padding: 3px 15px;
+  text-align: left;
+  color: black;
+  text-shadow: none;
+  overflow: hidden;
+  white-space: nowrap;
+  text-font: 85%;
+}
+
+.dataGridEvenRow {
+  background: white;
+}
+
+.dataGridEvenRowCell {
+  border: selectionBorderWidth solid white;
+}
+
+.dataGridOddRow {
+  background: white;
+}
+
+.dataGridOddRowCell {
+  border: selectionBorderWidth solid white;
+}
