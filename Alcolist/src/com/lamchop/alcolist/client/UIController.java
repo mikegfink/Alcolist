@@ -14,13 +14,15 @@ import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.view.client.ListDataProvider;
-import com.lamchop.alcolist.server.Manufacturer;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;
 
 import static com.google.gwt.dom.client.Style.Unit.PCT;
 
-public class UIController {
+import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.lamchop.alcolist.shared.Manufacturer;
+
+public class UIController implements UIUpdateInterface {
 	private UI uiPanel;
 	private MapsLoader mapsLoader;
 	private LayoutPanel mapPanel;
@@ -28,7 +30,9 @@ public class UIController {
 	private List<Manufacturer> manufacturers;
 	private Label title;
 	private LayoutPanel mainPanel;
-	
+	private AppDataController theAppDataController;
+	private FacebookHandler facebookHandler;
+	private AdminHandler adminHandler;
 	
 	public UIController() {
 		
@@ -41,6 +45,12 @@ public class UIController {
 		manufacturers.add(new Manufacturer("A", "Street", "Vancouver", "BC", "", "Winery", ""));
 
 		title = new Label("The Alcolist");
+		
+		this.theAppDataController = new AppDataController(this);
+		
+		facebookHandler = new FacebookHandler(theAppDataController);
+		adminHandler = new AdminHandler(theAppDataController);
+		
 		uiPanel = new UI();
 		mapsLoader = new MapsLoader();
 		mapsLoader.loadMapApi();
@@ -162,6 +172,18 @@ public class UIController {
 	
 	public UI getUI() {
 		return uiPanel;
+	}
+
+	@Override
+	public void update(List<Manufacturer> manufacturers) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(UserData userData) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

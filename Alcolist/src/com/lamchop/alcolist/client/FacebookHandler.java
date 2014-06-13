@@ -36,12 +36,15 @@ public class FacebookHandler implements ClickHandler {
 
 	// Use the implementation of Auth intended to be used in the GWT client app.
 	private static final Auth AUTH = Auth.get();
+	
+	private AppDataController theAppDataController;
 
 	/**
 	 * Basic constructor for login, logout only.
+	 * @param theAppDataController 
 	 */
-	public FacebookHandler() {
-
+	public FacebookHandler(AppDataController theAppDataController) {
+		this.theAppDataController = theAppDataController;
 	}
 	
 	/* (non-Javadoc)
@@ -64,6 +67,7 @@ public class FacebookHandler implements ClickHandler {
 	private void logout() {
 		Auth.get().clearAllTokens();
         Window.alert("All tokens cleared");
+        theAppDataController.clearUserData();
 	}
 
 	/**
@@ -97,6 +101,9 @@ public class FacebookHandler implements ClickHandler {
 	 */
 	protected void getFacebookLoginInfo() {
 		// TODO API call with token.
+		
+		int userID = 0;
+		theAppDataController.initUserData(userID);
 		
 	}
 	

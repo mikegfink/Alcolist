@@ -46,9 +46,9 @@ public class GWTBase {
 		// as a direct result of a user action, such as clicking a button or link.
 		// Otherwise, a browser's popup blocker may block the popup.
 		
-		FacebookHandler facebookHandler = new FacebookHandler();
-		final Button facebookLoginButton = new FacebookLoginButton(facebookHandler);
-		final Button facebookLogoutButton = new FacebookLogoutButton(facebookHandler);
+		//FacebookHandler facebookHandler = new FacebookHandler();
+		//final Button facebookLoginButton = new FacebookLoginButton(facebookHandler);
+		//final Button facebookLogoutButton = new FacebookLogoutButton(facebookHandler);
 
 		// We can add style names to widgets
 		sendButton.addStyleName("sendButton");
@@ -82,8 +82,8 @@ public class GWTBase {
 		dialogVPanel.add(serverResponseLabel);
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
 		dialogVPanel.add(closeButton);
-		dialogVPanel.add(facebookLoginButton);
-		dialogVPanel.add(facebookLogoutButton);
+		//dialogVPanel.add(facebookLoginButton);
+		//dialogVPanel.add(facebookLogoutButton);
 		dialogBox.setWidget(dialogVPanel);
 
 
