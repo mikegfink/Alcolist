@@ -37,24 +37,11 @@ public class FacebookHandler implements ClickHandler {
 	// Use the implementation of Auth intended to be used in the GWT client app.
 	private static final Auth AUTH = Auth.get();
 
-	private Button facebookLogin, facebookLogout, facebookShare; // Maybe facebook share isn't a button.
-
 	/**
 	 * Basic constructor for login, logout only.
 	 */
-	public FacebookHandler(Button facebookLogin, Button facebookLogout) {
-		this.facebookLogin = facebookLogin;
-		this.facebookLogout = facebookLogout;
-		facebookShare = null;
-	}
+	public FacebookHandler() {
 
-	/**
-	 * Constructor for also implementing sharing.
-	 */
-	public FacebookHandler(Button facebookLogin, Button facebookLogout, Button facebookShare) {
-		this.facebookLogin = facebookLogin;
-		this.facebookLogout = facebookLogout;
-		this.facebookShare = facebookShare;
 	}
 	
 	/* (non-Javadoc)
@@ -64,12 +51,13 @@ public class FacebookHandler implements ClickHandler {
 	public void onClick(ClickEvent event) {
 		Widget sender = (Widget) event.getSource();
 		
-		if (sender == facebookLogin) {
+		if (sender.getClass() == FacebookLoginButton.class) {
 			login();
-		} else if (sender == facebookLogout) {
+		} else if (sender.getClass() == FacebookLogoutButton.class) {
 			logout();
-		} else if (sender == facebookShare) {
-			shareWithFacebook("");
+		} else if (sender.getClass() == FacebookReviewBox.class) {
+			FacebookReviewBox facebookReviewBox = (FacebookReviewBox) sender;
+			shareWithFacebook(facebookReviewBox.getValue());
 		}
 	}
 	

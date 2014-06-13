@@ -46,11 +46,9 @@ public class GWTBase {
 		// as a direct result of a user action, such as clicking a button or link.
 		// Otherwise, a browser's popup blocker may block the popup.
 		
-		final Button facebookLoginButton = new Button("Authenticate with Facebook");
-		final Button facebookLogoutButton = new Button("Logout of Facebook");
-		FacebookHandler facebookHandler = new FacebookHandler(facebookLoginButton, facebookLogoutButton);
-		facebookLoginButton.addClickHandler(facebookHandler);
-		facebookLogoutButton.addClickHandler(facebookHandler);
+		FacebookHandler facebookHandler = new FacebookHandler();
+		final Button facebookLoginButton = new FacebookLoginButton(facebookHandler);
+		final Button facebookLogoutButton = new FacebookLogoutButton(facebookHandler);
 
 		// We can add style names to widgets
 		sendButton.addStyleName("sendButton");
