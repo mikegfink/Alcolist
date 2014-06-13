@@ -22,8 +22,8 @@ public class Alcolist implements EntryPoint {
 		
 		GWTBase gwtBase = new GWTBase();
 		//RootPanel.get("baseContainer").add(gwtBase.setupBase());
-		AbsolutePanel gwt = gwtBase.setupBase();
-		theRootPanel.add(gwt);
+		//AbsolutePanel gwt = gwtBase.setupBase();
+		//theRootPanel.add(gwt);
 		
 		theUIController = new UIController();
 		UI theUI = theUIController.getUI();
@@ -31,8 +31,8 @@ public class Alcolist implements EntryPoint {
 		//RootPanel.get("baseContainer").add(theUI);
 		theRootPanel.add(theUI);
 		
-		theRootPanel.setWidgetLeftWidth(gwt, 0, PCT, 50, PCT);
-		theRootPanel.setWidgetTopHeight(gwt, 50, PCT, 100, PCT);
-	    theRootPanel.setWidgetRightWidth(theUI, 0, PCT, 50, PCT);
+		//theRootPanel.setWidgetLeftWidth(gwt, 0, PCT, 50, PCT);
+		//theRootPanel.setWidgetTopHeight(gwt, 50, PCT, 100, PCT);
+	    //theRootPanel.setWidgetRightWidth(theUI, 0, PCT, 50, PCT);
 	}
 }
