@@ -26,9 +26,9 @@ public class Manufacturer implements Serializable {
 	@Persistent
 	private String postalCode;
 	@Persistent
-	private String type; // TODO make this an enum of the 3 types later
-	@Persistent
 	private String phoneNumber;
+	@Persistent
+	private String type; // TODO make this an enum of the 3 types later
 	@Persistent
 	private int sumRatings;
 	@Persistent
@@ -43,14 +43,14 @@ public class Manufacturer implements Serializable {
 	}
 
 	public Manufacturer(String name, String streetAddress, String city, String province, 
-			String postalCode, String type, String phoneNumber) {
+			String postalCode, String phoneNumber, String type) {
 		this.name = name;
 		this.streetAddress = streetAddress;
 		this.city = city;
 		this.province = province;
 		this.postalCode = postalCode;
-		this.type = type;
 		this.phoneNumber = phoneNumber;
+		this.type = type;
 		this.sumRatings = 0;
 		this.numRatings = 0;
 	}
