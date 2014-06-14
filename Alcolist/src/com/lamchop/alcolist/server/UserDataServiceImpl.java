@@ -47,7 +47,7 @@ public class UserDataServiceImpl  extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public UserData getUserData(int userID) {
+	public UserData getUserData(String userID) {
 		// TODO Auto-generated method stub
 		return null;
 	}

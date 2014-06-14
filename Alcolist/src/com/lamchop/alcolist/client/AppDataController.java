@@ -21,7 +21,7 @@ public class AppDataController {
 		this.theUI = theUI;
 	}
 	
-	public void initUserData(int userID) {
+	public void initUserData(String userID) {
 		userDataService = GWT.create(UserDataService.class);
 		userDataService.getUserData(userID, (new AsyncCallback<UserData>() {
 			public void onFailure(Throwable error) {
