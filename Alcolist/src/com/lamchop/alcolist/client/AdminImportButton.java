@@ -4,9 +4,9 @@ import com.google.gwt.user.client.ui.Button;
 
 public class AdminImportButton extends Button {
 	
-	public AdminImportButton(AdminHandler handler) {
+	public AdminImportButton(AppDataController theAppDataController) {
 		super();
-		this.addClickHandler(handler);
+		this.addClickHandler(new AdminHandler(theAppDataController));
 	}
 		
 }

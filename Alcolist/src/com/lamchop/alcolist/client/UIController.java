@@ -48,9 +48,6 @@ public class UIController implements UIUpdateInterface {
 		
 		this.theAppDataController = new AppDataController(this);
 		
-		facebookHandler = new FacebookHandler(theAppDataController);
-		adminHandler = new AdminHandler(theAppDataController);
-		
 		uiPanel = new UI();
 		mapsLoader = new MapsLoader();
 		mapsLoader.loadMapApi();

@@ -5,9 +5,9 @@ import com.google.gwt.user.client.ui.TextBox;
 
 public class FacebookReviewBox extends TextBox {
 
-	public FacebookReviewBox(FacebookHandler handler) {
+	public FacebookReviewBox(AppDataController theAppDataController) {
 		super();
-		this.addClickHandler(handler);
+		this.addClickHandler(new FacebookHandler(theAppDataController));
 	}
 
 }

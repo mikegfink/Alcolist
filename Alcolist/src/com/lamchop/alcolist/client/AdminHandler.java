@@ -9,12 +9,12 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class AdminHandler implements ClickHandler {
 
-	private ImportServiceAsync importService;
+	private static final ImportServiceAsync 
+							importService = GWT.create(ImportService.class);
 	private AppDataController appDataController;
 
 	public AdminHandler(AppDataController appDataController) {
 		super();
-		importService = GWT.create(ImportService.class);
 		this.appDataController = appDataController;
 	}
 

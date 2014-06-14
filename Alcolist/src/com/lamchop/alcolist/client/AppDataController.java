@@ -9,16 +9,16 @@ import com.lamchop.alcolist.shared.Manufacturer;
 
 public class AppDataController {
 
-	private ManufacturerServiceAsync manufacturerService;
 	private AppData appData;
 	private UIUpdateInterface theUI;
-	private UserDataServiceAsync userDataService;
+	private static UserDataServiceAsync userDataService;
+					// TODO: add final and move here = GWT.create(UserDataService.class);
+	private static final ManufacturerServiceAsync 
+					manufacturerService = GWT.create(ManufacturerService.class);
 	
 	public AppDataController(UIUpdateInterface theUI) {
-		manufacturerService = GWT.create(ManufacturerService.class);
 		appData = new AppData();
 		this.theUI = theUI;
-		userDataService = null;
 	}
 	
 	public void initUserData(int userID) {

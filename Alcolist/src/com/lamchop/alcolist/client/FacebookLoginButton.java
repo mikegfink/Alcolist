@@ -4,9 +4,9 @@ import com.google.gwt.user.client.ui.Button;
 
 public class FacebookLoginButton extends Button {
 
-	public FacebookLoginButton(FacebookHandler handler) {
+	public FacebookLoginButton(AppDataController theAppDataController) {
 		super();
-		this.addClickHandler(handler);
+		this.addClickHandler(new FacebookHandler(theAppDataController));
 	}
 
 }

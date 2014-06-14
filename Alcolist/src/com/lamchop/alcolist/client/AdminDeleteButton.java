@@ -4,8 +4,8 @@ import com.google.gwt.user.client.ui.Button;
 
 public class AdminDeleteButton extends Button {
 
-	public AdminDeleteButton(AdminHandler handler) {
+	public AdminDeleteButton(AppDataController theAppDataController) {
 		super();
-		this.addClickHandler(handler);
+		this.addClickHandler(new AdminHandler(theAppDataController));
 	}
 }
