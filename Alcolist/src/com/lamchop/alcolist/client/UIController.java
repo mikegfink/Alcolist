@@ -32,8 +32,6 @@ public class UIController implements UIUpdateInterface {
 	private Label title;
 	private LayoutPanel mainPanel;
 	private AppDataController theAppDataController;
-	private FacebookHandler facebookHandler;
-	private AdminHandler adminHandler;
 	
 	public UIController() {
 		
@@ -55,6 +53,7 @@ public class UIController implements UIUpdateInterface {
 		mapPanel = mapsLoader.getMap();
 		listPanel = new ListPanel();
 		mainPanel = new LayoutPanel();
+		LayoutPanel adminPanel = new LayoutPanel();
 		
 		title.addStyleName("title");
 		title.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -63,17 +62,21 @@ public class UIController implements UIUpdateInterface {
 		
 		AdminImportButton importButton = new AdminImportButton(theAppDataController);
 		importButton.setText("IMPORT DATA");
+				
+		AdminDeleteButton deleteButton = new AdminDeleteButton(theAppDataController);
+		deleteButton.setText("DELETE DATA");
 		
-//		AdminDeleteButton deleteButton = new AdminDeleteButton(theAppDataController);
-//		deleteButton.setText("DELETE DATA");
-		
-		mainPanel.add(importButton);
+		adminPanel.add(importButton);
+		adminPanel.add(deleteButton);
+		adminPanel.setWidgetLeftWidth(importButton, 0, PCT, 50, PCT);
+		adminPanel.setWidgetRightWidth(deleteButton, 0, PCT, 50, PCT);
+			
 		mainPanel.add(listPanel);
 		mainPanel.add(mapPanel);
+		mainPanel.add(adminPanel);
 		
-//		mainPanel.setWidgetBottomHeight(deleteButton, 2, PCT, 5, PCT);
-		mainPanel.setWidgetBottomHeight(importButton, 2, PCT, 5, PCT);
-//		mainPanel.setWidgetRightWidth(deleteButton, 2, PCT, 5, PCT);
+		mainPanel.setWidgetLeftWidth(adminPanel, 37, PCT, 10, PCT);
+		mainPanel.setWidgetBottomHeight(adminPanel, 30, PCT, 10, PCT);
 		mainPanel.setWidgetRightWidth(mapPanel, 0, PCT, 50, PCT);
 		mainPanel.setWidgetLeftWidth(listPanel, 0, PCT, 35, PCT);
 		

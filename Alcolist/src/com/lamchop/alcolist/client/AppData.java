@@ -17,8 +17,12 @@ final class AppData {
 		setUserData(null);
 	}
 	
-	protected void add(List<Manufacturer> manufacturers) {
-		manufacturers.addAll(manufacturers);
+	protected void add(List<Manufacturer> manufacturersToAdd) {
+		for (Manufacturer nManufacturer : manufacturersToAdd) {
+			if (!manufacturers.contains(nManufacturer)) {
+				manufacturers.add(nManufacturer);
+			}
+		}
 	}
 	
 	protected List<Manufacturer> getManufacturers() {
@@ -43,5 +47,9 @@ final class AppData {
 	
 	protected void addRoute(Route route) {
 		userData.add(route);
+	}
+
+	public void clearManufacturers() {
+		manufacturers.clear();		
 	}
 }

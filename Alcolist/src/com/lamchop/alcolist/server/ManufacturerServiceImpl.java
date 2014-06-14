@@ -49,5 +49,6 @@ public class ManufacturerServiceImpl  extends RemoteServiceServlet implements
 	  
 	private PersistenceManager getPersistenceManager() {
 		return PMF.getPersistenceManager();
+
 	}
 }
