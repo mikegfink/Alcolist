@@ -9,6 +9,7 @@ import com.google.gwt.user.cellview.client.ColumnSortEvent;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.RowStyles;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
@@ -60,10 +61,19 @@ public class UIController implements UIUpdateInterface {
 		
 		listPanel.addData(manufacturers);
 		
+		AdminImportButton importButton = new AdminImportButton(theAppDataController);
+		importButton.setText("IMPORT DATA");
+		
+//		AdminDeleteButton deleteButton = new AdminDeleteButton(theAppDataController);
+//		deleteButton.setText("DELETE DATA");
+		
+		mainPanel.add(importButton);
 		mainPanel.add(listPanel);
 		mainPanel.add(mapPanel);
 		
-		
+//		mainPanel.setWidgetBottomHeight(deleteButton, 2, PCT, 5, PCT);
+		mainPanel.setWidgetBottomHeight(importButton, 2, PCT, 5, PCT);
+//		mainPanel.setWidgetRightWidth(deleteButton, 2, PCT, 5, PCT);
 		mainPanel.setWidgetRightWidth(mapPanel, 0, PCT, 50, PCT);
 		mainPanel.setWidgetLeftWidth(listPanel, 0, PCT, 35, PCT);
 		
@@ -82,7 +92,7 @@ public class UIController implements UIUpdateInterface {
 
 	@Override
 	public void update(List<Manufacturer> manufacturers) {
-		
+		listPanel.addData(manufacturers);
 	}
 
 	@Override
