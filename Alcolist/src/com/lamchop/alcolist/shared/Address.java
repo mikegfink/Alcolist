@@ -50,4 +50,8 @@ public class Address {
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
+	
+	public String getAddress() {
+		return streetAddress + "," + city + "," + province;
+	}
 }
