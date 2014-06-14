@@ -10,8 +10,10 @@ import javax.jdo.Query;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.lamchop.alcolist.client.ManufacturerService;
+import com.lamchop.alcolist.shared.Manufacturer;
 
-public class ManufacturerServiceImpl extends RemoteServiceServlet implements ManufacturerService {
+public class ManufacturerServiceImpl  extends RemoteServiceServlet implements 
+		ManufacturerService {
 
 	private static final PersistenceManagerFactory PMF =
 	      JDOHelper.getPersistenceManagerFactory("transactions-optional");

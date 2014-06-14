@@ -6,6 +6,8 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import com.lamchop.alcolist.shared.Manufacturer;
+
 public class Deleter {
 	
 	private static final PersistenceManagerFactory PMF = 

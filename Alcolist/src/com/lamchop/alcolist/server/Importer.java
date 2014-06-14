@@ -5,6 +5,8 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
+import com.lamchop.alcolist.shared.Manufacturer;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
