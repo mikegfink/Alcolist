@@ -52,7 +52,8 @@ public class AppDataController {
 	}
 	
 	public void clearManufacturers() {
-		updateAppDataManufacturers(null);
+		appData.clearManufacturers();
+		sendManufacturersToUI();
 	}
 
 	private void updateAppDataManufacturers(List<Manufacturer> manufacturers) {
@@ -78,6 +79,7 @@ public class AppDataController {
 	public void clearUserData() {
 		
 		appData.setUserData(null);	
+		sendUserDataToUI();
 	}
 	
 	private void handleError(Throwable error) {

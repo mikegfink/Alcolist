@@ -1,5 +1,6 @@
 package com.lamchop.alcolist.server;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -22,7 +23,14 @@ public class ManufacturerServiceImpl  extends RemoteServiceServlet implements
 	@Override
 	public List<Manufacturer> getManufacturers() {
 		// TODO Auto-generated method stub
-		return null;
+		List<Manufacturer> manufacturers = new ArrayList<Manufacturer>();
+		manufacturers.add(new Manufacturer("Local Brewery", "123 Main St", 
+				"Vancouver", "BC", "V6R3Z2", "Brewery", "555-5555"));
+		manufacturers.add(new Manufacturer("Local Winery", "123 Main St", 
+				"Vancouver", "BC", "V6R3Z2", "Winery", "555-5555"));
+		manufacturers.add(new Manufacturer("Local Distillery", "123 Main St", 
+				"Vancouver", "BC", "V6R3Z2", "Distillery", "555-5555"));
+		return manufacturers;
 	}
 
 }
