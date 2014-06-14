@@ -30,7 +30,7 @@ public class Manufacturer implements Serializable {
 	@Persistent
 	private String phoneNumber;
 	@Persistent
-	private String type; // TODO make this an enum of the 3 types later
+	private String type; // TODO make this an enum of 4 types later: Winery, Brewery, Distillery, Other
 	@Persistent
 	private int sumRatings;
 	@Persistent

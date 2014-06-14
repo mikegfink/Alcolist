@@ -37,15 +37,17 @@ public class Importer {
 			
 			while ((line = br.readLine()) != null) {
 				String[] tokens = parser.parseLine(line);
-				Manufacturer manufacturer = createManufacturer(tokens);
-				storeManufacturer(manufacturer);
+				try {
+					Manufacturer manufacturer = createManufacturer(tokens);
+					storeManufacturer(manufacturer);
+				} catch (ArrayIndexOutOfBoundsException ae) {
+					System.err.println("Insufficient number of tokens in line: " + line);					
+				}	
 			}		
 		} catch (MalformedURLException mue) {
 			mue.printStackTrace();
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
-		} catch (ArrayIndexOutOfBoundsException ae) {
-			// Do something here? Parser has failed to return the correct number of tokens.
 		} finally {
 			try {
 				if (is != null) is.close();
