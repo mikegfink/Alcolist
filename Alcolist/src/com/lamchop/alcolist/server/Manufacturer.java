@@ -12,6 +12,8 @@ import javax.jdo.annotations.IdentityType;
 @PersistenceCapable(identityType = IdentityType.APPLICATION) // is this the right type?
 public class Manufacturer implements Serializable {
 
+	// TODO make compound primary key of name and postalCode. If doing this, remove setters for name
+	// and postalCode.
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Long id;

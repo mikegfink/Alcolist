@@ -1,8 +1,9 @@
 package com.lamchop.alcolist.server;
 
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.lamchop.alcolist.client.ImportService;
 
-public class ImportServiceImpl implements ImportService {
+public class ImportServiceImpl extends RemoteServiceServlet implements ImportService {
 
 	/** Webpage to pull data from. */
 	private String dataBC = "http://www.pssg.gov.bc.ca/lclb/docs-forms/web_all.csv";
@@ -15,7 +16,8 @@ public class ImportServiceImpl implements ImportService {
 
 	@Override
 	public void deleteData() {
-		// TODO Auto-generated method stub	
+		Deleter deleter = new Deleter();
+		deleter.deleteAllManufacturers();
 	}
 
 }
