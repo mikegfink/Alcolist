@@ -8,8 +8,9 @@ import javax.jdo.annotations.PrimaryKey;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.IdentityType;
 
-
-@PersistenceCapable(identityType = IdentityType.APPLICATION) // is this the right type?
+// TODO fix comments here
+// Added detachable = "false" to help with serialization error.
+@PersistenceCapable(identityType = IdentityType.APPLICATION) //, detachable = "false") // is this the right type?
 public class Manufacturer implements Serializable {
 
 	// TODO make compound primary key of name and postalCode. If doing this, remove setters for name

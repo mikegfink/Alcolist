@@ -20,6 +20,8 @@ public class Deleter {
 		try {
 			tx.begin();
 			Query q = pm.newQuery(Manufacturer.class);
+			// testing:
+			//q.setFilter();
 			q.deletePersistentAll();
 		    tx.commit();
 		} catch (Exception e) {

@@ -36,14 +36,18 @@ public class ManufacturerServiceImpl  extends RemoteServiceServlet implements
 		try {
 			Query q = pm.newQuery(Manufacturer.class);
 			// Return in a particular ordering - by name? TODO check that this works!
-			q.setOrdering("name");
-			manufacturers = (List<Manufacturer>) q.execute();
+			//q.setOrdering("name");
+			q.setRange(0, 20);
+			List<Manufacturer> queryResult = (List<Manufacturer>) q.execute();
+			manufacturers = (List<Manufacturer>) pm.detachCopyAll(queryResult);
+			
 		} catch (Exception e) {
 			// TODO maybe don't catch all exceptions??
 			e.printStackTrace();
 		} finally {
 			pm.close();
 		}
+		System.out.println("Query finished. About to return to client");
 		return manufacturers;
 	}
 	  
