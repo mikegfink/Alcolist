@@ -15,9 +15,14 @@ public class Manufacturer implements Serializable {
 
 	// TODO make compound primary key of name and postalCode. If doing this, remove setters for name
 	// and postalCode.
-	@PrimaryKey
+	/*@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Long id;
+	*/
+	@PrimaryKey
+	@Persistent
+	/** Primary key is concatenation of name and postalCode fields */
+	private String id;
 	@Persistent
 	private String name;
 	@Persistent
@@ -47,6 +52,7 @@ public class Manufacturer implements Serializable {
 
 	public Manufacturer(String name, String streetAddress, String city, String province, 
 			String postalCode, String phoneNumber, String type) {
+		this.id = name + postalCode;
 		this.name = name;
 		this.streetAddress = streetAddress;
 		this.city = city;
@@ -56,9 +62,10 @@ public class Manufacturer implements Serializable {
 		this.type = type;
 		this.sumRatings = 0;
 		this.numRatings = 0;
+		
 	}
 
-	public Long getId() {
+	public String getId() {
 		return this.id;
 	}
 
@@ -66,19 +73,21 @@ public class Manufacturer implements Serializable {
 		return this.name;
 	}
 	
+	/* Can't set name b/c is part of primary key
 	public void setName(String name) {
 		this.name = name;
-	}
+	}*/
 	
 	public Address getAddress() {
 		return new Address(streetAddress, city, province, postalCode);
 	}
 
+	// Now setting the address is problematic b/c can't change postal code or key will change
 	public void setAddress(Address address) {
 		this.streetAddress = address.getStreetAddress();
 		this.city = address.getCity();
 		this.province = address.getProvince();
-		this.postalCode = address.getPostalCode();
+		//this.postalCode = address.getPostalCode();
 	}
 	
 	public String getType() {

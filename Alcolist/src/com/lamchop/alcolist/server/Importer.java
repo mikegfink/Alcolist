@@ -108,6 +108,7 @@ public class Importer {
 			} finally {
 				if (tx.isActive()) {
 					// Rollback the transaction if an error occurred before it could be committed.
+					System.out.println("Rolling back transaction. Manufacturer not added.");
 					tx.rollback();
 				}
 				pm.close();

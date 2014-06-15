@@ -35,9 +35,9 @@ public class ManufacturerServiceImpl  extends RemoteServiceServlet implements
 		
 		try {
 			Query q = pm.newQuery(Manufacturer.class);
-			// Return in a particular ordering - by name? TODO check that this works!
-			//q.setOrdering("name");
-			q.setRange(0, 20);
+			// Return in a particular ordering for initial display in list.
+			q.setOrdering("name");
+			//q.setRange(0, 20);
 			List<Manufacturer> queryResult = (List<Manufacturer>) q.execute();
 			manufacturers = (List<Manufacturer>) pm.detachCopyAll(queryResult);
 			
@@ -47,7 +47,12 @@ public class ManufacturerServiceImpl  extends RemoteServiceServlet implements
 		} finally {
 			pm.close();
 		}
-		System.out.println("Query finished. About to return to client");
+		// For debugging, to see that the same manufacturer is not added more than once to the datastore.
+		System.out.println("Query finished. Returning manufacturers to client");
+		for (int i = 0; i < 20; i++) {
+			Manufacturer man = manufacturers.get(i);
+			System.out.println("Manufacturer name is " + man.getName());			
+		}
 		return manufacturers;
 	}
 	  
