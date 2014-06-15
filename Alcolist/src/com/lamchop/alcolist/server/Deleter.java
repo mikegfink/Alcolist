@@ -1,5 +1,8 @@
 package com.lamchop.alcolist.server;
 
+import java.util.Iterator;
+
+import javax.jdo.Extent;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
@@ -18,20 +21,39 @@ public class Deleter {
 		Transaction tx = pm.currentTransaction();
 		
 		try {
-			tx.begin();
-			Query q = pm.newQuery(Manufacturer.class);
+			System.out.println("Started transaction");
+			Extent ex = pm.getExtent(Manufacturer.class, true);
+			System.out.println("Got extent");
+			Iterator iter = ex.iterator();
+			while (iter.hasNext())
+			{
+				try {
+					tx.begin();
+					System.out.println("Looking at next item in extent");
+					Manufacturer toDelete = (Manufacturer) iter.next();
+					System.out.println("Got next manufacturer.");
+					pm.deletePersistent(toDelete);
+					System.out.println("Deleted manufacturer.");
+					tx.commit();
+				} catch (Exception e) {
+					// What exceptions do I need to catch??
+					e.printStackTrace();
+				} finally {
+					if (tx.isActive()) {
+						// Rollback the transaction if an error occurred before it could be committed.
+						System.err.println("Error occurred deleting Manufacturers. Rolling back transaction.");
+						tx.rollback();
+					}
+			    
+				}
+			//Query q = pm.newQuery(Manufacturer.class, );
 			// testing:
-			//q.setFilter();
-			q.deletePersistentAll();
-		    tx.commit();
+			//q.deletePersistentAll();
+			}    
 		} catch (Exception e) {
 			// What exceptions do I need to catch??
 			e.printStackTrace();
 		} finally {
-			if (tx.isActive()) {
-				// Rollback the transaction if an error occurred before it could be committed.
-				tx.rollback();
-			}
 			pm.close();
 		}
 	}
