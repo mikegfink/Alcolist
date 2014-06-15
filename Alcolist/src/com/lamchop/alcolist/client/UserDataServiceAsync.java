@@ -13,5 +13,5 @@ public interface UserDataServiceAsync {
 	void addReview(Review review, AsyncCallback<Void> async);
 	void removeRating(Review review, AsyncCallback<Void> async);
 	
-	void getUserData(int userID, AsyncCallback<UserData> async);
+	void getUserData(String userID, AsyncCallback<UserData> async);
 }

@@ -15,6 +15,6 @@ public interface UserDataService extends RemoteService {
 	public void addReview(Review review);
 	public void removeRating(Review review);
 	
-	public UserData getUserData(int userID);
+	public UserData getUserData(String userID);
 }
 
