@@ -18,7 +18,7 @@ import com.lamchop.alcolist.shared.Manufacturer;
 
 public class ListPanel extends LayoutPanel {
 	
-	private int PAGESIZE = 5;
+	private int PAGESIZE = 20;
 	
 	
 	private DataGrid<Manufacturer> listGrid;
@@ -128,7 +128,7 @@ public class ListPanel extends LayoutPanel {
 	    defaultSort(nameColumn, typeColumn);
 	}
 	
-	public void defaultSort(Column<Manufacturer, Manufacturer> firstSort, Column<Manufacturer, String> secondSort) {
+	private void defaultSort(Column<Manufacturer, Manufacturer> firstSort, Column<Manufacturer, String> secondSort) {
 		listGrid.getColumnSortList().push(firstSort);
 		ColumnSortEvent.fire(listGrid, listGrid.getColumnSortList());
 		
@@ -136,6 +136,9 @@ public class ListPanel extends LayoutPanel {
 		ColumnSortEvent.fire(listGrid,  listGrid.getColumnSortList());
 	}
 	
+	public void clearData() {
+		list.clear();
+	}
 	
 
 }

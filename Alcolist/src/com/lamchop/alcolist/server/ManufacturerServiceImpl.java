@@ -30,6 +30,8 @@ public class ManufacturerServiceImpl  extends RemoteServiceServlet implements
 				"Vancouver", "BC", "V6R3Z2", "Winery", "555-5555"));
 		manufacturers.add(new Manufacturer("Local Distillery", "123 Main St", 
 				"Vancouver", "BC", "V6R3Z2", "Distillery", "555-5555"));
+		manufacturers.add(new Manufacturer("A", "360 13th Ave E", 
+				"Vancouver", "BC", "", "Winery", ""));
 		return manufacturers;
 	}
 

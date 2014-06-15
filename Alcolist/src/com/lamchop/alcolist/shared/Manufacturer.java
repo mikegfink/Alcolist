@@ -120,5 +120,9 @@ public class Manufacturer implements Serializable {
 	public void setWebsite(String website) {
 		this.website = website;
 	}
+	
+	public String getFullAddress() {
+		return streetAddress + ", " + city + ", " + province;
+	}
 
 }
