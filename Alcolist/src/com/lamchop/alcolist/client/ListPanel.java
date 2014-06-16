@@ -121,6 +121,8 @@ public class ListPanel extends LayoutPanel {
 	}
 	
 	public void addData(List<Manufacturer> manufacturers) {
+		
+		list.clear();
 	    for (Manufacturer m : manufacturers) {
 	      list.add(m);
 	    }
@@ -136,9 +138,4 @@ public class ListPanel extends LayoutPanel {
 		ColumnSortEvent.fire(listGrid,  listGrid.getColumnSortList());
 	}
 	
-	public void clearData() {
-		list.clear();
-	}
-	
-
 }

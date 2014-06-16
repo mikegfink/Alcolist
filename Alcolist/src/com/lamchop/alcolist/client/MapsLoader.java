@@ -38,8 +38,7 @@ public class MapsLoader {
 	    Runnable onLoad = new Runnable() {
 	      @Override
 	      public void run() {
-	    	  draw();
-	      }
+	    	  draw();	      }
 	    };
 
 	    LoadApi.go(onLoad, loadLibraries, sensor);
