@@ -123,14 +123,14 @@ public class Importer {
 				pm.makePersistent(manufacturer);
 				tx.commit();
 				System.out.println("Added Manufacturer " + manufacturer.getName() + ", type = " +
-						manufacturer.getType() + ", postal code = " + manufacturer.getAddress().getPostalCode()); // For testing
+						manufacturer.getType() + ", postal code = " + manufacturer.getPostalCode()); // For testing
 			} catch (Exception e) {
 				// What exceptions do I need to catch??
 				e.printStackTrace();
 			} finally {
 				if (tx.isActive()) {
 					// Rollback the transaction if an error occurred before it could be committed.
-					System.out.println("Rolling back transaction. Manufacturer not added.");
+					System.err.println("Rolling back transaction. Manufacturer not added.");
 					tx.rollback();
 				}
 				pm.close();

@@ -79,7 +79,7 @@ public class ListPanel extends LayoutPanel {
 				new Column<Manufacturer, String>(new TextCell()) {
 					@Override
 					public String getValue(Manufacturer object) {
-						return object.getAddress().getCity();
+						return object.getCity();
 					}
 			
 		};
@@ -89,7 +89,7 @@ public class ListPanel extends LayoutPanel {
 		cityColumn.setSortable(true);
 		sortHandler.setComparator(cityColumn, new Comparator<Manufacturer>() {
 			public int compare(Manufacturer m1, Manufacturer m2) {
-				return m1.getAddress().getCity().compareTo(m2.getAddress().getCity());
+				return m1.getCity().compareTo(m2.getCity());
 			}
 		});
 		
