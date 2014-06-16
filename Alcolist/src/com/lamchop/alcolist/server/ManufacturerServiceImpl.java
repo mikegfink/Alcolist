@@ -30,6 +30,7 @@ public class ManufacturerServiceImpl  extends RemoteServiceServlet implements
 
 	@Override
 	public List<Manufacturer> getManufacturers() {
+
 		PersistenceManager pm = getPersistenceManager();
 		List<Manufacturer> manufacturers = new ArrayList<Manufacturer>(); 
 		
