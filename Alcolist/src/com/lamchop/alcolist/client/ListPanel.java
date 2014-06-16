@@ -18,7 +18,7 @@ import com.lamchop.alcolist.shared.Manufacturer;
 
 public class ListPanel extends LayoutPanel {
 	
-	private int PAGESIZE = 20;
+	private int PAGESIZE = 500;
 	
 	
 	private DataGrid<Manufacturer> listGrid;
@@ -114,8 +114,8 @@ public class ListPanel extends LayoutPanel {
 		
 		
 		listGrid.addColumn(nameColumn, "Manufacturer");
-		listGrid.addColumn(typeColumn, "Type");
 		listGrid.addColumn(cityColumn, "City");
+		listGrid.addColumn(typeColumn, "Type");
 		listGrid.setColumnWidth(0,  "50%");
 			
 	}

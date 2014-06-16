@@ -102,21 +102,29 @@ public class UIController implements UIUpdateInterface {
 		uiPanel.setWidgetRightWidth(loginButton, 3, PCT, 7, PCT);
 		uiPanel.setWidgetTopHeight(loginButton, 3, PCT, 4, PCT);
 
+
 	}
 
 	public UI getUI() {
+		uiPanel.onResize();
 		return uiPanel;
+
 	}
 
 
 	public void showList() {
-		mainPanel.clear();
-		mainPanel.add(listPanel);
-		mainPanel.add(mapPanel);
-		mainPanel.setWidgetRightWidth(mapPanel, 0, PCT, 60, PCT);
-		mainPanel.setWidgetLeftWidth(listPanel, 0, PCT, 35, PCT);
-		uiPanel.setWidgetTopHeight(mainPanel, 10, PCT, 85, PCT);
-		uiPanel.setWidgetLeftWidth(mainPanel, 3, PCT, 94, PCT);
+//		mainPanel.clear();
+//		mainPanel.add(mapPanel);
+//		mainPanel.add(listPanel);
+		
+//		mainPanel.setWidgetRightWidth(mapPanel, 0, PCT, 100, PCT);
+//		mainPanel.setWidgetLeftWidth(listPanel, 0, PCT, 35, PCT);
+		uiPanel.add(listPanel);
+		listPanel.addStyleName("listPanel");
+		uiPanel.setWidgetLeftWidth(listPanel, 5, PCT, 35, PCT);
+		uiPanel.setWidgetTopHeight(listPanel, 10, PCT, 80, PCT);
+//		uiPanel.setWidgetTopHeight(mainPanel, 10, PCT, 85, PCT);
+//		uiPanel.setWidgetLeftWidth(mainPanel, 3, PCT, 94, PCT);
 		
 	}
 	

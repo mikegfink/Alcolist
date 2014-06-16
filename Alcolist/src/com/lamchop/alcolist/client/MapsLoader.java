@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.maps.client.LoadApi;
 import com.google.gwt.maps.client.LoadApi.LoadLibrary;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.LayoutPanel;
 
@@ -37,9 +38,12 @@ public class MapsLoader {
 	    loadLibraries.add(LoadLibrary.VISUALIZATION);
 
 	    Runnable onLoad = new Runnable() {
+
 	      @Override
 	      public void run() {
-	    	  draw();	      }
+	    	  draw();
+	    	  theMap.getMapWidget().getMapWidget().triggerResize();
+	    	  }
 	    };
 
 	    LoadApi.go(onLoad, loadLibraries, sensor);
@@ -48,7 +52,7 @@ public class MapsLoader {
 	public void draw() {
 		theMapWidget = new AlcolistMapWidget();
 		theMap.add(theMapWidget);
-		theMapWidget.getMapWidget().triggerResize();
 		theMap.setMapWidget(theMapWidget);
+		theMapWidget.getMapWidget().triggerResize();
 	}
 }
