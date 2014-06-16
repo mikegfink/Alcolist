@@ -9,13 +9,14 @@ import com.google.gwt.user.client.ui.LayoutPanel;
 
 public class MapsLoader {
 	
-	private LayoutPanel theMap;
+	private MapPanel theMap;
+	private AlcolistMapWidget theMapWidget;
 	
 	public MapsLoader() {
-		theMap = new LayoutPanel();
+		theMap = new MapPanel();
 	}
 	
-	public LayoutPanel getMap() {
+	public MapPanel getMap() {
 		return theMap;
 	}
 	
@@ -37,16 +38,16 @@ public class MapsLoader {
 	    Runnable onLoad = new Runnable() {
 	      @Override
 	      public void run() {
-	    	  draw();
-	      }
+	    	  draw();	      }
 	    };
 
 	    LoadApi.go(onLoad, loadLibraries, sensor);
 	    
 	  }
 	public void draw() {
-		
-		theMap.add(new BasicMapWidget());	
+		theMapWidget = new AlcolistMapWidget();
+		theMap.add(theMapWidget);
+		theMap.setMapWidget(theMapWidget);
 		
 	}
 }
