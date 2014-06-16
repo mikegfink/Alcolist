@@ -47,6 +47,7 @@ public class MapsLoader {
 	public void draw() {
 		theMapWidget = new AlcolistMapWidget();
 		theMap.add(theMapWidget);
+		theMapWidget.getMapWidget().triggerResize();
 		theMap.setMapWidget(theMapWidget);
 		
 	}

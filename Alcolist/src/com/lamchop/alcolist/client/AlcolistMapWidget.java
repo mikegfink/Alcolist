@@ -1,6 +1,7 @@
 package com.lamchop.alcolist.client;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import com.google.gwt.user.client.ui.Composite;
@@ -38,12 +39,15 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.lamchop.alcolist.shared.Manufacturer;
+import static com.google.gwt.dom.client.Style.Unit.PCT;
+
 
 public class AlcolistMapWidget extends Composite {
 
-	private final VerticalPanel pWidget;
+	private final FlowPanel pWidget;
 	private MapWidget mapWidget;
 
 	private Marker markerBasic;
@@ -53,13 +57,12 @@ public class AlcolistMapWidget extends Composite {
 	@Override 
 	protected void onLoad() {
 		super.onLoad();
-		mapWidget.triggerResize();
 	}
 
 	public AlcolistMapWidget() {
-		pWidget = new VerticalPanel();
+		pWidget = new FlowPanel();
 		initWidget(pWidget);
-		//pWidget.setSize("100%", "100%");
+		pWidget.setSize("100%", "100%");
 		draw();
 
 	}
@@ -132,15 +135,16 @@ public class AlcolistMapWidget extends Composite {
 	}
 
 	private void drawMap() {
-		LatLng center = LatLng.newInstance(55, -129.5);
+		LatLng center = LatLng.newInstance(58, -130);
 		MapOptions opts = MapOptions.newInstance();
-		opts.setZoom(4);
+		opts.setZoom(6);
 		opts.setCenter(center);
 		opts.setMapTypeId(MapTypeId.ROADMAP);
 
 		mapWidget = new MapWidget(opts);
 		pWidget.add(mapWidget);
-		mapWidget.setSize("750px", "600px");
+		mapWidget.setSize("100%", "100%");
+//		pWidget.setWidgetLeftRight(mapWidget, 0, PCT, 100, PCT);
 
 		mapWidget.addClickHandler(new ClickMapHandler() {
 			@Override
@@ -149,6 +153,7 @@ public class AlcolistMapWidget extends Composite {
 				GWT.log("clicked on latlng=" + event.getMouseEvent().getLatLng());
 			}
 		});
+		mapWidget.triggerResize();
 
 	}
 	
@@ -186,6 +191,8 @@ public class AlcolistMapWidget extends Composite {
 			}      
 		});
 	}
+	
+
 	
 	public MapWidget getMapWidget() {
 		return mapWidget;

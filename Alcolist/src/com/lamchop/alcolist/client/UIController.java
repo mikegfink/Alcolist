@@ -72,26 +72,41 @@ public class UIController implements UIUpdateInterface {
 
 		AdminDeleteButton deleteButton = new AdminDeleteButton(theAppDataController);
 		deleteButton.setText("DELETE DATA");
+		
+		FacebookLoginButton loginButton = new FacebookLoginButton(theAppDataController);
+		loginButton.setText("login");
+		
+		Button showListButton = new Button();
+		showListButton.setText("Show List");
 
 		adminPanel.add(importButton);
 		adminPanel.add(deleteButton);
 		adminPanel.setWidgetLeftWidth(importButton, 0, PCT, 50, PCT);
 		adminPanel.setWidgetRightWidth(deleteButton, 0, PCT, 50, PCT);
 
-		mainPanel.add(listPanel);
-		mainPanel.add(mapPanel);
-		mainPanel.add(adminPanel);
 
-		mainPanel.setWidgetLeftWidth(adminPanel, 37, PCT, 10, PCT);
-		mainPanel.setWidgetBottomHeight(adminPanel, 30, PCT, 10, PCT);
-		mainPanel.setWidgetRightWidth(mapPanel, 0, PCT, 60, PCT);
-		mainPanel.setWidgetLeftWidth(listPanel, 0, PCT, 35, PCT);
+		mainPanel.add(mapPanel);
+		mainPanel.add(showListButton);
+		mainPanel.setWidgetTopHeight(showListButton, 3, PCT, 5, PCT);
+		mainPanel.setWidgetLeftWidth(showListButton, 7, PCT, 7, PCT);
+
+
+//		mainPanel.setWidgetLeftWidth(adminPanel, 37, PCT, 10, PCT);
+//		mainPanel.setWidgetBottomHeight(adminPanel, 30, PCT, 10, PCT);
+
 
 		uiPanel.add(mainPanel);
 		uiPanel.add(title);
+		uiPanel.add(adminPanel);
+		uiPanel.add(loginButton);
 
 		uiPanel.setWidgetTopHeight(title, 0, PCT, 10, PCT);
-		uiPanel.setWidgetTopHeight(mainPanel, 10, PCT, 90, PCT);
+		uiPanel.setWidgetLeftWidth(title, 20, PCT, 60, PCT);
+		uiPanel.setWidgetTopHeight(mainPanel, 0, PCT, 100, PCT);
+		uiPanel.setWidgetBottomHeight(adminPanel, 3, PCT, 7, PCT);
+		uiPanel.setWidgetRightWidth(adminPanel, 3, PCT, 15, PCT);
+		uiPanel.setWidgetRightWidth(loginButton, 3, PCT, 7, PCT);
+		uiPanel.setWidgetTopHeight(loginButton, 3, PCT, 4, PCT);
 
 	}
 
@@ -99,7 +114,30 @@ public class UIController implements UIUpdateInterface {
 		return uiPanel;
 	}
 
+
+	public void showList() {
+		
+		mainPanel.add(listPanel);
+		mainPanel.setWidgetRightWidth(mapPanel, 0, PCT, 60, PCT);
+		mainPanel.setWidgetLeftWidth(listPanel, 0, PCT, 35, PCT);
+		
+	}
 	
+	public void showMap() {
+		mainPanel.add(mapPanel);
+		mainPanel.setWidgetRightWidth(mapPanel, 0, PCT, 60, PCT);
+		mainPanel.setWidgetLeftWidth(listPanel, 0, PCT, 35, PCT);
+	}
+	
+	public void hideList() {
+		mainPanel.clear();
+		mainPanel.add(mapPanel);
+	}
+	
+	public void hideMap() {
+		mainPanel.clear();
+		mainPanel.add(listPanel);
+	}
 	
 	@Override
 	public void update(List<Manufacturer> manufacturers) {
