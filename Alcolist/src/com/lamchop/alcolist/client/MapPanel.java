@@ -11,7 +11,6 @@ public class MapPanel extends LayoutPanel {
 	
 	public void setMapWidget(AlcolistMapWidget mapWidget)  {
 		theMapWidget = mapWidget;
-		theMapWidget.getMapWidget().triggerResize();
 	}
 	
 	public void populateMap(List<Manufacturer> manufacturers) {

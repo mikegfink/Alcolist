@@ -93,4 +93,20 @@ public class AppDataController {
 			Window.Location.replace(loginInfo.getLogoutUrl());*/
 	}
 
+	public void showList() {
+		theUI.showList();		
+	}
+	
+	public void showMap() {
+		theUI.showMap();		
+	}
+	
+	public void hideList() {
+		theUI.hideList();		
+	}
+	
+	public void hideMap() {
+		theUI.hideMap();		
+	}
+
 }
