@@ -16,7 +16,7 @@ public class ManufacturerCell extends AbstractCell<Manufacturer>{
 		sb.appendHtmlConstant("<tr><td style='font-size: 130%; font-weight: bold;'>");
 		sb.appendHtmlConstant(value.getName());
 		sb.appendHtmlConstant("</td></tr><tr><td style='font-size: 95%; font-style: italic;'>");
-		sb.appendHtmlConstant(value.getAddress().getStreetAddress());
+		sb.appendHtmlConstant(value.getStreetAddress());
 		sb.appendHtmlConstant("</td></tr></table>");
 			
 	}

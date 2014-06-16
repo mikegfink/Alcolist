@@ -8,6 +8,8 @@ import javax.jdo.annotations.PrimaryKey;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.IdentityType;
 
+import com.google.gwt.maps.client.base.LatLng;
+
 // TODO fix comments here
 // Added detachable = "false" to help with serialization error.
 @PersistenceCapable(identityType = IdentityType.APPLICATION) //, detachable = "false") // is this the right type?
@@ -33,6 +35,12 @@ public class Manufacturer implements Serializable {
 	private String province;
 	@Persistent
 	private String postalCode;
+	@Persistent
+	private double latitude;
+	@Persistent
+	private double longitude;
+	
+
 	@Persistent
 	private String phoneNumber;
 	@Persistent
@@ -73,21 +81,56 @@ public class Manufacturer implements Serializable {
 		return this.name;
 	}
 	
-	/* Can't set name b/c is part of primary key
+	/* Can't set name because it is part of primary key
 	public void setName(String name) {
 		this.name = name;
 	}*/
 	
-	public Address getAddress() {
-		return new Address(streetAddress, city, province, postalCode);
+	public String getStreetAddress() {
+		return streetAddress;
 	}
 
-	// Now setting the address is problematic b/c can't change postal code or key will change
-	public void setAddress(Address address) {
-		this.streetAddress = address.getStreetAddress();
-		this.city = address.getCity();
-		this.province = address.getProvince();
-		//this.postalCode = address.getPostalCode();
+	public void setStreetAddress(String streetAddress) {
+		this.streetAddress = streetAddress;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	/* Cant set postal code because it is part of primary key
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}*/
+	
+	public String getFullAddress() {
+		return streetAddress + ", " + city + ", " + province;
+	}
+	
+	public LatLng getLatLng() {
+		LatLng result = LatLng.newInstance(latitude, longitude);
+		return result;
+	}
+	
+	public void setLatLng(LatLng latLng) {
+		this.latitude = latLng.getLatitude();
+		this.longitude = latLng.getLongitude();
 	}
 	
 	public String getType() {
@@ -132,9 +175,4 @@ public class Manufacturer implements Serializable {
 	public void setWebsite(String website) {
 		this.website = website;
 	}
-	
-	public String getFullAddress() {
-		return streetAddress + ", " + city + ", " + province;
-	}
-
 }
