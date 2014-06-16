@@ -30,6 +30,7 @@ public class Alcolist implements EntryPoint {
 		
 		//RootPanel.get("baseContainer").add(theUI);
 		theRootPanel.add(theUI);
+
 		
 		//theRootPanel.setWidgetLeftWidth(gwt, 0, PCT, 50, PCT);
 		//theRootPanel.setWidgetTopHeight(gwt, 50, PCT, 100, PCT);
