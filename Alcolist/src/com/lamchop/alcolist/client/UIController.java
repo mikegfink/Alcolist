@@ -46,12 +46,6 @@ public class UIController implements UIUpdateInterface {
 
 	public UIController() {
 
-		manufacturers = new ArrayList<Manufacturer>();
-		manufacturers.add(new Manufacturer("Gray Monk", "1055 Camp Rd", "Lake Country", "BC", "", "Winery", ""));
-		manufacturers.add(new Manufacturer("33 Acres", "15 W 8TH AVE", "Vancouver", "BC", "", "Brewery", ""));
-		manufacturers.add(new Manufacturer("Craft Beer Market", "85 W 1st Ave", "Vancouver", "BC", "V5Z 1Z1", "Brewery", "604-555-5555"));
-		manufacturers.add(new Manufacturer("A", "360 13th Ave E", "Vancouver", "BC", "", "Winery", ""));
-
 		title = new Label("The Alcolist");
 
 		this.theAppDataController = new AppDataController(this);
@@ -116,10 +110,13 @@ public class UIController implements UIUpdateInterface {
 
 
 	public void showList() {
-		
+		mainPanel.clear();
 		mainPanel.add(listPanel);
+		mainPanel.add(mapPanel);
 		mainPanel.setWidgetRightWidth(mapPanel, 0, PCT, 60, PCT);
 		mainPanel.setWidgetLeftWidth(listPanel, 0, PCT, 35, PCT);
+		uiPanel.setWidgetTopHeight(mainPanel, 10, PCT, 85, PCT);
+		uiPanel.setWidgetLeftWidth(mainPanel, 3, PCT, 94, PCT);
 		
 	}
 	
