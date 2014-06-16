@@ -23,7 +23,7 @@ public class AdminHandler implements ClickHandler {
 		Widget sender = (Widget) event.getSource();
 
 		if (sender.getClass() == AdminImportButton.class) {
-			importService.importData(new AsyncCallback<Void>() {
+			AdminHandler.importService.importData(new AsyncCallback<Void>() {
 				public void onFailure(Throwable error) {
 					handleError(error);
 				}
@@ -35,13 +35,13 @@ public class AdminHandler implements ClickHandler {
 
 		}
 		else if (sender.getClass() == AdminDeleteButton.class) {
-			importService.deleteData(new AsyncCallback<Void>() {
+			AdminHandler.importService.deleteData(new AsyncCallback<Void>() {
 				public void onFailure(Throwable error) {
 					handleError(error);
 				}
 
 				public void onSuccess(Void result) {
-					appDataController.clearManufacturers();
+					appDataController.deleteManufacturers();
 				}
 			});
 		}
