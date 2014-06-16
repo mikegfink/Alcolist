@@ -40,7 +40,7 @@ public class Importer {
 					Manufacturer manufacturer = createManufacturer(tokens);
 					storeManufacturer(manufacturer);
 				} catch (ArrayIndexOutOfBoundsException ae) {
-					System.err.println("Insufficient number of tokens in line: " + line);					
+					System.err.println("Insufficient number of tokens from line: " + line);					
 				}	
 			}		
 		} catch (MalformedURLException mue) {
@@ -83,6 +83,9 @@ public class Importer {
 	}
 
 	// Modified from http://stackoverflow.com/questions/1086123/
+	// Does not handle names like O'Brien properly - will produce O'brien.
+	// Better would be to check if it is all uppercase first, then only call this
+	// method if that is the case.
 	private static String toTitleCase(String input) {
 		input = input.toLowerCase();
 	    StringBuilder titleCase = new StringBuilder();
@@ -119,7 +122,8 @@ public class Importer {
 				tx.begin();
 				pm.makePersistent(manufacturer);
 				tx.commit();
-				System.out.println("Added Manufacturer " + manufacturer.getName()); // For testing
+				System.out.println("Added Manufacturer " + manufacturer.getName() + ", type = " +
+						manufacturer.getType() + ", postal code = " + manufacturer.getAddress().getPostalCode()); // For testing
 			} catch (Exception e) {
 				// What exceptions do I need to catch??
 				e.printStackTrace();
