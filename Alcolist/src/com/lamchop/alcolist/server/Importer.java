@@ -13,7 +13,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
- 
 
 public class Importer {
 
@@ -68,11 +67,11 @@ public class Importer {
 	 * @param tokens Array of String tokens produced from parsing a line of the CSV file
 	 * @return Manufacturer object containing the information in the tokens
 	 */
-	// This only works if I *don't* make licenseType an enum...
+	// This only works if I *don't* make licenseType an enum, or include a type "Other" that we don't store.
 	private Manufacturer createManufacturer(String[] tokens) throws ArrayIndexOutOfBoundsException {
-		String establishmentName = tokens[0];
-		String streetAddress = tokens[1];
-		String city = tokens[3];
+		String establishmentName = toTitleCase(tokens[0]);
+		String streetAddress = toTitleCase(tokens[1]);
+		String city = toTitleCase(tokens[3]);
 		String province = "British Columbia"; // All our manufacturers are in BC
 		String postalCode = tokens[4];
 		String phoneNumber = tokens[10];
@@ -83,6 +82,25 @@ public class Importer {
 		return manufacturer;
 	}
 
+	// Modified from http://stackoverflow.com/questions/1086123/
+	private static String toTitleCase(String input) {
+		input = input.toLowerCase();
+	    StringBuilder titleCase = new StringBuilder();
+	    boolean nextTitleCase = true;
+
+	    for (char c : input.toCharArray()) {
+	        if (Character.isSpaceChar(c)) {
+	            nextTitleCase = true;
+	        } else if (nextTitleCase) {
+	            c = Character.toTitleCase(c);
+	            nextTitleCase = false;
+	        }
+
+	        titleCase.append(c);
+	    }
+
+	    return titleCase.toString();
+	}
 	/** Stores the given manufacturer in the datastore if it has the right license type.
 	 * 
 	 * Manufacturer only stored if type is Winery, Brewery, or Distillery and there is not already

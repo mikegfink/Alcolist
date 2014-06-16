@@ -37,7 +37,6 @@ public class ManufacturerServiceImpl  extends RemoteServiceServlet implements
 			Query q = pm.newQuery(Manufacturer.class);
 			// Return in a particular ordering for initial display in list.
 			q.setOrdering("name");
-			//q.setRange(0, 20);
 			List<Manufacturer> queryResult = (List<Manufacturer>) q.execute();
 			manufacturers = (List<Manufacturer>) pm.detachCopyAll(queryResult);
 			
