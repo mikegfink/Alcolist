@@ -7,14 +7,19 @@ import com.lamchop.alcolist.client.ImportService;
 public class ImportServiceImpl extends RemoteServiceServlet implements 
 			ImportService {
 
+	/** Webpage to pull data from. */
+	private String dataBC = "http://www.pssg.gov.bc.ca/lclb/docs-forms/web_all.csv";
+			
 	@Override
 	public void importData() {
-		// TODO Auto-generated method stub	
+		Importer importer = new Importer();
+		importer.importData(dataBC);
 	}
 
 	@Override
 	public void deleteData() {
-		// TODO Auto-generated method stub	
+		Deleter deleter = new Deleter();
+		deleter.deleteAllManufacturers();
 	}
 
 }

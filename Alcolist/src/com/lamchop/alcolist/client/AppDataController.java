@@ -51,13 +51,18 @@ public class AppDataController {
 		
 	}
 	
-	public void clearManufacturers() {
-		appData.clearManufacturers();
+	public void deleteManufacturers() {
+		clearManufacturers();
 		sendManufacturersToUI();
+	}
+	
+	private void clearManufacturers() {
+		appData.clearManufacturers();
 	}
 
 	private void updateAppDataManufacturers(List<Manufacturer> manufacturers) {
 		
+		clearManufacturers();
 		appData.add(manufacturers);
 
 	}

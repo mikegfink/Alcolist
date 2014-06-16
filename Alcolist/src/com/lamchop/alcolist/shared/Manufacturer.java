@@ -8,13 +8,21 @@ import javax.jdo.annotations.PrimaryKey;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.IdentityType;
 
-
-@PersistenceCapable(identityType = IdentityType.APPLICATION) // is this the right type?
+// TODO fix comments here
+// Added detachable = "false" to help with serialization error.
+@PersistenceCapable(identityType = IdentityType.APPLICATION) //, detachable = "false") // is this the right type?
 public class Manufacturer implements Serializable {
 
-	@PrimaryKey
+	// TODO make compound primary key of name and postalCode. If doing this, remove setters for name
+	// and postalCode.
+	/*@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Long id;
+	*/
+	@PrimaryKey
+	@Persistent
+	/** Primary key is concatenation of name and postalCode fields */
+	private String id;
 	@Persistent
 	private String name;
 	@Persistent
@@ -26,9 +34,9 @@ public class Manufacturer implements Serializable {
 	@Persistent
 	private String postalCode;
 	@Persistent
-	private String type; // TODO make this an enum of the 3 types later
-	@Persistent
 	private String phoneNumber;
+	@Persistent
+	private String type; // TODO make this an enum of 4 types later: Winery, Brewery, Distillery, Other
 	@Persistent
 	private int sumRatings;
 	@Persistent
@@ -43,19 +51,21 @@ public class Manufacturer implements Serializable {
 	}
 
 	public Manufacturer(String name, String streetAddress, String city, String province, 
-			String postalCode, String type, String phoneNumber) {
+			String postalCode, String phoneNumber, String type) {
+		this.id = name + postalCode;
 		this.name = name;
 		this.streetAddress = streetAddress;
 		this.city = city;
 		this.province = province;
 		this.postalCode = postalCode;
-		this.type = type;
 		this.phoneNumber = phoneNumber;
+		this.type = type;
 		this.sumRatings = 0;
 		this.numRatings = 0;
+		
 	}
 
-	public Long getId() {
+	public String getId() {
 		return this.id;
 	}
 
@@ -63,19 +73,21 @@ public class Manufacturer implements Serializable {
 		return this.name;
 	}
 	
+	/* Can't set name b/c is part of primary key
 	public void setName(String name) {
 		this.name = name;
-	}
+	}*/
 	
 	public Address getAddress() {
 		return new Address(streetAddress, city, province, postalCode);
 	}
 
+	// Now setting the address is problematic b/c can't change postal code or key will change
 	public void setAddress(Address address) {
 		this.streetAddress = address.getStreetAddress();
 		this.city = address.getCity();
 		this.province = address.getProvince();
-		this.postalCode = address.getPostalCode();
+		//this.postalCode = address.getPostalCode();
 	}
 	
 	public String getType() {

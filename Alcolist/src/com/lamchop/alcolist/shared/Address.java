@@ -8,11 +8,14 @@ public class Address {
 
 	
 	public Address() {
+		this.streetAddress = "";
+		this.city = "";
+		this.province = "";
+		this.postalCode = "";
 	}
 	
 	public Address(String streetAddress,
 			String city, String province, String postalCode) {
-		this();
 		this.streetAddress = streetAddress;
 		this.city = city;
 		this.province = province;
