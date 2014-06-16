@@ -92,5 +92,9 @@ public class AppDataController {
 		/*if (error instanceof NotLoggedInException) {
 			Window.Location.replace(loginInfo.getLogoutUrl());*/
 	}
+	
+	public boolean isUserLoggedIn() {
+		return (appData.getUserData() != null);
+	}
 
 }
