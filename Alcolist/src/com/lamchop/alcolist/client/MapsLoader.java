@@ -2,6 +2,7 @@ package com.lamchop.alcolist.client;
 
 import java.util.ArrayList;
 
+import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.maps.client.LoadApi;
 import com.google.gwt.maps.client.LoadApi.LoadLibrary;
 import com.google.gwt.user.client.ui.AbsolutePanel;
@@ -49,6 +50,5 @@ public class MapsLoader {
 		theMap.add(theMapWidget);
 		theMapWidget.getMapWidget().triggerResize();
 		theMap.setMapWidget(theMapWidget);
-		
 	}
 }

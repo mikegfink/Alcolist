@@ -76,7 +76,7 @@ public class UIController implements UIUpdateInterface {
 		FacebookLoginButton loginButton = new FacebookLoginButton(theAppDataController);
 		loginButton.setText("login");
 		
-		Button showListButton = new Button();
+		Button showListButton = new ShowListButton(theAppDataController);
 		showListButton.setText("Show List");
 
 		adminPanel.add(importButton);

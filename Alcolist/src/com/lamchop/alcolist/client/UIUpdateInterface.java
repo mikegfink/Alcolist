@@ -9,4 +9,12 @@ public interface UIUpdateInterface {
 	public void update(List<Manufacturer> manufacturers);
 	
 	public void update(UserData userData);
+	
+	public void showList();
+	
+	public void showMap();
+	
+	public void hideList();
+	
+	public void hideMap();
 }

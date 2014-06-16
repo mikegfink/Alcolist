@@ -1,7 +1,6 @@
 package com.lamchop.alcolist.client;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import com.google.gwt.user.client.ui.Composite;
@@ -42,12 +41,13 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.lamchop.alcolist.shared.Manufacturer;
+
 import static com.google.gwt.dom.client.Style.Unit.PCT;
 
 
 public class AlcolistMapWidget extends Composite {
 
-	private final FlowPanel pWidget;
+	private final LayoutPanel pWidget;
 	private MapWidget mapWidget;
 
 	private Marker markerBasic;
@@ -60,7 +60,7 @@ public class AlcolistMapWidget extends Composite {
 	}
 
 	public AlcolistMapWidget() {
-		pWidget = new FlowPanel();
+		pWidget = new LayoutPanel();
 		initWidget(pWidget);
 		pWidget.setSize("100%", "100%");
 		draw();
@@ -154,7 +154,6 @@ public class AlcolistMapWidget extends Composite {
 			}
 		});
 		mapWidget.triggerResize();
-
 	}
 	
 
@@ -173,6 +172,7 @@ public class AlcolistMapWidget extends Composite {
 		GeocoderRequest request = GeocoderRequest.newInstance();
 		Geocoder geoCoder = Geocoder.newInstance();
 		request.setAddress(address);
+		
 		geoCoder.geocode(request, new GeocoderRequestHandler() {
 			@Override
 			public void onCallback(JsArray<GeocoderResult> results,
