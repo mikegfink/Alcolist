@@ -54,7 +54,7 @@ public class AlcolistMapWidget extends Composite {
 	private Marker markerBasic;
 	private Marker markerDrop;
 	private List<Manufacturer> manufacturers;
-	
+
 	@Override 
 	protected void onLoad() {
 		super.onLoad();
@@ -69,58 +69,58 @@ public class AlcolistMapWidget extends Composite {
 	}
 
 	private void draw() {
-//		Button addDropMarkerButton = new Button("Add Marker with Drop");
-//		addDropMarkerButton.addClickHandler(new ClickHandler() {
-//			public void onClick(ClickEvent event) {
-//				if (markerDrop != null) {
-//					markerDrop.clear();
-//				}
-//				drawMarkerWithDropAnimation();
-//			}
-//		});
+		//		Button addDropMarkerButton = new Button("Add Marker with Drop");
+		//		addDropMarkerButton.addClickHandler(new ClickHandler() {
+		//			public void onClick(ClickEvent event) {
+		//				if (markerDrop != null) {
+		//					markerDrop.clear();
+		//				}
+		//				drawMarkerWithDropAnimation();
+		//			}
+		//		});
 
 		// basic controls to test markers
-//		HorizontalPanel hp = new HorizontalPanel();
-//		hp.add(new HTML("<br>Basic Map Example."));
-//		hp.add(new HTML("&nbsp;"));
-//		hp.add(addDropMarkerButton);
-//		hp.setCellVerticalAlignment(addDropMarkerButton, VerticalPanel.ALIGN_BOTTOM);
+		//		HorizontalPanel hp = new HorizontalPanel();
+		//		hp.add(new HTML("<br>Basic Map Example."));
+		//		hp.add(new HTML("&nbsp;"));
+		//		hp.add(addDropMarkerButton);
+		//		hp.setCellVerticalAlignment(addDropMarkerButton, VerticalPanel.ALIGN_BOTTOM);
 
 		pWidget.clear();
-//		pWidget.add(hp);
+		//		pWidget.add(hp);
 
 		drawMap();
-//		drawBasicMarker();
+		//		drawBasicMarker();
 	}
 
-//	private void drawBasicMarker() {
-//		LatLng center = LatLng.newInstance(47.8, -121.4);
-//		MarkerOptions options = MarkerOptions.newInstance();
-//		options.setPosition(center);
-//		options.setTitle("Hello World");
-//
-//		markerBasic = Marker.newInstance(options);
-//		markerBasic.setMap(mapWidget);
-//
-//		markerBasic.addClickHandler(new ClickMapHandler() {
-//			@Override
-//			public void onEvent(ClickMapEvent event) {
-//				drawInfoWindow(markerBasic, event.getMouseEvent());
-//			}
-//		});
-//	}
+	//	private void drawBasicMarker() {
+	//		LatLng center = LatLng.newInstance(47.8, -121.4);
+	//		MarkerOptions options = MarkerOptions.newInstance();
+	//		options.setPosition(center);
+	//		options.setTitle("Hello World");
+	//
+	//		markerBasic = Marker.newInstance(options);
+	//		markerBasic.setMap(mapWidget);
+	//
+	//		markerBasic.addClickHandler(new ClickMapHandler() {
+	//			@Override
+	//			public void onEvent(ClickMapEvent event) {
+	//				drawInfoWindow(markerBasic, event.getMouseEvent());
+	//			}
+	//		});
+	//	}
 
-//	private void drawMarkerWithDropAnimation() {
-//		LatLng center = LatLng.newInstance(42.33, -120.81);
-//		MarkerOptions options = MarkerOptions.newInstance();
-//		options.setPosition(center);
-//		options.setTitle("Thanks for clicking on me.");
-//		options.setAnimation(Animation.DROP);
-//
-//		markerDrop = Marker.newInstance(options);
-//		markerDrop.setMap(mapWidget);
-//	}
-	
+	//	private void drawMarkerWithDropAnimation() {
+	//		LatLng center = LatLng.newInstance(42.33, -120.81);
+	//		MarkerOptions options = MarkerOptions.newInstance();
+	//		options.setPosition(center);
+	//		options.setTitle("Thanks for clicking on me.");
+	//		options.setAnimation(Animation.DROP);
+	//
+	//		markerDrop = Marker.newInstance(options);
+	//		markerDrop.setMap(mapWidget);
+	//	}
+
 
 	protected void drawInfoWindow(Marker marker, MouseEvent mouseEvent) {
 		if (marker == null || mouseEvent == null) {
@@ -145,7 +145,7 @@ public class AlcolistMapWidget extends Composite {
 		mapWidget = new MapWidget(opts);
 		pWidget.add(mapWidget);
 		mapWidget.setSize("100%", "100%");
-//		pWidget.setWidgetLeftRight(mapWidget, 0, PCT, 100, PCT);
+		//		pWidget.setWidgetLeftRight(mapWidget, 0, PCT, 100, PCT);
 
 		mapWidget.addClickHandler(new ClickMapHandler() {
 			@Override
@@ -156,11 +156,11 @@ public class AlcolistMapWidget extends Composite {
 		});
 		mapWidget.triggerResize();
 	}
-	
 
-	
+
+
 	public void createMarker(String address) {
-		
+
 		// THIS SHOULD WORK BUT NEEDS REFACTORING SO YOU CAN ACTUALLY 
 		// GET AT THE MAP. IT GETS LATLNGS BUT I CAN'T FIND THE MAP.
 		// First thing off the top of my head would be to have the maploader
@@ -169,11 +169,11 @@ public class AlcolistMapWidget extends Composite {
 		// method would be a method in that widget. E.g. BasicMapWidget has drawMarker(). 
 		// This would be part of a method like that in your custom widget class.
 
-		
+
 		GeocoderRequest request = GeocoderRequest.newInstance();
 		Geocoder geoCoder = Geocoder.newInstance();
 		request.setAddress(address);
-		
+
 		geoCoder.geocode(request, new GeocoderRequestHandler() {
 			@Override
 			public void onCallback(JsArray<GeocoderResult> results,
@@ -192,7 +192,7 @@ public class AlcolistMapWidget extends Composite {
 			}      
 		});
 	}
-	
+
 	public void createMarker(List<Marker> theMarkers) {
 		double maxLng = Double.NEGATIVE_INFINITY;
 		double minLng = Double.POSITIVE_INFINITY;
@@ -200,7 +200,7 @@ public class AlcolistMapWidget extends Composite {
 		double minLat = Double.POSITIVE_INFINITY;
 		double currLng, currLat;
 		LatLng currLatLng;
-		
+
 		for (Marker marker : theMarkers) {
 			marker.setMap(mapWidget);
 			currLatLng = marker.getPosition();
@@ -219,11 +219,15 @@ public class AlcolistMapWidget extends Composite {
 				maxLng = currLng;
 			}
 		}
-		recentreAndZoomMap(maxLat, minLat, maxLng, minLng);
+		if (maxLng > Double.NEGATIVE_INFINITY && 
+				maxLat > Double.NEGATIVE_INFINITY) {
+			recentreAndZoomMap(maxLat, minLat, maxLng, minLng);
+		}
 	}
-	
+
 	private void recentreAndZoomMap(double maxLat, double minLat, 
-					double maxLng, double minLng) {
+			double maxLng, double minLng) {
+		
 		LatLng southWest = LatLng.newInstance(minLat, minLng);
 		LatLng northEast = LatLng.newInstance(maxLat, maxLng);
 		LatLngBounds bounds = LatLngBounds.newInstance(southWest, northEast);
@@ -233,7 +237,7 @@ public class AlcolistMapWidget extends Composite {
 		mapWidget.setCenter(centre);
 		mapWidget.fitBounds(bounds);
 	}
-	
+
 	public MapWidget getMapWidget() {
 		return mapWidget;
 	}
