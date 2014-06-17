@@ -47,12 +47,6 @@ public class ManufacturerServiceImpl  extends RemoteServiceServlet implements
 		} finally {
 			pm.close();
 		}
-		// For debugging, to see that the same manufacturer is not added more than once to the datastore.
-		System.out.println("Query finished. Returning manufacturers to client");
-		for (int i = 0; i < 20; i++) {
-			Manufacturer man = manufacturers.get(i);
-			System.out.println("Manufacturer name is " + man.getName());			
-		}
 		return manufacturers;
 	}
 	  
