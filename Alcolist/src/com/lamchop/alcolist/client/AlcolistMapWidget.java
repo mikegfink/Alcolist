@@ -12,6 +12,7 @@ import com.google.gwt.maps.client.MapOptions;
 import com.google.gwt.maps.client.MapTypeId;
 import com.google.gwt.maps.client.MapWidget;
 import com.google.gwt.maps.client.base.LatLng;
+import com.google.gwt.maps.client.base.LatLngBounds;
 import com.google.gwt.maps.client.controls.ControlPosition;
 import com.google.gwt.maps.client.events.MouseEvent;
 import com.google.gwt.maps.client.events.channelnumber.ChannelNumberChangeMapEvent;
@@ -135,9 +136,9 @@ public class AlcolistMapWidget extends Composite {
 	}
 
 	private void drawMap() {
-		LatLng center = LatLng.newInstance(58, -130);
+		LatLng center = LatLng.newInstance(55, -120);
 		MapOptions opts = MapOptions.newInstance();
-		opts.setZoom(6);
+		opts.setZoom(7);
 		opts.setCenter(center);
 		opts.setMapTypeId(MapTypeId.ROADMAP);
 
@@ -192,7 +193,46 @@ public class AlcolistMapWidget extends Composite {
 		});
 	}
 	
-
+	public void createMarker(List<Marker> theMarkers) {
+		double maxLng = Double.NEGATIVE_INFINITY;
+		double minLng = Double.POSITIVE_INFINITY;
+		double maxLat = Double.NEGATIVE_INFINITY;
+		double minLat = Double.POSITIVE_INFINITY;
+		double currLng, currLat;
+		LatLng currLatLng;
+		
+		for (Marker marker : theMarkers) {
+			marker.setMap(mapWidget);
+			currLatLng = marker.getPosition();
+			currLat = currLatLng.getLatitude();
+			currLng = currLatLng.getLongitude();
+			if (currLat < minLat) {
+				minLat = currLat;
+			} 
+			if (currLat > maxLat) {
+				maxLat = currLat;
+			}	
+			if (currLng < minLng) {
+				minLng = currLng;
+			}
+			if (currLng > maxLng) {
+				maxLng = currLng;
+			}
+		}
+		recentreAndZoomMap(maxLat, minLat, maxLng, minLng);
+	}
+	
+	private void recentreAndZoomMap(double maxLat, double minLat, 
+					double maxLng, double minLng) {
+		LatLng southWest = LatLng.newInstance(minLat, minLng);
+		LatLng northEast = LatLng.newInstance(maxLat, maxLng);
+		LatLngBounds bounds = LatLngBounds.newInstance(southWest, northEast);
+		LatLng centre = bounds.getCenter();
+		//mapWidget.panTo(centre);
+		//mapWidget.panToBounds(bounds);
+		mapWidget.setCenter(centre);
+		mapWidget.fitBounds(bounds);
+	}
 	
 	public MapWidget getMapWidget() {
 		return mapWidget;

@@ -31,6 +31,7 @@ public class Alcolist implements EntryPoint {
 		//RootPanel.get("baseContainer").add(theUI);
 		theRootPanel.add(theUI);
 		theUI.onResize();
+		// TODO: Ask about this: google.maps.event.trigger(map, 'resize');
 
 		
 		//theRootPanel.setWidgetLeftWidth(gwt, 0, PCT, 50, PCT);

@@ -43,7 +43,7 @@ public class Importer {
 				try {
 					Manufacturer manufacturer = createManufacturer(tokens);
 					if (isValidManufacturer(manufacturer)){
-						storeManufacturer(manufacturer);
+						
 						importedManufacturers.add(manufacturer);
 					}
 				} catch (ArrayIndexOutOfBoundsException ae) {
@@ -62,6 +62,9 @@ public class Importer {
 			}
 		}
 		latLongAdder.makeGeocodeRequest(importedManufacturers);
+		for (Manufacturer nextManufacturer : importedManufacturers) {
+			storeManufacturer(nextManufacturer);
+		}
 	}
 	
 	private boolean isValidManufacturer(Manufacturer manufacturer) {

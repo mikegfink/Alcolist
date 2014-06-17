@@ -36,8 +36,10 @@ public class LatLngMaker {
 		// build a JSON object
 		
 		JSONObject resultAsJSON = (JSONObject) JSONValue.parse(result);
-		if (! resultAsJSON.get("status").equals("OK"))
+		if (! resultAsJSON.get("status").equals("OK")) {
+			System.out.println(resultAsJSON.get("status").toString());
 			return;
+		}
 
 		// get the first result
 		JSONArray resultsAsJSONArray = (JSONArray) resultAsJSON.get("results");

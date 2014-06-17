@@ -102,7 +102,7 @@ public class UIController implements UIUpdateInterface {
 		uiPanel.setWidgetRightWidth(loginButton, 3, PCT, 7, PCT);
 		uiPanel.setWidgetTopHeight(loginButton, 3, PCT, 4, PCT);
 
-
+		theAppDataController.initManufacturers();
 	}
 
 	public UI getUI() {
