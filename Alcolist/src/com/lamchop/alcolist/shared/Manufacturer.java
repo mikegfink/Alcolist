@@ -39,6 +39,8 @@ public class Manufacturer implements Serializable {
 	private double latitude;
 	@Persistent
 	private double longitude;
+	// TODO: make persistent if it works.
+	private String fullAddress;
 	
 
 	@Persistent
@@ -123,14 +125,18 @@ public class Manufacturer implements Serializable {
 		return streetAddress + ", " + city + ", " + province;
 	}
 	
+	public void setFullAddress(String formattedAddress) {
+		fullAddress = formattedAddress;		
+	}
+	
 	public LatLng getLatLng() {
 		LatLng result = LatLng.newInstance(latitude, longitude);
 		return result;
 	}
 	
-	public void setLatLng(LatLng latLng) {
-		this.latitude = latLng.getLatitude();
-		this.longitude = latLng.getLongitude();
+	public void setLatLng(double lat, double lng) {
+		this.latitude = lat;
+		this.longitude = lng;
 	}
 	
 	public String getType() {
@@ -175,4 +181,6 @@ public class Manufacturer implements Serializable {
 	public void setWebsite(String website) {
 		this.website = website;
 	}
+
+
 }

@@ -42,8 +42,10 @@ public class Importer {
 				String[] tokens = parser.parseLine(line);
 				try {
 					Manufacturer manufacturer = createManufacturer(tokens);
-					storeManufacturer(manufacturer);
-					importedManufacturers.add(manufacturer);
+					if (isValidManufacturer(manufacturer)){
+						storeManufacturer(manufacturer);
+						importedManufacturers.add(manufacturer);
+					}
 				} catch (ArrayIndexOutOfBoundsException ae) {
 					System.err.println("Insufficient number of tokens from line: " + line);					
 				}	
@@ -62,6 +64,12 @@ public class Importer {
 		latLongAdder.makeGeocodeRequest(importedManufacturers);
 	}
 	
+	private boolean isValidManufacturer(Manufacturer manufacturer) {
+		String licenseType = manufacturer.getType();
+		return (licenseType.equals("Winery") || 
+				licenseType.equals("Brewery") || licenseType.equals("Distillery"));
+	}
+
 	/**Create a manufacturer from name, street address, city, postal code, phone number, and license type 
 	 * contained in the given tokens.
 	 * 
@@ -120,30 +128,29 @@ public class Importer {
 	private void storeManufacturer(Manufacturer manufacturer) {
 		// if check will change once type is an enum. TODO add check for duplicates before adding? 
 		// Or delete all before adding??
-		String licenseType = manufacturer.getType();
-		if (licenseType.equals("Winery") || licenseType.equals("Brewery") || licenseType.equals("Distillery")) {
-			PersistenceManager pm = getPersistenceManager();
-			Transaction tx = pm.currentTransaction();
-			try {
-				tx.begin();
-				pm.makePersistent(manufacturer);
-				tx.commit();
-				System.out.println("Added Manufacturer " + manufacturer.getName() + ", type = " +
-						manufacturer.getType() + ", postal code = " + manufacturer.getPostalCode()); // For testing
-			} catch (Exception e) {
-				// What exceptions do I need to catch??
-				e.printStackTrace();
-			} finally {
-				if (tx.isActive()) {
-					// Rollback the transaction if an error occurred before it could be committed.
-					System.err.println("Rolling back transaction. Manufacturer not added.");
-					tx.rollback();
-				}
-				pm.close();
+
+		PersistenceManager pm = getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			pm.makePersistent(manufacturer);
+			tx.commit();
+			System.out.println("Added Manufacturer " + manufacturer.getName() + ", type = " +
+					manufacturer.getType() + ", postal code = " + manufacturer.getPostalCode()); // For testing
+		} catch (Exception e) {
+			// What exceptions do I need to catch??
+			e.printStackTrace();
+		} finally {
+			if (tx.isActive()) {
+				// Rollback the transaction if an error occurred before it could be committed.
+				System.err.println("Rolling back transaction. Manufacturer not added.");
+				tx.rollback();
 			}
+			pm.close();
 		}
 	}
-	
+
+
 	private PersistenceManager getPersistenceManager() {
 		return PMF.getPersistenceManager();
 	}
