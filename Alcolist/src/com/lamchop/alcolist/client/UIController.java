@@ -45,21 +45,30 @@ public class UIController implements UIUpdateInterface {
 	private AppDataController theAppDataController;
 
 	public UIController() {
-
-		title = new Label("The Alcolist");
-
 		this.theAppDataController = new AppDataController(this);
-
 		uiPanel = new UI();
+		initMap();
+		createTitle();
+		loadMapAndList();
+	}
+	
+	public void initMap() {
 		mapsLoader = new MapsLoader();
-		mapsLoader.loadMapApi();
+		mapsLoader.loadMapApi(this);
 		mapPanel = mapsLoader.getMap();
-		listPanel = new ListPanel();
-		mainPanel = new LayoutPanel();
-		adminPanel = new LayoutPanel();
-
+	}
+	
+	public void createTitle() {
+		title = new Label("The Alcolist");
 		title.addStyleName("title");
 		title.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+	}
+	
+	public void loadMapAndList() {	
+		
+
+		listPanel = new ListPanel();
+		adminPanel = new LayoutPanel();
 
 		AdminImportButton importButton = new AdminImportButton(theAppDataController);
 		importButton.setText("IMPORT DATA");
@@ -78,31 +87,24 @@ public class UIController implements UIUpdateInterface {
 		adminPanel.setWidgetLeftWidth(importButton, 0, PCT, 50, PCT);
 		adminPanel.setWidgetRightWidth(deleteButton, 0, PCT, 50, PCT);
 
-
-		mainPanel.add(mapPanel);
-		mainPanel.add(showListButton);
-		mainPanel.setWidgetTopHeight(showListButton, 3, PCT, 5, PCT);
-		mainPanel.setWidgetLeftWidth(showListButton, 7, PCT, 7, PCT);
-
-
-//		mainPanel.setWidgetLeftWidth(adminPanel, 37, PCT, 10, PCT);
-//		mainPanel.setWidgetBottomHeight(adminPanel, 30, PCT, 10, PCT);
-
-
-		uiPanel.add(mainPanel);
+		uiPanel.add(mapPanel);
 		uiPanel.add(title);
 		uiPanel.add(adminPanel);
 		uiPanel.add(loginButton);
 
 		uiPanel.setWidgetTopHeight(title, 0, PCT, 10, PCT);
 		uiPanel.setWidgetLeftWidth(title, 20, PCT, 60, PCT);
-		uiPanel.setWidgetTopHeight(mainPanel, 0, PCT, 100, PCT);
 		uiPanel.setWidgetBottomHeight(adminPanel, 3, PCT, 7, PCT);
 		uiPanel.setWidgetRightWidth(adminPanel, 3, PCT, 15, PCT);
 		uiPanel.setWidgetRightWidth(loginButton, 3, PCT, 7, PCT);
 		uiPanel.setWidgetTopHeight(loginButton, 3, PCT, 4, PCT);
+		uiPanel.add(showListButton);
+		uiPanel.setWidgetTopHeight(showListButton, 3, PCT, 5, PCT);
+		uiPanel.setWidgetLeftWidth(showListButton, 7, PCT, 7, PCT);
 
 		theAppDataController.initManufacturers();
+
+	
 	}
 
 	public UI getUI() {
@@ -113,19 +115,10 @@ public class UIController implements UIUpdateInterface {
 
 
 	public void showList() {
-//		mainPanel.clear();
-//		mainPanel.add(mapPanel);
-//		mainPanel.add(listPanel);
-		
-//		mainPanel.setWidgetRightWidth(mapPanel, 0, PCT, 100, PCT);
-//		mainPanel.setWidgetLeftWidth(listPanel, 0, PCT, 35, PCT);
 		uiPanel.add(listPanel);
 		listPanel.addStyleName("listPanel");
 		uiPanel.setWidgetLeftWidth(listPanel, 5, PCT, 35, PCT);
-		uiPanel.setWidgetTopHeight(listPanel, 10, PCT, 80, PCT);
-//		uiPanel.setWidgetTopHeight(mainPanel, 10, PCT, 85, PCT);
-//		uiPanel.setWidgetLeftWidth(mainPanel, 3, PCT, 94, PCT);
-		
+		uiPanel.setWidgetTopHeight(listPanel, 10, PCT, 80, PCT);	
 	}
 	
 	public void showMap() {

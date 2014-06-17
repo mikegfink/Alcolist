@@ -22,7 +22,7 @@ public class MapsLoader {
 		return theMap;
 	}
 	
-	public void loadMapApi() {
+	public void loadMapApi(UIController theUIController) {
 	    
 		
 		boolean sensor = true;
@@ -42,11 +42,11 @@ public class MapsLoader {
 	      @Override
 	      public void run() {
 	    	  draw();
-	    	  theMap.getMapWidget().getMapWidget().triggerResize();
+
 	    	  }
 	    };
 
-	    LoadApi.go(onLoad, loadLibraries, sensor);
+	    LoadApi.go(onLoad, loadLibraries, sensor) ;
 	    
 	  }
 	public void draw() {
