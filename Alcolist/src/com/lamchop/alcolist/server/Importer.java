@@ -13,11 +13,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Importer {
 
 	private static final PersistenceManagerFactory PMF = 
 			JDOHelper.getPersistenceManagerFactory("transactions-optional");
+	private List<Manufacturer> importedManufacturers = new ArrayList<Manufacturer>();
+	private LatLongAdder latLongAdder = new LatLongAdder();
 
 	public void importData(String website) {
 		// Get CSV file from website
@@ -39,6 +43,7 @@ public class Importer {
 				try {
 					Manufacturer manufacturer = createManufacturer(tokens);
 					storeManufacturer(manufacturer);
+					importedManufacturers.add(manufacturer);
 				} catch (ArrayIndexOutOfBoundsException ae) {
 					System.err.println("Insufficient number of tokens from line: " + line);					
 				}	
@@ -54,6 +59,7 @@ public class Importer {
 		            // nothing to see here
 			}
 		}
+		latLongAdder.makeGeocodeRequest(importedManufacturers);
 	}
 	
 	/**Create a manufacturer from name, street address, city, postal code, phone number, and license type 
