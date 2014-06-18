@@ -1,11 +1,15 @@
 package com.lamchop.alcolist.client;
 
-import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.ui.Image;
+import com.lamchop.alcolist.client.resources.Images;
 
-public class FacebookLoginButton extends Button {
-
+public class FacebookLoginButton extends Image {
+	
+	private static Images images = GWT.create(Images.class);
+	
 	public FacebookLoginButton(AppDataController theAppDataController) {
-		super();
+		super(images.facebookLogin());
 		this.addClickHandler(new FacebookHandler(theAppDataController));
 	}
 

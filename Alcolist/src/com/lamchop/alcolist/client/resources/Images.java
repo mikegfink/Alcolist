@@ -12,6 +12,9 @@ public interface Images extends ClientBundle {
 	 
 	  @Source("brewery.png")
 	  ImageResource brewery();
+	  
+	  @Source("facebookLogin.png")
+	  ImageResource facebookLogin();
 	 
 }
 

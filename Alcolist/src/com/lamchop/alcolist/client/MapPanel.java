@@ -64,7 +64,6 @@ public class MapPanel extends LayoutPanel {
 
 			//theMapWidget.createMarker(nextManufacturer.getFullAddress());
 		}
-
 		theMapWidget.createMarker(theMarkers);
 	}
 
@@ -72,7 +71,9 @@ public class MapPanel extends LayoutPanel {
 
 	private void clearMarkers() {
 		for (Marker currentMarker : theMarkers) {
-			currentMarker.clear();
+			if (currentMarker != null) {
+				currentMarker.clear();
+			}
 		}
 		theMarkers.clear();
 

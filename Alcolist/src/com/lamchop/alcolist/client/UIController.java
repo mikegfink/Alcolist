@@ -68,7 +68,7 @@ public class UIController implements UIUpdateInterface {
 		deleteButton.setText("DELETE DATA");
 		
 		FacebookLoginButton loginButton = new FacebookLoginButton(theAppDataController);
-		loginButton.setText("login");
+		//loginButton.setText("login");
 		
 		Button showListButton = new ShowListButton(theAppDataController);
 		showListButton.setText("Show List");
@@ -99,8 +99,9 @@ public class UIController implements UIUpdateInterface {
 		uiPanel.setWidgetTopHeight(mainPanel, 0, PCT, 100, PCT);
 		uiPanel.setWidgetBottomHeight(adminPanel, 3, PCT, 7, PCT);
 		uiPanel.setWidgetRightWidth(adminPanel, 3, PCT, 15, PCT);
-		uiPanel.setWidgetRightWidth(loginButton, 3, PCT, 7, PCT);
-		uiPanel.setWidgetTopHeight(loginButton, 3, PCT, 4, PCT);
+		uiPanel.setWidgetRightWidth(loginButton, 8, PCT, 6.35, PCT);
+		uiPanel.setWidgetTopHeight(loginButton, 3, PCT, 3.8, PCT);
+
 
 		theAppDataController.initManufacturers();
 	}
