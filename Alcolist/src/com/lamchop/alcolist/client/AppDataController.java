@@ -35,8 +35,7 @@ public class AppDataController {
 //		}));	
 	}
 	
-	public void initManufacturers() {
-		
+	public void initManufacturers() {		
 		manufacturerService.getManufacturers(new AsyncCallback<List<Manufacturer>>() {
 			public void onFailure(Throwable error) {
 				handleError(error);
