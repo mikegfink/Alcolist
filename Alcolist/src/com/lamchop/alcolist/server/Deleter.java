@@ -21,19 +21,14 @@ public class Deleter {
 		Transaction tx = pm.currentTransaction();
 		
 		try {
-			System.out.println("Started transaction");
 			Extent ex = pm.getExtent(Manufacturer.class, true);
-			System.out.println("Got extent");
 			Iterator iter = ex.iterator();
 			while (iter.hasNext())
 			{
 				try {
 					tx.begin();
-					System.out.println("Looking at next item in extent");
 					Manufacturer toDelete = (Manufacturer) iter.next();
-					System.out.println("Got next manufacturer.");
 					pm.deletePersistent(toDelete);
-					System.out.println("Deleted manufacturer.");
 					tx.commit();
 				} catch (Exception e) {
 					// What exceptions do I need to catch??
@@ -46,12 +41,8 @@ public class Deleter {
 					}
 			    
 				}
-			//Query q = pm.newQuery(Manufacturer.class, );
-			// testing:
-			//q.deletePersistentAll();
 			}    
 		} catch (Exception e) {
-			// What exceptions do I need to catch??
 			e.printStackTrace();
 		} finally {
 			pm.close();

@@ -99,49 +99,45 @@ public class Importer {
 		return manufacturer;
 	}
 
-	// Modified from http://stackoverflow.com/questions/1086123/
-	// Does not handle names like O'Brien properly - will produce O'brien.
-	// Better would be to check if it is all uppercase first, then only call this
-	// method if that is the case.
-	private static String toTitleCase(String input) {
-		input = input.toLowerCase();
-	    StringBuilder titleCase = new StringBuilder();
-	    boolean nextTitleCase = true;
-
-	    for (char c : input.toCharArray()) {
-	        if (Character.isSpaceChar(c)) {
-	            nextTitleCase = true;
-	        } else if (nextTitleCase) {
-	            c = Character.toTitleCase(c);
-	            nextTitleCase = false;
-	        }
-
-	        titleCase.append(c);
-	    }
-
-	    return titleCase.toString();
-	}
-	/** Stores the given manufacturer in the datastore if it has the right license type.
+	/** Converts a string to title case if it was all uppercase. Otherwise, returns
+	 * the original string
 	 * 
-	 * Manufacturer only stored if type is Winery, Brewery, or Distillery and there is not already
-	 * a manufacturer object with the same name and postal code.
+	 * Modified from http://stackoverflow.com/questions/1086123/
+	 */
+	private static String toTitleCase(String string) {
+		// Match all strings containing at least one lowercase letter
+		String regex = ".*[a-z]+.*";
+		if (!string.matches(regex)) {
+			string = string.toLowerCase();
+			StringBuilder titleCase = new StringBuilder();
+			boolean nextTitleCase = true;
+
+			for (char c : string.toCharArray()) {
+				if (Character.isSpaceChar(c)) {
+					nextTitleCase = true;
+				} else if (nextTitleCase) {
+					c = Character.toTitleCase(c);
+					nextTitleCase = false;
+				}
+				titleCase.append(c);
+			}
+			string = titleCase.toString();
+		}
+		return string;
+	}
+	
+	/** Stores the given manufacturer in the datastore 
 	 * 
 	 * @param manufacturer The Manufacturer object to store
 	 */
 	private void storeManufacturer(Manufacturer manufacturer) {
-		// if check will change once type is an enum. TODO add check for duplicates before adding? 
-		// Or delete all before adding??
-
 		PersistenceManager pm = getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();
 			pm.makePersistent(manufacturer);
 			tx.commit();
-			//System.out.println("Added Manufacturer " + manufacturer.getName() + ", type = " +
-			//		manufacturer.getType() + ", postal code = " + manufacturer.getPostalCode()); // For testing
 		} catch (Exception e) {
-			// What exceptions do I need to catch??
 			e.printStackTrace();
 		} finally {
 			if (tx.isActive()) {

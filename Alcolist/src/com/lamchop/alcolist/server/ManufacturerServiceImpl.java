@@ -36,13 +36,12 @@ public class ManufacturerServiceImpl  extends RemoteServiceServlet implements
 		
 		try {
 			Query q = pm.newQuery(Manufacturer.class);
-			// Return in a particular ordering for initial display in list.
+			// Return sorted by name for initial ordering in list.
 			q.setOrdering("name");
 			List<Manufacturer> queryResult = (List<Manufacturer>) q.execute();
 			manufacturers = (List<Manufacturer>) pm.detachCopyAll(queryResult);
 			
 		} catch (Exception e) {
-			// TODO maybe don't catch all exceptions??
 			e.printStackTrace();
 		} finally {
 			pm.close();
