@@ -22,7 +22,7 @@ public class LatLongAdder {
 	public void makeGeocodeRequest(List<Manufacturer> manufacturers) {
 		for (Manufacturer currentManufacturer: manufacturers) {
 			try {
-				TimeUnit.MILLISECONDS.sleep(100);
+				TimeUnit.MILLISECONDS.sleep(110);
 				// This is here because of the Geocoder request limit.
 			} catch (InterruptedException e) {
 				GWT.log("Sleep interrupted" + e.getMessage());

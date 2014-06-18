@@ -37,7 +37,8 @@ public class LatLngMaker {
 		
 		JSONObject resultAsJSON = (JSONObject) JSONValue.parse(result);
 		if (! resultAsJSON.get("status").equals("OK")) {
-			System.out.println(resultAsJSON.get("status").toString());
+			System.out.println("Status was: " + resultAsJSON.get("status").toString()
+					+ "for : " + address);
 			return;
 		}
 
@@ -52,6 +53,9 @@ public class LatLngMaker {
 		
 		double lat = (double) locationInJSON.get("lat");
 		double lng = (double) locationInJSON.get("lng");
+		
+		System.out.println("Address was: " + formattedAddress);
+		System.out.println("LatLng was: " + lat + ", " + lng);
 		
 		manufacturer.setLatLng(lat, lng);
 		manufacturer.setFullAddress(formattedAddress);
