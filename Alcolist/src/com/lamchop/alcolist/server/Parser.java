@@ -22,7 +22,8 @@ public class Parser {
 					inQuotes = !inQuotes;
 				} else if (next == COMMA && !inQuotes) {
 					// Only commas outside of quotes signal the end of a token.
-					tokens.add(accumulator.toString());
+					// Trim whitespace off either end before adding
+					tokens.add(accumulator.toString().trim());
 					// Reset accumulator for next token.
 					accumulator.setLength(0);
 				} else {
@@ -30,8 +31,8 @@ public class Parser {
 					accumulator.append(next);
 				}
 			}
-			// Add the last token
-			tokens.add(accumulator.toString());
+			// Add the last token, trimming whitespace off either end.
+			tokens.add(accumulator.toString().trim());
 			
 			String[] tokenArray = tokens.toArray(new String[tokens.size()]);
 			return tokenArray;
