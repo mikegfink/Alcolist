@@ -22,17 +22,17 @@ public class AppDataController {
 	}
 	
 	public void initUserData(String userID) {
-		userDataService = GWT.create(UserDataService.class);
-		userDataService.getUserData(userID, (new AsyncCallback<UserData>() {
-			public void onFailure(Throwable error) {
-				handleError(error);
-			}
-
-			public void onSuccess(UserData result) {
-				updateAppDataUserData(result);
-				sendUserDataToUI();
-			}
-		}));	
+//		userDataService = GWT.create(UserDataService.class);
+//		userDataService.getUserData(userID, (new AsyncCallback<UserData>() {
+//			public void onFailure(Throwable error) {
+//				handleError(error);
+//			}
+//
+//			public void onSuccess(UserData result) {
+//				updateAppDataUserData(result);
+//				sendUserDataToUI();
+//			}
+//		}));	
 	}
 	
 	public void initManufacturers() {

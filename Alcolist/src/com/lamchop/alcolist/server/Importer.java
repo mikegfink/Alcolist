@@ -138,8 +138,8 @@ public class Importer {
 			tx.begin();
 			pm.makePersistent(manufacturer);
 			tx.commit();
-			System.out.println("Added Manufacturer " + manufacturer.getName() + ", type = " +
-					manufacturer.getType() + ", postal code = " + manufacturer.getPostalCode()); // For testing
+			//System.out.println("Added Manufacturer " + manufacturer.getName() + ", type = " +
+			//		manufacturer.getType() + ", postal code = " + manufacturer.getPostalCode()); // For testing
 		} catch (Exception e) {
 			// What exceptions do I need to catch??
 			e.printStackTrace();

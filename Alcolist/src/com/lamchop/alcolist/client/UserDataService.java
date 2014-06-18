@@ -8,13 +8,13 @@ import com.lamchop.alcolist.shared.Route;
 
 @RemoteServiceRelativePath("userData") // Refers to servlet. See web.xml
 public interface UserDataService extends RemoteService {
-	public void addRating(Rating rating);
-	public void removeRating(Rating rating);
-	public void addRoute(Route route);
-	public void removeRoute(Route route);
-	public void addReview(Review review);
-	public void removeRating(Review review);
-	
-	public UserData getUserData(String userID);
+//	public void addRating(Rating rating);
+//	public void removeRating(Rating rating);
+//	public void addRoute(Route route);
+//	public void removeRoute(Route route);
+//	public void addReview(Review review);
+//	public void removeRating(Review review);
+//	
+//	public UserData getUserData(String userID);
 }
 

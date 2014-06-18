@@ -40,7 +40,8 @@ public class Manufacturer implements Serializable {
 	@Persistent
 	private double longitude;
 	// TODO: make persistent if it works.
-	private String fullAddress;
+	@Persistent
+	private String formattedAddress;
 	
 
 	@Persistent
@@ -72,6 +73,9 @@ public class Manufacturer implements Serializable {
 		this.type = type;
 		this.sumRatings = 0;
 		this.numRatings = 0;
+		this.latitude = 0;
+		this.longitude = 0;
+		this.formattedAddress = null;
 		
 	}
 
@@ -125,8 +129,12 @@ public class Manufacturer implements Serializable {
 		return streetAddress + ", " + city + ", " + province;
 	}
 	
-	public void setFullAddress(String formattedAddress) {
-		fullAddress = formattedAddress;		
+	public void setFormattedAddress(String formattedAddress) {
+		this.formattedAddress = formattedAddress;		
+	}
+	
+	public String getFormattedAddress() {
+		return formattedAddress;
 	}
 	
 	public LatLng getLatLng() {
