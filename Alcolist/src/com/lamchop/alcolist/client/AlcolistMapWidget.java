@@ -194,4 +194,8 @@ public class AlcolistMapWidget extends Composite {
 	public MapWidget getMapWidget() {
 		return mapWidget;
 	}
+	
+	public void triggerResize() {
+		mapWidget.triggerResize();
+	}
 }

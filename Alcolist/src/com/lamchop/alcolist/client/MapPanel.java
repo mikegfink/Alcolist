@@ -81,5 +81,9 @@ public class MapPanel extends LayoutPanel {
 	public AlcolistMapWidget getMapWidget() {
 		return theMapWidget;
 	}
+	
+	public void triggerResize() {
+		theMapWidget.triggerResize();
+	}
 
 }
