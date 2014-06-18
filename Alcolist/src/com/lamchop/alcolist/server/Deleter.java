@@ -6,7 +6,6 @@ import javax.jdo.Extent;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
-import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import com.lamchop.alcolist.shared.Manufacturer;
@@ -21,8 +20,8 @@ public class Deleter {
 		Transaction tx = pm.currentTransaction();
 		
 		try {
-			Extent ex = pm.getExtent(Manufacturer.class, true);
-			Iterator iter = ex.iterator();
+			Extent<Manufacturer> ex = pm.getExtent(Manufacturer.class, true);
+			Iterator<Manufacturer> iter = ex.iterator();
 			while (iter.hasNext())
 			{
 				try {
@@ -31,11 +30,10 @@ public class Deleter {
 					pm.deletePersistent(toDelete);
 					tx.commit();
 				} catch (Exception e) {
-					// What exceptions do I need to catch??
-					e.printStackTrace();
+						e.printStackTrace();
 				} finally {
 					if (tx.isActive()) {
-						// Rollback the transaction if an error occurred before it could be committed.
+						// Roll back the transaction if an error occurred before it could be committed.
 						System.err.println("Error occurred deleting Manufacturers. Rolling back transaction.");
 						tx.rollback();
 					}

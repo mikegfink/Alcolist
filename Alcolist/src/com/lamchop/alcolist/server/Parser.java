@@ -39,7 +39,7 @@ public class Parser {
 			e.printStackTrace();
 		}
 		// Still return a String array if parsing fails.
-		String[] noResult = {""};
+		String[] noResult = {};
 		return noResult;	
 	}
 }

@@ -2,7 +2,6 @@ package com.lamchop.alcolist.shared;
 
 import java.io.Serializable;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 import javax.jdo.annotations.PersistenceCapable;
@@ -10,17 +9,9 @@ import javax.jdo.annotations.IdentityType;
 
 import com.google.gwt.maps.client.base.LatLng;
 
-// TODO fix comments here
-// Added detachable = "false" to help with serialization error.
-@PersistenceCapable(identityType = IdentityType.APPLICATION) //, detachable = "false") // is this the right type?
+@PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class Manufacturer implements Serializable {
 
-	// TODO make compound primary key of name and postalCode. If doing this, remove setters for name
-	// and postalCode.
-	/*@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Long id;
-	*/
 	@PrimaryKey
 	@Persistent
 	/** Primary key is concatenation of name and postalCode fields */
@@ -61,6 +52,8 @@ public class Manufacturer implements Serializable {
 		// be used explicitly in our code.
 	}
 
+	// name and postalCode fields cannot be changed once set because they are used in
+	// the primary key.
 	public Manufacturer(String name, String streetAddress, String city, String province, 
 			String postalCode, String phoneNumber, String type) {
 		this.id = name + postalCode;
@@ -86,11 +79,6 @@ public class Manufacturer implements Serializable {
 	public String getName() {
 		return this.name;
 	}
-	
-	/* Can't set name because it is part of primary key
-	public void setName(String name) {
-		this.name = name;
-	}*/
 	
 	public String getStreetAddress() {
 		return streetAddress;
@@ -119,11 +107,6 @@ public class Manufacturer implements Serializable {
 	public String getPostalCode() {
 		return postalCode;
 	}
-
-	/* Cant set postal code because it is part of primary key
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
-	}*/
 	
 	public String getFullAddress() {
 		return streetAddress + ", " + city + ", " + province;
