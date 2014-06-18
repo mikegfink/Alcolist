@@ -1,110 +1,147 @@
 package com.lamchop.alcolist.client;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
-import com.google.gwt.maps.client.MapWidget;
-import com.google.gwt.maps.client.base.LatLng;
-import com.google.gwt.maps.client.overlays.Marker;
-import com.google.gwt.maps.client.overlays.MarkerOptions;
-import com.google.gwt.maps.client.services.Geocoder;
-import com.google.gwt.maps.client.services.GeocoderRequest;
-import com.google.gwt.maps.client.services.GeocoderRequestHandler;
-import com.google.gwt.maps.client.services.GeocoderResult;
-import com.google.gwt.maps.client.services.GeocoderStatus;
-import com.google.gwt.user.cellview.client.Column;
-import com.google.gwt.user.cellview.client.ColumnSortEvent;
-import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
-import com.google.gwt.user.cellview.client.DataGrid;
-import com.google.gwt.user.cellview.client.RowStyles;
+import java.util.List;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
-import com.google.gwt.view.client.ListDataProvider;
-import com.google.gwt.cell.client.TextCell;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JsArray;
-
 import static com.google.gwt.dom.client.Style.Unit.PCT;
-
-import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.lamchop.alcolist.shared.Manufacturer;
+import com.google.gwt.layout.client.Layout.Alignment;
 
 public class UIController implements UIUpdateInterface {
 	private UI uiPanel;
 	private MapsLoader mapsLoader;
 	private MapPanel mapPanel;
 	private ListPanel listPanel;
-	private List<Manufacturer> manufacturers;
 	private Label title;
-	private LayoutPanel mainPanel;
 	private LayoutPanel adminPanel;
 	private AppDataController theAppDataController;
+	private ShowListButton showListButton;
+	private HideListButton hideListButton;
+	private HideMapButton hideMapButton;
+	private ShowMapButton showMapButton;
+	private AdminImportButton importButton;
+	private AdminDeleteButton deleteButton;
+	private FacebookLoginButton loginButton;
+	private FacebookLogoutButton logoutButton;
 
 	public UIController() {
-
-		title = new Label("The Alcolist");
-
-		this.theAppDataController = new AppDataController(this);
-
+		theAppDataController = new AppDataController(this);
 		uiPanel = new UI();
 		mapsLoader = new MapsLoader();
-		mapsLoader.loadMapApi();
-		mapPanel = mapsLoader.getMap();
 		listPanel = new ListPanel();
-		mainPanel = new LayoutPanel();
 		adminPanel = new LayoutPanel();
+		title = new Label("The Alcolist");
+		
 
+		initMap();
+//		createTitle();
+//		initButtons();
+//		loadDefaultView();
+	}
+	
+	public void initMap() {
+		
+
+		mapsLoader.loadMapApi(this);
+		mapPanel = mapsLoader.getMap();
+		uiPanel.add(mapPanel);
+		mapPanel.setSize("100%", "100%");
+	}
+	
+	public void init() {
+		initTitle();
+		initButtons();
+		initListView();
+		initAdminPanel();
+		loadDefaultView();
+	}
+	
+	public void initTitle() {
+		
 		title.addStyleName("title");
 		title.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-
-		AdminImportButton importButton = new AdminImportButton(theAppDataController);
-		importButton.setText("IMPORT DATA");
-
-		AdminDeleteButton deleteButton = new AdminDeleteButton(theAppDataController);
-		deleteButton.setText("DELETE DATA");
-		
-		FacebookLoginButton loginButton = new FacebookLoginButton(theAppDataController);
-		//loginButton.setText("login");
-		
-		Button showListButton = new ShowListButton(theAppDataController);
-		showListButton.setText("Show List");
-
-		adminPanel.add(importButton);
-		adminPanel.add(deleteButton);
-		adminPanel.setWidgetLeftWidth(importButton, 0, PCT, 50, PCT);
-		adminPanel.setWidgetRightWidth(deleteButton, 0, PCT, 50, PCT);
-
-
-		mainPanel.add(mapPanel);
-		mainPanel.add(showListButton);
-		mainPanel.setWidgetTopHeight(showListButton, 3, PCT, 5, PCT);
-		mainPanel.setWidgetLeftWidth(showListButton, 7, PCT, 7, PCT);
-
-
-//		mainPanel.setWidgetLeftWidth(adminPanel, 37, PCT, 10, PCT);
-//		mainPanel.setWidgetBottomHeight(adminPanel, 30, PCT, 10, PCT);
-
-
-		uiPanel.add(mainPanel);
 		uiPanel.add(title);
-		uiPanel.add(adminPanel);
-		uiPanel.add(loginButton);
+	}
+	
+	public void loadDefaultView() {	
+		
+		if (theAppDataController.isUserLoggedIn()) {
+			uiPanel.add(logoutButton);
+		}
+		else {
+			uiPanel.add(loginButton);
+		}
 
 		uiPanel.setWidgetTopHeight(title, 0, PCT, 10, PCT);
 		uiPanel.setWidgetLeftWidth(title, 20, PCT, 60, PCT);
-		uiPanel.setWidgetTopHeight(mainPanel, 0, PCT, 100, PCT);
 		uiPanel.setWidgetBottomHeight(adminPanel, 3, PCT, 7, PCT);
 		uiPanel.setWidgetRightWidth(adminPanel, 3, PCT, 15, PCT);
+
 		uiPanel.setWidgetRightWidth(loginButton, 8, PCT, 6.35, PCT);
 		uiPanel.setWidgetTopHeight(loginButton, 3, PCT, 3.8, PCT);
 
 
+		
+		uiPanel.add(showListButton);
+		uiPanel.setWidgetTopHeight(showListButton, 3, PCT, 5, PCT);
+		uiPanel.setWidgetLeftWidth(showListButton, 7, PCT, 7, PCT);
+
+
 		theAppDataController.initManufacturers();
+		mapPanel.triggerResize();
+
 	}
+
+	private void initAdminPanel() {
+		adminPanel.add(importButton);
+		adminPanel.add(deleteButton);
+		adminPanel.setWidgetLeftWidth(importButton, 0, PCT, 50, PCT);
+		adminPanel.setWidgetRightWidth(deleteButton, 0, PCT, 50, PCT);
+		
+		uiPanel.add(adminPanel);
+	}
+
+	private void initListView() {
+	
+		listPanel.addStyleName("listPanel");
+		
+		
+		listPanel.add(hideListButton);
+		listPanel.setWidgetHorizontalPosition(hideListButton, Alignment.END);
+		listPanel.setWidgetTopHeight(hideListButton, 0, PCT, 5, PCT);
+		listPanel.setWidgetRightWidth(hideListButton, 0, PCT, 5, PCT);
+	}
+	
+	public void initButtons() {
+	
+		importButton = new AdminImportButton(theAppDataController);
+		importButton.setText("IMPORT DATA");
+
+		deleteButton = new AdminDeleteButton(theAppDataController);
+		deleteButton.setText("DELETE DATA");
+	
+		loginButton = new FacebookLoginButton(theAppDataController);
+
+		
+		logoutButton = new FacebookLogoutButton(theAppDataController);
+		logoutButton.setText("logout");
+	
+		showListButton = new ShowListButton(theAppDataController);
+		showListButton.setText("Show List");
+	
+		hideListButton = new HideListButton(theAppDataController);
+		hideListButton.setText("X");
+	
+		hideMapButton = new HideMapButton(theAppDataController);
+		hideMapButton.setText("Hide Map");
+	
+		showMapButton = new ShowMapButton(theAppDataController);
+		showMapButton.setText("Show Map");
+	}
+	
 
 	public UI getUI() {
 		uiPanel.onResize();
@@ -112,42 +149,43 @@ public class UIController implements UIUpdateInterface {
 
 	}
 
+	private void placeButton(Button aButton) {
+		uiPanel.add(aButton);
+		uiPanel.setWidgetTopHeight(aButton, 3, PCT, 5, PCT);
+		uiPanel.setWidgetLeftWidth(aButton, 7, PCT, 7, PCT);
+	}
 
 	public void showList() {
-//		mainPanel.clear();
-//		mainPanel.add(mapPanel);
-//		mainPanel.add(listPanel);
-		
-//		mainPanel.setWidgetRightWidth(mapPanel, 0, PCT, 100, PCT);
-//		mainPanel.setWidgetLeftWidth(listPanel, 0, PCT, 35, PCT);
+		uiPanel.remove(showListButton);
+		placeButton(hideMapButton);
 		uiPanel.add(listPanel);
-		listPanel.addStyleName("listPanel");
 		uiPanel.setWidgetLeftWidth(listPanel, 5, PCT, 35, PCT);
-		uiPanel.setWidgetTopHeight(listPanel, 10, PCT, 80, PCT);
-//		uiPanel.setWidgetTopHeight(mainPanel, 10, PCT, 85, PCT);
-//		uiPanel.setWidgetLeftWidth(mainPanel, 3, PCT, 94, PCT);
-		
+		uiPanel.setWidgetTopHeight(listPanel, 10, PCT, 80, PCT);	
 	}
 	
 	public void showMap() {
-		mainPanel.add(mapPanel);
-		mainPanel.setWidgetRightWidth(mapPanel, 0, PCT, 60, PCT);
-		mainPanel.setWidgetLeftWidth(listPanel, 0, PCT, 35, PCT);
+		uiPanel.remove(showMapButton);
+		placeButton(hideMapButton);
+		uiPanel.setWidgetLeftWidth(listPanel, 5, PCT, 35, PCT);
 	}
 	
 	public void hideList() {
-		mainPanel.clear();
-		mainPanel.add(mapPanel);
+		uiPanel.remove(listPanel);
+		uiPanel.remove(hideMapButton);
+		uiPanel.remove(showMapButton);
+		placeButton(showListButton);
 	}
 	
 	public void hideMap() {
-		mainPanel.clear();
-		mainPanel.add(listPanel);
+		uiPanel.remove(hideMapButton);
+		placeButton(showMapButton);
+		uiPanel.setWidgetLeftWidth(listPanel, 20, PCT, 60, PCT);
 	}
 	
 	@Override
 	public void update(List<Manufacturer> manufacturers) {
 		listPanel.addData(manufacturers);
+		mapPanel.triggerResize();
 		mapPanel.populateMap(manufacturers);
 	}
 

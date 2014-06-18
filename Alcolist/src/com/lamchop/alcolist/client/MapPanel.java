@@ -19,9 +19,9 @@ public class MapPanel extends LayoutPanel {
 	private AlcolistMapWidget theMapWidget;
 	private List<Marker> theMarkers;
 	private Images images = GWT.create(Images.class);
-	//	private MarkerImage breweryIcon;
-	//	private MarkerImage wineryIcon;
-	//	private MarkerImage distilleryIcon;
+		private MarkerImage breweryIcon;
+		private MarkerImage wineryIcon;
+		private MarkerImage distilleryIcon;
 
 	public MapPanel() {
 		theMarkers = new ArrayList<Marker>();
@@ -88,6 +88,10 @@ public class MapPanel extends LayoutPanel {
 
 	public AlcolistMapWidget getMapWidget() {
 		return theMapWidget;
+	}
+	
+	public void triggerResize() {
+		theMapWidget.triggerResize();
 	}
 
 }

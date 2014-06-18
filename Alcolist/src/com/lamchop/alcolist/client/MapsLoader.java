@@ -16,13 +16,14 @@ public class MapsLoader {
 	
 	public MapsLoader() {
 		theMap = new MapPanel();
+		theMap.setSize("100%", "100%");
 	}
 	
 	public MapPanel getMap() {
 		return theMap;
 	}
 	
-	public void loadMapApi() {
+	public void loadMapApi(final UIController theUIController) {
 	    
 		
 		boolean sensor = true;
@@ -42,11 +43,11 @@ public class MapsLoader {
 	      @Override
 	      public void run() {
 	    	  draw();
-	    	  theMap.getMapWidget().getMapWidget().triggerResize();
+	    	  theUIController.init();
 	    	  }
 	    };
 
-	    LoadApi.go(onLoad, loadLibraries, sensor);
+	    LoadApi.go(onLoad, loadLibraries, sensor) ;
 	    
 	  }
 	public void draw() {
