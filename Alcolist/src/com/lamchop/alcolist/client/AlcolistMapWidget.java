@@ -221,12 +221,21 @@ public class AlcolistMapWidget extends Composite {
 		}
 		if (maxLng > Double.NEGATIVE_INFINITY && 
 				maxLat > Double.NEGATIVE_INFINITY) {
-			recentreAndZoomMap(maxLat, minLat, maxLng, minLng);
+			recentreAndZoomMap(maxLat, minLat, maxLng, minLng, 65);
+			// TODO: Magic number needs to be a parameter but this method
+			// needs to not be in this class.
 		}
 	}
 
 	private void recentreAndZoomMap(double maxLat, double minLat, 
-			double maxLng, double minLng) {
+			double maxLng, double minLng, double percentage) {
+		// percentage is percent of screen for displaying markers
+		int MIN_VIEW_PERCENT = 20;
+		if (percentage > MIN_VIEW_PERCENT) {
+			double lngSpan = Math.abs((maxLng - minLng));
+			lngSpan = (lngSpan / percentage) * 100;
+			minLng = maxLng - lngSpan;
+		}
 		
 		LatLng southWest = LatLng.newInstance(minLat, minLng);
 		LatLng northEast = LatLng.newInstance(maxLat, maxLng);
