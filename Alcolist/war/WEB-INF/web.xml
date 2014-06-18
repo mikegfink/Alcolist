@@ -5,15 +5,6 @@
 	version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
 
 	<!-- Servlets -->
-	<servlet>
-		<servlet-name>greetServlet</servlet-name>
-		<servlet-class>com.lamchop.alcolist.server.GreetingServiceImpl</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>greetServlet</servlet-name>
-		<url-pattern>/alcolist/greet</url-pattern>
-	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>importService</servlet-name>
