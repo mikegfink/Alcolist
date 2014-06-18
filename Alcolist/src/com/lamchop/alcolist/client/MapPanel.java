@@ -57,8 +57,7 @@ public class MapPanel extends LayoutPanel {
 			} else if (licenseType.equals("Distillery")) {
 				marker.setIcon(distilleryIcon);
 			}
-			if (marker.getPosition().getLatitude() != 0 ||
-					marker.getPosition().getLatitude() != 0) {
+			if (isValidLatLng(marker)) {
 				theMarkers.add(marker);
 			}
 
@@ -67,7 +66,15 @@ public class MapPanel extends LayoutPanel {
 		theMapWidget.createMarker(theMarkers);
 	}
 
-
+	private boolean isValidLatLng(Marker marker) {
+		boolean notZeroLat = marker.getPosition().getLatitude() > 0.1 || 
+				marker.getPosition().getLatitude() < -0.1;
+		boolean notZeroLng = marker.getPosition().getLongitude() > 0.1 ||
+				marker.getPosition().getLongitude() < -0.1;
+		
+		return (notZeroLat || notZeroLng);
+				
+	}
 
 	private void clearMarkers() {
 		for (Marker currentMarker : theMarkers) {
