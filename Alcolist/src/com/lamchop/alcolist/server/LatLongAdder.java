@@ -32,7 +32,7 @@ public class LatLongAdder {
 			}
 			// Limiting the requests for debugging purposes
 			count++;
-			if (count >= 10)
+			if (count >= 20)
 				return;
 			
 			try {
