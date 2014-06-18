@@ -42,7 +42,6 @@ public class MapsLoader {
 	      @Override
 	      public void run() {
 	    	  draw();
-
 	    	  }
 	    };
 
