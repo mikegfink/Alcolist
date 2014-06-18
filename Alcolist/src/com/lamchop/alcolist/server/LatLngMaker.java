@@ -58,6 +58,6 @@ public class LatLngMaker {
 		System.out.println("LatLng was: " + lat + ", " + lng);
 		
 		manufacturer.setLatLng(lat, lng);
-		manufacturer.setFullAddress(formattedAddress);
+		manufacturer.setFormattedAddress(formattedAddress);
 	}
 }
