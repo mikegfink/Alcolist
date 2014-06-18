@@ -1,8 +1,6 @@
 package com.lamchop.alcolist.server;
 
-import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
 import com.lamchop.alcolist.shared.Manufacturer;
@@ -17,9 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Importer {
-
-	private static final PersistenceManagerFactory PMF = 
-			JDOHelper.getPersistenceManagerFactory("transactions-optional");
 	private List<Manufacturer> importedManufacturers = new ArrayList<Manufacturer>();
 	private LatLongAdder latLongAdder = new LatLongAdder();
 
@@ -131,7 +126,7 @@ public class Importer {
 	 * @param manufacturer The Manufacturer object to store
 	 */
 	private void storeManufacturer(Manufacturer manufacturer) {
-		PersistenceManager pm = getPersistenceManager();
+		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();
@@ -147,10 +142,5 @@ public class Importer {
 			}
 			pm.close();
 		}
-	}
-
-
-	private PersistenceManager getPersistenceManager() {
-		return PMF.getPersistenceManager();
 	}
 }

@@ -3,9 +3,7 @@ package com.lamchop.alcolist.server;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -14,9 +12,6 @@ import com.lamchop.alcolist.shared.Manufacturer;
 
 public class ManufacturerServiceImpl  extends RemoteServiceServlet implements 
 		ManufacturerService {
-
-	private static final PersistenceManagerFactory PMF =
-	      JDOHelper.getPersistenceManagerFactory("transactions-optional");
 	
 	@Override
 	public void addRating(Manufacturer manufacturer, int rating) {
@@ -31,7 +26,7 @@ public class ManufacturerServiceImpl  extends RemoteServiceServlet implements
 	@Override
 	public List<Manufacturer> getManufacturers() {
 
-		PersistenceManager pm = getPersistenceManager();
+		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
 		List<Manufacturer> manufacturers = new ArrayList<Manufacturer>(); 
 		
 		try {
@@ -49,8 +44,4 @@ public class ManufacturerServiceImpl  extends RemoteServiceServlet implements
 		return manufacturers;
 	}
 	  
-	private PersistenceManager getPersistenceManager() {
-		return PMF.getPersistenceManager();
-
-	}
 }

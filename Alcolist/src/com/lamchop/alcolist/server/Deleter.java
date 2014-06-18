@@ -3,20 +3,15 @@ package com.lamchop.alcolist.server;
 import java.util.Iterator;
 
 import javax.jdo.Extent;
-import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
 import com.lamchop.alcolist.shared.Manufacturer;
 
 public class Deleter {
-	
-	private static final PersistenceManagerFactory PMF = 
-			JDOHelper.getPersistenceManagerFactory("transactions-optional");
 
 	public void deleteAllManufacturers() {
-		PersistenceManager pm = getPersistenceManager();
+		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		
 		try {
@@ -47,7 +42,4 @@ public class Deleter {
 		}
 	}
 	
-	private PersistenceManager getPersistenceManager() {
-		return PMF.getPersistenceManager();
-	}
 }
