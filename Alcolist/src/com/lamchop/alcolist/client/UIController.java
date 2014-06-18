@@ -18,14 +18,14 @@ public class UIController implements UIUpdateInterface {
 	private Label title;
 	private LayoutPanel adminPanel;
 	private AppDataController theAppDataController;
-	private Button showListButton;
-	private Button hideListButton;
-	private Button hideMapButton;
-	private Button showMapButton;
-	private Button importButton;
-	private Button deleteButton;
-	private Button loginButton;
-	private Button logoutButton;
+	private ShowListButton showListButton;
+	private HideListButton hideListButton;
+	private HideMapButton hideMapButton;
+	private ShowMapButton showMapButton;
+	private AdminImportButton importButton;
+	private AdminDeleteButton deleteButton;
+	private FacebookLoginButton loginButton;
+	private FacebookLogoutButton logoutButton;
 
 	public UIController() {
 		theAppDataController = new AppDataController(this);
@@ -35,7 +35,7 @@ public class UIController implements UIUpdateInterface {
 		adminPanel = new LayoutPanel();
 		title = new Label("The Alcolist");
 		
-		initTitle();
+
 		initMap();
 //		createTitle();
 //		initButtons();
@@ -50,7 +50,8 @@ public class UIController implements UIUpdateInterface {
 		mapPanel.setSize("100%", "100%");
 	}
 	
-	public void init() {	
+	public void init() {
+		initTitle();
 		initButtons();
 		initListView();
 		initAdminPanel();
