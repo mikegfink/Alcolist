@@ -59,6 +59,7 @@ public class UIController implements UIUpdateInterface {
 		listPanel.add(hideListButton);
 		listPanel.setWidgetHorizontalPosition(hideListButton, Alignment.END);
 		listPanel.setWidgetTopHeight(hideListButton, 0, PCT, 5, PCT);
+		listPanel.setWidgetRightWidth(hideListButton, 0, PCT, 5, PCT);
 
 		adminPanel.add(importButton);
 		adminPanel.add(deleteButton);
