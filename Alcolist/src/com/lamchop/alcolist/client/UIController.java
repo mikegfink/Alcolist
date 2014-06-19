@@ -26,6 +26,7 @@ public class UIController implements UIUpdateInterface {
 	private AdminDeleteButton deleteButton;
 	private FacebookLoginButton loginButton;
 	private FacebookLogoutButton logoutButton;
+	private Legend legend;
 
 	public UIController() {
 		theAppDataController = new AppDataController(this);
@@ -34,6 +35,7 @@ public class UIController implements UIUpdateInterface {
 		listPanel = new ListPanel();
 		adminPanel = new LayoutPanel();
 		title = new Label("The Alcolist");
+		legend = new Legend();
 		
 
 		initMap();
@@ -75,6 +77,10 @@ public class UIController implements UIUpdateInterface {
 			uiPanel.add(loginButton);
 		}
 
+		uiPanel.add(legend);
+		uiPanel.setWidgetRightWidth(legend, 3, PCT, 10, PCT);
+		uiPanel.setWidgetTopHeight(legend, 8, PCT, 20, PCT);
+		
 		uiPanel.setWidgetTopHeight(title, 0, PCT, 10, PCT);
 		uiPanel.setWidgetLeftWidth(title, 20, PCT, 60, PCT);
 		uiPanel.setWidgetBottomHeight(adminPanel, 3, PCT, 7, PCT);
@@ -84,7 +90,7 @@ public class UIController implements UIUpdateInterface {
 		uiPanel.setWidgetTopHeight(loginButton, 3, PCT, 3.8, PCT);
 
 
-		
+
 		uiPanel.add(showListButton);
 		uiPanel.setWidgetTopHeight(showListButton, 3, PCT, 5, PCT);
 		uiPanel.setWidgetLeftWidth(showListButton, 7, PCT, 7, PCT);

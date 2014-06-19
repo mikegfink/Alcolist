@@ -51,7 +51,6 @@ public class AlcolistMapWidget extends Composite {
 	private MapWidget mapWidget;
 
 
-
 	@Override 
 	protected void onLoad() {
 		super.onLoad();
@@ -68,22 +67,8 @@ public class AlcolistMapWidget extends Composite {
 	private void draw() {
 		pWidget.clear();
 		drawMap();
+
 	}
-
-
-
-//	protected void drawInfoWindow(Marker marker, MouseEvent mouseEvent) {
-//		if (marker == null || mouseEvent == null) {
-//			return;
-//		}
-//
-//		HTML html = new HTML("You clicked on: " + mouseEvent.getLatLng().getToString());
-//
-//		InfoWindowOptions options = InfoWindowOptions.newInstance();
-//		options.setContent(html);
-//		InfoWindow iw = InfoWindow.newInstance(options);
-//		iw.open(mapWidget, marker);
-//	}
 
 	private void drawMap() {
 		LatLng center = LatLng.newInstance(55, -120);

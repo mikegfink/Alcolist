@@ -27,6 +27,7 @@ public class MapPanel extends LayoutPanel {
 	private List<Marker> theMarkers;
 	private Images images = GWT.create(Images.class);
 	private InfoWindow infoWindow;
+	
 
 //		private MarkerImage breweryIcon;
 //		private MarkerImage wineryIcon;
