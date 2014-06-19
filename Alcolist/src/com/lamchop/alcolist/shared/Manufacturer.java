@@ -173,5 +173,12 @@ public class Manufacturer implements Serializable {
 		this.website = website;
 	}
 
+	// Extra Methods just for testing. Needed because LatLng is not usable on the server side
+	public double getLatitude() {
+		return latitude;
+	}
 
+	public double getLongitude() {
+		return longitude;
+	}
 }
