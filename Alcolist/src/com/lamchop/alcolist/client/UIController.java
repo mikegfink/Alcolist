@@ -188,7 +188,6 @@ public class UIController implements UIUpdateInterface {
 		uiPanel.remove(hideMapButton);
 		placeButton(showMapButton);
 		uiPanel.setWidgetLeftWidth(listPanel, 20, PCT, 60, PCT);
-		mapPanel.calculateViewForMap(20);
 	}
 	
 	@Override
