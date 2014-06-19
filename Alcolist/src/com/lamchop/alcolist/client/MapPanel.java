@@ -28,13 +28,13 @@ public class MapPanel extends LayoutPanel {
 	private Images images = GWT.create(Images.class);
 	private InfoWindow infoWindow;
 
-//		private MarkerImage breweryIcon;
-//		private MarkerImage wineryIcon;
-//		private MarkerImage distilleryIcon;
+	//private MarkerImage breweryIcon;
+	//private MarkerImage wineryIcon;
+	//private MarkerImage distilleryIcon;
 
 	public MapPanel() {
 		theMarkers = new ArrayList<Marker>();
-		
+
 	}
 
 	public void setMapWidget(AlcolistMapWidget mapWidget)  {
@@ -60,6 +60,8 @@ public class MapPanel extends LayoutPanel {
 			options.setPosition(location);
 			final Marker marker = Marker.newInstance(options);
 			marker.setPosition(location);
+			marker.setMap(theMapWidget.getMapWidget());
+
 			if (licenseType.equals("Winery")) {
 				marker.setIcon(wineryIcon);
 			} else if (licenseType.equals("Brewery")) {
@@ -67,9 +69,11 @@ public class MapPanel extends LayoutPanel {
 			} else if (licenseType.equals("Distillery")) {
 				marker.setIcon(distilleryIcon);
 			}
+
 			if (isValidLatLng(marker)) {
 				theMarkers.add(marker);
 			}
+
 			marker.addClickHandler(new ClickMapHandler() {
 				@Override
 				public void onEvent(ClickMapEvent event) {
@@ -81,14 +85,14 @@ public class MapPanel extends LayoutPanel {
 		}
 		createMarker(theMarkers);
 	}
-	
+
 	protected void drawInfoWindow(Marker marker, Manufacturer manufacturer, MouseEvent mouseEvent) {
 		if (marker == null || mouseEvent == null) {
 			return;
 		}
 		HTML html = new HTML("<b>" + manufacturer.getName() + "</b><br>" 
 				+ manufacturer.getFormattedAddress());
-		
+
 		InfoWindowOptions options = InfoWindowOptions.newInstance();
 		options.setContent(html);
 		infoWindow = InfoWindow.newInstance(options);
@@ -96,15 +100,17 @@ public class MapPanel extends LayoutPanel {
 	}
 
 	private boolean isValidLatLng(Marker marker) {
+
 		boolean notZeroLat = marker.getPosition().getLatitude() > 0.1 || 
 				marker.getPosition().getLatitude() < -0.1;
+
 		boolean notZeroLng = marker.getPosition().getLongitude() > 0.1 ||
 				marker.getPosition().getLongitude() < -0.1;
-		
+
 		return (notZeroLat || notZeroLng);
-				
+
 	}
-	
+
 	public void createMarker(List<Marker> theMarkers) {
 		double maxLng = Double.NEGATIVE_INFINITY;
 		double minLng = Double.POSITIVE_INFINITY;
@@ -114,7 +120,7 @@ public class MapPanel extends LayoutPanel {
 		LatLng currLatLng;
 
 		for (Marker marker : theMarkers) {
-			marker.setMap(theMapWidget.getMapWidget());
+
 			currLatLng = marker.getPosition();
 			currLat = currLatLng.getLatitude();
 			currLng = currLatLng.getLongitude();
@@ -148,7 +154,7 @@ public class MapPanel extends LayoutPanel {
 			lngSpan = (lngSpan / percentage) * 100;
 			minLng = maxLng - lngSpan;
 		}
-		
+
 		LatLng southWest = LatLng.newInstance(minLat, minLng);
 		LatLng northEast = LatLng.newInstance(maxLat, maxLng);
 		LatLngBounds bounds = LatLngBounds.newInstance(southWest, northEast);
@@ -172,7 +178,7 @@ public class MapPanel extends LayoutPanel {
 	public AlcolistMapWidget getMapWidget() {
 		return theMapWidget;
 	}
-	
+
 	public void triggerResize() {
 		theMapWidget.triggerResize();
 	}
