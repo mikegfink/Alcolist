@@ -46,8 +46,6 @@ public class UIController implements UIUpdateInterface {
 	}
 	
 	public void initMap() {
-		
-
 		mapsLoader.loadMapApi(this);
 		mapPanel = mapsLoader.getMap();
 		uiPanel.add(mapPanel);
@@ -79,8 +77,10 @@ public class UIController implements UIUpdateInterface {
 		}
 
 		uiPanel.add(legend);
-		uiPanel.setWidgetRightWidth(legend, 3, PCT, 10, PCT);
-		uiPanel.setWidgetTopHeight(legend, 10, PCT, 20, PCT);
+
+		uiPanel.setWidgetRightWidth(legend, 3, PCT, 130, PX);
+		uiPanel.setWidgetTopHeight(legend, 8, PCT, 150, PX);
+
 		
 		uiPanel.setWidgetTopHeight(title, 0, PCT, 10, PCT);
 		uiPanel.setWidgetLeftWidth(title, 20, PCT, 60, PCT);
@@ -114,7 +114,6 @@ public class UIController implements UIUpdateInterface {
 	private void initListView() {
 	
 		listPanel.addStyleName("listPanel");
-		
 		
 		listPanel.add(hideListButton);
 		listPanel.setWidgetHorizontalPosition(hideListButton, Alignment.END);
