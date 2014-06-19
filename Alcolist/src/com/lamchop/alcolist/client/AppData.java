@@ -12,12 +12,12 @@ final class AppData {
 	private List<Manufacturer> manufacturers;
 	private UserData userData;
 	
-	protected AppData() {
+	public AppData() {
 		manufacturers = new ArrayList<Manufacturer>();
 		setUserData(null);
 	}
 	
-	protected void add(List<Manufacturer> manufacturersToAdd) {
+	public void add(List<Manufacturer> manufacturersToAdd) {
 		for (Manufacturer nManufacturer : manufacturersToAdd) {
 			if (!manufacturers.contains(nManufacturer)) {
 				manufacturers.add(nManufacturer);
@@ -25,27 +25,31 @@ final class AppData {
 		}
 	}
 	
-	protected List<Manufacturer> getManufacturers() {
+	public List<Manufacturer> getManufacturers() {
 		return manufacturers;
 	}
 
-	protected UserData getUserData() {
+	public UserData getUserData() {
 		return userData;
 	}
-
-	protected void setUserData(UserData userData) {
+	
+	public void newUserData(String userID, String userName) {
+		userData = new UserData(userID, userName);
+	}
+	
+	public void setUserData(UserData userData) {
 		this.userData = userData;
 	}
 	
-	protected void addRating(Rating rating) {
+	public void addRating(Rating rating) {
 		userData.add(rating);
 	}
 	
-	protected void addReview(Review review) {
+	public void addReview(Review review) {
 		userData.add(review);
 	}
 	
-	protected void addRoute(Route route) {
+	public void addRoute(Route route) {
 		userData.add(route);
 	}
 
