@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import static com.google.gwt.dom.client.Style.Unit.PCT;
+import static com.google.gwt.dom.client.Style.Unit.PX;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.google.gwt.layout.client.Layout.Alignment;
 
@@ -45,8 +46,6 @@ public class UIController implements UIUpdateInterface {
 	}
 	
 	public void initMap() {
-		
-
 		mapsLoader.loadMapApi(this);
 		mapPanel = mapsLoader.getMap();
 		uiPanel.add(mapPanel);
@@ -78,8 +77,8 @@ public class UIController implements UIUpdateInterface {
 		}
 
 		uiPanel.add(legend);
-		uiPanel.setWidgetRightWidth(legend, 3, PCT, 10, PCT);
-		uiPanel.setWidgetTopHeight(legend, 8, PCT, 20, PCT);
+		uiPanel.setWidgetRightWidth(legend, 3, PCT, 130, PX);
+		uiPanel.setWidgetTopHeight(legend, 8, PCT, 150, PX);
 		
 		uiPanel.setWidgetTopHeight(title, 0, PCT, 10, PCT);
 		uiPanel.setWidgetLeftWidth(title, 20, PCT, 60, PCT);
@@ -113,7 +112,6 @@ public class UIController implements UIUpdateInterface {
 	private void initListView() {
 	
 		listPanel.addStyleName("listPanel");
-		
 		
 		listPanel.add(hideListButton);
 		listPanel.setWidgetHorizontalPosition(hideListButton, Alignment.END);

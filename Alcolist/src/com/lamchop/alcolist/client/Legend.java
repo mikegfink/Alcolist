@@ -15,14 +15,15 @@ public class Legend extends LayoutPanel {
 	private LegendCell cell;
 	
 	public Legend() {
-//		types = new ArrayList<String>();
-//		types.add("Brewery");
-//		types.add("Winery");
-//		types.add("Distillery");
 		
 		cell = new LegendCell();
 		legend = new CellList<String>(cell);
 		
+		init();
+		
+	}
+	
+	private void init() {
 		legend.setRowData(0, TYPES);
 		add(legend);
 		addStyleName("listPanel");
