@@ -160,13 +160,15 @@ public class UIController implements UIUpdateInterface {
 		placeButton(hideMapButton);
 		uiPanel.add(listPanel);
 		uiPanel.setWidgetLeftWidth(listPanel, 5, PCT, 35, PCT);
-		uiPanel.setWidgetTopHeight(listPanel, 10, PCT, 80, PCT);	
+		uiPanel.setWidgetTopHeight(listPanel, 10, PCT, 80, PCT);
+		mapPanel.calculateViewForMap(50);
 	}
 	
 	public void showMap() {
 		uiPanel.remove(showMapButton);
 		placeButton(hideMapButton);
 		uiPanel.setWidgetLeftWidth(listPanel, 5, PCT, 35, PCT);
+		mapPanel.calculateViewForMap(50);
 	}
 	
 	public void hideList() {
@@ -174,12 +176,14 @@ public class UIController implements UIUpdateInterface {
 		uiPanel.remove(hideMapButton);
 		uiPanel.remove(showMapButton);
 		placeButton(showListButton);
+		mapPanel.calculateViewForMap(100);
 	}
 	
 	public void hideMap() {
 		uiPanel.remove(hideMapButton);
 		placeButton(showMapButton);
 		uiPanel.setWidgetLeftWidth(listPanel, 20, PCT, 60, PCT);
+		mapPanel.calculateViewForMap(20);
 	}
 	
 	@Override
