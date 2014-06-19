@@ -8,11 +8,16 @@ import com.lamchop.alcolist.shared.Route;
 
 public class UserData {
 	
-	private int userID; // Maybe unnecessary?
+	private String userID; // Maybe unnecessary?
 	private String name;
 	private List<Rating> ratings;
 	private List<Review> reviews;
 	private List<Route> routes;
+	
+	public UserData(String userID, String userName) {
+		this.userID = userID;
+		name = userName;		
+	}
 	
 	public void add(Rating rating) {
 		// TODO Auto-generated method stub

@@ -29,9 +29,6 @@ public class ImportServiceTest {
 	private ImportServiceImpl importService;
 	private ManufacturerServiceImpl manufacturerService;
 		
-	/**
-	 * Initialize import service for the tests. 
-	 */
 	@Before
 	public void setUp() {
 		helper.setUp();

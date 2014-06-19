@@ -29,13 +29,13 @@ public class MapPanel extends LayoutPanel {
 	private InfoWindow infoWindow;
 	
 
-//		private MarkerImage breweryIcon;
-//		private MarkerImage wineryIcon;
-//		private MarkerImage distilleryIcon;
+	//private MarkerImage breweryIcon;
+	//private MarkerImage wineryIcon;
+	//private MarkerImage distilleryIcon;
 
 	public MapPanel() {
 		theMarkers = new ArrayList<Marker>();
-		
+
 	}
 
 	public void setMapWidget(AlcolistMapWidget mapWidget)  {
@@ -57,56 +57,64 @@ public class MapPanel extends LayoutPanel {
 			licenseType = nextManufacturer.getType();
 
 			LatLng location = nextManufacturer.getLatLng();
-			MarkerOptions options = MarkerOptions.newInstance();
-			options.setPosition(location);
-			final Marker marker = Marker.newInstance(options);
-			marker.setPosition(location);
-			if (licenseType.equals("Winery")) {
-				marker.setIcon(wineryIcon);
-			} else if (licenseType.equals("Brewery")) {
-				marker.setIcon(breweryIcon);
-			} else if (licenseType.equals("Distillery")) {
-				marker.setIcon(distilleryIcon);
-			}
-			if (isValidLatLng(marker)) {
-				theMarkers.add(marker);
-			}
-			marker.addClickHandler(new ClickMapHandler() {
-				@Override
-				public void onEvent(ClickMapEvent event) {
-					infoWindow.close();
-					drawInfoWindow(marker, nextManufacturer, event.getMouseEvent());
-				}
-			});
 
+			if (isValidLatLng(location)) {
+				MarkerOptions options = MarkerOptions.newInstance();
+				options.setPosition(location);
+				final Marker marker = Marker.newInstance(options);
+				theMarkers.add(marker);
+				marker.setPosition(location);
+				marker.setMap(theMapWidget.getMapWidget());
+
+				if (licenseType.equals("Winery")) {
+					marker.setIcon(wineryIcon);
+				} else if (licenseType.equals("Brewery")) {
+					marker.setIcon(breweryIcon);
+				} else if (licenseType.equals("Distillery")) {
+					marker.setIcon(distilleryIcon);
+				}
+
+				marker.addClickHandler(new ClickMapHandler() {
+					@Override
+					public void onEvent(ClickMapEvent event) {
+						infoWindow.close();
+						drawInfoWindow(marker, nextManufacturer, event.getMouseEvent());
+					}
+				});
+			}
 		}
-		createMarker(theMarkers);
+		calculateViewForMap(100);
+		
+		// TODO: Remove this when possible.
 	}
-	
+
 	protected void drawInfoWindow(Marker marker, Manufacturer manufacturer, MouseEvent mouseEvent) {
 		if (marker == null || mouseEvent == null) {
 			return;
 		}
 		HTML html = new HTML("<b>" + manufacturer.getName() + "</b><br>" 
 				+ manufacturer.getFormattedAddress());
-		
+
 		InfoWindowOptions options = InfoWindowOptions.newInstance();
 		options.setContent(html);
 		infoWindow = InfoWindow.newInstance(options);
 		infoWindow.open(theMapWidget.getMapWidget(), marker);
 	}
 
-	private boolean isValidLatLng(Marker marker) {
-		boolean notZeroLat = marker.getPosition().getLatitude() > 0.1 || 
-				marker.getPosition().getLatitude() < -0.1;
-		boolean notZeroLng = marker.getPosition().getLongitude() > 0.1 ||
-				marker.getPosition().getLongitude() < -0.1;
-		
+	private boolean isValidLatLng(LatLng location) {
+
+		boolean notZeroLat = location.getLatitude() > 0.1 || 
+				location.getLatitude() < -0.1;
+
+		boolean notZeroLng = location.getLongitude() > 0.1 ||
+				location.getLongitude() < -0.1;
+
 		return (notZeroLat || notZeroLng);
-				
+
 	}
-	
-	public void createMarker(List<Marker> theMarkers) {
+
+	public void calculateViewForMap(int percentage) {
+
 		double maxLng = Double.NEGATIVE_INFINITY;
 		double minLng = Double.POSITIVE_INFINITY;
 		double maxLat = Double.NEGATIVE_INFINITY;
@@ -115,7 +123,7 @@ public class MapPanel extends LayoutPanel {
 		LatLng currLatLng;
 
 		for (Marker marker : theMarkers) {
-			marker.setMap(theMapWidget.getMapWidget());
+
 			currLatLng = marker.getPosition();
 			currLat = currLatLng.getLatitude();
 			currLng = currLatLng.getLongitude();
@@ -134,14 +142,14 @@ public class MapPanel extends LayoutPanel {
 		}
 		if (maxLng > Double.NEGATIVE_INFINITY && 
 				maxLat > Double.NEGATIVE_INFINITY) {
-			recentreAndZoomMap(maxLat, minLat, maxLng, minLng, 65);
+			recentreAndZoomMap(maxLat, minLat, maxLng, minLng, percentage);
 			// TODO: Magic number needs to be a parameter but this method
 			// needs to not be in this class.
 		}
 	}
 
 	private void recentreAndZoomMap(double maxLat, double minLat, 
-			double maxLng, double minLng, double percentage) {
+			double maxLng, double minLng, int percentage) {
 		// percentage is percent of screen for displaying markers
 		int MIN_VIEW_PERCENT = 20;
 		if (percentage > MIN_VIEW_PERCENT) {
@@ -149,7 +157,7 @@ public class MapPanel extends LayoutPanel {
 			lngSpan = (lngSpan / percentage) * 100;
 			minLng = maxLng - lngSpan;
 		}
-		
+
 		LatLng southWest = LatLng.newInstance(minLat, minLng);
 		LatLng northEast = LatLng.newInstance(maxLat, maxLng);
 		LatLngBounds bounds = LatLngBounds.newInstance(southWest, northEast);
@@ -173,7 +181,7 @@ public class MapPanel extends LayoutPanel {
 	public AlcolistMapWidget getMapWidget() {
 		return theMapWidget;
 	}
-	
+
 	public void triggerResize() {
 		theMapWidget.triggerResize();
 	}

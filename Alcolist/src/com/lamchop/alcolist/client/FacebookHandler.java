@@ -17,6 +17,7 @@ import com.google.api.gwt.oauth2.client.AuthRequest;
 import com.google.gwt.http.client.RequestBuilder.Method;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 
 
@@ -43,6 +44,10 @@ public class FacebookHandler implements ClickHandler {
 
 	// This scope allows the app to post to the User's timeline.
 	private static final String FACEBOOK_PUBLISH_SCOPE = "publish_stream";
+	
+	private static final String USER_ID = "id";
+	
+	private static final String USER_NAME = "name";
 
 	// Use the implementation of Auth intended to be used in the GWT client app.
 	private static final Auth AUTH = Auth.get();
@@ -97,8 +102,6 @@ public class FacebookHandler implements ClickHandler {
 			@Override
 			public void onSuccess(String token) {
 				// TODO: (optional) AUTH.getToken() gives a TokenInfo with access token (string) and expiry.
-				Window.alert("Got an OAuth token:\n" + token + "\n"
-						+ "Token expires in " + AUTH.expiresIn(req) + " ms\n");
 				appToken = token;
 				getFacebookLoginInfo();
 			}
@@ -124,6 +127,7 @@ public class FacebookHandler implements ClickHandler {
 		final String id = "me";		
 		String params = null;
 		String requestData = "access_token=" + appToken;
+		// params might be relevant later.
 		if (params != null) {
 			requestData = requestData + "&" + params;
 		}
@@ -137,9 +141,14 @@ public class FacebookHandler implements ClickHandler {
 
 			public void onSuccess(JSONObject result) {
 				Window.alert(result.toString());
-				JSONValue jsonID = result.get(id);
-				String userID = jsonID.toString();
-				theAppDataController.initUserData(userID);
+				JSONValue jsonIDValue = result.get(id);
+				JSONObject jsonID = jsonIDValue.isObject();
+				JSONValue jsonUserID = jsonID.get(USER_ID);
+				JSONString userID = jsonUserID.isString();
+				JSONValue jsonUserName = jsonID.get(USER_NAME);
+				JSONString userName = jsonUserName.isString();
+				
+				theAppDataController.initUserData(userID.stringValue(), userName.stringValue());
 			}
 		};
 		

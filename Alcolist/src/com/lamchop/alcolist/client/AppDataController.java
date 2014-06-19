@@ -21,7 +21,7 @@ public class AppDataController {
 		this.theUI = theUI;
 	}
 	
-	public void initUserData(String userID) {
+	public void initUserData(String userID, String userName) {
 //		userDataService = GWT.create(UserDataService.class);
 //		userDataService.getUserData(userID, (new AsyncCallback<UserData>() {
 //			public void onFailure(Throwable error) {
@@ -32,7 +32,8 @@ public class AppDataController {
 //				updateAppDataUserData(result);
 //				sendUserDataToUI();
 //			}
-//		}));	
+//		}));
+		appData.newUserData(userID, userName);
 	}
 	
 	public void initManufacturers() {		
