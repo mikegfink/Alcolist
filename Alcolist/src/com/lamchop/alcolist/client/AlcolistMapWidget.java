@@ -2,7 +2,6 @@ package com.lamchop.alcolist.client;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArray;
@@ -67,27 +66,24 @@ public class AlcolistMapWidget extends Composite {
 	}
 
 	private void draw() {
-
 		pWidget.clear();
-
-
 		drawMap();
 	}
 
 
 
-	protected void drawInfoWindow(Marker marker, MouseEvent mouseEvent) {
-		if (marker == null || mouseEvent == null) {
-			return;
-		}
-
-		HTML html = new HTML("You clicked on: " + mouseEvent.getLatLng().getToString());
-
-		InfoWindowOptions options = InfoWindowOptions.newInstance();
-		options.setContent(html);
-		InfoWindow iw = InfoWindow.newInstance(options);
-		iw.open(mapWidget, marker);
-	}
+//	protected void drawInfoWindow(Marker marker, MouseEvent mouseEvent) {
+//		if (marker == null || mouseEvent == null) {
+//			return;
+//		}
+//
+//		HTML html = new HTML("You clicked on: " + mouseEvent.getLatLng().getToString());
+//
+//		InfoWindowOptions options = InfoWindowOptions.newInstance();
+//		options.setContent(html);
+//		InfoWindow iw = InfoWindow.newInstance(options);
+//		iw.open(mapWidget, marker);
+//	}
 
 	private void drawMap() {
 		LatLng center = LatLng.newInstance(55, -120);
@@ -146,59 +142,7 @@ public class AlcolistMapWidget extends Composite {
 		});
 	}
 
-	public void createMarker(List<Marker> theMarkers) {
-		double maxLng = Double.NEGATIVE_INFINITY;
-		double minLng = Double.POSITIVE_INFINITY;
-		double maxLat = Double.NEGATIVE_INFINITY;
-		double minLat = Double.POSITIVE_INFINITY;
-		double currLng, currLat;
-		LatLng currLatLng;
 
-		for (Marker marker : theMarkers) {
-			marker.setMap(mapWidget);
-			currLatLng = marker.getPosition();
-			currLat = currLatLng.getLatitude();
-			currLng = currLatLng.getLongitude();
-			if (currLat < minLat) {
-				minLat = currLat;
-			} 
-			if (currLat > maxLat) {
-				maxLat = currLat;
-			}	
-			if (currLng < minLng) {
-				minLng = currLng;
-			}
-			if (currLng > maxLng) {
-				maxLng = currLng;
-			}
-		}
-		if (maxLng > Double.NEGATIVE_INFINITY && 
-				maxLat > Double.NEGATIVE_INFINITY) {
-			recentreAndZoomMap(maxLat, minLat, maxLng, minLng, 65);
-			// TODO: Magic number needs to be a parameter but this method
-			// needs to not be in this class.
-		}
-	}
-
-	private void recentreAndZoomMap(double maxLat, double minLat, 
-			double maxLng, double minLng, double percentage) {
-		// percentage is percent of screen for displaying markers
-		int MIN_VIEW_PERCENT = 20;
-		if (percentage > MIN_VIEW_PERCENT) {
-			double lngSpan = Math.abs((maxLng - minLng));
-			lngSpan = (lngSpan / percentage) * 100;
-			minLng = maxLng - lngSpan;
-		}
-		
-		LatLng southWest = LatLng.newInstance(minLat, minLng);
-		LatLng northEast = LatLng.newInstance(maxLat, maxLng);
-		LatLngBounds bounds = LatLngBounds.newInstance(southWest, northEast);
-		LatLng centre = bounds.getCenter();
-		//mapWidget.panTo(centre);
-		//mapWidget.panToBounds(bounds);
-		mapWidget.setCenter(centre);
-		mapWidget.fitBounds(bounds);
-	}
 
 	public MapWidget getMapWidget() {
 		return mapWidget;
