@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import static com.google.gwt.dom.client.Style.Unit.PCT;
+import static com.google.gwt.dom.client.Style.Unit.PX;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.google.gwt.layout.client.Layout.Alignment;
 
@@ -79,15 +80,15 @@ public class UIController implements UIUpdateInterface {
 
 		uiPanel.add(legend);
 		uiPanel.setWidgetRightWidth(legend, 3, PCT, 10, PCT);
-		uiPanel.setWidgetTopHeight(legend, 8, PCT, 20, PCT);
+		uiPanel.setWidgetTopHeight(legend, 10, PCT, 20, PCT);
 		
 		uiPanel.setWidgetTopHeight(title, 0, PCT, 10, PCT);
 		uiPanel.setWidgetLeftWidth(title, 20, PCT, 60, PCT);
 		uiPanel.setWidgetBottomHeight(adminPanel, 3, PCT, 7, PCT);
 		uiPanel.setWidgetRightWidth(adminPanel, 3, PCT, 15, PCT);
 
-		uiPanel.setWidgetRightWidth(loginButton, 8, PCT, 6.35, PCT);
-		uiPanel.setWidgetTopHeight(loginButton, 3, PCT, 3.8, PCT);
+		uiPanel.setWidgetRightWidth(loginButton, 8, PCT, 66, PX);
+		uiPanel.setWidgetTopHeight(loginButton, 3, PCT, 31, PX);
 
 
 
@@ -130,10 +131,8 @@ public class UIController implements UIUpdateInterface {
 		deleteButton.setText("DELETE DATA");
 	
 		loginButton = new FacebookLoginButton(theAppDataController);
-
-		
+	
 		logoutButton = new FacebookLogoutButton(theAppDataController);
-		logoutButton.setText("logout");
 	
 		showListButton = new ShowListButton(theAppDataController);
 		showListButton.setText("Show List");

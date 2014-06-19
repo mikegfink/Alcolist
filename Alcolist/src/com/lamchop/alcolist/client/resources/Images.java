@@ -15,6 +15,9 @@ public interface Images extends ClientBundle {
 	  
 	  @Source("facebookLogin.png")
 	  ImageResource facebookLogin();
+	  
+	  @Source("facebookLogout.png")
+	  ImageResource facebookLogout();
 	 
 }
 
