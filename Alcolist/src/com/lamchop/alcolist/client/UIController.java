@@ -2,13 +2,17 @@ package com.lamchop.alcolist.client;
 
 
 import java.util.List;
+
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
+
 import static com.google.gwt.dom.client.Style.Unit.PCT;
 import static com.google.gwt.dom.client.Style.Unit.PX;
+
 import com.lamchop.alcolist.shared.Manufacturer;
+import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.layout.client.Layout.Alignment;
 
 public class UIController implements UIUpdateInterface {
@@ -28,7 +32,7 @@ public class UIController implements UIUpdateInterface {
 	private FacebookLoginButton loginButton;
 	private FacebookLogoutButton logoutButton;
 	private Legend legend;
-	private LayoutPanel userPanel; // TODO: Maybe make it it's own type.
+	private Label userPanel; // TODO: Maybe make it it's own type.
 
 	public UIController() {
 		theAppDataController = new AppDataController(this);
@@ -38,7 +42,7 @@ public class UIController implements UIUpdateInterface {
 		adminPanel = new LayoutPanel();
 		title = new Label("The Alcolist");
 		legend = new Legend();
-		userPanel = new LayoutPanel();
+		userPanel = new Label();
 		
 
 		initMap();
@@ -210,7 +214,7 @@ public class UIController implements UIUpdateInterface {
 
 	private void showLoggedOut() {
 		hideLogoutButton();
-		
+		hideUserPanel();
 		showLoginButton();
 	}	
 
@@ -225,9 +229,9 @@ public class UIController implements UIUpdateInterface {
 	private void showUserPanel(String userName) {
 		String greeting = "Hi " + userName;
 		
-		userPanel.setTitle(greeting);
+		userPanel.setText(greeting); 
 		uiPanel.setWidgetRightWidth(userPanel, 14, PCT, 5, PCT);
-		uiPanel.setWidgetTopHeight(userPanel, 3, PCT, 2, PCT);
+		uiPanel.setWidgetTopHeight(userPanel, 3, PCT, 3, PCT);
 	}
 	
 	private void hideUserPanel() {

@@ -22,7 +22,7 @@ public class LatLongAdder {
 	}
 
 	public void makeGeocodeRequest(List<Manufacturer> manufacturers) {
-		int count = 0;
+		//int count = 0;
 		int batch = 0;
 		for (Manufacturer currentManufacturer: manufacturers) {
 			batch++;
@@ -36,9 +36,9 @@ public class LatLongAdder {
 				batch = 0;
 			}
 			// Limiting the requests for debugging purposes
-			count++;
-			if (count >= 20)
-				return;
+//			count++;
+//			if (count >= 20)
+//				return;
 
 			try {
 				getLatLong(currentManufacturer);
