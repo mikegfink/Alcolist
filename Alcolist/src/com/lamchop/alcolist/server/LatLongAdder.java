@@ -28,7 +28,7 @@ public class LatLongAdder {
 			batch++;
 			if (batch >= 10) {
 				try {
-					TimeUnit.MILLISECONDS.sleep(1100);
+					TimeUnit.MILLISECONDS.sleep(1200);
 					// This is here because of the Geocoder request limit.
 				} catch (InterruptedException e) {
 					GWT.log("Sleep interrupted" + e.getMessage());

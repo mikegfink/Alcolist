@@ -84,7 +84,7 @@ public class FacebookHandler implements ClickHandler {
 	private void logout() {
 		Auth.get().clearAllTokens();
 		appToken = null;
-		Window.alert("All tokens cleared");
+		Window.alert("Logged out of Alcolist.");
 		theAppDataController.clearUserData();
 	}
 
