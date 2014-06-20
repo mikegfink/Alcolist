@@ -28,6 +28,7 @@ public class ListPanel extends LayoutPanel {
 	Column<Manufacturer, Manufacturer> nameColumn;
 	Column<Manufacturer, String> cityColumn;
 	Column<Manufacturer, String> typeColumn;
+	Column<Manufacturer, String> phoneNumberColumn;
 
 
 	public ListPanel() {
@@ -91,6 +92,7 @@ public class ListPanel extends LayoutPanel {
 			}
 		});
 
+
 		// Make type column
 		typeColumn = 
 				new Column<Manufacturer, String>(new TextCell()) {
@@ -114,7 +116,7 @@ public class ListPanel extends LayoutPanel {
 		listGrid.addColumn(nameColumn, "Manufacturer");
 		listGrid.addColumn(cityColumn, "City");
 		listGrid.addColumn(typeColumn, "Type");
-		listGrid.setColumnWidth(0,  "50%");
+		listGrid.setColumnWidth(0,  "65%");
 
 	}
 
