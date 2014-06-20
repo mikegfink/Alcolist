@@ -47,9 +47,8 @@ public class LatLongAdderTest {
 		double latitude;
 		double longitude;
 		
-		importService.importData();
 		all = manufacturerService.getManufacturers();
-		// Make sure we have the data
+		// Make sure the data is already stored in the datastore.
 		assertTrue(all.size() > 350);
 		
 		for (Manufacturer next : all) {
