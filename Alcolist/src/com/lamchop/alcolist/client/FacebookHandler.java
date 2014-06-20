@@ -84,7 +84,7 @@ public class FacebookHandler implements ClickHandler {
 	private void logout() {
 		Auth.get().clearAllTokens();
 		appToken = null;
-		Window.alert("All tokens cleared");
+		Window.alert("Logged out of Alcolist.");
 		theAppDataController.clearUserData();
 	}
 
@@ -140,12 +140,10 @@ public class FacebookHandler implements ClickHandler {
 			}
 
 			public void onSuccess(JSONObject result) {
-				Window.alert(result.toString());
-				JSONValue jsonIDValue = result.get(id);
-				JSONObject jsonID = jsonIDValue.isObject();
-				JSONValue jsonUserID = jsonID.get(USER_ID);
+				JSONValue jsonUserID = result.get(USER_ID);
 				JSONString userID = jsonUserID.isString();
-				JSONValue jsonUserName = jsonID.get(USER_NAME);
+				
+				JSONValue jsonUserName = result.get(USER_NAME);
 				JSONString userName = jsonUserName.isString();
 				
 				theAppDataController.initUserData(userID.stringValue(), userName.stringValue());

@@ -105,10 +105,10 @@ public class MapPanel extends LayoutPanel {
 
 	private boolean isValidLatLng(LatLng location) {
 
-		boolean notZeroLat = location.getLatitude() > 0.1 || 
+		boolean notZeroLat = location.getLatitude() > 0.5 || 
 				location.getLatitude() < -0.1;
 
-		boolean notZeroLng = location.getLongitude() > 0.1 ||
+		boolean notZeroLng = location.getLongitude() > 0.5 ||
 				location.getLongitude() < -0.1;
 
 		return (notZeroLat || notZeroLng);
@@ -154,14 +154,16 @@ public class MapPanel extends LayoutPanel {
 			double maxLng, double minLng, int percentage) {
 		// percentage is percent of screen for displaying markers
 		int MIN_VIEW_PERCENT = 20;
-		if (percentage > MIN_VIEW_PERCENT) {
-			double lngSpan = Math.abs((maxLng - minLng));
+		double lngSpan = Math.abs((maxLng - minLng));
+		int border = 15;
+		
+		if (percentage > MIN_VIEW_PERCENT) {			
 			lngSpan = (lngSpan / percentage) * 100;
 			minLng = maxLng - lngSpan;
 		}
 
 		LatLng southWest = LatLng.newInstance(minLat, minLng);
-		LatLng northEast = LatLng.newInstance(maxLat, maxLng);
+		LatLng northEast = LatLng.newInstance(maxLat, maxLng + lngSpan/border);
 		LatLngBounds bounds = LatLngBounds.newInstance(southWest, northEast);
 		LatLng centre = bounds.getCenter();
 		//mapWidget.panTo(centre);

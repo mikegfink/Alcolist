@@ -2,13 +2,17 @@ package com.lamchop.alcolist.client;
 
 
 import java.util.List;
+
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
+
 import static com.google.gwt.dom.client.Style.Unit.PCT;
 import static com.google.gwt.dom.client.Style.Unit.PX;
+
 import com.lamchop.alcolist.shared.Manufacturer;
+import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.layout.client.Layout.Alignment;
 
 public class UIController implements UIUpdateInterface {
@@ -28,6 +32,7 @@ public class UIController implements UIUpdateInterface {
 	private FacebookLoginButton loginButton;
 	private FacebookLogoutButton logoutButton;
 	private Legend legend;
+	private Label userPanel; // TODO: Maybe make it it's own type.
 
 	public UIController() {
 		theAppDataController = new AppDataController(this);
@@ -37,6 +42,7 @@ public class UIController implements UIUpdateInterface {
 		adminPanel = new LayoutPanel();
 		title = new Label("The Alcolist");
 		legend = new Legend();
+		userPanel = new Label();
 		
 
 		initMap();
@@ -69,28 +75,25 @@ public class UIController implements UIUpdateInterface {
 	
 	public void loadDefaultView() {	
 		
-		if (theAppDataController.isUserLoggedIn()) {
-			uiPanel.add(logoutButton);
-		}
-		else {
-			uiPanel.add(loginButton);
-		}
-
+		uiPanel.add(loginButton);
+		uiPanel.add(logoutButton);
+		uiPanel.add(userPanel);
+		
+		hideUserPanel();
+		hideLogoutButton();
+		showLoginButton();
+		
 		uiPanel.add(legend);
 
 		uiPanel.setWidgetRightWidth(legend, 3, PCT, 130, PX);
 		uiPanel.setWidgetTopHeight(legend, 8, PCT, 150, PX);
-
 		
 		uiPanel.setWidgetTopHeight(title, 0, PCT, 10, PCT);
 		uiPanel.setWidgetLeftWidth(title, 20, PCT, 60, PCT);
 		uiPanel.setWidgetBottomHeight(adminPanel, 3, PCT, 7, PCT);
 		uiPanel.setWidgetRightWidth(adminPanel, 3, PCT, 15, PCT);
 
-		uiPanel.setWidgetRightWidth(loginButton, 8, PCT, 66, PX);
-		uiPanel.setWidgetTopHeight(loginButton, 3, PCT, 31, PX);
-
-
+		
 
 		uiPanel.add(showListButton);
 		uiPanel.setWidgetTopHeight(showListButton, 3, PCT, 5, PCT);
@@ -201,7 +204,59 @@ public class UIController implements UIUpdateInterface {
 	@Override
 	public void update(UserData userData) {
 		// TODO Auto-generated method stub
+		if (userData != null) {
+			showLoggedIn(userData);
+		}
+		else {
+			showLoggedOut();
+		}
+	}
 
+	private void showLoggedOut() {
+		hideLogoutButton();
+		hideUserPanel();
+		showLoginButton();
+	}	
+
+	private void showLoggedIn(UserData userData) {
+		hideLoginButton();
+		
+		showLogoutButton();
+		
+		showUserPanel(userData.getName());
+		
+	}
+	private void showUserPanel(String userName) {
+		String greeting = "Hi " + userName;
+		
+		userPanel.setText(greeting); 
+		uiPanel.setWidgetRightWidth(userPanel, 14, PCT, 5, PCT);
+		uiPanel.setWidgetTopHeight(userPanel, 3, PCT, 3, PCT);
+	}
+	
+	private void hideUserPanel() {
+		uiPanel.setWidgetRightWidth(userPanel, 14, PCT, 0, PCT);
+		uiPanel.setWidgetTopHeight(userPanel, 3, PCT, 0, PCT);
+	}
+
+	private void hideLoginButton() {
+		uiPanel.setWidgetRightWidth(loginButton, 0, PCT, 0, PCT);
+		uiPanel.setWidgetTopHeight(loginButton, 0, PCT, 0, PCT);
+	}
+
+	private void hideLogoutButton() {
+		uiPanel.setWidgetRightWidth(logoutButton, 0, PCT, 0, PCT);
+		uiPanel.setWidgetTopHeight(logoutButton, 0, PCT, 0, PCT);
+	}
+	
+	private void showLoginButton() {
+		uiPanel.setWidgetRightWidth(loginButton, 8, PCT, 66, PX);
+		uiPanel.setWidgetTopHeight(loginButton, 3, PCT, 31, PX);
+	}
+	
+	private void showLogoutButton() {
+		uiPanel.setWidgetRightWidth(logoutButton, 8, PCT, 66, PX);
+		uiPanel.setWidgetTopHeight(logoutButton, 3, PCT, 31, PX);
 	}
 
 }

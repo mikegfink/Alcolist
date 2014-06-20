@@ -8,4 +8,5 @@ public interface ImportService extends RemoteService {
 
 	public void importData();
 	public void deleteData();
+	public void geocodeData();
 }

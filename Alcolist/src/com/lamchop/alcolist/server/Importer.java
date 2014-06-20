@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Importer {
 	private List<Manufacturer> importedManufacturers = new ArrayList<Manufacturer>();
-	private LatLongAdder latLongAdder = new LatLongAdder();
+	//private LatLongAdder latLongAdder = new LatLongAdder();
 
 	public void importData(String website) {
 		// Get CSV file from website
@@ -56,7 +56,7 @@ public class Importer {
 		            // nothing to see here
 			}
 		}
-		latLongAdder.makeGeocodeRequest(importedManufacturers);
+		//latLongAdder.makeGeocodeRequest(importedManufacturers);
 		for (Manufacturer nextManufacturer : importedManufacturers) {
 			storeManufacturer(nextManufacturer);
 		}

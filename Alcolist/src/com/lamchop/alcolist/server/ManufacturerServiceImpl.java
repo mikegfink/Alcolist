@@ -41,6 +41,14 @@ public class ManufacturerServiceImpl  extends RemoteServiceServlet implements
 		} finally {
 			pm.close();
 		}
+		
+//		for (Manufacturer currentManufacturer : manufacturers) {
+//			if (currentManufacturer.getLatitude() > 2) {
+//				System.out.println("Address was: " + currentManufacturer.getFormattedAddress());
+//				System.out.println("LatLng was: " + currentManufacturer.getLatitude()
+//						+ ", " + currentManufacturer.getLongitude());
+//			}
+//		}
 		return manufacturers;
 	}
 	  

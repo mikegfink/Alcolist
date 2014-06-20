@@ -36,9 +36,9 @@ public class LatLongAdder {
 				batch = 0;
 			}
 			// Limiting the requests for debugging purposes
-			count++;
-			if (count >= 20)
-				return;
+//			count++;
+//			if (count >= 10)
+//				return;
 
 			try {
 				getLatLong(currentManufacturer);
@@ -58,6 +58,10 @@ public class LatLongAdder {
 				"&address=";
 		request += URLEncoder.encode(address, "UTF-8") + "&key=" + 
 				URLEncoder.encode(API_KEY, "UTF-8");
+		
+//		String request = GEOCODER_REQUEST_PREFIX_FOR_JSON;
+//		request += URLEncoder.encode(address, "UTF-8");
+		
 		URL geocodeURL = new URL(request);
 
 		// read from the URL
@@ -70,13 +74,15 @@ public class LatLongAdder {
 
 		resultStream.close();
 		// TODO: Debugging for live. Remove when safe to do so.
-		manufacturer.setFormattedAddress(result);
+		//System.out.println("Address is: " + address);
+		//manufacturer.setFormattedAddress(result);
 		// build a JSON object
 
 		JSONObject resultAsJSON = (JSONObject) JSONValue.parse(result);
 		if (! resultAsJSON.get("status").equals("OK")) {
 			System.out.println("Status was: " + resultAsJSON.get("status").toString()
-					+ "for : " + address);
+					+ " for: " + address);
+			manufacturer.setLatLng(0.4, 0.4);
 			return;
 		}
 
@@ -91,9 +97,10 @@ public class LatLongAdder {
 
 		double lat = (double) locationInJSON.get("lat");
 		double lng = (double) locationInJSON.get("lng");
-
-		System.out.println("Address was: " + formattedAddress);
-		System.out.println("LatLng was: " + lat + ", " + lng);
+		
+//		System.out.println("Original Address was: " + address);
+//		System.out.println("Address was: " + formattedAddress);
+//		System.out.println("LatLng was: " + lat + ", " + lng);
 
 		manufacturer.setLatLng(lat, lng);
 		manufacturer.setFormattedAddress(formattedAddress);

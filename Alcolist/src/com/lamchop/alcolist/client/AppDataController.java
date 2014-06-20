@@ -34,6 +34,7 @@ public class AppDataController {
 //			}
 //		}));
 		appData.newUserData(userID, userName);
+		sendUserDataToUI();
 	}
 	
 	public void initManufacturers() {		

@@ -58,4 +58,7 @@ public class UserData {
 		this.name = name;
 	}
 
+	public String getUserID() {
+		return userID;
+	}
 }
