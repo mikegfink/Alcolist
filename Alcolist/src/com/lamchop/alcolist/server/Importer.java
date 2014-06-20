@@ -86,7 +86,7 @@ public class Importer {
 		String city = toTitleCase(tokens[3]);
 		String province = "British Columbia"; // All our manufacturers are in BC
 		String postalCode = tokens[4];
-		String phoneNumber = tokens[10];
+		String phoneNumber = formatPhone(tokens[10]);
 		String licenseType = tokens[11];
 		
 		Manufacturer manufacturer = new Manufacturer(establishmentName, streetAddress, city, 
@@ -120,6 +120,20 @@ public class Importer {
 		}
 		return string;
 	}
+
+	private String formatPhone(String string) {
+		String result = string;
+		// Match phone numbers in their current format in the csv file.
+		String regex = "[0-9]{3} [0-9]{7}";
+		if (result.matches(regex)) {
+			result = string.substring(0, 3) + "-" + string.substring(4, 7) + "-" + 
+					string.substring(7, 11);
+		} else {
+			System.err.println("Phone number format has changed in CSV file!");
+		}
+		return result;
+	}
+
 	
 	/** Stores the given manufacturer in the datastore 
 	 * 
