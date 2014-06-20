@@ -35,7 +35,8 @@ public class MapPanel extends LayoutPanel {
 
 	public MapPanel() {
 		theMarkers = new ArrayList<Marker>();
-
+		theMapWidget = null;
+		infoWindow = null;
 	}
 
 	public void setMapWidget(AlcolistMapWidget mapWidget)  {
@@ -73,11 +74,10 @@ public class MapPanel extends LayoutPanel {
 				} else if (licenseType.equals("Distillery")) {
 					marker.setIcon(distilleryIcon);
 				}
-
+			
 				marker.addClickHandler(new ClickMapHandler() {
 					@Override
 					public void onEvent(ClickMapEvent event) {
-						infoWindow.close();
 						drawInfoWindow(marker, nextManufacturer, event.getMouseEvent());
 					}
 				});
@@ -97,6 +97,8 @@ public class MapPanel extends LayoutPanel {
 
 		InfoWindowOptions options = InfoWindowOptions.newInstance();
 		options.setContent(html);
+		if (infoWindow != null)
+			infoWindow.close();
 		infoWindow = InfoWindow.newInstance(options);
 		infoWindow.open(theMapWidget.getMapWidget(), marker);
 	}
