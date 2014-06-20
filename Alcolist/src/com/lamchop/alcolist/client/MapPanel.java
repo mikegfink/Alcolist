@@ -105,10 +105,10 @@ public class MapPanel extends LayoutPanel {
 
 	private boolean isValidLatLng(LatLng location) {
 
-		boolean notZeroLat = location.getLatitude() > 0.1 || 
+		boolean notZeroLat = location.getLatitude() > 0.5 || 
 				location.getLatitude() < -0.1;
 
-		boolean notZeroLng = location.getLongitude() > 0.1 ||
+		boolean notZeroLng = location.getLongitude() > 0.5 ||
 				location.getLongitude() < -0.1;
 
 		return (notZeroLat || notZeroLng);

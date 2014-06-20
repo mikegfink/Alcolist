@@ -6,4 +6,5 @@ public interface ImportServiceAsync {
 
 	void importData(AsyncCallback<Void> callback);
     void deleteData(AsyncCallback<Void> callback);
+    void geocodeData(AsyncCallback<Void> callback);
 }

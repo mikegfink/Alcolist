@@ -71,7 +71,7 @@ public class AlcolistMapWidget extends Composite {
 	}
 
 	private void drawMap() {
-		LatLng center = LatLng.newInstance(55, -120);
+		LatLng center = LatLng.newInstance(51, -120);
 		MapOptions opts = MapOptions.newInstance();
 		opts.setZoom(7);
 		opts.setCenter(center);
