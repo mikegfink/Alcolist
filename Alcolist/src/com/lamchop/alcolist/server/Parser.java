@@ -12,6 +12,7 @@ public class Parser {
 		try {
 			List<String> tokens = new ArrayList<String>();
 			StringBuffer accumulator = new StringBuffer();
+			String nextToken;
 			// Start the accumulator
 			accumulator.setLength(0);
 			boolean inQuotes = false;
@@ -23,7 +24,8 @@ public class Parser {
 				} else if (next == COMMA && !inQuotes) {
 					// Only commas outside of quotes signal the end of a token.
 					// Trim whitespace off either end before adding
-					tokens.add(accumulator.toString().trim());
+					nextToken = accumulator.toString();
+					tokens.add(trimWhitespace(nextToken));
 					// Reset accumulator for next token.
 					accumulator.setLength(0);
 				} else {
@@ -32,7 +34,8 @@ public class Parser {
 				}
 			}
 			// Add the last token, trimming whitespace off either end.
-			tokens.add(accumulator.toString().trim());
+			nextToken = accumulator.toString();
+			tokens.add(trimWhitespace(nextToken));
 			
 			String[] tokenArray = tokens.toArray(new String[tokens.size()]);
 			return tokenArray;
@@ -42,6 +45,20 @@ public class Parser {
 		// Still return a String array if parsing fails.
 		String[] noResult = {};
 		return noResult;	
+	}
+
+	// Trim the whitespace around the given string, or all the whitespace if all characters are spaces/tabs.
+	// Needed because built-in trim function will not trim whitespace from a string containing only 
+	// whitespace.
+	private String trimWhitespace(String string) {
+		// Regular expression to match strings containing only whitespace
+		String regex = "[ \t]*";
+		if (string.matches(regex)) {
+			string = "";
+		} else {
+			string = string.trim();
+		}
+		return string;
 	}
 }
 
