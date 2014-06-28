@@ -24,12 +24,14 @@ public class LatLongAdderTest {
 	private PersistenceManager pm;
 	private ImportServiceImpl importService;
 	private ManufacturerServiceImpl manufacturerService;
+	private int numGeocodePasses;
 		
 	@Before
 	public void setUp() {
 		helper.setUp();
 		importService = new ImportServiceImpl();
 		manufacturerService = new ManufacturerServiceImpl();
+		numGeocodePasses = 4; // Geocoding curently broken up into 4 calls to geocodeData()
 	}
 		
 	@After
@@ -50,7 +52,9 @@ public class LatLongAdderTest {
 		// Uncomment the following lines to run the tests properly. Commented out to avoid
 		// accidentally using up our geocoding and import limits
 		//importService.importData();
-		//importService.geocodeData();
+		//for (int i = 0; i < numGeocodePasses; i++) {
+		//	importService.geocodeData();				
+		//}
 		all = manufacturerService.getManufacturers();
 		// Make sure we have the data
 		// Uncomment the following line to run tests properly
