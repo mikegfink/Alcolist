@@ -123,13 +123,14 @@ public class Importer {
 
 	private String formatPhone(String string) {
 		String result = string;
-		// Match phone numbers in their current format in the csv file.
+		// Match phone numbers in their current format in the csv file
 		String regex = "[0-9]{3} [0-9]{7}";
 		if (result.matches(regex)) {
 			result = string.substring(0, 3) + "-" + string.substring(4, 7) + "-" + 
 					string.substring(7, 11);
-		} else {
-			System.err.println("Phone number format has changed in CSV file!");
+		} else if (string != "") {
+			// Only print an error message when a phone number is present but not in expected format
+			System.err.println("Phone number not in expected form: " + string);
 		}
 		return result;
 	}
