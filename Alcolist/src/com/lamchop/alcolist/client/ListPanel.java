@@ -1,6 +1,8 @@
 package com.lamchop.alcolist.client;
 
 import java.util.Comparator;
+import static com.google.gwt.dom.client.Style.Unit.PCT;
+import static com.google.gwt.dom.client.Style.Unit.PX;
 import java.util.List;
 
 import com.google.gwt.cell.client.Cell;
@@ -22,7 +24,7 @@ public class ListPanel extends LayoutPanel {
 
 
 	private DataGrid<Manufacturer> listGrid;
-	private LayoutPanel searchPanel;
+	private SearchPanel searchPanel;
 	ListDataProvider<Manufacturer> dataProvider;
 	List<Manufacturer> list;
 	Column<Manufacturer, Manufacturer> nameColumn;
@@ -31,10 +33,15 @@ public class ListPanel extends LayoutPanel {
 	Column<Manufacturer, String> phoneNumberColumn;
 
 
-	public ListPanel() {
+	public ListPanel(AppDataController theAppDataController) {
 		DataGridResource resource = GWT.create(DataGridResource.class);
 		listGrid = new DataGrid<Manufacturer>(PAGESIZE, resource);
 		listGrid.setEmptyTableWidget(new Label("Empty"));
+		
+		searchPanel = new SearchPanel(theAppDataController);
+		add(searchPanel);
+		this.setWidgetTopHeight(searchPanel, 0, PCT, 35, PX);
+		
 
 		addDataProvider();
 		list = dataProvider.getList();
@@ -45,6 +52,7 @@ public class ListPanel extends LayoutPanel {
 		initListColumns(sortHandler);
 
 		add(listGrid);
+		this.setWidgetBottomHeight(listGrid, 0, PCT, 90, PCT);
 	}
 
 	public void addDataProvider() {

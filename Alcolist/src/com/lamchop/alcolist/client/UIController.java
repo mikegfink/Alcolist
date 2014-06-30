@@ -38,7 +38,7 @@ public class UIController implements UIUpdateInterface {
 		theAppDataController = new AppDataController(this);
 		uiPanel = new UI();
 		mapsLoader = new MapsLoader();
-		listPanel = new ListPanel();
+		listPanel = new ListPanel(theAppDataController);
 		adminPanel = new LayoutPanel();
 		title = new Label("The Alcolist");
 		legend = new Legend();
@@ -258,5 +258,6 @@ public class UIController implements UIUpdateInterface {
 		uiPanel.setWidgetRightWidth(logoutButton, 8, PCT, 66, PX);
 		uiPanel.setWidgetTopHeight(logoutButton, 3, PCT, 31, PX);
 	}
+	
 
 }

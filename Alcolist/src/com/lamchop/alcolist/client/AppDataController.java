@@ -1,5 +1,6 @@
 package com.lamchop.alcolist.client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
@@ -112,6 +113,17 @@ public class AppDataController {
 	
 	public void hideMap() {
 		theUI.hideMap();		
+	}
+	
+	public void filterBySearch(String searchText) {
+		List<Manufacturer> allManufacturers = appData.getManufacturers();
+		List<Manufacturer> filteredManufacturers = new ArrayList<Manufacturer>();
+		for (Manufacturer m : allManufacturers) {
+			if (m.getCity().toLowerCase().contains(searchText) || m.getName().toLowerCase().contains(searchText) || m.getFullAddress().toLowerCase().contains(searchText))
+				filteredManufacturers.add(m);	
+		}
+		theUI.update(filteredManufacturers);
+			
 	}
 
 }
