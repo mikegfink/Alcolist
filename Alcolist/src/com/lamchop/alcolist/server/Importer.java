@@ -82,7 +82,7 @@ public class Importer {
 	// This only works if I *don't* make licenseType an enum, or include a type "Other" that we don't store.
 	private Manufacturer createManufacturer(String[] tokens) throws ArrayIndexOutOfBoundsException {
 		String establishmentName = toTitleCase(tokens[0]);
-		String streetAddress = toTitleCase(tokens[1]);
+		String streetAddress = toTitleCase(tokens[1] + " " + tokens[2]);
 		String city = toTitleCase(tokens[3]);
 		String province = "British Columbia"; // All our manufacturers are in BC
 		String postalCode = tokens[4];
