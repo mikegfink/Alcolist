@@ -18,6 +18,24 @@ public interface Images extends ClientBundle {
 	  
 	  @Source("facebookLogout.png")
 	  ImageResource facebookLogout();
+	  
+	  @Source("expandDark.png")
+	  ImageResource expandDark();
+	  
+	  @Source("expandLight.png")
+	  ImageResource expandLight();
+	  
+	  @Source("maximizeLight.png")
+	  ImageResource maximizeLight();
+	  
+	  @Source("maximizeDark.png")
+	  ImageResource maximizeDark();
+	  
+	  @Source("minimizeLight.png")
+	  ImageResource minimizeLight();
+	  
+	  @Source("minimizeDark.png")
+	  ImageResource minimizeDark();
 	 
 }
 

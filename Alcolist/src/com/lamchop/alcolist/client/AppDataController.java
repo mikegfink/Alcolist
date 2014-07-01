@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.lamchop.alcolist.client.ui.UIUpdateInterface;
 import com.lamchop.alcolist.shared.Manufacturer;
 
 public class AppDataController {
@@ -96,22 +97,6 @@ public class AppDataController {
 	
 	public boolean isUserLoggedIn() {
 		return (appData.getUserData() != null);
-	}
-
-	public void showList() {
-		theUI.showList();		
-	}
-	
-	public void showMap() {
-		theUI.showMap();		
-	}
-	
-	public void hideList() {
-		theUI.hideList();		
-	}
-	
-	public void hideMap() {
-		theUI.hideMap();		
 	}
 
 }

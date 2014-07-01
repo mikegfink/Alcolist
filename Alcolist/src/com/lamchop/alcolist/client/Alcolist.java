@@ -6,6 +6,10 @@ import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.dom.client.Style.Unit;
+import com.lamchop.alcolist.client.ui.GWTBase;
+import com.lamchop.alcolist.client.ui.UI;
+import com.lamchop.alcolist.client.ui.UIController;
+
 import static com.google.gwt.dom.client.Style.Unit.PCT;
 
 /**

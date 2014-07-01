@@ -19,6 +19,9 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import com.lamchop.alcolist.client.ui.FacebookLoginButton;
+import com.lamchop.alcolist.client.ui.FacebookLogoutButton;
+import com.lamchop.alcolist.client.ui.FacebookReviewBox;
 
 
 /**

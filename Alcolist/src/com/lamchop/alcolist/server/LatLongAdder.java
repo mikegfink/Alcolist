@@ -22,7 +22,8 @@ public class LatLongAdder {
 	}
 
 	public void makeGeocodeRequest(List<Manufacturer> manufacturers) {
-		int count = 0;
+		// Count is for debugging purposes to bottleneck the requests
+		// int count = 0;
 		int batch = 0;
 		for (Manufacturer currentManufacturer: manufacturers) {
 			batch++;
@@ -37,7 +38,7 @@ public class LatLongAdder {
 			}
 			// Limiting the requests for debugging purposes
 //			count++;
-//			if (count >= 10)
+//			if (count >= 20)
 //				return;
 
 			try {
@@ -58,7 +59,8 @@ public class LatLongAdder {
 				"&address=";
 		request += URLEncoder.encode(address, "UTF-8") + "&key=" + 
 				URLEncoder.encode(API_KEY, "UTF-8");
-		
+
+		// For testing without api key
 //		String request = GEOCODER_REQUEST_PREFIX_FOR_JSON;
 //		request += URLEncoder.encode(address, "UTF-8");
 		
