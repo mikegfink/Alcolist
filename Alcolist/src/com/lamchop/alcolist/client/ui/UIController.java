@@ -16,9 +16,6 @@ public class UIController implements UIUpdateInterface {
 	private static final int DEFAULT_MAP_WIDTH = 50;
 	private static final int BIG_MAP_WIDTH = 100;
 	private static final int HIDE_LIST_VALUE = 0;
-	private static final String SHOW_LIST = "ShowList";
-	private static final String HIDE_LIST = "HideList";
-	private static final String HIDE_MAP = "HideMap";
 	
 	private UI uiPanel;
 	private MapsLoader mapsLoader;
@@ -48,19 +45,19 @@ public class UIController implements UIUpdateInterface {
 	}
 	
 	public void showList() {
-		uiPanel.toggleViewButtons(SHOW_LIST);
+		uiPanel.toggleViewButtons(DEFAULT_LIST_WIDTH);
 		uiPanel.changeListView(DEFAULT_LIST_LEFT, DEFAULT_LIST_WIDTH);		
 		uiPanel.changeMapView(DEFAULT_MAP_WIDTH);
 	}
 	
 	public void hideList() {
-		uiPanel.toggleViewButtons(HIDE_LIST);
+		uiPanel.toggleViewButtons(HIDE_LIST_VALUE);
 		uiPanel.changeListView(DEFAULT_LIST_LEFT, HIDE_LIST_VALUE);		
 		uiPanel.changeMapView(BIG_MAP_WIDTH);
 	}
 	
 	public void hideMap() {
-		uiPanel.toggleViewButtons(HIDE_MAP);
+		uiPanel.toggleViewButtons(BIG_LIST_WIDTH);
 		uiPanel.changeListView(BIG_LIST_LEFT, BIG_LIST_WIDTH);	
 	}
 	

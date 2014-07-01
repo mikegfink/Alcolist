@@ -13,12 +13,11 @@ import com.lamchop.alcolist.client.UserData;
 import com.lamchop.alcolist.shared.Manufacturer;
 
 public class UI extends LayoutPanel {
-	// CONSTANTS
 	
-	private static final String HIDE_MAP = "HideMap";
-	private static final String HIDE_LIST = "HideList";
-	private static final String SHOW_LIST = "ShowList";
-	private static final int ANIMATE_DURATION = 500;
+	// CONSTANTS
+	private static final int HIDE_MAP_VALUE = 50;
+	private static final int HIDE_LIST_VALUE = 0;
+	private static final int ANIMATE_DURATION = 300;
 	private static final double TITLE_TOP_PCT = 0;
 	private static final double TITLE_HEIGHT_PCT = 10;
 	private static final double TITLE_WIDTH_PCT = 60;
@@ -149,20 +148,22 @@ public class UI extends LayoutPanel {
 		setWidgetLeftWidth(widgetToHide, widgetToHide.getAbsoluteLeft(), PX, 0, PCT);		
 	}
 	
+	// Intended for use to show adminPanel if user is an admin. Possibly additional menus
+	// for userData
 	public void showChild(Widget widgetToShow, int heightPercent, int widthPercent){
-		setWidgetTopHeight(widgetToShow, widgetToShow.getAbsoluteTop(), PX, heightPercent, PCT);
-		setWidgetLeftWidth(widgetToShow, widgetToShow.getAbsoluteLeft(), PX, widthPercent, PCT);
+		setWidgetTopHeight(widgetToShow, widgetToShow.getAbsoluteTop(), PX, 
+				heightPercent, PCT);
+		setWidgetLeftWidth(widgetToShow, widgetToShow.getAbsoluteLeft(), PX, 
+				widthPercent, PCT);
 	}
 
-	public void toggleViewButtons(String button) {
-		if (button.equals(SHOW_LIST)) {
-			viewPanel.toggleShowList();
-		} else if (button.equals(HIDE_LIST)) {
-			viewPanel.toggleHideList();
-		} else if (button.equalsIgnoreCase(HIDE_MAP)) {
+	public void toggleViewButtons(int listWidth) {
+		if (listWidth <= HIDE_LIST_VALUE) {
+			viewPanel.toggleHideList();			
+		} else if (listWidth >= HIDE_MAP_VALUE) {
 			viewPanel.toggleHideMap();
 		} else {
-			System.out.println("Uh oh, the if statement broke!");
+			viewPanel.toggleShowList();
 		}
 	}
 	
