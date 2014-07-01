@@ -78,4 +78,19 @@ public class ParserTest {
 		assertEquals(4, tokens.length);
 	}
 	
+	/**
+	 * Test parsing an example line from the CSV we are using.
+	 */
+	@Test
+	public void testParseExampleLine() {
+		String line = "The View Winery ,#1 - 2287 Ward Road,,KELOWNA,V1W4R5,1-2287 WARD RD,,KELOWNA,BC,V1W4R5,250 2151331,Winery,0";
+		String[] tokens = parser.parseLine(line);
+		
+		assertEquals("The View Winery", tokens[0]);
+		assertEquals("#1 - 2287 Ward Road", tokens[1]);
+		assertEquals("", tokens[2]);
+		assertEquals("0", tokens[12]);
+		assertEquals(13, tokens.length);
+	}
+	
 }

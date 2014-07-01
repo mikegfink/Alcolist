@@ -82,7 +82,7 @@ public class Importer {
 	// This only works if I *don't* make licenseType an enum, or include a type "Other" that we don't store.
 	private Manufacturer createManufacturer(String[] tokens) throws ArrayIndexOutOfBoundsException {
 		String establishmentName = toTitleCase(tokens[0]);
-		String streetAddress = toTitleCase(tokens[1]);
+		String streetAddress = toTitleCase(tokens[1] + " " + tokens[2]);
 		String city = toTitleCase(tokens[3]);
 		String province = "British Columbia"; // All our manufacturers are in BC
 		String postalCode = tokens[4];
@@ -123,13 +123,18 @@ public class Importer {
 
 	private String formatPhone(String string) {
 		String result = string;
-		// Match phone numbers in their current format in the csv file.
+		// Match phone numbers in their current format in the csv file
 		String regex = "[0-9]{3} [0-9]{7}";
 		if (result.matches(regex)) {
 			result = string.substring(0, 3) + "-" + string.substring(4, 7) + "-" + 
 					string.substring(7, 11);
-		} else {
-			System.err.println("Phone number format has changed in CSV file!");
+		} else if (string != "") {
+			// Only print an error message when a phone number is present but not in expected format
+			System.err.println("Phone number not in expected form: " + string);
+			// Don't return phone numbers that are less than 7 characters
+			if (string.length() < 7) {
+				result = "";
+			}
 		}
 		return result;
 	}
