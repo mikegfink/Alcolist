@@ -17,7 +17,7 @@ public class UI extends LayoutPanel {
 	// CONSTANTS
 	private static final int HIDE_MAP_VALUE = 50;
 	private static final int HIDE_LIST_VALUE = 0;
-	private static final int ANIMATE_DURATION = 300;
+	//private static final int ANIMATE_DURATION = 300;
 	private static final double TITLE_TOP_PCT = 0;
 	private static final double TITLE_HEIGHT_PCT = 10;
 	private static final double TITLE_WIDTH_PCT = 60;
