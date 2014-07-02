@@ -50,11 +50,12 @@ public class UI extends LayoutPanel {
 	private Legend legend;
 	private UserPanel userPanel; 
 	
-	public UI(AdminPanel adminPanel, UserPanel userPanel, ViewPanel viewPanel) {
+	public UI(AdminPanel adminPanel, UserPanel userPanel, ViewPanel viewPanel, ListPanel listPanel) {
 		this.mapPanel = null;
 		this.adminPanel = adminPanel;
 		this.userPanel = userPanel;
-		this.viewPanel = viewPanel;			
+		this.viewPanel = viewPanel;	
+		this.listPanel = listPanel;
 	}
 
 	public void init(MapPanel mapPanel) {
@@ -66,7 +67,6 @@ public class UI extends LayoutPanel {
 	}
 
 	private void createChildren() {
-		listPanel = new ListPanel();
 		title = new Label("The Alcolist");
 		legend = new Legend();
 	}
