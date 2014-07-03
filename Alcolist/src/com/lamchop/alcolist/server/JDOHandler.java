@@ -1,6 +1,10 @@
 package com.lamchop.alcolist.server;
 
+import java.util.List;
+
+import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import com.lamchop.alcolist.shared.Manufacturer;
@@ -10,7 +14,27 @@ import com.lamchop.alcolist.shared.Route;
 
 public class JDOHandler {
 	
-	public static void storeItem(Object item) {
+	public Manufacturer getManufacturerById(String id) {
+		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
+		Query q;
+		Manufacturer manufacturer = null;
+		try {
+			q = pm.newQuery(Manufacturer.class);
+			q.setFilter("id == searchID");
+			q.declareParameters("String searchID");
+			List<Manufacturer> queryResult = (List<Manufacturer>) q.execute(id);
+			if (queryResult.size() == 1) { // TODO
+				manufacturer = queryResult.get(0);
+			}
+		} catch (JDOObjectNotFoundException e) {
+			System.err.println("No Manufacturer found with this id: " + id);
+		} finally {
+			pm.close();
+		}
+		return manufacturer;
+	}
+	
+	public void storeItem(Object item) {
 		if (!isStorageType(item)) {
 			System.err.println("Wrong item type to store in datastore: " + item.toString());
 			return;
@@ -33,12 +57,12 @@ public class JDOHandler {
 		}
 	}
 
-	public static void deleteItem(Object item) {
+	public void deleteItem(Object item) {
 		if (!isStorageType(item)) {
 			System.err.println("Wrong item type to store in datastore: " + item.toString());
 			return;
-		}
-		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
+		}		
+		PersistenceManager pm = PMF.getPMF().getPersistenceManager();		
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();

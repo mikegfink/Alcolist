@@ -50,9 +50,10 @@ public class Importer {
 		            // nothing to see here
 			}
 		}
+		JDOHandler handler = new JDOHandler();
 		//latLongAdder.makeGeocodeRequest(importedManufacturers);
 		for (Manufacturer nextManufacturer : importedManufacturers) {
-			JDOHandler.storeItem(nextManufacturer);
+			handler.storeItem(nextManufacturer);
 		}
 	}
 	

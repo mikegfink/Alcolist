@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-import javax.jdo.Transaction;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.lamchop.alcolist.client.ImportService;
@@ -35,10 +34,7 @@ ImportService {
 
 		try {
 			Query q = pm.newQuery(Manufacturer.class);
-			// Return sorted by name for initial ordering in list.
-			q.setOrdering("name");
-			List<Manufacturer> queryResult = (List<Manufacturer>) q.execute();
-			manufacturers = queryResult;
+			manufacturers = (List<Manufacturer>) q.execute();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,9 +59,9 @@ ImportService {
 		}
 
 		LatLongAdder.makeGeocodeRequest(manufacturerBatch);
-
+		JDOHandler handler = new JDOHandler();
 		for (Manufacturer nextManufacturer : manufacturerBatch) {
-			JDOHandler.storeItem(nextManufacturer);
+			handler.storeItem(nextManufacturer);
 		}
 	}
 

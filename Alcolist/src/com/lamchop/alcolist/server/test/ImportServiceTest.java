@@ -32,12 +32,14 @@ public class ImportServiceTest {
 	@Before
 	public void setUp() {
 		helper.setUp();
+		pm = PMF.getPMF().getPersistenceManager();
 		importService = new ImportServiceImpl();
 		manufacturerService = new ManufacturerServiceImpl();
 	}
 		
 	@After
 	public void tearDown() {
+		pm.close();
 		helper.tearDown();
 	}
 		
@@ -46,7 +48,6 @@ public class ImportServiceTest {
 	 */
 	@Test
 	public void testDeleteAll() {
-		pm = PMF.getPMF().getPersistenceManager();
 		List<Manufacturer> all;
 		
 		importService.deleteData();
@@ -68,7 +69,6 @@ public class ImportServiceTest {
 	 */
 	@Test
 	public void testImportCorrectNumber() {
-		pm = PMF.getPMF().getPersistenceManager();
 		List<Manufacturer> all;
 		Query q;
 		List<Manufacturer> queryResult;

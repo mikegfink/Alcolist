@@ -17,7 +17,6 @@ public class ParserTest {
 	 */
 	@Before
 	public void setup() {
-		parser = new Parser();
 	}
 	
 	/**
@@ -26,7 +25,7 @@ public class ParserTest {
 	@Test
 	public void testParseSimpleLine() {
 		String line = "first,second,third,fourth,fifth";
-		String[] tokens = parser.parseLine(line);
+		String[] tokens = Parser.parseLine(line);
 		
 		assertEquals(5, tokens.length);
 		assertEquals("first", tokens[0]);
@@ -39,7 +38,7 @@ public class ParserTest {
 	 */
 	public void testParseMissingFields() {
 		String line = "0,1,,,4,,6";
-		String[] tokens = parser.parseLine(line);
+		String[] tokens = Parser.parseLine(line);
 		
 		assertEquals(7, tokens.length);
 		assertEquals("", tokens[2]);
@@ -54,7 +53,7 @@ public class ParserTest {
 	@Test
 	public void testParseTrailingCommas() {
 		String line = "zero,one,,";
-		String[] tokens = parser.parseLine(line);
+		String[] tokens = Parser.parseLine(line);
 		
 		assertEquals(4, tokens.length);
 		assertEquals("one", tokens[1]);
@@ -69,7 +68,7 @@ public class ParserTest {
 	@Test
 	public void testParseQuotedCommas() {
 		String line = "Austin House Fish & Chips,\"# 1, 32650 Logan Avenue\",Food Primary,94";
-		String[] tokens = parser.parseLine(line);
+		String[] tokens = Parser.parseLine(line);
 		
 		assertEquals("Austin House Fish & Chips", tokens[0]);
 		assertEquals("# 1, 32650 Logan Avenue", tokens[1]);
@@ -84,7 +83,7 @@ public class ParserTest {
 	@Test
 	public void testParseExampleLine() {
 		String line = "The View Winery ,#1 - 2287 Ward Road,,KELOWNA,V1W4R5,1-2287 WARD RD,,KELOWNA,BC,V1W4R5,250 2151331,Winery,0";
-		String[] tokens = parser.parseLine(line);
+		String[] tokens = Parser.parseLine(line);
 		
 		assertEquals("The View Winery", tokens[0]);
 		assertEquals("#1 - 2287 Ward Road", tokens[1]);

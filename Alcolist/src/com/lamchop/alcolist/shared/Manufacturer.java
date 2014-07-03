@@ -9,7 +9,7 @@ import javax.jdo.annotations.IdentityType;
 
 import com.google.gwt.maps.client.base.LatLng;
 
-@PersistenceCapable(identityType = IdentityType.APPLICATION)
+@PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 public class Manufacturer implements Serializable {
 
 	@PrimaryKey
@@ -72,7 +72,7 @@ public class Manufacturer implements Serializable {
 		
 	}
 
-	public String getId() {
+	public String getID() {
 		return this.id;
 	}
 
@@ -147,18 +147,21 @@ public class Manufacturer implements Serializable {
 	}
 	
 	public void addRating(int rating) {
-		// TODO Sprint 2
 		this.sumRatings += rating;
 		this.numRatings += 1;
 	}
 	
 	public void removeRating(int rating) {
-		// TODO Sprint 2
+		this.numRatings -= 1;
+		this.sumRatings -= rating;
 	}
 
-	public double getRating() {
-		// TODO Sprint 2
-		return 0;
+	public double getAverageRating() {
+		if (numRatings == 0) {
+			return 0;
+		} else {
+			return sumRatings/numRatings;
+		}
 	}
 	
 	public int getNumRatings() {
