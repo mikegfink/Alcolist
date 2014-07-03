@@ -21,9 +21,9 @@ public class LatLongAdder {
 	public LatLongAdder() {
 	}
 
-	public void makeGeocodeRequest(List<Manufacturer> manufacturers) {
+	public static void makeGeocodeRequest(List<Manufacturer> manufacturers) {
 		// Count is for debugging purposes to bottleneck the requests
-		// int count = 0;
+		int count = 0;
 		int batch = 0;
 		for (Manufacturer currentManufacturer: manufacturers) {
 			batch++;
@@ -37,9 +37,9 @@ public class LatLongAdder {
 				batch = 0;
 			}
 			// Limiting the requests for debugging purposes
-//			count++;
-//			if (count >= 20)
-//				return;
+			count++;
+			if (count >= 20)
+				return;
 
 			try {
 				getLatLong(currentManufacturer);
@@ -51,7 +51,7 @@ public class LatLongAdder {
 		}
 	}
 
-	private void getLatLong(Manufacturer manufacturer)  throws Exception {
+	private static void getLatLong(Manufacturer manufacturer)  throws Exception {
 		// adapted from http://theoryapp.com/parse-json-in-java/
 		// build a URL
 		String address = manufacturer.getFullAddress();

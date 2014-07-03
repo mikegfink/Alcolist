@@ -7,7 +7,7 @@ import com.lamchop.alcolist.shared.Manufacturer;
 
 public class Deleter {
 
-	public void deleteAllManufacturers() {
+	public static void deleteAllManufacturers() {
 		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
 		
 		try {

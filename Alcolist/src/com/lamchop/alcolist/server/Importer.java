@@ -1,8 +1,5 @@
 package com.lamchop.alcolist.server;
 
-import javax.jdo.PersistenceManager;
-import javax.jdo.Transaction;
-
 import com.lamchop.alcolist.shared.Manufacturer;
 
 import java.io.BufferedReader;
@@ -15,26 +12,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Importer {
-	private List<Manufacturer> importedManufacturers = new ArrayList<Manufacturer>();
-	//private LatLongAdder latLongAdder = new LatLongAdder();
 
-	public void importData(String website) {
+	public static void importData(String website) {
+		List<Manufacturer> importedManufacturers = new ArrayList<Manufacturer>();
 		// Get CSV file from website
 		// url streaming from Stack Exchange: (http://stackoverflow.com/questions/238547/)
 		URL url;
 		InputStream is = null;
 		BufferedReader br;
 		String line;
-		Parser parser;
 		
 		try {
 			url = new URL(website);
 			is = url.openStream();  // throws an IOException
 			br = new BufferedReader(new InputStreamReader(is));
-			parser = new Parser();
 			
 			while ((line = br.readLine()) != null) {
-				String[] tokens = parser.parseLine(line);
+				String[] tokens = Parser.parseLine(line);
 				try {
 					Manufacturer manufacturer = createManufacturer(tokens);
 					if (isValidManufacturer(manufacturer)){
@@ -58,11 +52,11 @@ public class Importer {
 		}
 		//latLongAdder.makeGeocodeRequest(importedManufacturers);
 		for (Manufacturer nextManufacturer : importedManufacturers) {
-			storeManufacturer(nextManufacturer);
+			JDOHandler.storeItem(nextManufacturer);
 		}
 	}
 	
-	private boolean isValidManufacturer(Manufacturer manufacturer) {
+	private static boolean isValidManufacturer(Manufacturer manufacturer) {
 		String licenseType = manufacturer.getType();
 		return (licenseType.equals("Winery") || 
 				licenseType.equals("Brewery") || licenseType.equals("Distillery"));
@@ -79,8 +73,7 @@ public class Importer {
 	 * @param tokens Array of String tokens produced from parsing a line of the CSV file
 	 * @return Manufacturer object containing the information in the tokens
 	 */
-	// This only works if I *don't* make licenseType an enum, or include a type "Other" that we don't store.
-	private Manufacturer createManufacturer(String[] tokens) throws ArrayIndexOutOfBoundsException {
+	private static Manufacturer createManufacturer(String[] tokens) throws ArrayIndexOutOfBoundsException {
 		String establishmentName = toTitleCase(tokens[0]);
 		String streetAddress = toTitleCase(tokens[1] + " " + tokens[2]);
 		String city = toTitleCase(tokens[3]);
@@ -121,7 +114,7 @@ public class Importer {
 		return string;
 	}
 
-	private String formatPhone(String string) {
+	private static String formatPhone(String string) {
 		String result = string;
 		// Match phone numbers in their current format in the csv file
 		String regex = "[0-9]{3} [0-9]{7}";
@@ -137,29 +130,5 @@ public class Importer {
 			}
 		}
 		return result;
-	}
-
-	
-	/** Stores the given manufacturer in the datastore 
-	 * 
-	 * @param manufacturer The Manufacturer object to store
-	 */
-	private void storeManufacturer(Manufacturer manufacturer) {
-		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		try {
-			tx.begin();
-			pm.makePersistent(manufacturer);
-			tx.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (tx.isActive()) {
-				// Roll back the transaction if an error occurred before it could be committed.
-				System.err.println("Rolling back transaction. Manufacturer not added.");
-				tx.rollback();
-			}
-			pm.close();
-		}
 	}
 }

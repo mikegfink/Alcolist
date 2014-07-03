@@ -17,18 +17,15 @@ ImportService {
 
 	/** Webpage to pull data from. */
 	private String dataBC = "http://www.pssg.gov.bc.ca/lclb/docs-forms/web_all.csv";
-	private LatLongAdder latLongAdder = new LatLongAdder();
 
 	@Override
 	public void importData() {
-		Importer importer = new Importer();
-		importer.importData(dataBC);
+		Importer.importData(dataBC);
 	}
 
 	@Override
 	public void deleteData() {
-		Deleter deleter = new Deleter();
-		deleter.deleteAllManufacturers();
+		Deleter.deleteAllManufacturers();
 	}
 
 	@Override
@@ -65,10 +62,10 @@ ImportService {
 			}
 		}
 
-		latLongAdder.makeGeocodeRequest(manufacturerBatch);
+		LatLongAdder.makeGeocodeRequest(manufacturerBatch);
 
 		for (Manufacturer nextManufacturer : manufacturerBatch) {
-			storeManufacturer(nextManufacturer);
+			JDOHandler.storeItem(nextManufacturer);
 		}
 	}
 
@@ -80,29 +77,6 @@ ImportService {
 
 		return (notZeroLat || notZeroLng);
 
-	}
-
-	/** Stores the given manufacturer in the datastore 
-	 * 
-	 * @param manufacturer The Manufacturer object to store
-	 */
-	private void storeManufacturer(Manufacturer manufacturer) {
-		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		try {
-			tx.begin();
-			pm.makePersistent(manufacturer);
-			tx.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (tx.isActive()) {
-				// Roll back the transaction if an error occurred before it could be committed.
-				System.err.println("Rolling back transaction. Manufacturer not added.");
-				tx.rollback();
-			}
-			pm.close();
-		}
 	}
 }
 

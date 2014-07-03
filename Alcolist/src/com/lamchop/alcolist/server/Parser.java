@@ -8,7 +8,7 @@ public class Parser {
 	private static final char QUOTE = '"';
 	private static final char COMMA = ',';
 	
-	public String[] parseLine(String line) {
+	public static String[] parseLine(String line) {
 		try {
 			List<String> tokens = new ArrayList<String>();
 			StringBuffer accumulator = new StringBuffer();
@@ -50,7 +50,7 @@ public class Parser {
 	// Trim the whitespace around the given string, or all the whitespace if all characters are spaces/tabs.
 	// Needed because built-in trim function will not trim whitespace from a string containing only 
 	// whitespace.
-	private String trimWhitespace(String string) {
+	private static String trimWhitespace(String string) {
 		// Regular expression to match strings containing only whitespace
 		String regex = "[ \t]*";
 		if (string.matches(regex)) {
