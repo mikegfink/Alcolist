@@ -12,16 +12,6 @@ import com.lamchop.alcolist.shared.Manufacturer;
 
 public class ManufacturerServiceImpl  extends RemoteServiceServlet implements 
 		ManufacturerService {
-	
-	@Override
-	public void addRating(Manufacturer manufacturer, int rating) {
-		// TODO Sprint 2
-	}
-
-	@Override
-	public void removeRating(Manufacturer manufacturer, int rating) {
-		// TODO Sprint 2
-	}
 
 	@Override
 	public List<Manufacturer> getManufacturers() {
