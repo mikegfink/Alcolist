@@ -4,6 +4,7 @@ import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.ToggleButton;
 import com.lamchop.alcolist.client.resources.Images;
 
 public class LegendCell extends AbstractCell<String>{
@@ -22,8 +23,6 @@ public class LegendCell extends AbstractCell<String>{
 			sb.appendHtmlConstant(new Image(images.winery()).toString());
 		if (value.equals("Distillery"))
 			sb.appendHtmlConstant(new Image(images.distillery()).toString());	
-		sb.appendHtmlConstant("<tr><td style= 'font-weight: bold;'>");
-		sb.appendHtmlConstant(value);
 		sb.appendHtmlConstant("</td></tr></table>");
 		
 	}

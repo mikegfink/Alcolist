@@ -17,6 +17,7 @@ public class AppDataController {
 					// TODO: add final and move here = GWT.create(UserDataService.class);
 	private static final ManufacturerServiceAsync 
 					manufacturerService = GWT.create(ManufacturerService.class);
+	private List<Manufacturer> displayedManufacturers;
 	
 	public AppDataController(UIUpdateInterface theUI) {
 		appData = new AppData();
@@ -48,6 +49,7 @@ public class AppDataController {
 			public void onSuccess(List<Manufacturer> result) {
 				updateAppDataManufacturers(result);
 				sendManufacturersToUI();
+				displayedManufacturers = result;
 			}
 		});
 		
@@ -103,14 +105,30 @@ public class AppDataController {
 
 	
 	public void filterBySearch(String searchText) {
-		List<Manufacturer> allManufacturers = appData.getManufacturers();
+//		List<Manufacturer> allManufacturers = appData.getManufacturers();
 		List<Manufacturer> filteredManufacturers = new ArrayList<Manufacturer>();
-		for (Manufacturer m : allManufacturers) {
+		for (Manufacturer m : displayedManufacturers) {
 			if (m.getCity().toLowerCase().contains(searchText) || m.getName().toLowerCase().contains(searchText) || m.getFullAddress().toLowerCase().contains(searchText))
 				filteredManufacturers.add(m);	
 		}
 		theUI.update(filteredManufacturers);
 			
+	}
+	
+	public void filterByType(String type) {
+		List<Manufacturer> allManufacturers = appData.getManufacturers();
+		List<Manufacturer> filteredManufacturers = new ArrayList<Manufacturer>();
+		for (Manufacturer m : allManufacturers) {
+			if (m.getType().equals(type))
+				filteredManufacturers.add(m);	
+		}
+		theUI.update(filteredManufacturers);
+		displayedManufacturers = filteredManufacturers;
+	}
+	
+	public void removeFilter() {
+		displayedManufacturers = appData.getManufacturers();
+		theUI.update(displayedManufacturers);
 	}
 
 }
