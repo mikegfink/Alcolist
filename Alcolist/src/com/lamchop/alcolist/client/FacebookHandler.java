@@ -46,7 +46,7 @@ public class FacebookHandler implements ClickHandler {
 	private static final String FACEBOOK_BIRTHDAY_SCOPE = "user_birthday";
 
 	// This scope allows the app to post to the User's timeline.
-	private static final String FACEBOOK_PUBLISH_SCOPE = "publish_stream";
+	private static final String FACEBOOK_PUBLISH_SCOPE = "publish_actions";
 	
 	private static final String USER_ID = "id";
 	
