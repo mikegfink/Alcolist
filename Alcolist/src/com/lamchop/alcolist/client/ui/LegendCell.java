@@ -26,5 +26,7 @@ public class LegendCell extends AbstractCell<String>{
 		sb.appendHtmlConstant("</td></tr></table>");
 		
 	}
+	
+	
 
 }
