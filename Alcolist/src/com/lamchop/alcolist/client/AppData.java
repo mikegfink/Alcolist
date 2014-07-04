@@ -14,7 +14,7 @@ final class AppData {
 	
 	public AppData() {
 		manufacturers = new ArrayList<Manufacturer>();
-		setUserData(null);
+		userData = new UserData();
 	}
 	
 	public void add(List<Manufacturer> manufacturersToAdd) {
@@ -29,12 +29,26 @@ final class AppData {
 		return manufacturers;
 	}
 
+	public Boolean isLoggedIn() {
+		return userData.isDefault();
+	}
+
 	public UserData getUserData() {
 		return userData;
 	}
 	
 	public void newUserData(String userID, String userName) {
-		userData = new UserData(userID, userName);
+		clearUserData();
+		userData.setName(userName);
+		userData.setUserID(userID);
+	}
+	
+	public void clearUserData() {
+		userData.setIDToDefault();
+		userData.setNameToDefault();
+		userData.clearRatings();
+		userData.clearRoutes();
+		userData.clearReviews();
 	}
 	
 	public void setUserData(UserData userData) {

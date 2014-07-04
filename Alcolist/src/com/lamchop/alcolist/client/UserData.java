@@ -1,5 +1,6 @@
 package com.lamchop.alcolist.client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.lamchop.alcolist.shared.Rating;
@@ -8,15 +9,21 @@ import com.lamchop.alcolist.shared.Route;
 
 public class UserData {
 	
-	private String userID; // Maybe unnecessary?
+	private static final String DEFAULT_NAME = "Guest";
+	private static final String DEFAULT_USERID = "";
+	
+	private String userID; 
 	private String name;
 	private List<Rating> ratings;
 	private List<Review> reviews;
 	private List<Route> routes;
 	
-	public UserData(String userID, String userName) {
-		this.userID = userID;
-		name = userName;		
+	public UserData() {
+		this.userID = DEFAULT_USERID;
+		name = DEFAULT_NAME;
+		ratings = new ArrayList<Rating>();
+		reviews = new ArrayList<Review>();
+		routes = new ArrayList<Route>();
 	}
 	
 	public void add(Rating rating) {
@@ -57,8 +64,36 @@ public class UserData {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public void setUserID(String userID) {
+		this.userID = userID;
+	}
 
 	public String getUserID() {
 		return userID;
+	}
+	
+	public void setNameToDefault() {
+		name = DEFAULT_NAME;		
+	}
+	
+	public void setIDToDefault() {
+		userID = DEFAULT_USERID;
+	}
+	
+	public void clearRatings() {
+		ratings.clear();
+	}
+	
+	public void clearRoutes() {
+		routes.clear();		
+	}
+	
+	public void clearReviews() {
+		reviews.clear();		
+	}
+
+	public Boolean isDefault() {
+		return (userID.equals(DEFAULT_USERID) && name.equals(DEFAULT_NAME));
 	}
 }

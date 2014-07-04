@@ -64,8 +64,12 @@ public class UIController implements UIUpdateInterface {
 	
 	@Override
 	public void update(List<Manufacturer> manufacturers) {
-		uiPanel.updateList(manufacturers);
-
+		uiPanel.updateList(manufacturers);	
+		
+		if (firstTime) {
+			showList();
+		}
+		
 		uiPanel.updateMap(manufacturers);
 		
 		if (firstTime) {
@@ -77,7 +81,7 @@ public class UIController implements UIUpdateInterface {
 	@Override
 	public void update(UserData userData) {
 		// TODO Consider changing this to not a null check
-		if (userData != null) {
+		if (!userData.isDefault()) {
 			uiPanel.showLoggedIn(userData);
 		}
 		else {
