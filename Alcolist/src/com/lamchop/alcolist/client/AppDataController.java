@@ -89,7 +89,8 @@ public class AppDataController {
 			appData.addRoute(route);
 		}
 	}
-
+	// TODO: All methods above hopefully collapsed into one if UserDataServices are reworked
+	
 	public void initManufacturers() {		
 		manufacturerService.getManufacturers(new AsyncCallback<List<Manufacturer>>() {
 			public void onFailure(Throwable error) {
