@@ -6,6 +6,7 @@ import java.util.List;
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+import javax.jdo.Transaction;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.lamchop.alcolist.client.UserDataService;
@@ -49,12 +50,41 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 	public void removeRating(Rating rating) {
 		String manufacturerID = rating.getManufacturerID();
 		Manufacturer manufacturer = handler.getManufacturerById(manufacturerID);
-		if (manufacturer != null) {
-			manufacturer.removeRating(rating.getRating());
-			handler.storeItem(manufacturer);
-			handler.deleteItem(rating);
+		String ratingID = rating.getID();
+		// Can't delete detached copy of rating directly.
+		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		Query q;
+		Rating storedRating = null;
+		try {
+			tx.begin();
+			q = pm.newQuery(Rating.class);
+			q.setFilter("id == searchID");
+			q.declareParameters("String searchID");
+			List<Rating> queryResult = (List<Rating>) q.execute(ratingID);
+			
+			if (queryResult.size() == 1) { // TODO
+				storedRating = queryResult.get(0);
+			}
+			
+			if ((manufacturer != null ) && (storedRating != null)) {
+				manufacturer.removeRating(rating.getRating());
+				handler.storeItem(manufacturer);
+				pm.deletePersistent(storedRating);
+			}
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (tx.isActive()) {
+				// Roll back the transaction if an error occurred before it could be committed.
+				System.err.println("Rolling back transaction. Rating not deleted.");
+				tx.rollback();
+			}
+			pm.close();
 		}
 	}
+	
 
 	@Override
 	public void addRoute(Route route) {
@@ -63,6 +93,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public void removeRoute(Route route) {
+		// Can't delete detached copy of route directly.
 		handler.deleteItem(route);	
 	}
 
@@ -73,6 +104,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public void removeReview(Review review) {
+		// Can't delete detached copy of review directly.
 		handler.deleteItem(review);
 	}
 
@@ -146,7 +178,4 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 		
 		return ratings;
 	}
-
-
-
 }

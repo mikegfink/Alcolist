@@ -14,6 +14,7 @@ import com.lamchop.alcolist.shared.Route;
 
 public class JDOHandler {
 	
+	// Returns the Manufacturer, not a detached copy
 	public Manufacturer getManufacturerById(String id) {
 		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
 		Query q;
@@ -57,6 +58,7 @@ public class JDOHandler {
 		}
 	}
 
+	// Item passed must not be a detached copy
 	public void deleteItem(Object item) {
 		if (!isStorageType(item)) {
 			System.err.println("Wrong item type to store in datastore: " + item.toString());

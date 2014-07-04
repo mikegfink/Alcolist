@@ -117,7 +117,7 @@ public class UserDataServiceTest {
 		String user1ID = "1GNOETHU23"; // random
 		String user2ID = "Eoo325rf"; // random
 		int user1Stars = 4;
-		int user2Stars = 3;
+		int user2Stars = 5;
 		Rating user1Rating = new Rating(user1ID, manufacturer1.getID(), user1Stars);
 		Rating user2Rating = new Rating(user2ID, manufacturer1.getID(), user2Stars);
 		
@@ -162,7 +162,7 @@ public class UserDataServiceTest {
 		// Check that the rating has been removed from the manufacturer
 		updatedManufacturer1 = handler.getManufacturerById(manufacturer1.getID());
 		assertEquals(1, updatedManufacturer1.getNumRatings());
-		assertEquals(user2Stars, updatedManufacturer1.getNumRatings());	
+		assertEquals(user2Stars, updatedManufacturer1.getAverageRating(), DELTA);	
 	}
 	
 	/** Test that a rating is updated properly and not duplicated */
