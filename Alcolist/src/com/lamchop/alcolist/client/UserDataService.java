@@ -10,6 +10,8 @@ import com.lamchop.alcolist.shared.Route;
 
 @RemoteServiceRelativePath("userData") // Refers to servlet. See web.xml
 public interface UserDataService extends RemoteService {
+	// addRating can be used to change the star rating of existing ratings. It will overwrite the
+	// previous rating and correctly update the rating in the manufacturer.
 	public void addRating(Rating rating);
 	public void removeRating(Rating rating);
 	public void addRoute(Route route);
@@ -19,6 +21,6 @@ public interface UserDataService extends RemoteService {
 	
 	public List<Route> getRoutes(String userID);
 	public List<Review> getReviews(String userID);
-	public List<Rating> getRatings(String userID); // TODO: Consider collapsing rating/reviews
+	public List<Rating> getRatings(String userID);
 }
 

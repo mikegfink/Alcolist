@@ -68,8 +68,6 @@ public class JDOHandler {
 			tx.begin();
 			pm.deletePersistent(item);
 			tx.commit();
-		} catch (JDOObjectNotFoundException e) {
-			// Nothing to do. item is not in datastore
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
