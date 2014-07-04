@@ -26,7 +26,6 @@ public class UserDataServiceTest {
 	private PersistenceManager pm;
 	private JDOHandler handler;
 	private UserDataServiceImpl userService;
-	private String userID1;
 	private Manufacturer manufacturer1;
 			
 	@Before
@@ -35,7 +34,6 @@ public class UserDataServiceTest {
 		pm = PMF.getPMF().getPersistenceManager();
 		handler = new JDOHandler();
 		userService = new UserDataServiceImpl();
-		userID1 = "1GNOETHU23"; // random 
 		manufacturer1 = new Manufacturer("Test1", "1234 Test Way", "Vancouver", "British Columbia", "V7J 1Y6",
 				"604-888-8888", "Brewery");
 
@@ -47,12 +45,14 @@ public class UserDataServiceTest {
 		helper.tearDown();
 	}
 		
-	/** 
-	 * Test that a rating can be added to a manufacturer.
-	 */
+	/** Test that a rating can be added and deleted */
 	@Test
-	public void testAddRating() {
+	public void testAddAndDeleteRating() {
 		handler.storeItem(manufacturer1);
+		
+		String userID = "1GNOETHU23"; // random 
+		int stars = 4;
+		Rating testRating = new Rating(userID, manufacturer1.getID(), stars);
 		
 		// Check that manufacturer1 is in the datastore
 		Query q;
@@ -65,15 +65,12 @@ public class UserDataServiceTest {
 		Manufacturer storedManufacturer = storedManufacturers.get(0);
 		assertEquals(manufacturer1.getID(), storedManufacturer.getID());
 		
-		int stars = 4;
-		Rating testRating = new Rating(userID1, manufacturer1.getID(), stars); 
-
 		// Check that manufacturer starts with 0 ratings:
 		assertEquals(0, manufacturer1.getNumRatings());
 		assertEquals(0, manufacturer1.getAverageRating(), DELTA);
 		
 		// Check that the user starts with 0 ratings
-		List<Rating> userRatings = userService.getRatings(userID1);
+		List<Rating> userRatings = userService.getRatings(userID);
 		assertEquals(0, userRatings.size());
 		
 		userService.addRating(testRating);
@@ -89,16 +86,88 @@ public class UserDataServiceTest {
 		assertEquals(testRating.getID(), storedRating.getID());
 
 		// Check that we can get the rating using getRatings
-		userRatings = userService.getRatings(userID1);
+		userRatings = userService.getRatings(userID);
 		assertEquals(1, userRatings.size());
 		storedRating = userRatings.get(0);
-		assertEquals(userID1, storedRating.getUserID());
+		assertEquals(userID, storedRating.getUserID());
 		
 		// Check that the manufacturer has been updated with the new rating
 		Manufacturer updatedManufacturer1 = handler.getManufacturerById(manufacturer1.getID());
 		assertEquals(1, updatedManufacturer1.getNumRatings());
 		assertEquals(4, updatedManufacturer1.getAverageRating(), DELTA);
 		
-	}
+		// TODO figure out how to test deleting
+		userService.removeRating(testRating);
 		
+		// Check that the rating has been removed from the datastore
+		userRatings = userService.getRatings(userID);
+		assertEquals(0, userRatings.size());
+		
+		// Check that the rating has been removed from the manufacturer
+		updatedManufacturer1 = handler.getManufacturerById(manufacturer1.getID());
+		assertEquals(0, updatedManufacturer1.getNumRatings());
+		assertEquals(0, updatedManufacturer1.getNumRatings());	
+	}
+	
+	/** Test that multiple ratings can be added and deleted from a manufacturer */
+	@Test
+	public void testAddDeleteMultipleRatings(){
+		handler.storeItem(manufacturer1);
+		
+		String user1ID = "1GNOETHU23"; // random
+		String user2ID = "Eoo325rf"; // random
+		int user1Stars = 4;
+		int user2Stars = 3;
+		Rating user1Rating = new Rating(user1ID, manufacturer1.getID(), user1Stars);
+		Rating user2Rating = new Rating(user2ID, manufacturer1.getID(), user2Stars);
+		
+		// Check that manufacturer starts with 0 ratings:
+		assertEquals(0, manufacturer1.getNumRatings());
+		assertEquals(0, manufacturer1.getAverageRating(), DELTA);
+		
+		// Check that the users start with 0 ratings
+		List<Rating> user1Ratings = userService.getRatings(user1ID);
+		assertEquals(0, user1Ratings.size());
+		List<Rating> user2Ratings = userService.getRatings(user2ID);
+		assertEquals(0, user2Ratings.size());
+		
+		userService.addRating(user1Rating);
+		userService.addRating(user2Rating);
+		
+		// Check that the ratings are stored in the datastore
+		user1Ratings = userService.getRatings(user1ID);
+		assertEquals(1, user1Ratings.size());		
+		Rating user1Stored = user1Ratings.get(0);
+		assertEquals(user1ID, user1Stored.getUserID());
+		assertEquals(user1Stars, user1Stored.getRating());
+		
+		user2Ratings = userService.getRatings(user2ID);
+		assertEquals(1, user2Ratings.size());
+		Rating user2Stored = user2Ratings.get(0);
+		assertEquals(user2ID, user2Stored.getUserID());
+		assertEquals(user2Stars, user2Stored.getRating());
+
+		// Check that manufacturer is updated correctly with new ratings
+		Manufacturer updatedManufacturer1 = handler.getManufacturerById(manufacturer1.getID());
+		assertEquals(2, updatedManufacturer1.getNumRatings());
+		assertEquals((user1Stars + user2Stars)/2, updatedManufacturer1.getAverageRating(), DELTA);
+		
+		// TODO figure out how to test deleting
+		userService.removeRating(user1Rating);
+		
+		// Check that the rating has been removed from the datastore
+		user1Ratings = userService.getRatings(user1ID);
+		assertEquals(0, user1Ratings.size());
+		
+		// Check that the rating has been removed from the manufacturer
+		updatedManufacturer1 = handler.getManufacturerById(manufacturer1.getID());
+		assertEquals(1, updatedManufacturer1.getNumRatings());
+		assertEquals(user2Stars, updatedManufacturer1.getNumRatings());	
+	}
+	
+	/** Test that a rating is updated properly and not duplicated */
+	@Test
+	public void testUpdateRating() {
+		
+	}
 }
