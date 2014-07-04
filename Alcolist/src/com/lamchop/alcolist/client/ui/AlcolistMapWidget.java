@@ -82,10 +82,11 @@ public class AlcolistMapWidget extends Composite {
 		opts.setMapTypeId(MapTypeId.ROADMAP);
 		opts.setMapTypeControl(false);
 		ZoomControlOptions zoomOption = ZoomControlOptions.newInstance();
-		zoomOption.setStyle(SMALL);
+//		zoomOption.setStyle(SMALL);
 		zoomOption.setPosition(RIGHT_BOTTOM);
 		opts.setZoomControlOptions(zoomOption);
 		opts.setPanControl(false);
+		opts.setStreetViewControl(false);
 		
 		mapWidget = new MapWidget(opts);
 		pWidget.add(mapWidget);

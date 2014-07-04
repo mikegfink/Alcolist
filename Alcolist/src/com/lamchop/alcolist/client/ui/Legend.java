@@ -31,6 +31,9 @@ public class Legend extends LayoutPanel {
 	
 	public Legend(AppDataController theAppDataController) {
 		
+		//to get rid of popup labels
+	    addMouseOutHandler();
+	    
 		legend = new CellTable<String>();
 		this.theAppDataController = theAppDataController;
 		legendLabel = new PopupPanel();
@@ -84,25 +87,32 @@ public class Legend extends LayoutPanel {
 		add(legend);
 		final SingleSelectionModel<String> selectionModel = addSelectionHandler();
 	    addClickHandler(selectionModel);
-	    legend.addRowHoverHandler(new RowHoverEvent.Handler() {
+	    addPopupLabels();
+	}
 
+	private void addMouseOutHandler() {
+		this.addDomHandler(new MouseOutHandler() {
+		    public void onMouseOut(MouseOutEvent event) {
+		        legendLabel.hide();
+		    }
+		}, MouseOutEvent.getType());
+	}
+
+	private void addPopupLabels() {
+		legend.addRowHoverHandler(new RowHoverEvent.Handler() {
 			@Override
 			public void onRowHover(RowHoverEvent event) {
 				int row = event.getHoveringRow().getRowIndex();
 				legendLabel.setWidget(new Label(TYPES.get(row)));
 				CellTable source = (CellTable) event.getSource();
-
-				int x = source.getRowElement(row).getAbsoluteLeft();
+				int x = source.getRowElement(row).getAbsoluteRight();
 				int y = source.getRowElement(row).getAbsoluteTop();               
 				legendLabel.setPopupPosition(x, y);
                 legendLabel.show();
-				legendLabel.addDomHandler(new MouseOutHandler() {
-				    public void onMouseOut(MouseOutEvent event) {
-				        legendLabel.hide();
-				    }
-				}, MouseOutEvent.getType());
 			}
 	    	
 	    });
 	}
+	
+	
 }
