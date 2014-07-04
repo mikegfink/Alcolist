@@ -2,6 +2,7 @@ package com.lamchop.alcolist.client.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArray;
@@ -13,6 +14,7 @@ import com.google.gwt.maps.client.MapWidget;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.maps.client.base.LatLngBounds;
 import com.google.gwt.maps.client.controls.ControlPosition;
+import com.google.gwt.maps.client.controls.ZoomControlOptions;
 import com.google.gwt.maps.client.events.MouseEvent;
 import com.google.gwt.maps.client.events.channelnumber.ChannelNumberChangeMapEvent;
 import com.google.gwt.maps.client.events.channelnumber.ChannelNumberChangeMapHandler;
@@ -42,6 +44,8 @@ import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.lamchop.alcolist.shared.Manufacturer;
 
+import static com.google.gwt.maps.client.controls.ZoomControlStyle.SMALL;
+import static com.google.gwt.maps.client.controls.ControlPosition.RIGHT_BOTTOM;
 import static com.google.gwt.dom.client.Style.Unit.PCT;
 
 
@@ -76,7 +80,14 @@ public class AlcolistMapWidget extends Composite {
 		opts.setZoom(7);
 		opts.setCenter(center);
 		opts.setMapTypeId(MapTypeId.ROADMAP);
-
+		opts.setMapTypeControl(false);
+		ZoomControlOptions zoomOption = ZoomControlOptions.newInstance();
+//		zoomOption.setStyle(SMALL);
+		zoomOption.setPosition(RIGHT_BOTTOM);
+		opts.setZoomControlOptions(zoomOption);
+		opts.setPanControl(false);
+		opts.setStreetViewControl(false);
+		
 		mapWidget = new MapWidget(opts);
 		pWidget.add(mapWidget);
 		mapWidget.setSize("100%", "100%");

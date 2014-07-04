@@ -22,10 +22,10 @@ public class UI extends LayoutPanel {
 	private static final double TITLE_HEIGHT_PCT = 10;
 	private static final double TITLE_WIDTH_PCT = 60;
 	private static final double TITLE_LEFT_PCT = 20;
-	private static final double LEGEND_LEFT_PCT = 90;
-	private static final double LEGEND_WIDTH_PIXELS = 130;
-	private static final double LEGEND_TOP_PCT = 8;
-	private static final double LEGEND_HEIGHT_PIXELS = 148;
+	private static final double LEGEND_LEFT_PCT = 5;
+	private static final double LEGEND_WIDTH_PIXELS = 80;
+	private static final double LEGEND_TOP_PCT = 25;
+	private static final double LEGEND_HEIGHT_PIXELS = 170;
 	private static final double ADMIN_BOT_PCT = 3;
 	private static final double ADMIN_HEIGHT_PCT = 7;
 	private static final double ADMIN_RIGHT_PCT = 3;
@@ -38,7 +38,7 @@ public class UI extends LayoutPanel {
 	private static final double LIST_HEIGHT_PCT = 80;
 	private static final double VIEWPANEL_TOP_PCT = 10;
 	private static final double VIEWPANEL_HEIGHT_PIXELS = 98;
-	private static final double VIEWPANEL_RIGHT_PCT = 5;
+	private static final double VIEWPANEL_LEFT_PCT = 5;
 	private static final double VIEWPANEL_WIDTH_PIXELS = 34;
 	
 	// FIELDS
@@ -50,12 +50,13 @@ public class UI extends LayoutPanel {
 	private Legend legend;
 	private UserPanel userPanel; 
 	
-	public UI(AdminPanel adminPanel, UserPanel userPanel, ViewPanel viewPanel, ListPanel listPanel) {
+	public UI(AdminPanel adminPanel, UserPanel userPanel, ViewPanel viewPanel, ListPanel listPanel, Legend legend) {
 		this.mapPanel = null;
 		this.adminPanel = adminPanel;
 		this.userPanel = userPanel;
 		this.viewPanel = viewPanel;	
 		this.listPanel = listPanel;
+		this.legend = legend;
 	}
 
 	public void init(MapPanel mapPanel) {
@@ -68,7 +69,7 @@ public class UI extends LayoutPanel {
 
 	private void createChildren() {
 		title = new Label("The Alcolist");
-		legend = new Legend();
+
 	}
 
 	private void addChildren() {
@@ -91,8 +92,8 @@ public class UI extends LayoutPanel {
 		setWidgetTopHeight(title, TITLE_TOP_PCT, PCT, TITLE_HEIGHT_PCT, PCT);
 		setWidgetLeftWidth(title, TITLE_LEFT_PCT, PCT, TITLE_WIDTH_PCT, PCT);
 		
+		setWidgetTopHeight(legend, LEGEND_TOP_PCT, PCT, LEGEND_HEIGHT_PIXELS, PX);
 		setWidgetLeftWidth(legend, LEGEND_LEFT_PCT, PCT, LEGEND_WIDTH_PIXELS, PX);
-		setWidgetTopHeight(legend, LEGEND_TOP_PCT, PCT, LEGEND_HEIGHT_PIXELS, PX);	
 		
 		setWidgetBottomHeight(adminPanel, ADMIN_BOT_PCT, PCT, ADMIN_HEIGHT_PCT, PCT);
 		setWidgetRightWidth(adminPanel, ADMIN_RIGHT_PCT, PCT, ADMIN_WIDTH_PCT, PCT);
@@ -101,7 +102,7 @@ public class UI extends LayoutPanel {
 		setWidgetRightWidth(userPanel, USERPANEL_RIGHT_PCT, PCT, USERPANEL_WIDTH_PCT, PCT);
 		
 		setWidgetTopHeight(viewPanel, VIEWPANEL_TOP_PCT, PCT, VIEWPANEL_HEIGHT_PIXELS, PX);
-		setWidgetRightWidth(viewPanel, VIEWPANEL_RIGHT_PCT, PCT, VIEWPANEL_WIDTH_PIXELS, PX);
+		setWidgetLeftWidth(viewPanel, VIEWPANEL_LEFT_PCT, PCT, VIEWPANEL_WIDTH_PIXELS, PX);
 		
 		hideChild(listPanel);
 		//hideChild(adminPanel);
@@ -115,6 +116,8 @@ public class UI extends LayoutPanel {
 		
 		this.setWidgetLeftWidth(viewPanel, leftEdgePct + widthPct, PCT, 
 				viewPanel.getOffsetWidth(), PX);
+		this.setWidgetLeftWidth(legend, leftEdgePct + widthPct, PCT, 
+				legend.getOffsetWidth(), PX);
 
 		// This has been pretty annoying.
 		//this.animate(ANIMATE_DURATION);

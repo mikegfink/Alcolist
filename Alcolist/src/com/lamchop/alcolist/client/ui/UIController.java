@@ -27,7 +27,7 @@ public class UIController implements UIUpdateInterface {
 		theAppDataController = new AppDataController(this);	
 		uiPanel = new UI(new AdminPanel(theAppDataController),
 				new UserPanel(theAppDataController), new ViewPanel(this), 
-				new ListPanel(theAppDataController));
+				new ListPanel(theAppDataController), new Legend(theAppDataController));
 		initMap();
 	}
 	

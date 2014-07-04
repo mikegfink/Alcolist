@@ -25,6 +25,8 @@
 .listPanel {
 	border: 1px solid black;
 	background: white;
+	-moz-box-shadow: 0 0 30px 5px #999;
+	-webkit-box-shadow: 0 0 30px 5px #999;
 }
 
 .gwt-ToggleButton-up,.gwt-ToggleButton-up-hovering,.gwt-ToggleButton-up-disabled
