@@ -32,6 +32,10 @@ public class Review implements Serializable {
 		this.review = review;
 	}
 
+	public Long getID() {
+		return id;
+	}
+	
 	public String getUserID() {
 		return userID;
 	}

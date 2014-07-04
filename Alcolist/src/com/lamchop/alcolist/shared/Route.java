@@ -32,6 +32,10 @@ public class Route implements Serializable {
 		this.waypoints = waypoints;
 	}
 
+	public Long getID() {
+		return id;
+	}
+	
 	public String getUserID() {
 		return userID;
 	}

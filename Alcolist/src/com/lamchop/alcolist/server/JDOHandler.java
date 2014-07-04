@@ -58,29 +58,29 @@ public class JDOHandler {
 		}
 	}
 
-	// Item passed must not be a detached copy
-	public void deleteItem(Object item) {
-		if (!isStorageType(item)) {
-			System.err.println("Wrong item type to store in datastore: " + item.toString());
-			return;
-		}		
-		PersistenceManager pm = PMF.getPMF().getPersistenceManager();		
-		Transaction tx = pm.currentTransaction();
-		try {
-			tx.begin();
-			pm.deletePersistent(item);
-			tx.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (tx.isActive()) {
-				// Roll back the transaction if an error occurred before it could be committed.
-				System.err.println("Rolling back transaction. Item not added.");
-				tx.rollback();
-			}
-			pm.close();
-		}	
-	}
+//	// Item passed must not be a detached copy
+//	public void deleteItem(Object item) {
+//		if (!isStorageType(item)) {
+//			System.err.println("Wrong item type to store in datastore: " + item.toString());
+//			return;
+//		}		
+//		PersistenceManager pm = PMF.getPMF().getPersistenceManager();		
+//		Transaction tx = pm.currentTransaction();
+//		try {
+//			tx.begin();
+//			pm.deletePersistent(item);
+//			tx.commit();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			if (tx.isActive()) {
+//				// Roll back the transaction if an error occurred before it could be committed.
+//				System.err.println("Rolling back transaction. Item not added.");
+//				tx.rollback();
+//			}
+//			pm.close();
+//		}	
+//	}
 	
 	private static boolean isStorageType(Object item) {
 		Object itemClass = item.getClass();

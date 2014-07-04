@@ -94,7 +94,33 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public void removeRoute(Route route) {
 		// Can't delete detached copy of route directly.
-		handler.deleteItem(route);	
+		Long routeID = route.getID();
+		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		Query q;
+		Route storedRoute = null;
+		try {
+			tx.begin();
+			q = pm.newQuery(Route.class);
+			q.setFilter("id == searchID");
+			q.declareParameters("String searchID");
+			List<Route> queryResult = (List<Route>) q.execute(routeID);
+			
+			if (queryResult.size() == 1) { // TODO
+				storedRoute = queryResult.get(0);
+				pm.deletePersistent(storedRoute);
+			}
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (tx.isActive()) {
+				// Roll back the transaction if an error occurred before it could be committed.
+				System.err.println("Rolling back transaction. Route not deleted.");
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 
 	@Override
@@ -105,7 +131,33 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public void removeReview(Review review) {
 		// Can't delete detached copy of review directly.
-		handler.deleteItem(review);
+		Long reviewID = review.getID();
+		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		Query q;
+		Review storedReview = null;
+		try {
+			tx.begin();
+			q = pm.newQuery(Review.class);
+			q.setFilter("id == searchID");
+			q.declareParameters("Long searchID");
+			List<Review> queryResult = (List<Review>) q.execute(reviewID);
+			
+			if (queryResult.size() == 1) { // TODO
+				storedReview = queryResult.get(0);
+				pm.deletePersistent(storedReview);
+			}
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (tx.isActive()) {
+				// Roll back the transaction if an error occurred before it could be committed.
+				System.err.println("Rolling back transaction. Review not deleted.");
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 
 	@Override
