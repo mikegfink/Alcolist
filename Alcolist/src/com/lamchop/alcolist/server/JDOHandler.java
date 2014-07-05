@@ -14,7 +14,6 @@ import com.lamchop.alcolist.shared.Route;
 
 public class JDOHandler {
 	
-	// Returns the Manufacturer, not a detached copy
 	public Manufacturer getManufacturerById(String id) {
 		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
 		Query q;
