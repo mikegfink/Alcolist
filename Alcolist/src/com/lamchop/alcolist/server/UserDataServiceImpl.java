@@ -26,8 +26,8 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public void addRating(Rating rating) {
-		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
 		String manufacturerID = rating.getManufacturerID();
+		String ratingID = rating.getID();
 		Manufacturer manufacturer = handler.getManufacturerById(manufacturerID);
 		if (manufacturer == null) {
 			System.err.println("Rating not added. Manufacturer with ID " + manufacturerID +
@@ -35,15 +35,31 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 			return;
 		}
 		// Check if this user has already rated this manufacturer and are now changing their rating
+		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		Query q;
+		Rating previousRating = null;
 		try {
-			Rating oldRating = (Rating) pm.getObjectById(rating.getID());
-			manufacturer.removeRating(oldRating.getRating());
-		} catch (JDOObjectNotFoundException e) {
-			// No previous rating present. No action needed.
-		}
+			tx.begin();
+			q = pm.newQuery(Rating.class);
+			q.setFilter("id == searchID");
+			q.declareParameters("String searchID");
+			List<Rating> queryResult = (List<Rating>) q.execute(ratingID);
+		
+			if (queryResult.size() == 1) { // TODO
+				previousRating = queryResult.get(0);
+				// Manufacturer will not be changed in the datastore because it is a detached copy.
+				manufacturer.removeRating(previousRating.getRating());
+			}
+			tx.commit();						
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pm.close();
 		manufacturer.addRating(rating.getRating());
 		handler.storeItem(manufacturer);
 		handler.storeItem(rating);
+		}
 	}
 
 	@Override
@@ -85,7 +101,6 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 		}
 	}
 	
-
 	@Override
 	public void addRoute(Route route) {
 		handler.storeItem(route);	
@@ -94,18 +109,71 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public void removeRoute(Route route) {
 		// Can't delete detached copy of route directly.
-		handler.deleteItem(route);	
+		Long routeID = route.getID();
+		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		Query q;
+		Route storedRoute = null;
+		try {
+			tx.begin();
+			q = pm.newQuery(Route.class);
+			q.setFilter("id == searchID");
+			q.declareParameters("String searchID");
+			List<Route> queryResult = (List<Route>) q.execute(routeID);
+			
+			if (queryResult.size() == 1) { // TODO
+				storedRoute = queryResult.get(0);
+				pm.deletePersistent(storedRoute);
+			}
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (tx.isActive()) {
+				// Roll back the transaction if an error occurred before it could be committed.
+				System.err.println("Rolling back transaction. Route not deleted.");
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 
 	@Override
 	public void addReview(Review review) {
+		// TODO prevent multiple reviews of same manufacturer
 		handler.storeItem(review);
 	}
 
 	@Override
 	public void removeReview(Review review) {
 		// Can't delete detached copy of review directly.
-		handler.deleteItem(review);
+		Long reviewID = review.getID();
+		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		Query q;
+		Review storedReview = null;
+		try {
+			tx.begin();
+			q = pm.newQuery(Review.class);
+			q.setFilter("id == searchID");
+			q.declareParameters("Long searchID");
+			List<Review> queryResult = (List<Review>) q.execute(reviewID);
+			
+			if (queryResult.size() == 1) { // TODO
+				storedReview = queryResult.get(0);
+				pm.deletePersistent(storedReview);
+			}
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (tx.isActive()) {
+				// Roll back the transaction if an error occurred before it could be committed.
+				System.err.println("Rolling back transaction. Review not deleted.");
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 
 	@Override

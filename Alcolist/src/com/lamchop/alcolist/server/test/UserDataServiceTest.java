@@ -152,7 +152,6 @@ public class UserDataServiceTest {
 		assertEquals(2, updatedManufacturer1.getNumRatings());
 		assertEquals((user1Stars + user2Stars)/2, updatedManufacturer1.getAverageRating(), DELTA);
 		
-		// TODO figure out how to test deleting
 		userService.removeRating(user1Rating);
 		
 		// Check that the rating has been removed from the datastore
@@ -168,6 +167,58 @@ public class UserDataServiceTest {
 	/** Test that a rating is updated properly and not duplicated */
 	@Test
 	public void testUpdateRating() {
+		handler.storeItem(manufacturer1);
 		
+		String userID = "1G39485"; // random
+		int userStars1 = 3;
+		int userStars2 = 5;
+		Rating user1Rating = new Rating(userID, manufacturer1.getID(), userStars1);
+		
+		// Check that the user starts with 0 ratings
+		List<Rating> user1Ratings = userService.getRatings(userID);
+		assertEquals(0, user1Ratings.size());
+
+		userService.addRating(user1Rating);
+		
+		// Check that the rating is stored in the datastore
+		user1Ratings = userService.getRatings(userID);
+		assertEquals(1, user1Ratings.size());		
+		Rating user1Stored = user1Ratings.get(0);
+		assertEquals(userID, user1Stored.getUserID());
+		assertEquals(userStars1, user1Stored.getRating());
+
+		// Check that manufacturer is updated correctly with new rating
+		Manufacturer updatedManufacturer1 = handler.getManufacturerById(manufacturer1.getID());
+		assertEquals(1, updatedManufacturer1.getNumRatings());
+		assertEquals(userStars1, updatedManufacturer1.getAverageRating(), DELTA);
+			
+		// Add the same rating again and make sure there is no change or error
+		userService.addRating(user1Rating);
+		
+		user1Ratings = userService.getRatings(userID);
+		assertEquals(1, user1Ratings.size());
+		user1Stored = user1Ratings.get(0);
+		assertEquals(userID, user1Stored.getUserID());
+		assertEquals(userStars1, user1Stored.getRating());
+		
+		updatedManufacturer1 = handler.getManufacturerById(manufacturer1.getID());
+		assertEquals(1, updatedManufacturer1.getNumRatings());
+		assertEquals(userStars1, updatedManufacturer1.getAverageRating(), DELTA);
+		
+		// Add a new rating to the same manufacturer
+		Rating user1SecondRating = new Rating(userID, manufacturer1.getID(), userStars2);
+		userService.addRating(user1SecondRating);
+
+		// Check that the new rating is the only one for this user
+		user1Ratings = userService.getRatings(userID);
+		assertEquals(1, user1Ratings.size());
+		user1Stored = user1Ratings.get(0);
+		assertEquals(userID, user1Stored.getUserID());
+		assertEquals(userStars2, user1Stored.getRating());
+		
+		// Check that the manufacturer has only the new rating
+		updatedManufacturer1 = handler.getManufacturerById(manufacturer1.getID());
+		assertEquals(1, updatedManufacturer1.getNumRatings());
+		assertEquals(userStars2, updatedManufacturer1.getAverageRating(), DELTA);
 	}
 }
