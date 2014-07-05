@@ -2,7 +2,6 @@ package com.lamchop.alcolist.shared;
 
 import java.io.Serializable;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -12,8 +11,9 @@ import javax.jdo.annotations.PrimaryKey;
 public class Review implements Serializable {
 
 	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Long id;
+	// id is a concatenation of userID and manufacturerID so there can only be one review per user for
+	// each manufacturer
+	private String id;
 	@Persistent
 	private String userID;
 	@Persistent
@@ -27,12 +27,13 @@ public class Review implements Serializable {
 	}
 
 	public Review(String userID, String manufacturerID, String review) {
+		this.id = manufacturerID + userID;
 		this.userID = userID;
 		this.manufacturerID = manufacturerID;
 		this.review = review;
 	}
 
-	public Long getID() {
+	public String getID() {
 		return id;
 	}
 	

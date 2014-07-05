@@ -16,6 +16,7 @@ public interface UserDataService extends RemoteService {
 	public void removeRating(Rating rating);
 	public void addRoute(Route route);
 	public void removeRoute(Route route);
+	// If the user has already reviewed this manufacturer, replaces the review.
 	public void addReview(Review review);
 	public void removeReview(Review review);
 	

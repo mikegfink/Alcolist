@@ -3,7 +3,6 @@ package com.lamchop.alcolist.server;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
@@ -15,6 +14,7 @@ import com.lamchop.alcolist.shared.Rating;
 import com.lamchop.alcolist.shared.Review;
 import com.lamchop.alcolist.shared.Route;
 
+// TODO refactor this class
 public class UserDataServiceImpl extends RemoteServiceServlet implements 
 		UserDataService {
 	
@@ -29,11 +29,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 		String manufacturerID = rating.getManufacturerID();
 		String ratingID = rating.getID();
 		Manufacturer manufacturer = handler.getManufacturerById(manufacturerID);
-		if (manufacturer == null) {
-			System.err.println("Rating not added. Manufacturer with ID " + manufacturerID +
-					" not found.");
-			return;
-		}
+		
 		// Check if this user has already rated this manufacturer and are now changing their rating
 		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -48,18 +44,25 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 		
 			if (queryResult.size() == 1) { // TODO
 				previousRating = queryResult.get(0);
-				// Manufacturer will not be changed in the datastore because it is a detached copy.
+				// manufacturer will not be changed in the datastore because it is a detached copy.
 				manufacturer.removeRating(previousRating.getRating());
 			}
 			tx.commit();						
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
+			if (tx.isActive()) {
+				// Roll back the transaction if an error occurred before it could be committed.
+				System.err.println("Rolling back transaction. Rating not added.");
+				tx.rollback();
+				pm.close();
+				return;
+			}
 			pm.close();
+		}
 		manufacturer.addRating(rating.getRating());
 		handler.storeItem(manufacturer);
 		handler.storeItem(rating);
-		}
 	}
 
 	@Override
@@ -81,12 +84,11 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 			
 			if (queryResult.size() == 1) { // TODO
 				storedRating = queryResult.get(0);
-			}
-			
-			if ((manufacturer != null ) && (storedRating != null)) {
 				manufacturer.removeRating(rating.getRating());
 				handler.storeItem(manufacturer);
 				pm.deletePersistent(storedRating);
+			} else {
+				System.err.println("Error finding rating in the datastore. Rating not deleted");
 			}
 			tx.commit();
 		} catch (Exception e) {
@@ -124,6 +126,8 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 			if (queryResult.size() == 1) { // TODO
 				storedRoute = queryResult.get(0);
 				pm.deletePersistent(storedRoute);
+			} else {
+				System.err.println("Error finding route in the datastore. Route not deleted.");
 			}
 			tx.commit();
 		} catch (Exception e) {
@@ -140,14 +144,13 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public void addReview(Review review) {
-		// TODO prevent multiple reviews of same manufacturer
 		handler.storeItem(review);
 	}
 
 	@Override
 	public void removeReview(Review review) {
 		// Can't delete detached copy of review directly.
-		Long reviewID = review.getID();
+		String reviewID = review.getID();
 		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		Query q;
@@ -156,12 +159,14 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 			tx.begin();
 			q = pm.newQuery(Review.class);
 			q.setFilter("id == searchID");
-			q.declareParameters("Long searchID");
+			q.declareParameters("String searchID");
 			List<Review> queryResult = (List<Review>) q.execute(reviewID);
 			
 			if (queryResult.size() == 1) { // TODO
 				storedReview = queryResult.get(0);
 				pm.deletePersistent(storedReview);
+			} else {
+				System.err.println("Error finding review in the datastore. Review not deleted.");
 			}
 			tx.commit();
 		} catch (Exception e) {
