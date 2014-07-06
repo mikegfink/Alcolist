@@ -25,8 +25,8 @@
 .listPanel {
 	border: 1px solid black;
 	background: white;
-	-moz-box-shadow: 0 0 30px 5px #999;
-	-webkit-box-shadow: 0 0 30px 5px #999;
+	moz-box-shadow: 0 0 30px 5px #999;
+	webkit-box-shadow: 0 0 30px 5px #999;
 }
 
 .gwt-ToggleButton-up,.gwt-ToggleButton-up-hovering,.gwt-ToggleButton-up-disabled {
@@ -43,6 +43,21 @@
 
 .gwt-PushButton-down,.gwt-PushButton-down-hovering,.gwt-PushButton-down-disabled {
   padding: 0px 0px 0px 0px;
+}
+
+.gwt-SuggestBox {
+	border: 0px;
+	width:250px;
+	padding:2px;
+}
+
+.gwt-PushButton-up, .gwt-PushButton-down, .gwt-PushButton-up-hovering {
+	background: white;
+	font-color: grey;
+	padding: 0px 0px 0px 0px;
+	text-align: center;
+	border: 0px;
+	height: 30px;
 }
 
 /** Set ids using widget.getElement().setId("idOfElement") */

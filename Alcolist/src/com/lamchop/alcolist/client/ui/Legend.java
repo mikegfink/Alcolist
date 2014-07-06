@@ -40,8 +40,26 @@ public class Legend extends LayoutPanel {
 		init();
 	}
 	
-	private void addClickHandler(
-			final SingleSelectionModel<String> selectionModel) {
+	private void init() {
+		Column<String, String> icons = new Column<String, String>(new LegendCell()) {
+			@Override
+			public String getValue(String object) {
+				return object;
+			}
+		};
+		
+		legend.addColumn(icons);
+		legend.setRowData(0, TYPES);
+		add(legend);
+		
+		final SingleSelectionModel<String> selectionModel = addSelectionHandler();
+		
+	    addClickHandler(selectionModel);
+	    
+	    addPopupLabels();
+	}
+	
+	private void addClickHandler(final SingleSelectionModel<String> selectionModel) {
 		legend.addHandler(new ClickHandler(){
 	         @Override
 	         public void onClick(ClickEvent event) {
@@ -74,21 +92,6 @@ public class Legend extends LayoutPanel {
 	    });
 		return selectionModel;
 	}
-	
-	private void init() {
-		Column<String, String> icons = new Column<String, String>(new LegendCell()) {
-			@Override
-			public String getValue(String object) {
-				return object;
-			}
-		};
-		legend.addColumn(icons);
-		legend.setRowData(0, TYPES);
-		add(legend);
-		final SingleSelectionModel<String> selectionModel = addSelectionHandler();
-	    addClickHandler(selectionModel);
-	    addPopupLabels();
-	}
 
 	private void addMouseOutHandler() {
 		this.addDomHandler(new MouseOutHandler() {
@@ -104,7 +107,7 @@ public class Legend extends LayoutPanel {
 			public void onRowHover(RowHoverEvent event) {
 				int row = event.getHoveringRow().getRowIndex();
 				legendLabel.setWidget(new Label(TYPES.get(row)));
-				CellTable source = (CellTable) event.getSource();
+				CellTable<String> source = (CellTable<String>) event.getSource();
 				int x = source.getRowElement(row).getAbsoluteRight();
 				int y = source.getRowElement(row).getAbsoluteTop();               
 				legendLabel.setPopupPosition(x, y);

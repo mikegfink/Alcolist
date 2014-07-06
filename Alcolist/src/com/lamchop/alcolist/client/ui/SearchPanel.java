@@ -7,9 +7,15 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
+import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.lamchop.alcolist.client.AppDataController;
@@ -18,27 +24,66 @@ import static com.google.gwt.dom.client.Style.Unit.PCT;
 import static com.google.gwt.dom.client.Style.Unit.PX;
 
 public class SearchPanel extends LayoutPanel{
+	private static final int CLEARSEARCH_HIDDEN_WIDTH_PX = 0;
+	private static final int CLEARSEARCH_WIDTH_PX = 20;
+	private static final int CLEARSEARCH_LEFT_PX = 230;
+	private static final int CLEARSEARCH_CENTRE_PX = 4;
+	private static final int SEARCHBUTTON_WIDTH_PX = 75;
+	private static final int SUGGEST_BOX_WIDTH_PX = 256;
+	private static final int SEARCH_BAR_LEFT_PX = 0;
 	
-	MultiWordSuggestOracle oracle;
-	AppDataController theAppDataController;
-	Button searchButton;
-	SuggestBox textBox;
+	
+	private MultiWordSuggestOracle oracle;
+	private AppDataController theAppDataController;
+	private Button searchButton;
+	private SuggestBox textBox;
+	private PushButton clearSearchButton;
+	private LayoutPanel searchBar;
 	
 	public SearchPanel(AppDataController theAppDataController) {
 		this.theAppDataController = theAppDataController;
-		initPanel();
+		initSearchWidgets();
 	}
 	
 
-	private void initPanel() {
+	private void initSearchWidgets() {
 		textBox = new SuggestBox();
 		searchButton = new Button();
+		clearSearchButton = new PushButton();
+		searchBar = new LayoutPanel();
+		placeSearchWidgets();
+		addSearchHandlers();
+	}
+
+
+	private void placeSearchWidgets() {
 		searchButton.setText("Search");
-		this.add(textBox);
-//		this.setWidgetLeftWidth(textBox, 0, PCT, 200, PX);
 		this.add(searchButton);
-		this.setWidgetLeftWidth(searchButton, 175, PX, 75, PX);
+		this.setWidgetLeftWidth(searchButton, SUGGEST_BOX_WIDTH_PX, PX, SEARCHBUTTON_WIDTH_PX, PX);
 		
+		addSearchBar();
+		
+		this.add(searchBar);
+		this.setWidgetLeftWidth(searchBar, SEARCH_BAR_LEFT_PX, PX, SUGGEST_BOX_WIDTH_PX, PX);
+
+	}
+
+
+	private void addSearchBar() {
+		
+		searchBar.add(textBox);
+		
+		searchBar.add(clearSearchButton);
+		clearSearchButton.setText("X");
+		
+		searchBar.setWidgetTopBottom(clearSearchButton, CLEARSEARCH_CENTRE_PX, PX, CLEARSEARCH_CENTRE_PX, PX);
+		hideClearSearchButton();
+		
+		searchBar.addStyleName("listPanel");
+	}
+
+
+	private void addSearchHandlers() {
 		searchButton.addClickHandler(new ClickHandler() {
 		    public void onClick(ClickEvent event) {
 		        search();
@@ -52,11 +97,56 @@ public class SearchPanel extends LayoutPanel{
 		        }
 		      }
 		    });
+		textBox.addKeyUpHandler(new KeyUpHandler() {
+
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				if (textBox.getText() != null) {
+					if (clearSearchButton.getOffsetWidth() == 0)
+						showClearSearchButton();
+				}
+				if (event.getNativeKeyCode() == KeyCodes.KEY_BACKSPACE || event.getNativeKeyCode() == KeyCodes.KEY_DELETE ) {
+					if (textBox.getText() == null) {
+						hideClearSearchButton();
+					}
+				}
+				
+			}
+			
+		});
+		
+		clearSearchButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				clearSearch();
+				hideClearSearchButton();
+				
+			}
+			
+		});
 	}
 	
-	public void search() {
+	private void search() {
 		String searchString = textBox.getText().toLowerCase().trim();
 		theAppDataController.filterBySearch(searchString);
 	}
+
+	
+	private void clearSearch() {
+		textBox.setText("");
+		theAppDataController.removeSearch();
+		
+	}
+	
+	private void showClearSearchButton() {
+		searchBar.setWidgetLeftWidth(clearSearchButton, CLEARSEARCH_LEFT_PX, PX, CLEARSEARCH_WIDTH_PX, PX);
+	}
+	
+	private void hideClearSearchButton() {
+		searchBar.setWidgetLeftWidth(clearSearchButton, CLEARSEARCH_LEFT_PX, PX, CLEARSEARCH_HIDDEN_WIDTH_PX, PX);
+	}
+	
+
 
 }
