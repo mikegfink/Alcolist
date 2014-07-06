@@ -21,11 +21,17 @@ public class AppDataController {
 	private static final ManufacturerServiceAsync 
 							manufacturerService = GWT.create(ManufacturerService.class);
 
-	private List<Manufacturer> displayedManufacturers;
+	private List<Manufacturer> filteredList;
+	private List<Manufacturer> searchList;
+	private List<Manufacturer> allManufacturers;
+	private String type;
+	private String searchText;
 	
 	public AppDataController(UIUpdateInterface theUI) {
 		appData = new AppData();
 		this.theUI = theUI;
+		searchList = new ArrayList<Manufacturer>();
+		filteredList = new ArrayList<Manufacturer>();
 	}
 
 	// TODO: Request rework of UserData storage so that we receive a UserData object from 
@@ -102,7 +108,7 @@ public class AppDataController {
 			public void onSuccess(List<Manufacturer> result) {
 				updateAppDataManufacturers(result);
 				sendManufacturersToUI();
-				displayedManufacturers = result;
+				allManufacturers = result;
 			}
 		});		
 	}
@@ -143,15 +149,25 @@ public class AppDataController {
 	}
 
 	public void filterBySearch(String searchText) {
-//		List<Manufacturer> allManufacturers = appData.getManufacturers();
-		List<Manufacturer> filteredManufacturers = new ArrayList<Manufacturer>();
-		for (Manufacturer m : displayedManufacturers) {
+		if (type != null && searchText != null)
+			filterList(allManufacturers);
+		this.searchText = searchText;
+		if (filteredList.isEmpty())
+			searchList(allManufacturers);
+		else searchList(filteredList);
+	}
+	
+	private void searchList(List<Manufacturer> manufacturers) {
+		searchList.clear();
+		
+		for (Manufacturer m : manufacturers) {
 			if (m.getCity().toLowerCase().contains(searchText) || m.getName().toLowerCase().contains(searchText) || m.getFullAddress().toLowerCase().contains(searchText))
-				filteredManufacturers.add(m);	
+				searchList.add(m);	
 		}
-		theUI.update(filteredManufacturers);
+		theUI.update(searchList);
 
 	}
+	
 
 	private void handleError(Throwable error) {
 		Window.alert(error.getMessage());
@@ -160,19 +176,45 @@ public class AppDataController {
 	}
 	
 	public void filterByType(String type) {
-		List<Manufacturer> allManufacturers = appData.getManufacturers();
-		List<Manufacturer> filteredManufacturers = new ArrayList<Manufacturer>();
-		for (Manufacturer m : allManufacturers) {
+		if (type != null && searchText != null)
+			searchList(allManufacturers);
+		this.type = type;
+		if (searchList.isEmpty())
+			filterList(allManufacturers);
+		else filterList(searchList);
+		
+	}
+	
+	private void filterList(List<Manufacturer> manufacturers) {
+		filteredList.clear();
+		for (Manufacturer m : manufacturers) {
 			if (m.getType().equals(type))
-				filteredManufacturers.add(m);	
+				filteredList.add(m);	
 		}
-		theUI.update(filteredManufacturers);
-		displayedManufacturers = filteredManufacturers;
+		theUI.update(filteredList);
+
 	}
 	
 	public void removeFilter() {
-		displayedManufacturers = appData.getManufacturers();
-		theUI.update(displayedManufacturers);
+		filteredList.clear();
+		type = null;
+		if (searchList.isEmpty())
+			theUI.update(allManufacturers);
+		else searchList(allManufacturers);
+		
+		
+	}
+	
+	public void removeSearch() {
+		searchList.clear();
+		searchText = null;
+		if (filteredList.isEmpty())
+			theUI.update(allManufacturers);
+		else {
+			filterList(allManufacturers);
+		}
+
+		
 	}
 
 }
