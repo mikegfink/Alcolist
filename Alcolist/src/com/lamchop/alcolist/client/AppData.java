@@ -66,8 +66,29 @@ final class AppData {
 	public void addRoute(Route route) {
 		userData.add(route);
 	}
+	
+	public Review addReview(String manID, String reviewText) {
+		Review review = new Review(userData.getUserID(), manID, reviewText);
+		userData.add(review);
+		return review;
+	}
+	
+	public Rating addRating(String manID, int ratingValue) {
+		Rating rating = new Rating(userData.getUserID(), manID, ratingValue);
+		userData.add(rating);
+		return rating;
+	}
+	
+	public Route addRoute(String[] legs) {
+		// TODO: Is this needed? Parameter probably will change etc depending on implementation
+		return null;
+	}
 
 	public void clearManufacturers() {
 		manufacturers.clear();		
+	}
+	
+	public Review getReview(String manID) {
+		return userData.findReview(manID);
 	}
 }

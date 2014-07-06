@@ -33,7 +33,7 @@ public class UI extends LayoutPanel {
 	private static final double USERPANEL_HEIGHT_PCT = 10;
 	private static final double USERPANEL_TOP_PCT = 0;
 	private static final double USERPANEL_RIGHT_PCT = 0;
-	private static final double USERPANEL_WIDTH_PCT = 30;
+	private static final double USERPANEL_WIDTH_PCT = 50;
 	private static final double LIST_TOP_PCT = 10;
 	private static final double LIST_HEIGHT_PCT = 80;
 	private static final double VIEWPANEL_TOP_PCT = 10;
@@ -44,7 +44,7 @@ public class UI extends LayoutPanel {
 	// FIELDS
 	private MapPanel mapPanel;
 	private ListPanel listPanel;
-	private Label title; // Replace with Title class or Image
+	private Label title; // TODO: Replace with Title class or Image
 	private AdminPanel adminPanel;
 	private ViewPanel viewPanel;
 	private Legend legend;
@@ -134,12 +134,15 @@ public class UI extends LayoutPanel {
 	}
 	
 	public void showLoggedOut() {
-		userPanel.showLoggedOut();		
+		userPanel.showLoggedOut();
+		listPanel.showLoggedOut();
+		mapPanel.showLoggedOut();
 	}
 	
 	public void showLoggedIn(UserData userData){
 		userPanel.showLoggedIn(userData);
-		
+		listPanel.showLoggedIn();
+		mapPanel.showLoggedIn();
 		// Maybe some other things need to change here too as it develops.
 	}
 	

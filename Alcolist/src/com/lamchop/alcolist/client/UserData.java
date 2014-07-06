@@ -29,6 +29,7 @@ public class UserData {
 	public void add(Rating rating) {
 		// TODO Auto-generated method stub
 		// If manufacturer has a rating, replace it, otherwise add it.
+		
 	}
 	
 	public void remove(Rating rating) {
@@ -39,6 +40,14 @@ public class UserData {
 	public void add(Review review) {
 		// TODO Auto-generated method stub
 		// If manufacturer has a review, replace it, otherwise add it.
+		for (Review aReview : reviews) {
+			if (aReview.getManufacturerID().equals(review.getManufacturerID())) {
+				reviews.remove(aReview);
+				reviews.add(review);
+				return;
+			}
+		}
+		reviews.add(review);
 	}
 	
 	public void remove(Review review) {
@@ -95,5 +104,14 @@ public class UserData {
 
 	public Boolean isDefault() {
 		return (userID.equals(DEFAULT_USERID) && name.equals(DEFAULT_NAME));
+	}
+
+	public Review findReview(String manID) {
+		for (Review aReview : reviews) {
+			if (aReview.getManufacturerID().equals(manID)) {
+				return aReview;
+			}
+		}	
+		return null;
 	}
 }

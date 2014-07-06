@@ -14,14 +14,12 @@ public class UserPanel extends LayoutPanel {
 	private static final double LOG_WIDTH_PIXELS = 66; 
 	private static final double LOG_TOP_PCT = 3; 
 	private static final double LOG_HEIGHT_PIXELS = 31; 
-	private static final double GREET_RIGHT_PCT = 40;
+	private static final double GREET_RIGHT_PCT = 30;
 	private static final double GREET_TOP_PCT = 3;
 	private static final double HIDE_PCT = 0;
-	private static final double GREET_WIDTH_PCT = 55;
+	private static final double GREET_WIDTH_PIXELS = 100;
 	private static final double GREET_HEIGHT_PCT = 90;
-	
-	
-	
+		
 	private FacebookLoginButton loginButton;
 	private FacebookLogoutButton logoutButton;
 	private Label greeting;
@@ -54,6 +52,7 @@ public class UserPanel extends LayoutPanel {
 		greeting.setText("");
 		setWidgetRightWidth(greeting, GREET_RIGHT_PCT, PCT, HIDE_PCT, PCT);
 		setWidgetTopHeight(greeting, GREET_TOP_PCT, PCT, HIDE_PCT, PCT);
+		
 	}
 	
 	private void showLoginButton() {
@@ -82,8 +81,9 @@ public class UserPanel extends LayoutPanel {
 		String hello = "Hi " + userName;
 		
 		greeting.setText(hello); 
-		setWidgetRightWidth(greeting, GREET_RIGHT_PCT, PCT, GREET_WIDTH_PCT, PCT);
+		setWidgetRightWidth(greeting, GREET_RIGHT_PCT, PCT, GREET_WIDTH_PIXELS, PX);
 		setWidgetTopHeight(greeting, GREET_TOP_PCT, PCT, GREET_HEIGHT_PCT, PCT);
+		
 	}
 
 }
