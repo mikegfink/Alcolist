@@ -153,8 +153,40 @@ public class AppDataController {
 
 	}
 
+	public Review addReview(String reviewText, final String manID) {
+		// TODO Auto-generated method stub
+		Review review = appData.addReview(manID, reviewText);
+		
+		userDataService.addReview(review, (new AsyncCallback<Void>() {
+			public void onFailure(Throwable error) {
+				handleError(error);
+			}
+
+			public void onSuccess(Void result) {
+				GWT.log("Review added successfully for: Manufacturer ID: " + manID);
+			}
+		}));
+		
+		return review;
+	}
+	
+	public void addRating(int ratingValue, final String manID) {
+		// TODO Auto-generated method stub
+		Rating rating = appData.addRating(manID, ratingValue);
+		
+		userDataService.addRating(rating, (new AsyncCallback<Void>() {
+			public void onFailure(Throwable error) {
+				handleError(error);
+			}
+
+			public void onSuccess(Void result) {
+				GWT.log("Rating added successfully for: Manufacturer ID: " + manID);
+			}
+		}));		
+	}
+	
 	private void handleError(Throwable error) {
-		Window.alert(error.getMessage());
+		GWT.log(error.getMessage());
 		/*if (error instanceof NotLoggedInException) {
 			Window.Location.replace(loginInfo.getLogoutUrl());*/
 	}
@@ -175,4 +207,7 @@ public class AppDataController {
 		theUI.update(displayedManufacturers);
 	}
 
+	public Review getReview(String manID) {
+		return appData.getReview(manID);
+	}
 }

@@ -2,21 +2,17 @@ package com.lamchop.alcolist.client.ui;
 
 import java.util.ArrayList;
 
-import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.maps.client.LoadApi;
 import com.google.gwt.maps.client.LoadApi.LoadLibrary;
-import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.ui.AbsolutePanel;
-import com.google.gwt.user.client.ui.LayoutPanel;
 
 public class MapsLoader {
 	
 	private MapPanel theMap;
 	private AlcolistMapWidget theMapWidget;
 	
-	public MapsLoader() {
-		theMap = new MapPanel();
-		theMap.setSize("100%", "100%");
+	public MapsLoader(UIController theUIController) {
+		theMap = new MapPanel(theUIController);
+		theMap.setSize("100%", "100%");		
 	}
 	
 	public MapPanel getMap() {

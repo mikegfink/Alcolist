@@ -3,6 +3,8 @@ package com.lamchop.alcolist.client.ui;
 
 import java.util.List;
 
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.client.UserData;
 import com.lamchop.alcolist.shared.Manufacturer;
@@ -13,7 +15,7 @@ public class UIController implements UIUpdateInterface {
 	private static final int DEFAULT_LIST_WIDTH = 35;
 	private static final int BIG_LIST_WIDTH = 60;
 	private static final int BIG_LIST_LEFT = 20;
-	private static final int DEFAULT_MAP_WIDTH = 50;
+	private static final int DEFAULT_MAP_WIDTH = 55;
 	private static final int BIG_MAP_WIDTH = 100;
 	private static final int HIDE_LIST_VALUE = 0;
 	
@@ -25,14 +27,19 @@ public class UIController implements UIUpdateInterface {
 	public UIController() {
 		firstTime = true;
 		theAppDataController = new AppDataController(this);	
-		uiPanel = new UI(new AdminPanel(theAppDataController),
-				new UserPanel(theAppDataController), new ViewPanel(this), 
-				new ListPanel(theAppDataController), new Legend(theAppDataController));
+
+		AdminPanel adminPanel = new AdminPanel(theAppDataController);
+		UserPanel userPanel = new UserPanel(theAppDataController);
+		ViewPanel viewPanel = new ViewPanel(this);
+		ListPanel listPanel = new ListPanel(theAppDataController);
+		Legend legend = new Legend(theAppDataController);
+		uiPanel = new UI(adminPanel, userPanel, viewPanel, listPanel, legend);
+		
 		initMap();
 	}
 	
 	public void initMap() {
-		mapsLoader = new MapsLoader();
+		mapsLoader = new MapsLoader(this);
 		// This will call initUIPanel once the map api is loaded in order to 
 		// synchronize the loading of the UI
 		mapsLoader.loadMapApi(this);		
@@ -92,5 +99,9 @@ public class UIController implements UIUpdateInterface {
 	public UI getUI() {
 		uiPanel.onResize();
 		return uiPanel;
+	}
+
+	public void showReviewPanel(Manufacturer manufacturer) {
+		new ReviewPanel(manufacturer, theAppDataController).center();
 	}
 }

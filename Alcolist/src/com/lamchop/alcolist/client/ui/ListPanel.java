@@ -7,7 +7,6 @@ import static com.google.gwt.dom.client.Style.Unit.PX;
 
 import java.util.List;
 
-import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.cellview.client.Column;
@@ -150,6 +149,16 @@ public class ListPanel extends LayoutPanel {
 
 		listGrid.getColumnSortList().push(secondSort);
 		ColumnSortEvent.fire(listGrid,  listGrid.getColumnSortList());
+	}
+
+	public void showLoggedIn() {
+		// TODO Create buttons for add/edit review/rating/routes
+		
+	}
+
+	public void showLoggedOut() {
+		// TODO Remove buttons for ratings/reviews/routes CONSIDER WHAT TO DO ABOUT DIRECTIONS
+		
 	}
 
 }

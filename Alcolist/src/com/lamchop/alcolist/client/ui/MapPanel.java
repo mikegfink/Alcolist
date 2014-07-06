@@ -23,21 +23,41 @@ import com.lamchop.alcolist.shared.Manufacturer;
 
 public class MapPanel extends LayoutPanel {
 
-	private static final int DEFAULT_MAP_VIEW_PCT = 50;
+	private static final int DEFAULT_MAP_VIEW_PCT = 55;
 	private AlcolistMapWidget theMapWidget;
 	private List<Marker> theMarkers;
 	private Images images = GWT.create(Images.class);
 	private InfoWindow infoWindow;
+	private UIController theUIController;
+	private boolean LoggedIn;
 
-	public MapPanel() {
+	public MapPanel(UIController theUIController) {
 		theMarkers = new ArrayList<Marker>();
 		theMapWidget = null;
 		infoWindow = null;
+		this.theUIController = theUIController;
+		LoggedIn = false;
 	}
 
 	public void setMapWidget(AlcolistMapWidget mapWidget)  {
 		theMapWidget = mapWidget;
+		
+		addMapClickHandler();
 	}
+
+	private void addMapClickHandler() {
+		theMapWidget.getMapWidget().addClickHandler(new ClickMapHandler() {
+			@Override
+			public void onEvent(ClickMapEvent event) {
+				if (infoWindow != null)
+					infoWindow.close();
+				
+				GWT.log("clicked on latlng=" + event.getMouseEvent().getLatLng());
+			}
+		});
+	}
+	
+	
 
 	public void populateMap(List<Manufacturer> manufacturers) {
 		clearMarkers();
@@ -48,10 +68,9 @@ public class MapPanel extends LayoutPanel {
 		MarkerImage breweryIcon = MarkerImage.newInstance(brewery.getUrl());
 		MarkerImage wineryIcon = MarkerImage.newInstance(winery.getUrl());
 		MarkerImage distilleryIcon = MarkerImage.newInstance(distillery.getUrl());
-		String licenseType = "";
 
 		for (final Manufacturer nextManufacturer: manufacturers) {
-			licenseType = nextManufacturer.getType();
+			String licenseType = nextManufacturer.getType();
 
 			LatLng location = nextManufacturer.getLatLng();
 
@@ -88,14 +107,15 @@ public class MapPanel extends LayoutPanel {
 		if (marker == null || mouseEvent == null) {
 			return;
 		}
-		HTML html = new HTML("<b>" + manufacturer.getName() + "</b><br>" 
-				+ manufacturer.getFormattedAddress());
+		MarkerWindow markerWindow = new MarkerWindow(manufacturer, theUIController, LoggedIn);
 
 		InfoWindowOptions options = InfoWindowOptions.newInstance();
-		options.setContent(html);
+		options.setContent(markerWindow);
+			
 		if (infoWindow != null)
 			infoWindow.close();
 		infoWindow = InfoWindow.newInstance(options);
+	
 		infoWindow.open(theMapWidget.getMapWidget(), marker);
 	}
 
@@ -141,8 +161,6 @@ public class MapPanel extends LayoutPanel {
 		if (maxLng > Double.NEGATIVE_INFINITY && 
 				maxLat > Double.NEGATIVE_INFINITY) {
 			recentreAndZoomMap(maxLat, minLat, maxLng, minLng, percentage);
-			// TODO: Magic number needs to be a parameter but this method
-			// needs to not be in this class.
 		}
 	}
 
@@ -151,7 +169,7 @@ public class MapPanel extends LayoutPanel {
 		// percentage is percent of screen for displaying markers
 		int MIN_VIEW_PERCENT = 20;
 		double lngSpan = Math.abs((maxLng - minLng));
-		int border = 15;
+		//int border = 1; // Can't be zero
 		
 		if (percentage > MIN_VIEW_PERCENT) {			
 			lngSpan = (lngSpan / percentage) * 100;
@@ -159,7 +177,7 @@ public class MapPanel extends LayoutPanel {
 		}
 
 		LatLng southWest = LatLng.newInstance(minLat, minLng);
-		LatLng northEast = LatLng.newInstance(maxLat, maxLng + lngSpan/border);
+		LatLng northEast = LatLng.newInstance(maxLat, maxLng); // removed lngSpan/border;
 		LatLngBounds bounds = LatLngBounds.newInstance(southWest, northEast);
 		LatLng centre = bounds.getCenter();
 		//mapWidget.panTo(centre);
@@ -184,6 +202,16 @@ public class MapPanel extends LayoutPanel {
 
 	public void triggerResize() {
 		theMapWidget.triggerResize();
+	}
+
+	public void showLoggedIn() {
+		// TODO Auto-generated method stub
+		LoggedIn = true;
+	}
+	
+	public void showLoggedOut() {
+		// TODO Auto-generated method stub
+		LoggedIn = false;
 	}
 
 }

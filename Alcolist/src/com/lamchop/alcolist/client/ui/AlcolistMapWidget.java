@@ -92,13 +92,13 @@ public class AlcolistMapWidget extends Composite {
 		pWidget.add(mapWidget);
 		mapWidget.setSize("100%", "100%");
 
-		mapWidget.addClickHandler(new ClickMapHandler() {
-			@Override
-			public void onEvent(ClickMapEvent event) {
-				// TODO fix the event getting, getting ....
-				GWT.log("clicked on latlng=" + event.getMouseEvent().getLatLng());
-			}
-		});
+//		mapWidget.addClickHandler(new ClickMapHandler() {
+//			@Override
+//			public void onEvent(ClickMapEvent event) {
+//				// TODO fix the event getting, getting ....
+//				GWT.log("clicked on latlng=" + event.getMouseEvent().getLatLng());
+//			}
+//		});
 		mapWidget.triggerResize();
 	}
 

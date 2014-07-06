@@ -58,7 +58,5 @@ public class SearchPanel extends LayoutPanel{
 		String searchString = textBox.getText().toLowerCase().trim();
 		theAppDataController.filterBySearch(searchString);
 	}
-	
-	
 
 }

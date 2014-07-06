@@ -29,13 +29,19 @@
 	-webkit-box-shadow: 0 0 30px 5px #999;
 }
 
-.gwt-ToggleButton-up,.gwt-ToggleButton-up-hovering,.gwt-ToggleButton-up-disabled
-  {
+.gwt-ToggleButton-up,.gwt-ToggleButton-up-hovering,.gwt-ToggleButton-up-disabled {
   padding: 0px 0px 0px 0px;
 }
 
-.gwt-ToggleButton-down,.gwt-ToggleButton-down-hovering,.gwt-ToggleButton-down-disabled
-  {
+.gwt-ToggleButton-down,.gwt-ToggleButton-down-hovering,.gwt-ToggleButton-down-disabled {
+  padding: 0px 0px 0px 0px;
+}
+
+.gwt-PushButton-up,.gwt-PushButton-up-hovering,.gwt-PushButton-up-disabled {
+  padding: 0px 0px 0px 0px;
+}
+
+.gwt-PushButton-down,.gwt-PushButton-down-hovering,.gwt-PushButton-down-disabled {
   padding: 0px 0px 0px 0px;
 }
 

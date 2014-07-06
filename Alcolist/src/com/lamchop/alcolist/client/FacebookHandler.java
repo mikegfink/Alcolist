@@ -10,6 +10,7 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.api.gwt.oauth2.client.Auth;
@@ -21,7 +22,10 @@ import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 import com.lamchop.alcolist.client.ui.FacebookLoginButton;
 import com.lamchop.alcolist.client.ui.FacebookLogoutButton;
-import com.lamchop.alcolist.client.ui.FacebookReviewBox;
+import com.lamchop.alcolist.client.ui.FacebookShareButton;
+import com.lamchop.alcolist.client.ui.ReviewPanel;
+import com.lamchop.alcolist.shared.Manufacturer;
+import com.lamchop.alcolist.shared.Review;
 
 
 /**
@@ -46,11 +50,13 @@ public class FacebookHandler implements ClickHandler {
 	private static final String FACEBOOK_BIRTHDAY_SCOPE = "user_birthday";
 
 	// This scope allows the app to post to the User's timeline.
-	private static final String FACEBOOK_PUBLISH_SCOPE = "publish_stream";
+	private static final String FACEBOOK_PUBLISH_SCOPE = "publish_actions";
 	
 	private static final String USER_ID = "id";
 	
 	private static final String USER_NAME = "name";
+	
+	private static final String APP_URL = "http://alcolist-test.appspot.com";
 
 	// Use the implementation of Auth intended to be used in the GWT client app.
 	private static final Auth AUTH = Auth.get();
@@ -67,9 +73,6 @@ public class FacebookHandler implements ClickHandler {
 		this.theAppDataController = theAppDataController;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
-	 */
 	@Override
 	public void onClick(ClickEvent event) {
 		Widget sender = (Widget) event.getSource();
@@ -78,17 +81,22 @@ public class FacebookHandler implements ClickHandler {
 			login();
 		} else if (sender.getClass() == FacebookLogoutButton.class) {
 			logout();
-		} else if (sender.getClass() == FacebookReviewBox.class) {
-			FacebookReviewBox facebookReviewBox = (FacebookReviewBox) sender;
-			shareWithFacebook(facebookReviewBox.getValue());
+		} else if (sender.getClass() == FacebookShareButton.class) {
+			FacebookShareButton facebookShare = (FacebookShareButton) sender;
+			shareWithFacebook(facebookShare.getReview(), facebookShare.getManufacturer());
 		}
 	}
 
 	private void logout() {
 		Auth.get().clearAllTokens();
-		appToken = null;
+		resetToken();
+		// TODO: Make a nicer dialog for this.
 		Window.alert("Logged out of Alcolist.");
 		theAppDataController.clearUserData();
+	}
+
+	private void resetToken() {
+		appToken = null;
 	}
 
 	/**
@@ -96,12 +104,11 @@ public class FacebookHandler implements ClickHandler {
 	 */
 	private void login() {
 		final AuthRequest req = new AuthRequest(FACEBOOK_AUTH_URL, FACEBOOK_CLIENT_ID)
-		// TODO: Consider extending AuthRequest in order to include display=popup in the parameters.
+		// TODO: Consider extending AuthRequest to include display=popup in the parameters.
 		// Facebook expects a comma-delimited list of scopes
-		.withScopeDelimiter(",");
-
-		AUTH.clearAllTokens();
-		AUTH.login(req, new Callback<String, Throwable>() {
+		.withScopeDelimiter(","); // Probably can delete this line
+		
+		authorizeFacebook(req, new Callback<String, Throwable>() {
 			@Override
 			public void onSuccess(String token) {
 				// TODO: (optional) AUTH.getToken() gives a TokenInfo with access token (string) and expiry.
@@ -111,9 +118,14 @@ public class FacebookHandler implements ClickHandler {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Error:\n" + caught.getMessage());
+				Window.alert("Error:\n" + caught.getMessage()); // TODO: Replace with handleError that does something useful
 			}
 		});
+	}
+
+	private void authorizeFacebook(AuthRequest req, Callback<String, Throwable> callback) {
+		AUTH.clearAllTokens();
+		AUTH.login(req, callback);
 	}
 
 	/**
@@ -153,6 +165,11 @@ public class FacebookHandler implements ClickHandler {
 			}
 		};
 		
+		makeRequest(builder, requestData, callback);
+	}
+
+	private void makeRequest(RequestBuilder builder,
+			String requestData, final Callback<JSONObject, Throwable> callback) {
 		try {
 			builder.sendRequest(requestData, new RequestCallback() {
 				public void onError(Request request, Throwable exception) {
@@ -182,29 +199,58 @@ public class FacebookHandler implements ClickHandler {
 
 	/**
 	 * Creates a permission request for sharing then shares the content
-	 * @param toShare  The content to share on Facebook
+	 * @param review  The content to share on Facebook
+	 * @param manufacturer 
 	 */
-	private void shareWithFacebook(String toShare) {
+	private void shareWithFacebook(final Review review, final Manufacturer manufacturer) {
 		final AuthRequest req = new AuthRequest(FACEBOOK_AUTH_URL, FACEBOOK_CLIENT_ID)
-		.withScopes(FACEBOOK_EMAIL_SCOPE, FACEBOOK_BIRTHDAY_SCOPE, FACEBOOK_PUBLISH_SCOPE)
-		// TODO: Consider extending AuthRequest in order to include display=popup in the parameters.
+		.withScopes(FACEBOOK_PUBLISH_SCOPE)
 		// Facebook expects a comma-delimited list of scopes
 		.withScopeDelimiter(",");
+		// TODO: Consider extending AuthRequest to include display=popup in the parameters.
 
-		AUTH.login(req, new Callback<String, Throwable>() {
-			@Override
+		authorizeFacebook(req, new Callback<String, Throwable>() {
 			public void onSuccess(String token) {
-				// TODO: (optional) AUTH.getToken() gives a TokenInfo with access token (string) and expiry.
-				Window.alert("Got an OAuth token:\n" + token + "\n"
-						+ "Token expires in " + AUTH.expiresIn(req) + " ms\n");
-				getFacebookLoginInfo();
+				appToken = token;
+				makeGraphRequest(review.getReview(), manufacturer);
 			}
 
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Error:\n" + caught.getMessage());
+			public void onFailure(Throwable reason) {
+				Window.alert(reason.getMessage());
 			}
 		});
+	}
+	
+	private void makeGraphRequest(String toShare, Manufacturer manufacturer) {
+		Method method = RequestBuilder.POST;
+		RequestBuilder builder;
+		final String id = "me/feed/";	
+		String message = "My Review of: " + manufacturer.getName() + "\n" + toShare;
+		
+		String params = "message="
+				+ URL.encodeQueryString(message) +
+				"&link=" + URL.encodeQueryString(APP_URL);
+		//TODO: Bring the manufacturer in and use the website as the url. 
+		
+		String requestData = "access_token=" + appToken;
+
+		if (params != null) {
+			requestData = requestData + "&" + params;
+		}
+		builder = new RequestBuilder(method, "https://graph.facebook.com/"
+				+ id + "?" + requestData);
+
+		final Callback<JSONObject, Throwable> callback = new Callback<JSONObject, Throwable>() {
+			public void onFailure(Throwable reason) {
+				Window.alert(reason.getMessage());
+			}
+
+			public void onSuccess(JSONObject result) {
+				Window.alert("Supposedly worked");
+			}
+		};
+		
+		makeRequest(builder, requestData, callback);
 	}
 
 	/*public class FacebookUtil {
