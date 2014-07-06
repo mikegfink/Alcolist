@@ -8,7 +8,7 @@ import com.lamchop.alcolist.shared.Manufacturer;
 public class ReviewButton extends Button {
 
 	public ReviewButton(final Manufacturer manufacturer, final UIController theUIController) {
-		this.setText("Add Review");
+		this.setText("Review");
 		this.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				theUIController.showReviewPanel(manufacturer);

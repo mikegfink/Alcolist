@@ -15,7 +15,7 @@ public class UIController implements UIUpdateInterface {
 	private static final int DEFAULT_LIST_WIDTH = 35;
 	private static final int BIG_LIST_WIDTH = 60;
 	private static final int BIG_LIST_LEFT = 20;
-	private static final int DEFAULT_MAP_WIDTH = 50;
+	private static final int DEFAULT_MAP_WIDTH = 55;
 	private static final int BIG_MAP_WIDTH = 100;
 	private static final int HIDE_LIST_VALUE = 0;
 	

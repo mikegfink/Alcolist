@@ -23,7 +23,7 @@ import com.lamchop.alcolist.shared.Manufacturer;
 
 public class MapPanel extends LayoutPanel {
 
-	private static final int DEFAULT_MAP_VIEW_PCT = 50;
+	private static final int DEFAULT_MAP_VIEW_PCT = 55;
 	private AlcolistMapWidget theMapWidget;
 	private List<Marker> theMarkers;
 	private Images images = GWT.create(Images.class);

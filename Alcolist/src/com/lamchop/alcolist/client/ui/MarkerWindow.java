@@ -17,7 +17,7 @@ public class MarkerWindow extends VerticalPanel {
 			UIController theUIController, boolean loggedIn) {
 		this.manufacturer = manufacturer;
 		this.theUIController = theUIController;
-		// TODO I'm not sure why this in HTML except to format the bold
+
 		name = new HTML("<b>" + manufacturer.getName() + "</b>");
 		address	= new HTML(manufacturer.getFormattedAddress());
 
