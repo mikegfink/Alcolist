@@ -30,6 +30,11 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 		String ratingID = rating.getID();
 		Manufacturer manufacturer = handler.getManufacturerById(manufacturerID);
 		
+		if (manufacturer == null) {
+			System.err.println("Rating not added. Unable to find manufacturer in the datastore.");
+			return;
+		}
+		
 		// Check if this user has already rated this manufacturer and are now changing their rating
 		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -44,7 +49,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 		
 			if (queryResult.size() == 1) { // TODO
 				previousRating = queryResult.get(0);
-				// manufacturer will not be changed in the datastore because it is a detached copy.
+				// this will not change manufacturer in the datastore because it is a detached copy.
 				manufacturer.removeRating(previousRating.getRating());
 			}
 			tx.commit();						
@@ -69,6 +74,11 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 	public void removeRating(Rating rating) {
 		String manufacturerID = rating.getManufacturerID();
 		Manufacturer manufacturer = handler.getManufacturerById(manufacturerID);
+		
+		if (manufacturer == null) {
+			System.err.println("Unable to find manufacturer in the datastore.");
+		}
+		
 		String ratingID = rating.getID();
 		// Can't delete detached copy of rating directly.
 		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
@@ -82,14 +92,17 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 			q.declareParameters("String searchID");
 			List<Rating> queryResult = (List<Rating>) q.execute(ratingID);
 			
-			if (queryResult.size() == 1) { // TODO
-				storedRating = queryResult.get(0);
+			if (queryResult.size() != 1) { // TODO)
+				System.err.println("Error finding rating in the datastore. Rating not deleted");
+				return;
+			}
+			
+			if (manufacturer != null) {
 				manufacturer.removeRating(rating.getRating());
 				handler.storeItem(manufacturer);
-				pm.deletePersistent(storedRating);
-			} else {
-				System.err.println("Error finding rating in the datastore. Rating not deleted");
 			}
+			storedRating = queryResult.get(0);
+			pm.deletePersistent(storedRating);
 			tx.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -190,7 +203,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 		try {
 			Query q = pm.newQuery(Route.class);
 			q.setFilter("userID == id");
-			q.declareParameters("Long id");
+			q.declareParameters("String id");
 			// Return sorted by routeName for initial ordering in list.
 			q.setOrdering("routeName");
 			List<Route> queryResult = (List<Route>) q.execute(userID);
@@ -215,8 +228,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 			Query q = pm.newQuery(Review.class);
 			q.setFilter("userID == id");
 			q.declareParameters("String id");
-			// Return sorted by manufacturer name for initial ordering in list.
-			// manufactureID starts with manufacturer name.
+			// Return sorted by manufacturer name (manufacturerID starts with name) for initial ordering in list.
 			q.setOrdering("manufacturerID");
 			List<Review> queryResult = (List<Review>) q.execute(userID);
 			reviews = (List<Review>) pm.detachCopyAll(queryResult);
@@ -239,8 +251,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 			Query q = pm.newQuery(Rating.class);
 			q.setFilter("userID == id");
 			q.declareParameters("String id");
-			// Return sorted by manufacturer name for initial ordering in list.
-			// manufactureID starts with manufacturer name.
+			// Return sorted by manufacturer name (manufacturerID starts with name) for initial ordering in list.
 			q.setOrdering("manufacturerID");
 			List<Rating> queryResult = (List<Rating>) q.execute(userID);
 			ratings = (List<Rating>) pm.detachCopyAll(queryResult);
