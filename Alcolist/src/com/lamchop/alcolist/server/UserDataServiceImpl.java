@@ -120,7 +120,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 			tx.begin();
 			q = pm.newQuery(Route.class);
 			q.setFilter("id == searchID");
-			q.declareParameters("String searchID");
+			q.declareParameters("Long searchID");
 			List<Route> queryResult = (List<Route>) q.execute(routeID);
 			
 			if (queryResult.size() == 1) { // TODO
@@ -190,9 +190,9 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 		try {
 			Query q = pm.newQuery(Route.class);
 			q.setFilter("userID == id");
-			q.declareParameters("String id");
-			// Return sorted by manufacturer name (id starts with name) for initial ordering in list.
-			q.setOrdering("manufacturerID");
+			q.declareParameters("Long id");
+			// Return sorted by routeName for initial ordering in list.
+			q.setOrdering("routeName");
 			List<Route> queryResult = (List<Route>) q.execute(userID);
 			routes = (List<Route>) pm.detachCopyAll(queryResult);
 			
@@ -215,7 +215,8 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 			Query q = pm.newQuery(Review.class);
 			q.setFilter("userID == id");
 			q.declareParameters("String id");
-			// Return sorted by manufacturer name (id starts with name) for initial ordering in list.
+			// Return sorted by manufacturer name for initial ordering in list.
+			// manufactureID starts with manufacturer name.
 			q.setOrdering("manufacturerID");
 			List<Review> queryResult = (List<Review>) q.execute(userID);
 			reviews = (List<Review>) pm.detachCopyAll(queryResult);
@@ -238,7 +239,8 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 			Query q = pm.newQuery(Rating.class);
 			q.setFilter("userID == id");
 			q.declareParameters("String id");
-			// Return sorted by manufacturer name (id starts with name) for initial ordering in list.
+			// Return sorted by manufacturer name for initial ordering in list.
+			// manufactureID starts with manufacturer name.
 			q.setOrdering("manufacturerID");
 			List<Rating> queryResult = (List<Rating>) q.execute(userID);
 			ratings = (List<Rating>) pm.detachCopyAll(queryResult);
