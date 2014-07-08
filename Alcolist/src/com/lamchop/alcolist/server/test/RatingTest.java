@@ -202,7 +202,7 @@ public class RatingTest {
 		assertEquals(updatedStars, updatedManufacturer.getAverageRating(), DELTA);
 	}
 	
-	// Test deleting a rating twice
+	/** Test deleting a rating twice */
 	@Test
 	public void testDeleteTwice() {
 		handler.storeItem(manufacturer);
@@ -224,7 +224,7 @@ public class RatingTest {
 		assertEquals(0, updatedManufacturer.getAverageRating(), DELTA);
 	}
 	
-	// Test that deleting a rating after the manufacturer has been deleted still deletes the rating
+	/** Test that deleting a rating after the manufacturer has been deleted still deletes the rating */
 	@Test
 	public void testDeletedManufacturer() {
 		handler.storeItem(manufacturer);

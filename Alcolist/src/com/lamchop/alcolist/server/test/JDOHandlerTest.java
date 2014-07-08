@@ -2,13 +2,8 @@ package com.lamchop.alcolist.server.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import java.util.List;
-
-import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,19 +12,14 @@ import org.junit.Test;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.lamchop.alcolist.server.JDOHandler;
-import com.lamchop.alcolist.server.ManufacturerServiceImpl;
 import com.lamchop.alcolist.server.PMF;
-import com.lamchop.alcolist.server.UserDataServiceImpl;
 import com.lamchop.alcolist.shared.Manufacturer;
-import com.lamchop.alcolist.shared.Rating;
 
 public class JDOHandlerTest {
-	private static final double DELTA = 1.0e-6; // margin of error for comparing doubles
 	private final LocalServiceTestHelper helper =  
 			new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
 	private PersistenceManager pm;
 	private JDOHandler handler;
-	private ManufacturerServiceImpl manufacturerService;
 	private Manufacturer manufacturer1;
 			
 	@Before
