@@ -22,6 +22,7 @@ public class UIController implements UIUpdateInterface {
 	private UI uiPanel;
 	private MapsLoader mapsLoader;
 	private AppDataController theAppDataController;
+
 	private boolean firstTime;
 
 	public UIController() {
@@ -31,7 +32,7 @@ public class UIController implements UIUpdateInterface {
 		AdminPanel adminPanel = new AdminPanel(theAppDataController);
 		UserPanel userPanel = new UserPanel(theAppDataController);
 		ViewPanel viewPanel = new ViewPanel(this);
-		ListPanel listPanel = new ListPanel(theAppDataController);
+		ListPanel listPanel = new ListPanel(theAppDataController, this);
 		Legend legend = new Legend(theAppDataController);
 		uiPanel = new UI(adminPanel, userPanel, viewPanel, listPanel, legend);
 		
@@ -87,7 +88,6 @@ public class UIController implements UIUpdateInterface {
 
 	@Override
 	public void update(UserData userData) {
-		// TODO Consider changing this to not a null check
 		if (!userData.isDefault()) {
 			uiPanel.showLoggedIn(userData);
 		}
@@ -103,5 +103,10 @@ public class UIController implements UIUpdateInterface {
 
 	public void showReviewPanel(Manufacturer manufacturer) {
 		new ReviewPanel(manufacturer, theAppDataController).center();
+	}
+	
+	// Really sad about this. Will try to refactor it out.
+	public AppDataController getTheAppDataController() {
+		return theAppDataController;
 	}
 }

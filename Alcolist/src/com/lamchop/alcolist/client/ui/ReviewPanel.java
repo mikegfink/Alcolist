@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.lamchop.alcolist.client.AppDataController;
+import com.lamchop.alcolist.client.ui.buttons.FacebookShareButton;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Review;
 
@@ -60,7 +61,7 @@ public class ReviewPanel extends PopupPanel {
 	private void createElements() {
 		display = new LayoutPanel();
 		reviewText = new Label();
-		shareButton = new FacebookShareButton(manufacturer, review, appDataController);
+		shareButton = new FacebookShareButton(manufacturer, appDataController);
 		saveButton = new Button("Save");
 		editButton = new Button("Edit");
 		reviewBox = new TextArea();

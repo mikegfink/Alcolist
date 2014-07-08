@@ -4,6 +4,8 @@ import static com.google.gwt.dom.client.Style.Unit.PCT;
 
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.lamchop.alcolist.client.AppDataController;
+import com.lamchop.alcolist.client.ui.buttons.AdminDeleteButton;
+import com.lamchop.alcolist.client.ui.buttons.AdminImportButton;
 
 public class AdminPanel extends LayoutPanel {
 	

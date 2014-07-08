@@ -189,14 +189,14 @@ public class AppDataController {
 	public void addRating(int ratingValue, final String manID) {
 		// TODO Auto-generated method stub
 		Rating rating = appData.addRating(manID, ratingValue);
-		
+		GWT.log("Rating was: " + rating.getRating() + " for ID: " + manID);
 		userDataService.addRating(rating, (new AsyncCallback<Void>() {
 			public void onFailure(Throwable error) {
 				handleError(error);
 			}
 
 			public void onSuccess(Void result) {
-				GWT.log("Rating added successfully for: Manufacturer ID: " + manID);
+				GWT.log("Rating: added successfully for: Manufacturer ID: " + manID);
 			}
 		}));		
 	}
@@ -251,5 +251,9 @@ public class AppDataController {
 
 	public Review getReview(String manID) {
 		return appData.getReview(manID);
+	}
+
+	public Rating getRating(String manID) {
+		return appData.getRating(manID);
 	}
 }

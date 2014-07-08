@@ -7,6 +7,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.client.UserData;
+import com.lamchop.alcolist.client.ui.buttons.FacebookLoginButton;
+import com.lamchop.alcolist.client.ui.buttons.FacebookLogoutButton;
 
 public class UserPanel extends LayoutPanel {
 	

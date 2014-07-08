@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.lamchop.alcolist.shared.Rating;
 import com.lamchop.alcolist.shared.Review;
-import com.lamchop.alcolist.shared.RouteRequest;
 import com.lamchop.alcolist.shared.RouteResult;
 
 public class UserData {
@@ -28,18 +27,24 @@ public class UserData {
 	}
 	
 	public void add(Rating rating) {
-		// TODO Auto-generated method stub
 		// If manufacturer has a rating, replace it, otherwise add it.
+		for (Rating aRating : ratings) {
+			if (aRating.getManufacturerID().equals(rating.getManufacturerID())) {
+				ratings.remove(aRating);
+				ratings.add(rating);
+				return;
+			}
+		}
+		ratings.add(rating);
 		
 	}
 	
 	public void remove(Rating rating) {
-		// TODO Auto-generated method stub
 		// Remove a rating from storage.
+		ratings.remove(rating);
 	}
 
 	public void add(Review review) {
-		// TODO Auto-generated method stub
 		// If manufacturer has a review, replace it, otherwise add it.
 		for (Review aReview : reviews) {
 			if (aReview.getManufacturerID().equals(review.getManufacturerID())) {
@@ -52,19 +57,26 @@ public class UserData {
 	}
 	
 	public void remove(Review review) {
-		// TODO Auto-generated method stub
 		// Remove a review from storage.
+		reviews.remove(review);
 	}
 
 	public void add(RouteResult route) {
-		// TODO Auto-generated method stub
 		// If route ID already exists replace it, otherwise new route.
 		// How is this going to work?
+		for (RouteResult aRoute : routes) {
+			if (aRoute.getID().equals(route.getID())) {
+				routes.remove(aRoute);
+				routes.add(route);
+				return;
+			}
+		}
+		routes.add(route);
 	}
 	
 	public void remove(RouteResult route) {
-		// TODO Auto-generated method stub
 		// Remove a route from storage.
+		routes.remove(route);
 	}
 
 	public String getName() {
@@ -111,6 +123,15 @@ public class UserData {
 		for (Review aReview : reviews) {
 			if (aReview.getManufacturerID().equals(manID)) {
 				return aReview;
+			}
+		}	
+		return null;
+	}
+
+	public Rating findRating(String manID) {
+		for (Rating aRating : ratings) {
+			if (aRating.getManufacturerID().equals(manID)) {
+				return aRating;
 			}
 		}	
 		return null;

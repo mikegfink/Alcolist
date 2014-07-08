@@ -1,4 +1,4 @@
-package com.lamchop.alcolist.client.ui;
+package com.lamchop.alcolist.client.ui.buttons;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Image;
@@ -7,12 +7,12 @@ import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.client.FacebookHandler;
 import com.lamchop.alcolist.client.resources.Images;
 
-public class FacebookLogoutButton extends PushButton {
+public class FacebookLoginButton extends PushButton {
 	
 	private static Images images = GWT.create(Images.class);
-
-	public FacebookLogoutButton(AppDataController theAppDataController) {
-		super(new Image(images.facebookLogout()));
+	
+	public FacebookLoginButton(AppDataController theAppDataController) {
+		super(new Image(images.facebookLogin()));
 		this.addClickHandler(new FacebookHandler(theAppDataController));
 	}
 

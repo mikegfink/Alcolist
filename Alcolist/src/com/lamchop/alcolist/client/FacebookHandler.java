@@ -3,6 +3,7 @@ package com.lamchop.alcolist.client;
 import java.io.IOException;
 
 import com.google.gwt.core.client.Callback;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.Request;
@@ -20,10 +21,9 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
-import com.lamchop.alcolist.client.ui.FacebookLoginButton;
-import com.lamchop.alcolist.client.ui.FacebookLogoutButton;
-import com.lamchop.alcolist.client.ui.FacebookShareButton;
-import com.lamchop.alcolist.client.ui.ReviewPanel;
+import com.lamchop.alcolist.client.ui.buttons.FacebookLoginButton;
+import com.lamchop.alcolist.client.ui.buttons.FacebookLogoutButton;
+import com.lamchop.alcolist.client.ui.buttons.FacebookShareButton;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Review;
 
@@ -84,14 +84,17 @@ public class FacebookHandler implements ClickHandler {
 		} else if (sender.getClass() == FacebookShareButton.class) {
 			FacebookShareButton facebookShare = (FacebookShareButton) sender;
 			shareWithFacebook(facebookShare.getReview(), facebookShare.getManufacturer());
+
 		}
 	}
+
+	
 
 	private void logout() {
 		Auth.get().clearAllTokens();
 		resetToken();
 		// TODO: Make a nicer dialog for this.
-		Window.alert("Logged out of Alcolist.");
+		Window.alert("Logged out of Alcolist. You are still logged in to Facebook.");
 		theAppDataController.clearUserData();
 	}
 
@@ -216,7 +219,7 @@ public class FacebookHandler implements ClickHandler {
 			}
 
 			public void onFailure(Throwable reason) {
-				Window.alert(reason.getMessage());
+				GWT.log(reason.getMessage());
 			}
 		});
 	}
@@ -242,115 +245,14 @@ public class FacebookHandler implements ClickHandler {
 
 		final Callback<JSONObject, Throwable> callback = new Callback<JSONObject, Throwable>() {
 			public void onFailure(Throwable reason) {
-				Window.alert(reason.getMessage());
+				GWT.log(reason.getMessage());
 			}
 
 			public void onSuccess(JSONObject result) {
-				Window.alert("Supposedly worked");
+				GWT.log("Supposedly worked with post id: " + result.toString());
 			}
 		};
 		
 		makeRequest(builder, requestData, callback);
 	}
-
-	/*public class FacebookUtil {
-	    private String token = null;
-
-	    private static FacebookUtil instance = new FacebookUtil();
-
-	    private static final String FACEBOOK_AUTH_URL = "https://www.facebook.com/dialog/oauth";
-
-	    private static final String FACEBOOK_CLIENT_ID = "MY_CLIENT_ID"; 
-
-	    private FacebookUtil() {
-	    }
-
-	    public static FacebookUtil getInstance() {
-		return instance;
-	    }
-
-	    public void resetToken() {
-		token = null;
-	    }
-
-	    private void doAuth(Callback<String, Throwable> callback) {
-		final AuthRequest req = new AuthRequest(FACEBOOK_AUTH_URL,
-			FACEBOOK_CLIENT_ID).withScopes("email", "user_birthday",
-			"user_hometown", "user_location", "publish_stream")
-		// Facebook expects a comma-delimited list of scopes
-			.withScopeDelimiter(",");
-		Auth.get().clearAllTokens();
-		Auth.get().login(req, callback);
-	    }
-
-	    public void doGraph(final String id,
-		    final Callback<JSONObject, Throwable> callback) {
-		doGraph(id, RequestBuilder.GET, null, callback);
-	    }
-
-	    public void doGraph(final String id, final Method method,
-		    final String params, final Callback<JSONObject, Throwable> callback) {
-		if (token == null) {
-		    doAuth(new Callback<String, Throwable>() {
-			public void onSuccess(String token) {
-			    FacebookUtil.this.token = token;
-			    doGraphNoAuth(id, method, params, callback);
-			}
-
-			public void onFailure(Throwable reason) {
-			    callback.onFailure(reason);
-			}
-		    });
-		} else {
-		    doGraphNoAuth(id, method, params, callback);
-		}
-	    }
-
-	    private void doGraphNoAuth(String id, Method method, String params,
-		    final Callback<JSONObject, Throwable> callback) {
-		final String requestData = "access_token=" + token
-			+ (params != null ? "&" + params : "");
-		RequestBuilder builder;
-		if (method == RequestBuilder.POST) {
-		    builder = new RequestBuilder(method, "https://graph.facebook.com/"
-			    + id);
-		    builder.setHeader("Content-Type",
-			    "application/x-www-form-urlencoded");
-		} else if (method == RequestBuilder.GET) {
-		    builder = new RequestBuilder(method, "https://graph.facebook.com/"
-			    + id + "?" + requestData);
-		} else {
-		    callback.onFailure(new IOException(
-			    "doGraph only supports GET and POST requests"));
-		    return;
-		}
-		try {
-		    builder.sendRequest(requestData, new RequestCallback() {
-			public void onError(Request request, Throwable exception) {
-			    callback.onFailure(exception);
-			}
-
-			public void onResponseReceived(Request request,
-				Response response) {
-			    if (Response.SC_OK == response.getStatusCode()) {
-				callback.onSuccess(JSONParser.parseStrict(
-					response.getText()).isObject());
-			    } else if (Response.SC_BAD_REQUEST == response
-				    .getStatusCode()) {
-				callback.onFailure(new IOException("Error: "
-					+ response.getText()));
-			    } else {
-				callback.onFailure(new IOException(
-					"Couldn't retrieve JSON ("
-						+ response.getStatusText() + ")"));
-			    }
-			}
-
-		    });
-		} catch (RequestException e) {
-		    callback.onFailure(e);
-		}
-	    }
-
-	}*/
 }
