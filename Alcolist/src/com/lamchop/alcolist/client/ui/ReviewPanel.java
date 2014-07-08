@@ -61,7 +61,7 @@ public class ReviewPanel extends PopupPanel {
 	private void createElements() {
 		display = new LayoutPanel();
 		reviewText = new Label();
-		shareButton = new FacebookShareButton(manufacturer, review, appDataController);
+		shareButton = new FacebookShareButton(manufacturer, appDataController);
 		saveButton = new Button("Save");
 		editButton = new Button("Edit");
 		reviewBox = new TextArea();

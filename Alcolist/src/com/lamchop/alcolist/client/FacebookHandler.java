@@ -21,7 +21,6 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
-import com.lamchop.alcolist.client.ui.ReviewPanel;
 import com.lamchop.alcolist.client.ui.buttons.FacebookLoginButton;
 import com.lamchop.alcolist.client.ui.buttons.FacebookLogoutButton;
 import com.lamchop.alcolist.client.ui.buttons.FacebookShareButton;
@@ -85,8 +84,11 @@ public class FacebookHandler implements ClickHandler {
 		} else if (sender.getClass() == FacebookShareButton.class) {
 			FacebookShareButton facebookShare = (FacebookShareButton) sender;
 			shareWithFacebook(facebookShare.getReview(), facebookShare.getManufacturer());
+
 		}
 	}
+
+	
 
 	private void logout() {
 		Auth.get().clearAllTokens();
