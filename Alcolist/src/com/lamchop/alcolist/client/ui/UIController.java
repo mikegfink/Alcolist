@@ -31,7 +31,7 @@ public class UIController implements UIUpdateInterface {
 		AdminPanel adminPanel = new AdminPanel(theAppDataController);
 		UserPanel userPanel = new UserPanel(theAppDataController);
 		ViewPanel viewPanel = new ViewPanel(this);
-		ListPanel listPanel = new ListPanel(theAppDataController);
+		ListPanel listPanel = new ListPanel(theAppDataController, this);
 		Legend legend = new Legend(theAppDataController);
 		uiPanel = new UI(adminPanel, userPanel, viewPanel, listPanel, legend);
 		
