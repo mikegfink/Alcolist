@@ -6,7 +6,8 @@ import java.util.List;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Rating;
 import com.lamchop.alcolist.shared.Review;
-import com.lamchop.alcolist.shared.Route;
+import com.lamchop.alcolist.shared.RouteRequest;
+import com.lamchop.alcolist.shared.RouteResult;
 
 final class AppData {
 	private List<Manufacturer> manufacturers;
@@ -63,8 +64,8 @@ final class AppData {
 		userData.add(review);
 	}
 	
-	public void addRoute(Route route) {
-		userData.add(route);
+	public void addRoute(RouteResult routeResult) {
+		userData.add(routeResult);
 	}
 	
 	public Review addReview(String manID, String reviewText) {
@@ -79,7 +80,7 @@ final class AppData {
 		return rating;
 	}
 	
-	public Route addRoute(String[] legs) {
+	public RouteRequest addRoute(String[] legs) {
 		// TODO: Is this needed? Parameter probably will change etc depending on implementation
 		return null;
 	}

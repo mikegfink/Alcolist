@@ -10,7 +10,7 @@ import com.lamchop.alcolist.client.ui.UIUpdateInterface;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Rating;
 import com.lamchop.alcolist.shared.Review;
-import com.lamchop.alcolist.shared.Route;
+import com.lamchop.alcolist.shared.RouteResult;
 
 public class AppDataController {
 
@@ -68,12 +68,12 @@ public class AppDataController {
 	}
 	
 	private void getRoutes(final String userID) {
-		userDataService.getRoutes(userID, (new AsyncCallback<List<Route>>() {
+		userDataService.getRoutes(userID, (new AsyncCallback<List<RouteResult>>() {
 			public void onFailure(Throwable error) {
 				handleError(error);
 			}
 
-			public void onSuccess(List<Route> result) {
+			public void onSuccess(List<RouteResult> result) {
 				updateUserDataRoutes(result);
 				sendUserDataToUI();
 			}
@@ -92,9 +92,9 @@ public class AppDataController {
 		}
 	}
 	
-	public void updateUserDataRoutes(List<Route> routes) {
-		for (Route route : routes) {
-			appData.addRoute(route);
+	public void updateUserDataRoutes(List<RouteResult> routeResults) {
+		for (RouteResult routeResult : routeResults) {
+			appData.addRoute(routeResult);
 		}
 	}
 	// TODO: All methods above hopefully collapsed into one if UserDataServices are reworked

@@ -5,7 +5,8 @@ import java.util.List;
 
 import com.lamchop.alcolist.shared.Rating;
 import com.lamchop.alcolist.shared.Review;
-import com.lamchop.alcolist.shared.Route;
+import com.lamchop.alcolist.shared.RouteRequest;
+import com.lamchop.alcolist.shared.RouteResult;
 
 public class UserData {
 	
@@ -16,14 +17,14 @@ public class UserData {
 	private String name;
 	private List<Rating> ratings;
 	private List<Review> reviews;
-	private List<Route> routes;
+	private List<RouteResult> routes;
 	
 	public UserData() {
 		this.userID = DEFAULT_USERID;
 		name = DEFAULT_NAME;
 		ratings = new ArrayList<Rating>();
 		reviews = new ArrayList<Review>();
-		routes = new ArrayList<Route>();
+		routes = new ArrayList<RouteResult>();
 	}
 	
 	public void add(Rating rating) {
@@ -55,13 +56,13 @@ public class UserData {
 		// Remove a review from storage.
 	}
 
-	public void add(Route route) {
+	public void add(RouteResult route) {
 		// TODO Auto-generated method stub
 		// If route ID already exists replace it, otherwise new route.
 		// How is this going to work?
 	}
 	
-	public void remove(Route route) {
+	public void remove(RouteResult route) {
 		// TODO Auto-generated method stub
 		// Remove a route from storage.
 	}

@@ -12,7 +12,8 @@ import com.lamchop.alcolist.client.UserDataService;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Rating;
 import com.lamchop.alcolist.shared.Review;
-import com.lamchop.alcolist.shared.Route;
+import com.lamchop.alcolist.shared.RouteRequest;
+import com.lamchop.alcolist.shared.RouteResult;
 
 // TODO refactor this class
 public class UserDataServiceImpl extends RemoteServiceServlet implements 
@@ -116,44 +117,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 		}
 	}
 	
-	@Override
-	public void addRoute(Route route) {
-		handler.storeItem(route);	
-	}
-
-	@Override
-	public void removeRoute(Route route) {
-		// Can't delete detached copy of route directly.
-		Long routeID = route.getID();
-		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		Query q;
-		Route storedRoute = null;
-		try {
-			tx.begin();
-			q = pm.newQuery(Route.class);
-			q.setFilter("id == searchID");
-			q.declareParameters("Long searchID");
-			List<Route> queryResult = (List<Route>) q.execute(routeID);
-			
-			if (queryResult.size() == 1) { // TODO
-				storedRoute = queryResult.get(0);
-				pm.deletePersistent(storedRoute);
-			} else {
-				System.err.println("Error finding route in the datastore. Route not deleted.");
-			}
-			tx.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (tx.isActive()) {
-				// Roll back the transaction if an error occurred before it could be committed.
-				System.err.println("Rolling back transaction. Route not deleted.");
-				tx.rollback();
-			}
-			pm.close();
-		}
-	}
+	
 
 	@Override
 	public void addReview(Review review) {
@@ -195,19 +159,61 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public List<Route> getRoutes(String userID) {
-		// TODO Auto-generated method stub
+	public void addRoute(RouteResult routeResult) {
+		if (routeResult.getUserID() != null) {
+			handler.storeItem(routeResult);
+		} else {
+			System.err.println("This route has no userID so it will not be stored");
+		}
+	}
+
+	@Override
+	public void removeRoute(RouteResult routeResult) {
+		// Can't delete detached copy of route directly.
+		Long routeID = routeResult.getID();
 		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
-		List<Route> routes = new ArrayList<Route>();
+		Transaction tx = pm.currentTransaction();
+		Query q;
+		RouteResult storedRoute = null;
+		try {
+			tx.begin();
+			q = pm.newQuery(RouteResult.class);
+			q.setFilter("id == searchID");
+			q.declareParameters("Long searchID");
+			List<RouteResult> queryResult = (List<RouteResult>) q.execute(routeID);
+			
+			if (queryResult.size() == 1) { // TODO
+				storedRoute = queryResult.get(0);
+				pm.deletePersistent(storedRoute);
+			} else {
+				System.err.println("Error finding route in the datastore. Route not deleted.");
+			}
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (tx.isActive()) {
+				// Roll back the transaction if an error occurred before it could be committed.
+				System.err.println("Rolling back transaction. Route not deleted.");
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	@Override
+	public List<Rating> getRatings(String userID) {
+		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
+		List<Rating> ratings = new ArrayList<Rating>(); 
 		
 		try {
-			Query q = pm.newQuery(Route.class);
+			Query q = pm.newQuery(Rating.class);
 			q.setFilter("userID == id");
 			q.declareParameters("String id");
-			// Return sorted by routeName for initial ordering in list.
-			q.setOrdering("routeName");
-			List<Route> queryResult = (List<Route>) q.execute(userID);
-			routes = (List<Route>) pm.detachCopyAll(queryResult);
+			// Return sorted by manufacturer name (manufacturerID starts with name) for initial ordering in list.
+			q.setOrdering("manufacturerID");
+			List<Rating> queryResult = (List<Rating>) q.execute(userID);
+			ratings = (List<Rating>) pm.detachCopyAll(queryResult);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -215,7 +221,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 			pm.close();
 		}
 		
-		return routes;
+		return ratings;
 	}
 	
 	@Override
@@ -243,18 +249,19 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 	}
 	
 	@Override
-	public List<Rating> getRatings(String userID) {
+	public List<RouteResult> getRoutes(String userID) {
+		// TODO Auto-generated method stub
 		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
-		List<Rating> ratings = new ArrayList<Rating>(); 
+		List<RouteResult> routeResults = new ArrayList<RouteResult>();
 		
 		try {
-			Query q = pm.newQuery(Rating.class);
+			Query q = pm.newQuery(RouteResult.class);
 			q.setFilter("userID == id");
 			q.declareParameters("String id");
-			// Return sorted by manufacturer name (manufacturerID starts with name) for initial ordering in list.
-			q.setOrdering("manufacturerID");
-			List<Rating> queryResult = (List<Rating>) q.execute(userID);
-			ratings = (List<Rating>) pm.detachCopyAll(queryResult);
+			// Return sorted by routeName for initial ordering in list.
+			q.setOrdering("routeName");
+			List<RouteResult> queryResult = (List<RouteResult>) q.execute(userID);
+			routeResults = (List<RouteResult>) pm.detachCopyAll(queryResult);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -262,6 +269,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 			pm.close();
 		}
 		
-		return ratings;
+		return routeResults;
 	}
+	
 }

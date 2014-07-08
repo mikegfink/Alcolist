@@ -10,7 +10,7 @@ import javax.jdo.Transaction;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Rating;
 import com.lamchop.alcolist.shared.Review;
-import com.lamchop.alcolist.shared.Route;
+import com.lamchop.alcolist.shared.RouteRequest;
 
 public class JDOHandler {
 	
@@ -85,6 +85,6 @@ public class JDOHandler {
 		Object itemClass = item.getClass();
 		// If new classes are created to be stored in the datastore, add them below.
 		return itemClass.equals(Manufacturer.class) || itemClass.equals(Rating.class) ||
-				itemClass.equals(Review.class) || itemClass.equals(Route.class);
+				itemClass.equals(Review.class) || itemClass.equals(RouteRequest.class);
 	}
 }

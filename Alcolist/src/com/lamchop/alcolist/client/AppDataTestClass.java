@@ -6,7 +6,8 @@ import java.util.List;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Rating;
 import com.lamchop.alcolist.shared.Review;
-import com.lamchop.alcolist.shared.Route;
+import com.lamchop.alcolist.shared.RouteRequest;
+import com.lamchop.alcolist.shared.RouteResult;
 
 final class AppDataTestClass {
 	private List<Manufacturer> manufacturers;
@@ -48,7 +49,7 @@ final class AppDataTestClass {
 		userData.add(review);
 	}
 	
-	protected void addRoute(Route route) {
+	protected void addRoute(RouteResult route) {
 		userData.add(route);
 	}
 }
