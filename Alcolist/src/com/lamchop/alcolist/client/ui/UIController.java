@@ -88,7 +88,6 @@ public class UIController implements UIUpdateInterface {
 
 	@Override
 	public void update(UserData userData) {
-		// TODO Consider changing this to not a null check
 		if (!userData.isDefault()) {
 			uiPanel.showLoggedIn(userData);
 		}

@@ -12,7 +12,7 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.lamchop.alcolist.client.AppDataController;
@@ -28,12 +28,12 @@ public class StarRating extends Composite {
 	static private Images images = GWT.create(Images.class);
 
 	private Rating rating;
-	
+
 	private int starValue;
 
 	private AppDataController appDataController;
 
-	private HTMLPanel container;
+	private HorizontalPanel container;
 
 	private String manID;
 
@@ -45,7 +45,7 @@ public class StarRating extends Composite {
 		this.appDataController = theUIController.getTheAppDataController();
 		getRating();
 
-		container = new HTMLPanel("");
+		container = new HorizontalPanel();
 		initWidget(container);
 
 		if (rating != null) {
@@ -55,16 +55,16 @@ public class StarRating extends Composite {
 			starValue = 0; 
 		}
 
-		getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
-		getElement().getStyle().setCursor(Cursor.POINTER);
-		getElement().getStyle().setPadding(2, Unit.PX);
-
 		for(int index = 0; index < STAR_COUNT; index++) {
 			Image starImage = new Image();
 			container.add(starImage);
 		}
-		
+
 		displayRating(starValue);
+
+		getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+		getElement().getStyle().setCursor(Cursor.POINTER);
+		getElement().getStyle().setPadding(2, Unit.PX);
 
 		sinkEvents(Event.ONMOUSEMOVE | Event.ONMOUSEOUT | Event.ONMOUSEDOWN);
 
@@ -111,8 +111,8 @@ public class StarRating extends Composite {
 	public void setRating(int value) {
 		appDataController.addRating(value, manID);
 		getRating();
-		rating.setRating(value);
-		displayRating(value);
+		starValue = rating.getRating();		
+		displayRating(starValue);
 	}
 
 }
