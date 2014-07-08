@@ -35,6 +35,16 @@
 		<servlet-name>manufacturerService</servlet-name>
 		<url-pattern>/alcolist/manufacturer</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+        <servlet-name>routingService</servlet-name>
+        <servlet-class>com.lamchop.alcolist.server.RoutingServiceImpl</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>routingService</servlet-name>
+        <url-pattern>/alcolist/routing</url-pattern>
+    </servlet-mapping>
 
 
 	<!-- Default page to serve -->

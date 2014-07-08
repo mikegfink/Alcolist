@@ -15,20 +15,22 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.lamchop.alcolist.client.RoutingService;
 import com.lamchop.alcolist.shared.RouteRequest;
 import com.lamchop.alcolist.shared.RouteResult;
 
-
-public class RoutingService {
+public class RoutingServiceImpl extends RemoteServiceServlet implements RoutingService {
 	private static final String DIRECTIONS_REQUEST_PREFIX_FOR_JSON = "https://maps.googleapis.com/maps/api/directions/json?";
 	private static final String API_KEY = "AIzaSyD8qoqKwoDciNy713T1osobkieK0WpsPfM";
 
-	public RoutingService() {
+	public RoutingServiceImpl() {
 	}
 
-	public static RouteResult makeDirectionsRequest(RouteRequest routeRequest, boolean optimize) {
+	@Override
+	public RouteResult getRouteFromRequest(RouteRequest routeRequest) {
 		try {
-			URL directionURL = buildDirectionURL(routeRequest, optimize);
+			URL directionURL = buildDirectionURL(routeRequest);
 			
 			String result = readFromURL(directionURL);
 
@@ -47,13 +49,14 @@ public class RoutingService {
 		}
 	}
 
-	private static URL buildDirectionURL(RouteRequest routeRequest, boolean optimize) 
+	private static URL buildDirectionURL(RouteRequest routeRequest) 
 			throws UnsupportedEncodingException, MalformedURLException {
 		// Adapted from LatLongAdder's getLatLong method which was adapted from
 		// http://theoryapp.com/parse-json-in-java/
 		String start = routeRequest.getStart();
 		String end = routeRequest.getEnd();
 		List<String> midpoints = routeRequest.getMidpoints();
+		boolean optimize = routeRequest.getOptimize();
 		
 		String origin = "origin=" + URLEncoder.encode(start, "UTF-8");
 		String destination = "&destination=" + URLEncoder.encode(end, "UTF-8");

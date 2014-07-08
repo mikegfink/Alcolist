@@ -6,7 +6,6 @@ import java.util.List;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Rating;
 import com.lamchop.alcolist.shared.Review;
-import com.lamchop.alcolist.shared.RouteRequest;
 import com.lamchop.alcolist.shared.RouteResult;
 
 final class AppDataTestClass {

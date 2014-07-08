@@ -12,7 +12,6 @@ import com.lamchop.alcolist.client.UserDataService;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Rating;
 import com.lamchop.alcolist.shared.Review;
-import com.lamchop.alcolist.shared.RouteRequest;
 import com.lamchop.alcolist.shared.RouteResult;
 
 // TODO refactor this class
@@ -157,9 +156,10 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 			pm.close();
 		}
 	}
-
+	
 	@Override
 	public void addRoute(RouteResult routeResult) {
+		// TODO also require route to have a name?
 		if (routeResult.getUserID() != null) {
 			handler.storeItem(routeResult);
 		} else {
@@ -270,6 +270,5 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 		}
 		
 		return routeResults;
-	}
-	
+	}	
 }

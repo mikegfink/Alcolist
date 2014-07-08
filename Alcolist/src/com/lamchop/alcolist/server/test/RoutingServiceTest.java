@@ -10,14 +10,17 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.lamchop.alcolist.server.RoutingService;
+import com.lamchop.alcolist.server.RoutingServiceImpl;
 import com.lamchop.alcolist.shared.RouteRequest;
+import com.lamchop.alcolist.shared.RouteResult;
 
 // TODO write actual tests!
 public class RoutingServiceTest {
+	private RoutingServiceImpl routingService;
 		
 	@Before
 	public void setUp() {
+		routingService = new RoutingServiceImpl();
 	}
 		
 	@After
@@ -28,10 +31,12 @@ public class RoutingServiceTest {
 	public void test() {
 		String start = "375 Water Street, Vancouver, BC V6B 1E1, Canada";
 		String end = "1132 Hamilton Street, Vancouver, BC V6B 2S2, Canada";
-		RouteRequest request = new RouteRequest(start, end, new ArrayList<String>());
+		RouteRequest request1 = new RouteRequest(start, end, new ArrayList<String>(), false);
+		RouteRequest request2 = new RouteRequest(start, end, new ArrayList<String>(), true);
 		
 		try {
-			RoutingService.makeDirectionsRequest(request, false);
+			RouteResult route1 = routingService.getRouteFromRequest(request1);
+			RouteResult route2 = routingService.getRouteFromRequest(request2);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -51,11 +56,12 @@ public class RoutingServiceTest {
 		midpoints.add(mid2);
 		midpoints.add(mid3);
 		
-		RouteRequest request = new RouteRequest(start, end, midpoints);
+		RouteRequest request1 = new RouteRequest(start, end, midpoints, false);
+		RouteRequest request2 = new RouteRequest(start, end, midpoints, true);
 		
 		try {
-			RoutingService.makeDirectionsRequest(request, false);
-			RoutingService.makeDirectionsRequest(request, true);
+			RouteResult route1 = routingService.getRouteFromRequest(request1);
+			RouteResult route2 = routingService.getRouteFromRequest(request2);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

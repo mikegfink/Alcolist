@@ -11,13 +11,13 @@ public class RouteRequest implements Serializable {
 	private String end;
 	/** List of address strings for additional locations to visit on the route */
 	private List<String> midpoints;
-	private String userID;
+	private boolean optimize;
 
-	public RouteRequest(String start, String end, List<String> midpoints) {
+	public RouteRequest(String start, String end, List<String> midpoints, boolean optimize) {
 		this.start = start;
 		this.end = end;
 		this.midpoints = midpoints;
-		this.userID = null;
+		this.optimize = optimize;
 	}
 	
 	public String getStart() {
@@ -44,12 +44,11 @@ public class RouteRequest implements Serializable {
 		this.midpoints = midpoints;
 	}
 
-	public String getUserID() {
-		return userID;
-	}
-
-	public void setUserID(String userID) {
-		this.userID = userID;
+	public boolean getOptimize() {
+		return optimize;
 	}
 	
+	public void setOptimize(boolean optimize) {
+		this.optimize = optimize;
+	}
 }
