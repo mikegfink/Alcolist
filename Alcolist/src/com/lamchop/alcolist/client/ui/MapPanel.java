@@ -169,7 +169,8 @@ public class MapPanel extends LayoutPanel {
 		// percentage is percent of screen for displaying markers
 		int MIN_VIEW_PERCENT = 20;
 		double lngSpan = Math.abs((maxLng - minLng));
-		//int border = 1; // Can't be zero
+		double latSpan = Math.abs((maxLat - minLat));
+		double border = .1; 
 		
 		if (percentage > MIN_VIEW_PERCENT) {			
 			lngSpan = (lngSpan / percentage) * 100;
@@ -177,7 +178,7 @@ public class MapPanel extends LayoutPanel {
 		}
 
 		LatLng southWest = LatLng.newInstance(minLat, minLng);
-		LatLng northEast = LatLng.newInstance(maxLat, maxLng); // removed lngSpan/border;
+		LatLng northEast = LatLng.newInstance(maxLat + latSpan * border, maxLng);
 		LatLngBounds bounds = LatLngBounds.newInstance(southWest, northEast);
 		LatLng centre = bounds.getCenter();
 		//mapWidget.panTo(centre);
@@ -210,7 +211,7 @@ public class MapPanel extends LayoutPanel {
 	}
 	
 	public void showLoggedOut() {
-		// TODO Auto-generated method stub
+		infoWindow.close();
 		LoggedIn = false;
 	}
 
