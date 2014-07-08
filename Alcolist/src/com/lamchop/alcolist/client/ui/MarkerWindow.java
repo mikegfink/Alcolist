@@ -3,6 +3,9 @@ package com.lamchop.alcolist.client.ui;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.lamchop.alcolist.client.ui.buttons.ReviewButton;
+import com.lamchop.alcolist.client.ui.buttons.RouteButton;
+import com.lamchop.alcolist.client.ui.buttons.StarRating;
 import com.lamchop.alcolist.shared.Manufacturer;
 
 public class MarkerWindow extends VerticalPanel {
@@ -32,9 +35,9 @@ public class MarkerWindow extends VerticalPanel {
 	}
 
 	private void setupLoggedIn() {
-		HorizontalPanel buttonPanel = new HorizontalPanel();
+		HorizontalPanel buttonPanel = new HorizontalPanel();		
+		buttonPanel.add(new StarRating(manufacturer, theUIController));
 		buttonPanel.add(new ReviewButton(manufacturer, theUIController));
-		buttonPanel.add(new RatingButton());
 		buttonPanel.add(new RouteButton());
 		add(buttonPanel);
 	}

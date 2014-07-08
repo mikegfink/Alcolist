@@ -1,4 +1,4 @@
-package com.lamchop.alcolist.client.ui;
+package com.lamchop.alcolist.client.ui.buttons;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Image;

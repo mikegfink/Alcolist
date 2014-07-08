@@ -252,4 +252,8 @@ public class AppDataController {
 	public Review getReview(String manID) {
 		return appData.getReview(manID);
 	}
+
+	public Rating getRating(String manID) {
+		return appData.getRating(manID);
+	}
 }

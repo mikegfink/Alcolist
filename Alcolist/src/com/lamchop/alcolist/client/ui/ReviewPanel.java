@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.lamchop.alcolist.client.AppDataController;
+import com.lamchop.alcolist.client.ui.buttons.FacebookShareButton;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Review;
 

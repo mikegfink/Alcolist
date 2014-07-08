@@ -22,6 +22,7 @@ public class UIController implements UIUpdateInterface {
 	private UI uiPanel;
 	private MapsLoader mapsLoader;
 	private AppDataController theAppDataController;
+
 	private boolean firstTime;
 
 	public UIController() {
@@ -103,5 +104,10 @@ public class UIController implements UIUpdateInterface {
 
 	public void showReviewPanel(Manufacturer manufacturer) {
 		new ReviewPanel(manufacturer, theAppDataController).center();
+	}
+	
+	// Really sad about this. Will try to refactor it out.
+	public AppDataController getTheAppDataController() {
+		return theAppDataController;
 	}
 }

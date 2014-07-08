@@ -91,4 +91,9 @@ final class AppData {
 	public Review getReview(String manID) {
 		return userData.findReview(manID);
 	}
+
+	public Rating getRating(String manID) {
+		// TODO Auto-generated method stub
+		return userData.findRating(manID);
+	}
 }

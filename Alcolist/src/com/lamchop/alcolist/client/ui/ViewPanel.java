@@ -2,7 +2,11 @@ package com.lamchop.alcolist.client.ui;
 
 import static com.google.gwt.dom.client.Style.Unit.PCT;
 import static com.google.gwt.dom.client.Style.Unit.PX;
+
 import com.google.gwt.user.client.ui.LayoutPanel;
+import com.lamchop.alcolist.client.ui.buttons.HideListButton;
+import com.lamchop.alcolist.client.ui.buttons.HideMapButton;
+import com.lamchop.alcolist.client.ui.buttons.ShowListButton;
 
 public class ViewPanel extends LayoutPanel {
 	

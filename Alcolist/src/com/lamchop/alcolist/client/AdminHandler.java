@@ -6,8 +6,8 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
-import com.lamchop.alcolist.client.ui.AdminDeleteButton;
-import com.lamchop.alcolist.client.ui.AdminImportButton;
+import com.lamchop.alcolist.client.ui.buttons.AdminDeleteButton;
+import com.lamchop.alcolist.client.ui.buttons.AdminImportButton;
 
 public class AdminHandler implements ClickHandler {
 

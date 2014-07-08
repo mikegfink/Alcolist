@@ -114,4 +114,14 @@ public class UserData {
 		}	
 		return null;
 	}
+
+	public Rating findRating(String manID) {
+		// TODO Auto-generated method stub
+		for (Rating aRating : ratings) {
+			if (aRating.getManufacturerID().equals(manID)) {
+				return aRating;
+			}
+		}	
+		return null;
+	}
 }
