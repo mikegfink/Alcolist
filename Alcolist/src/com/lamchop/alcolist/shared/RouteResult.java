@@ -10,6 +10,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.gwt.maps.client.base.LatLng;
+import com.lamchop.alcolist.client.PolylineDecoder;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 public class RouteResult implements Serializable {
@@ -84,6 +85,10 @@ public class RouteResult implements Serializable {
 
 	public String getPolyline() {
 		return polyline;
+	}
+	
+	public List<LatLng> getDecodedPolyline() {
+		return PolylineDecoder.decodePoly(polyline);
 	}
 
 	public void setSouthwestBound(double lat, double lng) {

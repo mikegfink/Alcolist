@@ -110,7 +110,7 @@ public class RoutingServiceImpl extends RemoteServiceServlet implements RoutingS
 		// For displaying smoothed path on map
 		JSONObject overviewPolyline = (JSONObject) routeInJSON.get("overview_polyline");
 		String polylinePoints = (String) overviewPolyline.get("points");
-		System.out.println(polylinePoints);
+		System.out.println("Polyline is " + polylinePoints);
 		
 		// viewport bounding box of the overview polyline
 		JSONObject boundsInJSON = (JSONObject) routeInJSON.get("bounds");
@@ -153,5 +153,4 @@ public class RoutingServiceImpl extends RemoteServiceServlet implements RoutingS
 				northeastLong, htmlDirections, copyrights, warnings);
 		return routeResult;
 	}
-	
 }
