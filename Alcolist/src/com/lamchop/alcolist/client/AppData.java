@@ -93,7 +93,6 @@ final class AppData {
 	}
 
 	public Rating getRating(String manID) {
-		// TODO Auto-generated method stub
 		return userData.findRating(manID);
 	}
 }
