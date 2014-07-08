@@ -16,4 +16,8 @@ public interface UIUpdateInterface {
 	public void hideList();
 	
 	public void hideMap();
+	
+	public void showNearMeCircle(MyLocation myLocation);
+
+	public void hideNearMeCircle();
 }
