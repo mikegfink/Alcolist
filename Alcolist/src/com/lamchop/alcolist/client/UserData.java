@@ -3,7 +3,6 @@ package com.lamchop.alcolist.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.core.shared.GWT;
 import com.lamchop.alcolist.shared.Rating;
 import com.lamchop.alcolist.shared.Review;
 import com.lamchop.alcolist.shared.Route;
@@ -62,8 +61,7 @@ public class UserData {
 		reviews.remove(review);
 	}
 
-	public void add(Route route) {
-		
+	public void add(Route route) {		
 		// If route ID already exists replace it, otherwise new route.
 		// How is this going to work?
 		for (Route aRoute : routes) {
@@ -77,7 +75,6 @@ public class UserData {
 	}
 	
 	public void remove(Route route) {
-
 		// Remove a route from storage.
 		routes.remove(route);
 	}
@@ -132,10 +129,7 @@ public class UserData {
 	}
 
 	public Rating findRating(String manID) {
-		GWT.log("Size is: " + ratings.size());
-		
 		for (Rating aRating : ratings) {
-			GWT.log("Current ID is: " + aRating.getManufacturerID());
 			if (aRating.getManufacturerID().equals(manID)) {
 				return aRating;
 			}
