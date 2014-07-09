@@ -46,5 +46,10 @@ public interface Images extends ClientBundle {
 	@Source("starEmpty.png")
 	ImageResource starEmpty();
 
+	@Source("nearMeDown.png")
+	ImageResource nearMeDown();
+
+	@Source("nearMeUp.png")
+	ImageResource nearMeUp();
 }
 

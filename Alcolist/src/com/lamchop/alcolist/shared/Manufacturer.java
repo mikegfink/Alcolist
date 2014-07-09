@@ -109,7 +109,7 @@ public class Manufacturer implements Serializable {
 	}
 	
 	public String getFullAddress() {
-		return streetAddress + ", " + city + ", " + province;
+		return streetAddress.trim() + ", " + city.trim() + ", " + province.trim();
 	}
 	
 	public void setFormattedAddress(String formattedAddress) {

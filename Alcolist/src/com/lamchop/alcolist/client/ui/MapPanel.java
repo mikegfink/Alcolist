@@ -70,6 +70,7 @@ public class MapPanel extends LayoutPanel {
 		MarkerImage distilleryIcon = MarkerImage.newInstance(distillery.getUrl());
 
 		for (final Manufacturer nextManufacturer: manufacturers) {
+			
 			String licenseType = nextManufacturer.getType();
 
 			LatLng location = nextManufacturer.getLatLng();
@@ -99,8 +100,7 @@ public class MapPanel extends LayoutPanel {
 			}
 		}
 		calculateViewForMap(DEFAULT_MAP_VIEW_PCT);
-		
-		// TODO: Remove this when possible, if possible.
+		// Not sure if still needed.
 	}
 
 	protected void drawInfoWindow(Marker marker, Manufacturer manufacturer, MouseEvent mouseEvent) {
@@ -121,11 +121,11 @@ public class MapPanel extends LayoutPanel {
 
 	private boolean isValidLatLng(LatLng location) {
 
-		boolean notZeroLat = location.getLatitude() > 0.5 || 
-				location.getLatitude() < -0.1;
+		boolean notZeroLat = location.getLatitude() > 0.05 || 
+				location.getLatitude() < -0.05;
 
-		boolean notZeroLng = location.getLongitude() > 0.5 ||
-				location.getLongitude() < -0.1;
+		boolean notZeroLng = location.getLongitude() > 0.05 ||
+				location.getLongitude() < -0.05;
 
 		return (notZeroLat || notZeroLng);
 
@@ -230,7 +230,9 @@ public class MapPanel extends LayoutPanel {
 	}
 	
 	public void showLoggedOut() {
-		infoWindow.close();
+		if (infoWindow != null) {
+			infoWindow.close();
+		}
 		LoggedIn = false;
 	}
 
