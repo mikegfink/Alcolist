@@ -36,6 +36,7 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionModel;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.lamchop.alcolist.client.AppDataController;
+import com.lamchop.alcolist.client.ui.buttons.NearMeButton;
 import com.lamchop.alcolist.shared.Manufacturer;
 
 public class ListPanel extends LayoutPanel {
@@ -53,10 +54,11 @@ public class ListPanel extends LayoutPanel {
 	private Column<Manufacturer, String> extraInfo;
 	private Manufacturer currentSelected;
 	private UIController theUIController;
+	private NearMeButton nearMeButton;
 	
 
 
-	public ListPanel(AppDataController theAppDataController, UIController theUIController) {
+	public ListPanel(final AppDataController theAppDataController, UIController theUIController) {
 		DataGridResource resource = GWT.create(DataGridResource.class);
 		listGrid = new DataGrid<Manufacturer>(PAGESIZE, resource);
 		listGrid.setEmptyTableWidget(new Label("No Results Found"));
@@ -66,6 +68,23 @@ public class ListPanel extends LayoutPanel {
 		searchPanel = new SearchPanel(theAppDataController);
 		add(searchPanel);
 		this.setWidgetTopHeight(searchPanel, 0, PCT, 35, PX);
+	
+		
+		nearMeButton = new NearMeButton(theAppDataController);
+		nearMeButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				
+				if (nearMeButton.isDown()) {
+					theAppDataController.showNearMe();
+				}
+				else {
+					theAppDataController.clearNearMe();
+				}
+			}
+		});
+		add(nearMeButton);
+		this.setWidgetTopHeight(nearMeButton, 3, PX, 32, PX);
+		this.setWidgetLeftWidth(nearMeButton, 70, PCT, 32, PX);
 		
 
 		addDataProvider();

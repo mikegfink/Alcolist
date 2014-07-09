@@ -7,4 +7,6 @@ import com.lamchop.alcolist.shared.Manufacturer;
 
 public interface ManufacturerServiceAsync {
 	void getManufacturers(AsyncCallback<List<Manufacturer>> async);
+	void addManufacturer(Manufacturer manufacturer, AsyncCallback<Void> callback);
+	void removeManufacturer(Manufacturer manufacturer, AsyncCallback<Void> callback);
 }

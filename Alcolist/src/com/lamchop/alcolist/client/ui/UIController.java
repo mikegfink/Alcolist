@@ -109,4 +109,15 @@ public class UIController implements UIUpdateInterface {
 	public AppDataController getTheAppDataController() {
 		return theAppDataController;
 	}
+
+	@Override
+	public void showNearMeCircle(MyLocation myLocation) {
+		uiPanel.showNearMeCircle(myLocation);
+		
+	}
+
+	@Override
+	public void hideNearMeCircle() {
+		uiPanel.hideNearMeCircle();
+	}
 }

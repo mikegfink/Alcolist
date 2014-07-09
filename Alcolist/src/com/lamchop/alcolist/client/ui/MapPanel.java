@@ -10,6 +10,8 @@ import com.google.gwt.maps.client.events.MouseEvent;
 import com.google.gwt.maps.client.events.click.ClickMapEvent;
 import com.google.gwt.maps.client.events.click.ClickMapHandler;
 import com.google.gwt.maps.client.mvc.MVCArray;
+import com.google.gwt.maps.client.overlays.Circle;
+import com.google.gwt.maps.client.overlays.CircleOptions;
 import com.google.gwt.maps.client.overlays.InfoWindow;
 import com.google.gwt.maps.client.overlays.InfoWindowOptions;
 import com.google.gwt.maps.client.overlays.Marker;
@@ -32,6 +34,7 @@ public class MapPanel extends LayoutPanel {
 	private Images images = GWT.create(Images.class);
 	private InfoWindow infoWindow;
 	private UIController theUIController;
+	private Circle circle;
 	private boolean LoggedIn;
 
 	public MapPanel(UIController theUIController) {
@@ -40,6 +43,7 @@ public class MapPanel extends LayoutPanel {
 		infoWindow = null;
 		this.theUIController = theUIController;
 		LoggedIn = false;
+		circle = null;
 	}
 
 	public void setMapWidget(AlcolistMapWidget mapWidget)  {
@@ -60,8 +64,6 @@ public class MapPanel extends LayoutPanel {
 		});
 	}
 	
-	
-
 	public void populateMap(List<Manufacturer> manufacturers) {
 		clearMarkers();
 
@@ -192,8 +194,7 @@ public class MapPanel extends LayoutPanel {
 		LatLng northEast = LatLng.newInstance(maxLat + latSpan * border, maxLng);
 		LatLngBounds bounds = LatLngBounds.newInstance(southWest, northEast);
 		LatLng centre = bounds.getCenter();
-		//mapWidget.panTo(centre);
-		//mapWidget.panToBounds(bounds);
+
 		theMapWidget.getMapWidget().setCenter(centre);
 		theMapWidget.getMapWidget().fitBounds(bounds);
 	}
@@ -206,6 +207,26 @@ public class MapPanel extends LayoutPanel {
 		}
 		theMarkers.clear();
 
+	}
+	
+	public void displayNearMe(MyLocation myLocation)	{
+		clearNearMe();
+		
+		LatLng center = myLocation.getMyLocation();
+		CircleOptions circleOptions = CircleOptions.newInstance();
+		circleOptions.setFillOpacity(0.1);
+		circleOptions.setFillColor("CornflowerBlue");
+		circleOptions.setStrokeColor("CornflowerBlue");
+		circle = Circle.newInstance(circleOptions);
+		circle.setCenter(center);
+		circle.setRadius(MyLocation.NEAR_ME_RADIUS_METERS);
+		circle.setMap(theMapWidget.getMapWidget());
+	}
+	
+	public void clearNearMe() {
+		if (circle != null) {
+			circle.setMap(null);
+		};		
 	}
 
 	public AlcolistMapWidget getMapWidget() {

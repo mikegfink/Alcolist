@@ -13,6 +13,7 @@ import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Rating;
 import com.lamchop.alcolist.shared.Review;
 import com.lamchop.alcolist.shared.RouteResult;
+import com.lamchop.alcolist.shared.Visited;
 
 // TODO refactor this class
 public class UserDataServiceImpl extends RemoteServiceServlet implements 
@@ -115,8 +116,6 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 			pm.close();
 		}
 	}
-	
-	
 
 	@Override
 	public void addReview(Review review) {
@@ -269,7 +268,32 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 		} finally {
 			pm.close();
 		}
-		
 		return routeResults;
 	}	
+
+	@Override
+	public Visited getVisited(String userID) {
+		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
+		Query q;
+		Visited stored = null;
+		try {
+			q = pm.newQuery(Visited.class);
+			q.setFilter("userID == searchID");
+			q.declareParameters("String searchID");
+			List<Visited> queryResult = (List<Visited>) q.execute(userID);
+					
+			if (queryResult.size() == 1) { // TODO
+				stored = pm.detachCopy(queryResult.get(0));
+			} else {
+				System.err.println("Error finding visited manufacturers in the datastore" +
+						"for user with id " + userID);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pm.close();
+		}
+		return stored;
+	}
 }
+

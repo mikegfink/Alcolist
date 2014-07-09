@@ -172,5 +172,13 @@ public class UI extends LayoutPanel {
 			viewPanel.toggleShowList();
 		}
 	}
+
+	public void showNearMeCircle(MyLocation myLocation) {
+		mapPanel.displayNearMe(myLocation);		
+	}
+	
+	public void hideNearMeCircle() {
+		mapPanel.clearNearMe();
+	}
 	
 }
