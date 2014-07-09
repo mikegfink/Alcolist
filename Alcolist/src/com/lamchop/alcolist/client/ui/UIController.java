@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.client.UserData;
+import com.lamchop.alcolist.client.ui.buttons.MakeRouteButton;
 import com.lamchop.alcolist.shared.Manufacturer;
 
 public class UIController implements UIUpdateInterface {
@@ -34,7 +35,8 @@ public class UIController implements UIUpdateInterface {
 		ViewPanel viewPanel = new ViewPanel(this);
 		ListPanel listPanel = new ListPanel(theAppDataController, this);
 		Legend legend = new Legend(theAppDataController);
-		uiPanel = new UI(adminPanel, userPanel, viewPanel, listPanel, legend);
+		MakeRouteButton makeRouteButton = new MakeRouteButton(this);
+		uiPanel = new UI(adminPanel, userPanel, viewPanel, listPanel, legend, makeRouteButton);
 		
 		initMap();
 	}
@@ -120,4 +122,22 @@ public class UIController implements UIUpdateInterface {
 	public void hideNearMeCircle() {
 		uiPanel.hideNearMeCircle();
 	}
+	
+	public void addRoutePanel() {
+		uiPanel.showRoutePanel(new RoutePanel(theAppDataController, this));
+		hideList();
+		
+	}
+	
+	public void addDirectionsPanel() {
+		uiPanel.showDirectionsPanel(new DirectionsPanel());
+		
+	}
+	
+	public void hideRoutePanel() {
+
+		uiPanel.hideRoutePanel();
+		showList();
+	}
+	
 }

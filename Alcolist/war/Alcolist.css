@@ -29,6 +29,10 @@
 	webkit-box-shadow: 0 0 30px 5px #999;
 }
 
+.locationTextBox {
+	border: 1px solid black;
+}
+
 .gwt-ToggleButton-up,.gwt-ToggleButton-up-hovering,.gwt-ToggleButton-up-disabled {
   padding: 0px 0px 0px 0px;
 }
@@ -45,11 +49,24 @@
   padding: 0px 0px 0px 0px;
 }
 
-.gwt-SuggestBox {
+.gwt-SuggestBox-search {
 	border: 0px;
 	width:250px;
 	padding:2px;
 }
+
+.gwt-SuggestBox-location {
+	border: 0px;
+	width:200px;
+	padding:2px;
+	font-style: italic;
+	font-colour:grey;
+}
+
+.gwt-Button-addLocation {
+	font-size: 90%;
+}
+
 
 .gwt-PushButton-up, .gwt-PushButton-down, .gwt-PushButton-up-hovering {
 	background: white;
