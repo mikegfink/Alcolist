@@ -3,12 +3,14 @@ package com.lamchop.alcolist.client.ui;
 
 import java.util.List;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.client.UserData;
 import com.lamchop.alcolist.client.ui.buttons.MakeRouteButton;
 import com.lamchop.alcolist.shared.Manufacturer;
+import com.lamchop.alcolist.shared.Route;
 
 public class UIController implements UIUpdateInterface {
 	
@@ -138,6 +140,14 @@ public class UIController implements UIUpdateInterface {
 
 		uiPanel.hideRoutePanel();
 		showList();
+	}
+	
+	public void showRoute(Route route, Element directionsPanel) {
+		uiPanel.showRoute(route, directionsPanel);
+	}
+	
+	public void hideRoute() {
+		uiPanel.hideRoute();
 	}
 	
 }

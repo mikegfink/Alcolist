@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.maps.client.base.LatLngBounds;
 import com.google.gwt.maps.client.events.MouseEvent;
@@ -257,7 +258,7 @@ public class MapPanel extends LayoutPanel {
 		LoggedIn = false;
 	}
 
-	public void displayRoute(Route route) {
+	public void displayRoute(Route route, Element directionsPanel) {
 		// TODO 
 		DirectionsRendererOptions options = DirectionsRendererOptions.newInstance();
 		
@@ -265,12 +266,16 @@ public class MapPanel extends LayoutPanel {
 		// would get the same route displayed next time
 		options.setDraggable(false);
 		options.setMap(theMapWidget.getMapWidget());
+		
 		// InfoWindow where text info is rendered when a marker is clicked
 		//options.setInfoWindow(??)
 		//rendererOptions.setMarkerOptions(??)
-		// Element in which to display the directions 
-		// options.setPanel(??)
+		
+		// Element in which to display the directions
 		// TODO show/hide directions by showing/hiding the Element passed to setPanel
+		options.setPanel(directionsPanel);
+		
+		
 		// TODO set polyline options
 		
 		// TODO change this if we want text to display when markers are clicked. Must set

@@ -5,6 +5,7 @@ import static com.google.gwt.dom.client.Style.Unit.PX;
 
 import java.util.List;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
@@ -190,14 +191,6 @@ public class UI extends LayoutPanel {
 		mapPanel.clearNearMe();
 	}
 	
-	public void showRoute(Route route) {
-		mapPanel.displayRoute(route);
-	}
-	
-	public void hideRoute() {
-		mapPanel.clearRoute();
-	}
-	
 	public void showRoutePanel(RoutePanel aRoutePanel) {
 		this.routePanel = aRoutePanel;
 		add(aRoutePanel);
@@ -227,4 +220,11 @@ public class UI extends LayoutPanel {
 		
 	}
 
+	public void showRoute(Route route, Element directionsPanel) {
+		mapPanel.displayRoute(route, directionsPanel);
+	}
+	
+	public void hideRoute() {
+		mapPanel.clearRoute();
+	}
 }

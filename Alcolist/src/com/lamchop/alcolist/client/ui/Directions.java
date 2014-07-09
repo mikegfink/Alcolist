@@ -1,14 +1,8 @@
 package com.lamchop.alcolist.client.ui;
 
 import com.google.gwt.core.client.JsArray;
-import com.google.gwt.maps.client.MapWidget;
-import com.google.gwt.maps.client.services.DirectionsRenderer;
-import com.google.gwt.maps.client.services.DirectionsRendererOptions;
+
 import com.google.gwt.maps.client.services.DirectionsRequest;
-import com.google.gwt.maps.client.services.DirectionsResult;
-import com.google.gwt.maps.client.services.DirectionsResultHandler;
-import com.google.gwt.maps.client.services.DirectionsService;
-import com.google.gwt.maps.client.services.DirectionsStatus;
 import com.google.gwt.maps.client.services.DirectionsWaypoint;
 import com.google.gwt.maps.client.services.TravelMode;
 import com.lamchop.alcolist.shared.Route;
