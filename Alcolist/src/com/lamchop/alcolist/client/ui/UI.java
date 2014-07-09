@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.lamchop.alcolist.client.UserData;
 import com.lamchop.alcolist.shared.Manufacturer;
+import com.lamchop.alcolist.shared.Route;
 
 public class UI extends LayoutPanel {
 	
@@ -181,4 +182,11 @@ public class UI extends LayoutPanel {
 		mapPanel.clearNearMe();
 	}
 	
+	public void showRoute(Route route) {
+		mapPanel.displayRoute(route);
+	}
+	
+	public void hideRoute() {
+		mapPanel.clearRoute();
+	}
 }

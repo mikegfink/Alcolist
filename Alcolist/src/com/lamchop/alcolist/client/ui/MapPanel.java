@@ -19,12 +19,20 @@ import com.google.gwt.maps.client.overlays.MarkerImage;
 import com.google.gwt.maps.client.overlays.MarkerOptions;
 import com.google.gwt.maps.client.overlays.Polyline;
 import com.google.gwt.maps.client.overlays.PolylineOptions;
+import com.google.gwt.maps.client.services.DirectionsRenderer;
+import com.google.gwt.maps.client.services.DirectionsRendererOptions;
+import com.google.gwt.maps.client.services.DirectionsRequest;
+import com.google.gwt.maps.client.services.DirectionsResult;
+import com.google.gwt.maps.client.services.DirectionsResultHandler;
+import com.google.gwt.maps.client.services.DirectionsService;
+import com.google.gwt.maps.client.services.DirectionsStatus;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.lamchop.alcolist.client.resources.Images;
 import com.lamchop.alcolist.shared.Manufacturer;
+import com.lamchop.alcolist.shared.Route;
 
 public class MapPanel extends LayoutPanel {
 
@@ -36,6 +44,7 @@ public class MapPanel extends LayoutPanel {
 	private UIController theUIController;
 	private Circle circle;
 	private boolean LoggedIn;
+	private DirectionsRenderer directionsRenderer;
 
 	public MapPanel(UIController theUIController) {
 		theMarkers = new ArrayList<Marker>();
@@ -44,6 +53,7 @@ public class MapPanel extends LayoutPanel {
 		this.theUIController = theUIController;
 		LoggedIn = false;
 		circle = null;
+		directionsRenderer = null;
 	}
 
 	public void setMapWidget(AlcolistMapWidget mapWidget)  {
@@ -245,6 +255,60 @@ public class MapPanel extends LayoutPanel {
 	public void showLoggedOut() {
 		infoWindow.close();
 		LoggedIn = false;
+	}
+
+	public void displayRoute(Route route) {
+		// TODO 
+		DirectionsRendererOptions options = DirectionsRendererOptions.newInstance();
+		
+		// TODO should they be draggable? Then we need to change the stored route so the user
+		// would get the same route displayed next time
+		options.setDraggable(false);
+		options.setMap(theMapWidget.getMapWidget());
+		// InfoWindow where text info is rendered when a marker is clicked
+		//options.setInfoWindow(??)
+		//rendererOptions.setMarkerOptions(??)
+		// Element in which to display the directions 
+		// options.setPanel(??)
+		// TODO show/hide directions by showing/hiding the Element passed to setPanel
+		// TODO set polyline options
+		
+		// TODO change this if we want text to display when markers are clicked. Must set
+		// an InfoWindow to display the information with options.setInfoWindow
+		options.setSuppressInfoWindows(true);
+		
+		// We are only getting one route because I've called 
+		// setProvideRouteAlternatives(false) in making the DirectionsRequest object
+		options.setHideRouteList(true);
+		options.setRouteIndex(0);
+		
+		final DirectionsRenderer directionsDisplay = DirectionsRenderer.newInstance(options);
+		
+		// TODO add a way for the user to select if route will be optimized or not.
+		// Currently optimizing all the routes.
+		DirectionsRequest request = Directions.getDirectionsRequestFromRoute(route, true); 
+		
+		DirectionsService service = DirectionsService.newInstance();
+		
+		service.route(request, new DirectionsResultHandler() {
+				@Override
+				public void onCallback(DirectionsResult result,
+						DirectionsStatus status) {
+					if (status == DirectionsStatus.OK) {
+						directionsDisplay.setDirections(result);
+					} else {
+						System.err.println("Direction result not received. Direction " +
+								"status was: " + status.value());
+					}
+				}
+		});
+		
+	}
+
+	public void clearRoute() {
+		if (directionsRenderer != null) {
+			directionsRenderer.setMap(null);
+		}
 	}
 
 }
