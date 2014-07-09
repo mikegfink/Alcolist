@@ -12,7 +12,7 @@ import com.lamchop.alcolist.client.UserDataService;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Rating;
 import com.lamchop.alcolist.shared.Review;
-import com.lamchop.alcolist.shared.RouteResult;
+import com.lamchop.alcolist.shared.Route;
 import com.lamchop.alcolist.shared.Visited;
 
 // TODO refactor this class
@@ -157,30 +157,30 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 	}
 	
 	@Override
-	public void addRoute(RouteResult routeResult) {
-		if (routeResult.getUserID() == null) {
+	public void addRoute(Route route) {
+		if (route.getUserID() == null) {
 			System.err.println("This route has no userID so it will not be stored");
-		} else if (routeResult.getRouteName() == "") {
+		} else if (route.getRouteName() == "") {
 			System.err.println("This route has no name so it will not be stored");
 		} else {
-			handler.storeItem(routeResult);		
+			handler.storeItem(route);		
 		}
 	}
 
 	@Override
-	public void removeRoute(RouteResult routeResult) {
+	public void removeRoute(Route route) {
 		// Can't delete detached copy of route directly.
-		Long routeID = routeResult.getID();
+		Long routeID = route.getID();
 		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		Query q;
-		RouteResult storedRoute = null;
+		Route storedRoute = null;
 		try {
 			tx.begin();
-			q = pm.newQuery(RouteResult.class);
+			q = pm.newQuery(Route.class);
 			q.setFilter("id == searchID");
 			q.declareParameters("Long searchID");
-			List<RouteResult> queryResult = (List<RouteResult>) q.execute(routeID);
+			List<Route> queryResult = (List<Route>) q.execute(routeID);
 			
 			if (queryResult.size() == 1) { // TODO
 				storedRoute = queryResult.get(0);
@@ -249,26 +249,26 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 	}
 	
 	@Override
-	public List<RouteResult> getRoutes(String userID) {
+	public List<Route> getRoutes(String userID) {
 		// TODO Auto-generated method stub
 		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
-		List<RouteResult> routeResults = new ArrayList<RouteResult>();
+		List<Route> routes = new ArrayList<Route>();
 		
 		try {
-			Query q = pm.newQuery(RouteResult.class);
+			Query q = pm.newQuery(Route.class);
 			q.setFilter("userID == id");
 			q.declareParameters("String id");
 			// Return sorted by routeName for initial ordering in list.
 			q.setOrdering("routeName");
-			List<RouteResult> queryResult = (List<RouteResult>) q.execute(userID);
-			routeResults = (List<RouteResult>) pm.detachCopyAll(queryResult);
+			List<Route> queryResult = (List<Route>) q.execute(userID);
+			routes = (List<Route>) pm.detachCopyAll(queryResult);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			pm.close();
 		}
-		return routeResults;
+		return routes;
 	}	
 
 	@Override

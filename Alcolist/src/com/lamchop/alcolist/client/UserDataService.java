@@ -4,11 +4,9 @@ import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Rating;
 import com.lamchop.alcolist.shared.Review;
-
-import com.lamchop.alcolist.shared.RouteResult;
+import com.lamchop.alcolist.shared.Route;
 import com.lamchop.alcolist.shared.Visited;
 
 
@@ -24,13 +22,13 @@ public interface UserDataService extends RemoteService {
 	public void removeReview(Review review);
 	
 	// Must set userID and routeName fields or route will not be stored.
-	public void addRoute(RouteResult routeResult);
-	public void removeRoute(RouteResult routeResult);
+	public void addRoute(Route route);
+	public void removeRoute(Route route);
 	
 	
 	public List<Rating> getRatings(String userID);
 	public List<Review> getReviews(String userID);
-	public List<RouteResult> getRoutes(String userID);
+	public List<Route> getRoutes(String userID);
 	// TODO Is it better if this returns a list manufacturers instead?
 	public Visited getVisited(String userID);
 }
