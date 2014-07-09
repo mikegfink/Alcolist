@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.lamchop.alcolist.client.UserData;
+import com.lamchop.alcolist.client.ui.buttons.MakeRouteButton;
 import com.lamchop.alcolist.shared.Manufacturer;
 
 public class UI extends LayoutPanel {
@@ -49,14 +50,18 @@ public class UI extends LayoutPanel {
 	private ViewPanel viewPanel;
 	private Legend legend;
 	private UserPanel userPanel; 
+	private MakeRouteButton makeRouteButton;
+	private RoutePanel routePanel;
 	
-	public UI(AdminPanel adminPanel, UserPanel userPanel, ViewPanel viewPanel, ListPanel listPanel, Legend legend) {
+	public UI(AdminPanel adminPanel, UserPanel userPanel, ViewPanel viewPanel, 
+			ListPanel listPanel, Legend legend, MakeRouteButton makeRouteButton) {
 		this.mapPanel = null;
 		this.adminPanel = adminPanel;
 		this.userPanel = userPanel;
 		this.viewPanel = viewPanel;	
 		this.listPanel = listPanel;
 		this.legend = legend;
+		this.makeRouteButton = makeRouteButton;
 	}
 
 	public void init(MapPanel mapPanel) {
@@ -69,7 +74,6 @@ public class UI extends LayoutPanel {
 
 	private void createChildren() {
 		title = new Label("The Alcolist");
-
 	}
 
 	private void addChildren() {
@@ -84,6 +88,7 @@ public class UI extends LayoutPanel {
 		this.add(userPanel);
 		this.add(legend);
 		this.add(listPanel);
+		this.add(makeRouteButton);
 		
 	}
 
@@ -104,6 +109,9 @@ public class UI extends LayoutPanel {
 		setWidgetTopHeight(viewPanel, VIEWPANEL_TOP_PCT, PCT, VIEWPANEL_HEIGHT_PIXELS, PX);
 		setWidgetLeftWidth(viewPanel, VIEWPANEL_LEFT_PCT, PCT, VIEWPANEL_WIDTH_PIXELS, PX);
 		
+		setWidgetTopHeight(makeRouteButton, 2, PCT, 6, PCT);
+		setWidgetLeftWidth(makeRouteButton, 2, PCT, 10, PCT);
+		
 		hideChild(listPanel);
 		//hideChild(adminPanel);
 				
@@ -117,7 +125,7 @@ public class UI extends LayoutPanel {
 		this.setWidgetLeftWidth(viewPanel, leftEdgePct + widthPct, PCT, 
 				viewPanel.getOffsetWidth(), PX);
 		this.setWidgetLeftWidth(legend, leftEdgePct + widthPct, PCT, 
-				legend.getOffsetWidth(), PX);
+				LEGEND_WIDTH_PIXELS, PX);
 
 		// This has been pretty annoying.
 		//this.animate(ANIMATE_DURATION);
@@ -179,6 +187,35 @@ public class UI extends LayoutPanel {
 	
 	public void hideNearMeCircle() {
 		mapPanel.clearNearMe();
+	}
+	
+	public void showRoutePanel(RoutePanel aRoutePanel) {
+		this.routePanel = aRoutePanel;
+		add(aRoutePanel);
+		setWidgetTopHeight(aRoutePanel, LIST_TOP_PCT, PCT, LIST_HEIGHT_PCT, PCT);
+		setWidgetLeftWidth(aRoutePanel, 5, PCT, 35, PCT);
+		
+		hideChild(makeRouteButton);
+		legend.setVisible(false);
+		viewPanel.setVisible(false);
+		
+	}
+	
+	public void showDirectionsPanel(DirectionsPanel directionsPanel) {
+		add(directionsPanel);
+		setWidgetTopHeight(directionsPanel, LIST_TOP_PCT, PCT, LIST_HEIGHT_PCT, PCT);
+		setWidgetLeftWidth(directionsPanel, 5, PCT, 35, PCT);
+		
+		this.remove(routePanel);
+	}
+	
+	public void hideRoutePanel() {
+		this.remove(routePanel);
+		viewPanel.setVisible(true);
+		legend.setVisible(true);
+		setWidgetTopHeight(makeRouteButton, 2, PCT, 6, PCT);
+		setWidgetLeftWidth(makeRouteButton, 2, PCT, 10, PCT);
+		
 	}
 	
 }

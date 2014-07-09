@@ -10,7 +10,7 @@ public class UserDataPanels {
 	public UserDataPanels(AppDataController appDataController) {
 		//setReviewPanel(new ReviewPanel(appDataController));
 		setRatingPanel(new RatingPanel(appDataController));
-		setRoutePanel(new RoutePanel(appDataController));		
+//		setRoutePanel(new RoutePanel(appDataController));		
 	}
 
 	public RoutePanel getRoutePanel() {

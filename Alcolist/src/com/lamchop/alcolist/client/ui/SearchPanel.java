@@ -48,6 +48,7 @@ public class SearchPanel extends LayoutPanel{
 
 	private void initSearchWidgets() {
 		textBox = new SuggestBox();
+		textBox.addStyleDependentName("search");
 		searchButton = new Button();
 		clearSearchButton = new PushButton();
 		searchBar = new LayoutPanel();
