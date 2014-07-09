@@ -197,8 +197,9 @@ public class MapPanel extends LayoutPanel {
 	}
 	
 	public void displayNearMe(MyLocation myLocation)	{
-		LatLng center = myLocation.getMyLocation();
+		clearNearMe();
 		
+		LatLng center = myLocation.getMyLocation();
 		CircleOptions circleOptions = CircleOptions.newInstance();
 		circleOptions.setFillOpacity(0.1);
 		circleOptions.setFillColor("CornflowerBlue");
@@ -210,7 +211,9 @@ public class MapPanel extends LayoutPanel {
 	}
 	
 	public void clearNearMe() {
-		circle = null;
+		if (circle != null) {
+			circle.setMap(null);
+		};		
 	}
 
 	public AlcolistMapWidget getMapWidget() {
