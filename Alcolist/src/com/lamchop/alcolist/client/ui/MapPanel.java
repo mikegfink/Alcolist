@@ -9,11 +9,14 @@ import com.google.gwt.maps.client.base.LatLngBounds;
 import com.google.gwt.maps.client.events.MouseEvent;
 import com.google.gwt.maps.client.events.click.ClickMapEvent;
 import com.google.gwt.maps.client.events.click.ClickMapHandler;
+import com.google.gwt.maps.client.mvc.MVCArray;
 import com.google.gwt.maps.client.overlays.InfoWindow;
 import com.google.gwt.maps.client.overlays.InfoWindowOptions;
 import com.google.gwt.maps.client.overlays.Marker;
 import com.google.gwt.maps.client.overlays.MarkerImage;
 import com.google.gwt.maps.client.overlays.MarkerOptions;
+import com.google.gwt.maps.client.overlays.Polyline;
+import com.google.gwt.maps.client.overlays.PolylineOptions;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
@@ -101,6 +104,14 @@ public class MapPanel extends LayoutPanel {
 		calculateViewForMap(DEFAULT_MAP_VIEW_PCT);
 		
 		// TODO: Remove this when possible, if possible.
+	}
+	
+	public void overlayPolyline(MVCArray<LatLng> polylinePath) {
+		PolylineOptions options = PolylineOptions.newInstance();
+		// TODO set some options?
+		options.setPath(polylinePath);
+		Polyline polyline = Polyline.newInstance(options);
+		polyline.setMap(theMapWidget.getMapWidget());
 	}
 
 	protected void drawInfoWindow(Marker marker, Manufacturer manufacturer, MouseEvent mouseEvent) {

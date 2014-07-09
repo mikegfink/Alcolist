@@ -159,11 +159,12 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 	
 	@Override
 	public void addRoute(RouteResult routeResult) {
-		// TODO also require route to have a name?
-		if (routeResult.getUserID() != null) {
-			handler.storeItem(routeResult);
-		} else {
+		if (routeResult.getUserID() == null) {
 			System.err.println("This route has no userID so it will not be stored");
+		} else if (routeResult.getRouteName() == "") {
+			System.err.println("This route has no name so it will not be stored");
+		} else {
+			handler.storeItem(routeResult);		
 		}
 	}
 

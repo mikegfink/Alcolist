@@ -1,7 +1,6 @@
 package com.lamchop.alcolist.shared;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -11,6 +10,8 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.gwt.maps.client.base.LatLng;
+import com.google.gwt.maps.client.mvc.MVCArray;
+import com.lamchop.alcolist.client.PolylineDecoder;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 public class RouteResult implements Serializable {
@@ -87,8 +88,8 @@ public class RouteResult implements Serializable {
 		return polyline;
 	}
 	
-	public List<LatLng> getDecodedPolyline() {
-		return decodePoly(polyline);
+	public MVCArray<LatLng> getDecodedPolyline() {
+		return PolylineDecoder.decodePoly(polyline);
 	}
 
 	public void setSouthwestBound(double lat, double lng) {
@@ -121,37 +122,4 @@ public class RouteResult implements Serializable {
 		return warnings;
 	}
 	
-	// Adapted from http://jeffreysambells.com/2010/05/27/decoding-polylines-from-google-maps-direction-api-with-java
-	private List<LatLng> decodePoly(String encoded) {
-
-		List<LatLng> poly = new ArrayList<LatLng>();
-		int index = 0, len = encoded.length();
-		int lat = 0, lng = 0;
-		
-		while (index < len) {
-			int b, shift = 0, result = 0;
-			do {
-				b = encoded.charAt(index++) - 63;
-				result |= (b & 0x1f) << shift;
-				shift += 5;
-			} while (b >= 0x20);
-			int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
-			lat += dlat;
-			
-			shift = 0;
-			result = 0;
-			do {
-				b = encoded.charAt(index++) - 63;
-				result |= (b & 0x1f) << shift;
-				shift += 5;
-			} while (b >= 0x20);
-			int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
-			lng += dlng;
-
-			LatLng p = LatLng.newInstance((double) lat / 1E5, (double) lng / 1E5);
-			poly.add(p);
-		}
-
-		return poly;
-	}
 }

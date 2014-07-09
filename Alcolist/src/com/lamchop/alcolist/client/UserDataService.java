@@ -19,7 +19,7 @@ public interface UserDataService extends RemoteService {
 	public void addReview(Review review);
 	public void removeReview(Review review);
 	
-	// Must have userID field set in order to be stored.
+	// Must set userID and routeName fields or route will not be stored.
 	public void addRoute(RouteResult routeResult);
 	public void removeRoute(RouteResult routeResult);
 	
