@@ -60,7 +60,6 @@ public class MyLocation {
 	}
 
 	private void callFilterNearMe() {
-		appDataController.filterNearMe(this);
-		appDataController.updateNearMe(this);
+		appDataController.firstNearMe();
 	}
 }

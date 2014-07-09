@@ -1,6 +1,7 @@
 package com.lamchop.alcolist.client;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
@@ -20,25 +21,25 @@ public class AppDataController {
 	private AppData appData;
 	private UIUpdateInterface theUI;
 	private static final UserDataServiceAsync 
-							userDataService	 = GWT.create(UserDataService.class);
+	userDataService	 = GWT.create(UserDataService.class);
 	private static final ManufacturerServiceAsync 
-							manufacturerService = GWT.create(ManufacturerService.class);
-	
+	manufacturerService = GWT.create(ManufacturerService.class);
+
 	private MyLocation myLocation; 
-	private List<Manufacturer> filteredList;
-	private List<Manufacturer> searchList;
 	private List<Manufacturer> allManufacturers;
-	private List<Manufacturer> nearMeList;
+	private List<Manufacturer> displayList;
 	private String type;
 	private String searchText;
-	
+	private boolean nearMe;
+	private boolean firstNearMe;
+
 	public AppDataController(UIUpdateInterface theUI) {
 		appData = new AppData();
 		this.theUI = theUI;
-		searchList = new ArrayList<Manufacturer>();
-		filteredList = new ArrayList<Manufacturer>();
-		nearMeList = new ArrayList<Manufacturer>();
+		displayList = new ArrayList<Manufacturer>();
 		myLocation = null;
+		nearMe = false;
+		firstNearMe = true;
 	}
 
 	// TODO: Request rework of UserData storage so that we receive a UserData object from 
@@ -60,7 +61,7 @@ public class AppDataController {
 			}
 		}));
 	}
-	
+
 	private void getReviews(final String userID) {
 		userDataService.getReviews(userID, (new AsyncCallback<List<Review>>() {
 			public void onFailure(Throwable error) {
@@ -73,7 +74,7 @@ public class AppDataController {
 			}
 		}));
 	}
-	
+
 	private void getRoutes(final String userID) {
 		userDataService.getRoutes(userID, (new AsyncCallback<List<Route>>() {
 			public void onFailure(Throwable error) {
@@ -86,26 +87,26 @@ public class AppDataController {
 			}
 		}));
 	}
-	
+
 	public void updateUserDataReviews(List<Review> reviews) {
 		for (Review review : reviews) {
 			appData.addReview(review);
 		}
 	}
-	
+
 	public void updateUserDataRatings(List<Rating> ratings) {
 		for (Rating rating : ratings) {
 			appData.addRating(rating);
 		}
 	}
-	
+
 	public void updateUserDataRoutes(List<Route> routes) {
 		for (Route route : routes) {
 			appData.addRoute(route);
 		}
 	}
 	// TODO: All methods above hopefully collapsed into one if UserDataServices are reworked
-	
+
 	public void initManufacturers() {		
 		manufacturerService.getManufacturers(new AsyncCallback<List<Manufacturer>>() {
 			public void onFailure(Throwable error) {
@@ -155,162 +156,122 @@ public class AppDataController {
 		return appData.isLoggedIn();
 	}
 
-	public void filterBySearch(String searchText) {
-		if (type != null && searchText != null)
-			filterList(allManufacturers);
+	public void filterBySearch(String searchText) {		
 		this.searchText = searchText;
-		if (filteredList.isEmpty() && nearMeList.isEmpty())
-			searchList(allManufacturers);
-		else if (nearMeList.isEmpty()) {
-			searchList(filteredList);
-		} else {
-			filterNearMe(myLocation);
-			searchList(nearMeList);
-		}
-		
-		theUI.update(searchList);
-	}
-	
-	private void searchList(List<Manufacturer> manufacturers) {
-		searchList.clear();
-		
-		for (Manufacturer m : manufacturers) {
-			if (m.getCity().toLowerCase().contains(searchText) || m.getName().toLowerCase().contains(searchText) || m.getFullAddress().toLowerCase().contains(searchText))
-				searchList.add(m);	
-		}
-	}
-	
-	public void filterByType(String type) {
-		if (searchText != null)
-			searchList(allManufacturers);
-		
-		this.type = type;
-		
-		if (searchList.isEmpty() && nearMeList.isEmpty()) {
-			filterList(allManufacturers);
-		} else if (nearMeList.isEmpty()) {
-			filterList(searchList);
-		} else {
-			filteredList.clear();
-			filterNearMe(myLocation);
-			filterList(nearMeList);
-		}
-		
-		theUI.update(filteredList);
-	}
-	
-	private void filterList(List<Manufacturer> manufacturers) {
-		filteredList.clear();
-		
-		for (Manufacturer m : manufacturers) {
-			if (m.getType().equals(type))
-				filteredList.add(m);	
-		}		
-	}
-	
-	public void removeFilter() {
-		filteredList.clear();
-		type = null;
-		
-		if (searchList.isEmpty() && nearMeList.isEmpty()) {
-			theUI.update(allManufacturers);
-		}
-		else if (nearMeList.isEmpty()){
-			searchList(allManufacturers);
-			theUI.update(searchList);
-		} else if (searchList.isEmpty()) {
-			filterNearMe(myLocation);
-			updateNearMe(myLocation);
-		} else {
-			searchList(allManufacturers);
-			filterNearMe(myLocation);
-			updateNearMe(myLocation);
-		}
-	}
-	
-	public void removeSearch() {
-		searchList.clear();
-		searchText = null;
-		
-		if (filteredList.isEmpty() && nearMeList.isEmpty())
-			theUI.update(allManufacturers);
-		else if (nearMeList.isEmpty()) {
-			filterList(allManufacturers);
-			theUI.update(filteredList);
-		} else if (filteredList.isEmpty()) {
-			filterNearMe(myLocation);
-			updateNearMe(myLocation);
-		} else {
-			filterList(allManufacturers);
-			filterNearMe(myLocation);
-			updateNearMe(myLocation);
-		}
-	}
-	
-	public void showNearMe() {
-		myLocation = new MyLocation(this);
-		
-		GWT.log("LatLng is: " + myLocation.toString());
-		
+		filter();
 	}
 
-	public void filterNearMe(MyLocation myLocation) {
-		LatLng myLatLng = myLocation.getMyLocation();
-		List<Manufacturer> baseList;
-		
-		if (filteredList.isEmpty()) {
-			if (searchList.isEmpty()) {
-				baseList = allManufacturers;
-			} else {
-				baseList = searchList;
+	private void searchList() {		
+		Iterator<Manufacturer> iter = displayList.iterator();
+		while (iter.hasNext()) {
+			Manufacturer m = iter.next();
+			if (!hasSearchText(m))
+				iter.remove();	
 			}
+	}
+
+	private boolean hasSearchText(Manufacturer m) {
+		return m.getCity().toLowerCase().contains(searchText) || m.getName().toLowerCase().contains(searchText) || m.getFullAddress().toLowerCase().contains(searchText);
+	}
+
+	public void filterByType(String type) {		
+		this.type = type;
+		filter();
+	}
+
+	private void filterList() {		
+		Iterator<Manufacturer> iter = displayList.iterator();
+		while (iter.hasNext()) {
+			Manufacturer m = iter.next();
+			if (!m.getType().equals(type))
+				iter.remove();	
+			}
+	}
+
+	public void removeFilter() {
+		type = null;
+		filter();
+	}
+
+	public void removeSearch() {
+		searchText = null;
+		filter();
+	}
+
+	public void showNearMe() {
+		if (firstNearMe) {
+			myLocation = new MyLocation(this);
 		}
 		else {
-			baseList = filteredList;
+			nearMe = true;
+			filter();
 		}
-		
-		for (Manufacturer m : baseList) {
-			double dist = distFrom(m.getLatitude(), m.getLongitude(), myLatLng.getLatitude(), myLatLng.getLongitude());
-			if (isNearMe(dist)) {
-				nearMeList.add(m);
-			}
-		}	
-		
 	}
 
-	public void updateNearMe(MyLocation myLocation) {
-		theUI.update(nearMeList);
+	public void firstNearMe() {
+		firstNearMe = false;
+		nearMe = true;
+		filter();
+	}
+
+	private void nearMeList() {
+		Iterator<Manufacturer> iter = displayList.iterator();
+		while (iter.hasNext()) {
+			Manufacturer m = iter.next();
+			double dist = distFrom(m.getLatitude(), m.getLongitude(), 
+					myLocation.getMyLocation().getLatitude(), 
+					myLocation.getMyLocation().getLongitude());
+			if (!isNearMe(dist)) {
+				iter.remove();
+			}
+		}
+		
 		theUI.showNearMeCircle(myLocation);
 	}
-	
+
 	public void clearNearMe() {
-		nearMeList.clear();
 		theUI.hideNearMeCircle();
-		filterByType(type);			
+		nearMe = false;
+		filter();			
 	}
 
 	private boolean isNearMe(double dist) {
 		return dist < (MyLocation.NEAR_ME_RADIUS_METERS);			
 	}
-	
-	private double distFrom(double lat1, double lng1, double lat2, double lng2) {
-	    double earthRadius = 6371000;
-	    double dLat = Math.toRadians(lat2-lat1);
-	    double dLng = Math.toRadians(lng2-lng1);
-	    double sindLat = Math.sin(dLat / 2);
-	    double sindLng = Math.sin(dLng / 2);
-	    double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
-	            * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
-	    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-	    double dist = earthRadius * c;
 
-	    return dist;
-	    }
+	private double distFrom(double lat1, double lng1, double lat2, double lng2) {
+		double earthRadius = 6371000;
+		double dLat = Math.toRadians(lat2-lat1);
+		double dLng = Math.toRadians(lng2-lng1);
+		double sindLat = Math.sin(dLat / 2);
+		double sindLng = Math.sin(dLng / 2);
+		double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
+				* Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+		double dist = earthRadius * c;
+
+		return dist;
+	}
 	
+	private void filter() {
+		displayList.clear();
+		displayList.addAll(allManufacturers);
+		if (type != null) {
+			filterList();
+		}
+		if (searchText != null) {
+			searchList();
+		}
+		if (nearMe) {
+			nearMeList();
+		}
+
+		theUI.update(displayList);
+	}
+
 	public Review addReview(String reviewText, final String manID) {
-		// TODO Auto-generated method stub
 		Review review = appData.addReview(manID, reviewText);
-		
+
 		userDataService.addReview(review, (new AsyncCallback<Void>() {
 			public void onFailure(Throwable error) {
 				handleError(error);
@@ -320,12 +281,11 @@ public class AppDataController {
 				GWT.log("Review added successfully for: Manufacturer ID: " + manID);
 			}
 		}));
-		
+
 		return review;
 	}
-	
+
 	public void addRating(int ratingValue, final String manID) {
-		// TODO Auto-generated method stub
 		Rating rating = appData.addRating(manID, ratingValue);
 		GWT.log("Rating was: " + rating.getRating() + " for ID: " + manID);
 		userDataService.addRating(rating, (new AsyncCallback<Void>() {
@@ -338,7 +298,7 @@ public class AppDataController {
 			}
 		}));		
 	}
-	
+
 	public Review getReview(String manID) {
 		return appData.getReview(manID);
 	}
@@ -346,7 +306,7 @@ public class AppDataController {
 	public Rating getRating(String manID) {
 		return appData.getRating(manID);
 	}
-	
+
 	private void handleError(Throwable error) {
 		GWT.log(error.getMessage());
 	}
