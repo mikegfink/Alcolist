@@ -265,3 +265,4 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 		return ratings;
 	}
 }
+
