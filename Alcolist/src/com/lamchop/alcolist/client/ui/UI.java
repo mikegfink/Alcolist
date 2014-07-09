@@ -218,4 +218,8 @@ public class UI extends LayoutPanel {
 		
 	}
 	
+	public void selectOnMap(Manufacturer manufacturer){
+		mapPanel.bounceMarker(manufacturer);
+	}
+	
 }

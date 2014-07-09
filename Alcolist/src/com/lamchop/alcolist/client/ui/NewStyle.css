@@ -32,3 +32,37 @@
 .dataGridOddRowCell {
   border: selectionBorderWidth solid white;
 }
+
+.dataGridKeyboardSelectedRow {
+  background: #ffc;
+}
+
+.dataGridHoveredRow {
+  background: #eee;
+  border: none;
+}
+
+.dataGridHoveredRowCell {
+  border: selectionBorderWidth solid #eee;
+}
+
+.dataGridSelectedRow {
+  background: #628cd5;
+  color: white;
+  height: auto;
+  overflow: auto;
+}
+
+.dataGridSelectedRowCell {
+  border: selectionBorderWidth solid #628cd5;
+}
+
+
+
+
+
+
+
+
+
+

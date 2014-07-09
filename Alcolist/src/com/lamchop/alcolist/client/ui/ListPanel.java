@@ -95,7 +95,7 @@ public class ListPanel extends LayoutPanel {
 
 		initListColumns(sortHandler);
 
-		listGrid.setTableBuilder(new CustomTableBuilder(listGrid));
+//		listGrid.setTableBuilder(new CustomTableBuilder(listGrid));
 
 		add(listGrid);
 
@@ -114,22 +114,10 @@ public class ListPanel extends LayoutPanel {
 	    listGrid.setSelectionModel(selectionModel);
 	    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 		      public void onSelectionChange(SelectionChangeEvent event) {
-	
 		        currentSelected = selectionModel.getSelectedObject();
-//		        if (currentSelected != null) {
-//		        	if (showingInfo.contains(currentSelected)) {
-//		        		showingInfo.remove(currentSelected);
-//		        	}
-//		        	else showingInfo.add(currentSelected);
-//			        selectionModel.setSelected(currentSelected, false);
-			        listGrid.redraw();
-
-		        	
-//		        }
-		        
-		        
-		        
-		        
+		        if (currentSelected != null)
+		        	theUIController.selectOnMap(currentSelected);
+ 
 		      }  
 		    });
 	}
@@ -199,22 +187,26 @@ public class ListPanel extends LayoutPanel {
 			}
 		});
 		
-		extraInfo = 
-				new Column<Manufacturer, String>(new TextButtonCell()) {
-			@Override
-			public String getValue(Manufacturer object) {
-				return "Review " + object.getName();
-			}
-		};
-		
-		extraInfo.setFieldUpdater(new FieldUpdater<Manufacturer, String>() {
-			  public void update(int index, Manufacturer object, String value) {
-			    theUIController.showReviewPanel(object);
-	
-			  }
-			});
+//		extraInfo = 
+//				new Column<Manufacturer, String>(new TextButtonCell()) {
+//			@Override
+//			public String getValue(Manufacturer object) {
+//				return "Review " + object.getName();
+//			}
+//		};
+//		
+//		extraInfo.setFieldUpdater(new FieldUpdater<Manufacturer, String>() {
+//			  public void update(int index, Manufacturer object, String value) {
+//			    theUIController.showReviewPanel(object);
+//	
+//			  }
+//			});
 
 		listGrid.setColumnWidth(0,  "65%");
+		
+		listGrid.addColumn(nameColumn, "Manufacturer Name");
+		listGrid.addColumn(cityColumn, "City");
+		listGrid.addColumn(typeColumn, "Type");
 		
 	}
 
@@ -249,47 +241,47 @@ public class ListPanel extends LayoutPanel {
 	
 
 	
-	private class CustomTableBuilder extends AbstractCellTableBuilder<Manufacturer>{
-	
-
-		public CustomTableBuilder(AbstractCellTable<Manufacturer> cellTable) {
-			super(cellTable);
-			
-		}
-
-		@Override
-		protected void buildRowImpl(Manufacturer rowValue, int absRowIndex) {
-			
-			
-			
-			TableRowBuilder row = startRow();
-			TableCellBuilder td = row.startTD();
-	        this.renderCell(td, this.createContext(0), nameColumn, rowValue);
-	        td.endTD();
-	        
-			td = row.startTD();
-	        this.renderCell(td, this.createContext(1), cityColumn, rowValue);
-	        td.endTD();
-	        
-			td = row.startTD();
-	        this.renderCell(td, this.createContext(2), typeColumn, rowValue);
-	        td.endTD();
-	        
-	        row.endTR();
-			
-	        if (currentSelected != null) {
-	        	if (currentSelected.equals(rowValue)) {
-	        		row = startRow();
-	        		td = row.startTD().colSpan(3);
-	        		this.renderCell(td,  this.createContext(0), extraInfo, rowValue);
-	        		td.endTD();
-	        		row.endTR();
-	        	}
-	        }
-		}
-		
-
-		
-	}
+//	private class CustomTableBuilder extends AbstractCellTableBuilder<Manufacturer>{
+//	
+//
+//		public CustomTableBuilder(AbstractCellTable<Manufacturer> cellTable) {
+//			super(cellTable);
+//			
+//		}
+//
+//		@Override
+//		protected void buildRowImpl(Manufacturer rowValue, int absRowIndex) {
+//			
+//			
+//			
+//			TableRowBuilder row = startRow();
+//			TableCellBuilder td = row.startTD();
+//	        this.renderCell(td, this.createContext(0), nameColumn, rowValue);
+//	        td.endTD();
+//	        
+//			td = row.startTD();
+//	        this.renderCell(td, this.createContext(1), cityColumn, rowValue);
+//	        td.endTD();
+//	        
+//			td = row.startTD();
+//	        this.renderCell(td, this.createContext(2), typeColumn, rowValue);
+//	        td.endTD();
+//	        
+//	        row.endTR();
+//			
+//	        if (currentSelected != null) {
+//	        	if (currentSelected.equals(rowValue)) {
+//	        		row = startRow();
+//	        		td = row.startTD().colSpan(3);
+//	        		this.renderCell(td,  this.createContext(0), extraInfo, rowValue);
+//	        		td.endTD();
+//	        		row.endTR();
+//	        	}
+//	        }
+//		}
+//		
+//
+//		
+//	}
 
 }
