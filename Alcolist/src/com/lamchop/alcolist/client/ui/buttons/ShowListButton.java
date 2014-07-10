@@ -12,7 +12,7 @@ public class ShowListButton extends ToggleButton {
 	private static Images images = GWT.create(Images.class);
 	
 	public ShowListButton(UIController theUIController) {
-		super(new Image(images.expandLight()), new Image(images.expandDark()));
+		super(new Image(images.listUp()), new Image(images.listDown()));
 		this.addClickHandler(new ViewHandler(theUIController));
 	}
 }

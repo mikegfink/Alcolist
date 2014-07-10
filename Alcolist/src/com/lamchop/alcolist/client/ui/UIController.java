@@ -38,6 +38,7 @@ public class UIController implements UIUpdateInterface {
 		ListPanel listPanel = new ListPanel(theAppDataController, this);
 		Legend legend = new Legend(theAppDataController);
 		MakeRouteButton makeRouteButton = new MakeRouteButton(this);
+//		RoutePanel routePanel = new RoutePanel(theAppDataController, this);
 		uiPanel = new UI(adminPanel, userPanel, viewPanel, listPanel, legend, makeRouteButton);
 		
 		initMap();
@@ -93,7 +94,7 @@ public class UIController implements UIUpdateInterface {
 
 	@Override
 	public void update(UserData userData) {
-		if (!userData.isDefault()) {
+		if (theAppDataController.isUserLoggedIn()) {
 			uiPanel.showLoggedIn(userData);
 		}
 		else {
@@ -107,7 +108,7 @@ public class UIController implements UIUpdateInterface {
 	}
 
 	public void showReviewPanel(Manufacturer manufacturer) {
-		new ReviewPanel(manufacturer, theAppDataController).center();
+		new ReviewPanel(manufacturer, theAppDataController, this).center();
 	}
 	
 	// Really sad about this. Will try to refactor it out.

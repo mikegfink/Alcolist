@@ -33,10 +33,10 @@ public class Route implements Serializable {
 		// Zero argument default constructor required by Serializable. Does not need to ever
 		// be used explicitly in our code.
 	}
-	
-	public Route(String start, String end, List<String> midpoints) {
-		this.start = start;
-		this.end = end;
+
+	public Route(String userID, String routeName, List<String> midpoints) {
+		this.userID = userID;
+		this.routeName = routeName;
 		this.midpoints = midpoints;
 	}
 	

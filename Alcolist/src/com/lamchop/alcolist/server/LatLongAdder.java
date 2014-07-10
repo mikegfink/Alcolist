@@ -2,6 +2,8 @@ package com.lamchop.alcolist.server;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Scanner;
@@ -11,19 +13,21 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import com.lamchop.alcolist.shared.Manufacturer;
-
 import com.google.gwt.core.client.GWT;
 
 public class LatLongAdder {
+	private static final String ACCEPT_IN_LOCALITY = "locality";
+	private static final String ACCEPT_IN_PROVINCE = "administrative_area_level_2";
 	private static final String GEOCODER_REQUEST_PREFIX_FOR_JSON = "https://maps.googleapis.com/maps/api/geocode/json?";
-	private static final String API_KEY = "AIzaSyCk0q9Lk0DUIsZFYQFyRXxDQ_UqnjqbXlg";
-
+	//private static final String API_KEY = "AIzaSyCk0q9Lk0DUIsZFYQFyRXxDQ_UqnjqbXlg";
+	private static final String API_KEY = "AIzaSyBcZ7-MM_f_wu9jzveXCfNUJycr4gc_HxY";
+	//private static final String API_KEY = "AIzaSyAh7We3t3S443OsQSiogLWqyOSHPoTFeko";
+	// Test(1, 2) production(3) keys.
+	
 	public LatLongAdder() {
 	}
 
 	public static void makeGeocodeRequest(List<Manufacturer> manufacturers) {
-		// Count is for debugging purposes to bottleneck the requests
-		int count = 0;
 		int batch = 0;
 		for (Manufacturer currentManufacturer: manufacturers) {
 			batch++;
@@ -35,18 +39,18 @@ public class LatLongAdder {
 					GWT.log("Sleep interrupted" + e.getMessage());
 				}
 				batch = 0;
-			}
-			// Limiting the requests for debugging purposes
-			count++;
-			if (count >= 20)
-				return;
-
+			}			
 			try {
+//				if (currentManufacturer.getCity().equals("Prince Rupert")||
+//						currentManufacturer.getCity().equals("Christina Lake")) {
+//					System.out.println("In staging: " + currentManufacturer.getName() + currentManufacturer.getLatitude() + " and lng: " + 
+//							currentManufacturer.getLongitude());
+//				}
 				getLatLong(currentManufacturer);
 				
+
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				GWT.log(e.getMessage());;
 			}
 		}
 	}
@@ -54,16 +58,77 @@ public class LatLongAdder {
 	private static void getLatLong(Manufacturer manufacturer)  throws Exception {
 		// adapted from http://theoryapp.com/parse-json-in-java/
 		// build a URL
-		String address = manufacturer.getFullAddress();
-		String request = GEOCODER_REQUEST_PREFIX_FOR_JSON +
-				"&address=";
+		String address = manufacturer.getFullAddress().trim();
+		String request = GEOCODER_REQUEST_PREFIX_FOR_JSON +	"&address=";
 		request += URLEncoder.encode(address, "UTF-8") + "&key=" + 
 				URLEncoder.encode(API_KEY, "UTF-8");
 
 		// For testing without api key
-//		String request = GEOCODER_REQUEST_PREFIX_FOR_JSON;
-//		request += URLEncoder.encode(address, "UTF-8");
+		//		String request = GEOCODER_REQUEST_PREFIX_FOR_JSON;
+		//		request += URLEncoder.encode(address, "UTF-8");
+
+		String result = makeRequest(request);
+		// TODO: Debugging for live. Remove when safe to do so.
+		//System.out.println("Address is: " + address);
+		//manufacturer.setFormattedAddress(result);
+		// build a JSON object
+		boolean geocodeSuccess = parseJSON(manufacturer, ACCEPT_IN_LOCALITY, result);	
+		if (geocodeSuccess)
+			return;
+
+		String cityAddress = manufacturer.getCity() + "," + manufacturer.getProvince() +
+				"," + manufacturer.getPostalCode();
+		String cityRequest = GEOCODER_REQUEST_PREFIX_FOR_JSON +	"&address=";
+		cityRequest += URLEncoder.encode(cityAddress, "UTF-8") + "&key=" + 
+				URLEncoder.encode(API_KEY, "UTF-8");
+
+		result = makeRequest(cityRequest);
+
+		System.out.println("In geocode: " + manufacturer.getName() + ": " + JSONValue.parse(result));
+
+		geocodeSuccess = parseJSON(manufacturer, ACCEPT_IN_PROVINCE, result);
+
+		manufacturer.setFormattedAddress(manufacturer.getFullAddress());
+	}
+
+	private static boolean parseJSON(Manufacturer manufacturer, String type,
+			String result) {
+		JSONObject resultAsJSON;
+		JSONArray resultsAsJSONArray;
+		JSONObject responseInJSON;
+		JSONArray addressArray;
+		boolean acceptLocation = false;
+		resultAsJSON = (JSONObject) JSONValue.parse(result);
+		if (!resultAsJSON.get("status").equals("OK")) {
+			System.out.println("Status was: " + resultAsJSON.get("status").toString()
+					+ " for: " + manufacturer.getFullAddress());
+			manufacturer.setLatLng(0.04, 0.04);
+			return false;
+		}
+
+		// get the first result
+		resultsAsJSONArray = (JSONArray) resultAsJSON.get("results");
+		responseInJSON = (JSONObject) resultsAsJSONArray.get(0);
+
+		addressArray = (JSONArray) responseInJSON.get("address_components");
+		for (int i = 0; i < addressArray.size(); i++) {
+			JSONObject myAddress = (JSONObject) addressArray.get(i);
+			JSONArray types = (JSONArray) myAddress.get("types");
+
+			if (types.contains(type)) {
+				acceptLocation = true;
+			}
+		}
 		
+		if (acceptLocation) {
+			setAddress(responseInJSON, manufacturer);
+			return true;
+		}
+		return false;
+	}
+
+	private static String makeRequest(String request)
+			throws MalformedURLException, IOException {
 		URL geocodeURL = new URL(request);
 
 		// read from the URL
@@ -75,23 +140,11 @@ public class LatLongAdder {
 			result += resultStream.nextLine();
 
 		resultStream.close();
-		// TODO: Debugging for live. Remove when safe to do so.
-		//System.out.println("Address is: " + address);
-		//manufacturer.setFormattedAddress(result);
-		// build a JSON object
+		return result;
+	}
 
-		JSONObject resultAsJSON = (JSONObject) JSONValue.parse(result);
-		if (! resultAsJSON.get("status").equals("OK")) {
-			System.out.println("Status was: " + resultAsJSON.get("status").toString()
-					+ " for: " + address);
-			manufacturer.setLatLng(0.4, 0.4);
-			return;
-		}
-
-		// get the first result
-		JSONArray resultsAsJSONArray = (JSONArray) resultAsJSON.get("results");
-		JSONObject responseInJSON = (JSONObject) resultsAsJSONArray.get(0);
-
+	private static void setAddress(JSONObject responseInJSON, Manufacturer manufacturer) {
+		
 		String formattedAddress = (String) responseInJSON.get("formatted_address");
 
 		JSONObject geometryInJSON = (JSONObject) responseInJSON.get("geometry");
@@ -99,13 +152,21 @@ public class LatLongAdder {
 
 		double lat = (double) locationInJSON.get("lat");
 		double lng = (double) locationInJSON.get("lng");
-		
-//		System.out.println("Original Address was: " + address);
+
+//		System.out.println("Original Address was: " + manufacturer.getFullAddress());
 //		System.out.println("Address was: " + formattedAddress);
-//		System.out.println("LatLng was: " + lat + ", " + lng);
 
 		manufacturer.setLatLng(lat, lng);
 		manufacturer.setFormattedAddress(formattedAddress);
+		
+		if (manufacturer.getCity().equals("Prince Rupert") ||
+				manufacturer.getCity().equals("Christina Lake") ||
+				manufacturer.getName().contains("See Ya")) {
+			System.out.println(manufacturer.getName() + manufacturer.getLatitude() + " and lng: " + 
+					manufacturer.getLongitude());
+			System.out.println(manufacturer.getFormattedAddress());
+			
+		}
 	}
 }
 

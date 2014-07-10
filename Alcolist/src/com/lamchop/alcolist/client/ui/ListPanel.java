@@ -20,6 +20,10 @@ import com.google.gwt.dom.builder.shared.TableCellBuilder;
 import com.google.gwt.dom.builder.shared.TableRowBuilder;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.text.shared.AbstractSafeHtmlRenderer;
+import com.google.gwt.text.shared.SafeHtmlRenderer;
 import com.google.gwt.user.cellview.client.AbstractCellTable;
 import com.google.gwt.user.cellview.client.AbstractCellTableBuilder;
 import com.google.gwt.user.cellview.client.Column;
@@ -42,8 +46,7 @@ import com.lamchop.alcolist.shared.Manufacturer;
 public class ListPanel extends LayoutPanel {
 
 	private int PAGESIZE = 10000; // TODO: What about when there are 6000?
-	private final HashSet<Manufacturer> showingInfo = new HashSet<Manufacturer>();
-
+	
 	private DataGrid<Manufacturer> listGrid;
 	private SearchPanel searchPanel;
 	private ListDataProvider<Manufacturer> dataProvider;
@@ -55,6 +58,7 @@ public class ListPanel extends LayoutPanel {
 	private Manufacturer currentSelected;
 	private UIController theUIController;
 	private NearMeButton nearMeButton;
+	private Manufacturer showingInfo;
 	
 
 
@@ -83,8 +87,8 @@ public class ListPanel extends LayoutPanel {
 			}
 		});
 		add(nearMeButton);
-		this.setWidgetTopHeight(nearMeButton, 3, PX, 32, PX);
-		this.setWidgetLeftWidth(nearMeButton, 70, PCT, 32, PX);
+		this.setWidgetTopHeight(nearMeButton, 0, PX, 33, PX);
+		this.setWidgetLeftWidth(nearMeButton, 65, PCT, 33, PX);
 		
 
 		addDataProvider();
@@ -187,13 +191,40 @@ public class ListPanel extends LayoutPanel {
 			}
 		});
 		
-//		extraInfo = 
-//				new Column<Manufacturer, String>(new TextButtonCell()) {
-//			@Override
-//			public String getValue(Manufacturer object) {
-//				return "Review " + object.getName();
-//			}
-//		};
+		SafeHtmlRenderer<String> anchorRenderer = new AbstractSafeHtmlRenderer<String>() {
+		      @Override
+		      public SafeHtml render(String object) {
+		        SafeHtmlBuilder sb = new SafeHtmlBuilder();
+		        sb.appendHtmlConstant("<a href=\"javascript:;\">").appendEscaped(object)
+		            .appendHtmlConstant("</a>");
+		        return sb.toSafeHtml();
+		      }
+		    };
+		
+		extraInfo = 
+				new Column<Manufacturer, String>(new ClickableTextCell(anchorRenderer)) {
+			@Override
+			public String getValue(Manufacturer object) {
+				if (object.equals(showingInfo))
+					return "<<";
+				
+				else return ">>";
+			}
+		};
+		extraInfo.setVerticalAlignment(HasVerticalAlignment.ALIGN_BOTTOM);
+		
+		extraInfo.setFieldUpdater(new FieldUpdater<Manufacturer, String>() {
+		      @Override
+		      public void update(int index, Manufacturer object, String value) {
+		    	  currentSelected = object;
+		    	  if (extraInfo.getValue(object) == "<<")
+		    		  showingInfo = null;
+		    	  
+		    	  else showingInfo = object;
+		    	  
+		    	  //TODO add popup!
+		      }
+		    });
 //		
 //		extraInfo.setFieldUpdater(new FieldUpdater<Manufacturer, String>() {
 //			  public void update(int index, Manufacturer object, String value) {
@@ -202,11 +233,13 @@ public class ListPanel extends LayoutPanel {
 //			  }
 //			});
 
-		listGrid.setColumnWidth(0,  "65%");
+		listGrid.setColumnWidth(0,  "50%");
+		listGrid.setColumnWidth(3,  "10%");
 		
 		listGrid.addColumn(nameColumn, "Manufacturer Name");
 		listGrid.addColumn(cityColumn, "City");
 		listGrid.addColumn(typeColumn, "Type");
+		listGrid.addColumn(extraInfo);
 		
 	}
 

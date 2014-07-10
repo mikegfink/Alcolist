@@ -8,6 +8,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.lamchop.alcolist.client.ui.MyLocation;
 import com.lamchop.alcolist.client.ui.UIUpdateInterface;
 import com.lamchop.alcolist.shared.Manufacturer;
@@ -32,16 +33,39 @@ public class AppDataController {
 	private String searchText;
 	private boolean nearMe;
 	private boolean firstNearMe;
+	private MultiWordSuggestOracle routeOracle; 
 
 	public AppDataController(UIUpdateInterface theUI) {
 		appData = new AppData();
 		this.theUI = theUI;
 		displayList = new ArrayList<Manufacturer>();
+		allManufacturers = new ArrayList<Manufacturer>();
 		myLocation = null;
 		nearMe = false;
 		firstNearMe = true;
 	}
 
+	public void createOracle() {
+		routeOracle = new MultiWordSuggestOracle();
+		for (Manufacturer m: allManufacturers) {
+			routeOracle.add(m.getName());
+		}
+	}
+	
+	public MultiWordSuggestOracle getOracle() {
+		return routeOracle;
+	}
+	
+	public Manufacturer findTheManufacturer(String name) {
+		
+		for (Manufacturer m: allManufacturers) {
+			if (m.getName().toLowerCase().equals(name.toLowerCase())) {
+				return m;
+			}
+		}
+		return null;
+	}
+	
 	// TODO: Request rework of UserData storage so that we receive a UserData object from 
 	// the server
 	public void initUserData(String userID, String userName) {
@@ -117,6 +141,7 @@ public class AppDataController {
 				updateAppDataManufacturers(result);
 				sendManufacturersToUI();
 				allManufacturers = result;
+				createOracle();
 			}
 		});		
 	}
@@ -128,6 +153,8 @@ public class AppDataController {
 
 	private void clearManufacturers() {
 		appData.clearManufacturers();
+		allManufacturers.clear();
+		displayList.clear();
 	}
 
 	private void updateAppDataManufacturers(List<Manufacturer> manufacturers) {		
