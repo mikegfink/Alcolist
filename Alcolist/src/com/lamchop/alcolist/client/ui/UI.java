@@ -25,28 +25,30 @@ public class UI extends LayoutPanel {
 	private static final int HIDE_MAP_VALUE = 50;
 	private static final int HIDE_LIST_VALUE = 0;
 	//private static final int ANIMATE_DURATION = 300;
-	private static final double TITLE_TOP_PCT = 0;
-	private static final double TITLE_HEIGHT_PCT = 10;
-	private static final double TITLE_WIDTH_PCT = 80;
-	private static final double TITLE_LEFT_PCT = 0;
-	private static final double LEGEND_LEFT_PCT = 5;
-	private static final double LEGEND_WIDTH_PIXELS = 80;
-	private static final double LEGEND_TOP_PCT = 25;
-	private static final double LEGEND_HEIGHT_PIXELS = 170;
-	private static final double ADMIN_BOT_PCT = 3;
-	private static final double ADMIN_HEIGHT_PCT = 7;
-	private static final double ADMIN_RIGHT_PCT = 3;
-	private static final double ADMIN_WIDTH_PCT = 15;
-	private static final double USERPANEL_HEIGHT_PCT = 10;
-	private static final double USERPANEL_TOP_PCT = 1;
-	private static final double USERPANEL_RIGHT_PCT = 0;
-	private static final double USERPANEL_WIDTH_PCT = 50;
-	private static final double LIST_TOP_PCT = 12;
-	private static final double LIST_HEIGHT_PCT = 80;
-	private static final double VIEWPANEL_TOP_PCT = 12;
-	private static final double VIEWPANEL_HEIGHT_PIXELS = 98;
-	private static final double VIEWPANEL_LEFT_PCT = 5;
-	private static final double VIEWPANEL_WIDTH_PIXELS = 34;
+	private static final int TITLE_TOP_PCT = 0;
+	private static final int TITLE_HEIGHT_PCT = 10;
+	private static final int TITLE_WIDTH_PCT = 80;
+	private static final int TITLE_LEFT_PCT = 0;
+	private static final int LEGEND_LEFT_PCT = 5;
+	private static final int LEGEND_WIDTH_PIXELS = 80;
+	private static final int LEGEND_TOP_PCT = 25;
+	private static final int LEGEND_HEIGHT_PIXELS = 170;
+	private static final int ADMIN_BOT_PCT = 3;
+	private static final int ADMIN_HEIGHT_PCT = 7;
+	private static final int ADMIN_RIGHT_PCT = 3;
+	private static final int ADMIN_WIDTH_PCT = 15;
+	private static final int USERPANEL_HEIGHT_PCT = 10;
+	private static final int USERPANEL_TOP_PCT = 1;
+	private static final int USERPANEL_RIGHT_PCT = 0;
+	private static final int USERPANEL_WIDTH_PCT = 50;
+	private static final int LIST_TOP_PCT = 12;
+	private static final int LIST_HEIGHT_PCT = 80;
+	private static final int VIEWPANEL_TOP_PCT = 12;
+	private static final int VIEWPANEL_HEIGHT_PIXELS = 98;
+	private static final int VIEWPANEL_LEFT_PCT = 5;
+	private static final int VIEWPANEL_WIDTH_PIXELS = 34;
+	private static final int DIRECTIONS_LEFT_PCT = 5;
+	private static final int DIRECTIONS_WIDTH_PCT = 35;
 	
 	
 	// FIELDS
@@ -60,6 +62,7 @@ public class UI extends LayoutPanel {
 	private UserPanel userPanel; 
 	private MakeRouteButton makeRouteButton;
 	private RoutePanel routePanel;
+	private DirectionsPanel directionsPanel;
 	
 	public UI(AdminPanel adminPanel, UserPanel userPanel, ViewPanel viewPanel, ListPanel listPanel, 
 			Legend legend, MakeRouteButton makeRouteButton) {
@@ -87,6 +90,8 @@ public class UI extends LayoutPanel {
 				TITLE_HEIGHT_PCT / (images.titleImage().getHeight() * 100));
 		int newHeight = (int) (Window.getClientHeight() * TITLE_HEIGHT_PCT / 100);
 		title.setPixelSize(newWidth, newHeight);
+		
+		directionsPanel = new DirectionsPanel(mapPanel.getMapWidget(), this);
 	}
 
 	private void addChildren() {
@@ -102,6 +107,7 @@ public class UI extends LayoutPanel {
 		this.add(legend);
 		this.add(listPanel);
 		this.add(makeRouteButton);
+		this.add(directionsPanel);
 		
 	}
 
@@ -125,6 +131,10 @@ public class UI extends LayoutPanel {
 		setWidgetTopHeight(makeRouteButton, 2, PCT, 6, PCT);
 		setWidgetLeftWidth(makeRouteButton, 2, PCT, 10, PCT);
 		
+		setWidgetTopHeight(directionsPanel, LIST_TOP_PCT, PCT, LIST_HEIGHT_PCT, PX);
+		setWidgetLeftWidth(directionsPanel, DIRECTIONS_LEFT_PCT, PCT, DIRECTIONS_WIDTH_PCT, PCT);
+	
+		//hideChild(directionsPanel);
 		hideChild(listPanel);
 //		hideChild(routePanel);
 		//hideChild(adminPanel);
@@ -215,14 +225,6 @@ public class UI extends LayoutPanel {
 		
 	}
 	
-	public void showDirectionsPanel(DirectionsPanel directionsPanel) {
-		add(directionsPanel);
-		setWidgetTopHeight(directionsPanel, LIST_TOP_PCT, PCT, LIST_HEIGHT_PCT, PCT);
-		setWidgetLeftWidth(directionsPanel, 5, PCT, 35, PCT);
-		
-		this.remove(routePanel);
-	}
-	
 	public void hideRoutePanel() {
 		this.remove(routePanel);
 		viewPanel.setVisible(true);
@@ -231,13 +233,19 @@ public class UI extends LayoutPanel {
 		setWidgetLeftWidth(makeRouteButton, 2, PCT, 10, PCT);
 		
 	}
-
-	public void showRoute(Route route) {
-		mapPanel.displayRoute(route);
+	
+	public void getDirections(Route route) {
+		directionsPanel.displayRoute(route);
+	}
+	
+	public void showRoute() {		
+		showChild(directionsPanel, LIST_HEIGHT_PCT, DIRECTIONS_WIDTH_PCT);
+		this.remove(routePanel);
 	}
 	
 	public void hideRoute() {
-		mapPanel.clearRoute();
+		directionsPanel.clearRoute();
+		hideChild(directionsPanel);
 	}
 	
 	public void selectOnMap(Manufacturer manufacturer){

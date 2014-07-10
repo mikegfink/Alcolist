@@ -4,15 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JsArray;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.maps.client.base.LatLngBounds;
 import com.google.gwt.maps.client.events.MouseEvent;
 import com.google.gwt.maps.client.events.click.ClickMapEvent;
 import com.google.gwt.maps.client.events.click.ClickMapHandler;
-import com.google.gwt.maps.client.mvc.MVCArray;
 import com.google.gwt.maps.client.overlays.Animation;
 import com.google.gwt.maps.client.overlays.Circle;
 import com.google.gwt.maps.client.overlays.CircleOptions;
@@ -21,25 +17,10 @@ import com.google.gwt.maps.client.overlays.InfoWindowOptions;
 import com.google.gwt.maps.client.overlays.Marker;
 import com.google.gwt.maps.client.overlays.MarkerImage;
 import com.google.gwt.maps.client.overlays.MarkerOptions;
-import com.google.gwt.maps.client.overlays.Polyline;
-import com.google.gwt.maps.client.overlays.PolylineOptions;
-import com.google.gwt.maps.client.services.DirectionsLeg;
-import com.google.gwt.maps.client.services.DirectionsRenderer;
-import com.google.gwt.maps.client.services.DirectionsRendererOptions;
-import com.google.gwt.maps.client.services.DirectionsRequest;
-import com.google.gwt.maps.client.services.DirectionsResult;
-import com.google.gwt.maps.client.services.DirectionsResultHandler;
-import com.google.gwt.maps.client.services.DirectionsRoute;
-import com.google.gwt.maps.client.services.DirectionsService;
-import com.google.gwt.maps.client.services.DirectionsStatus;
-import com.google.gwt.maps.client.services.DirectionsStep;
-import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.lamchop.alcolist.client.resources.Images;
 import com.lamchop.alcolist.shared.Manufacturer;
-import com.lamchop.alcolist.shared.Route;
 
 public class MapPanel extends LayoutPanel {
 
@@ -53,7 +34,6 @@ public class MapPanel extends LayoutPanel {
 	private UIController theUIController;
 	private Circle circle;
 	private boolean LoggedIn;
-	private DirectionsRenderer directionsRenderer;
 	private Marker bouncingMarker;
 
 	public MapPanel(UIController theUIController) {
@@ -63,7 +43,6 @@ public class MapPanel extends LayoutPanel {
 		this.theUIController = theUIController;
 		LoggedIn = false;
 		circle = null;
-		directionsRenderer = null;
 	}
 
 	public void setMapWidget(AlcolistMapWidget mapWidget)  {
@@ -309,91 +288,4 @@ public class MapPanel extends LayoutPanel {
 		return Math.abs(pos1.getLatitude() - pos2.getLatitude()) <= POSITION_ACCURACY 
 				&& Math.abs(pos1.getLongitude() - pos2.getLongitude()) <= POSITION_ACCURACY;	
 	}
-
-	public void displayRoute(Route route) {
-		System.out.println("calling displayRoute");
-		DirectionsRendererOptions options = DirectionsRendererOptions.newInstance();
-	
-		options.setDraggable(false);
-		options.setMap(theMapWidget.getMapWidget());
-		
-		MarkerOptions markerOptions = MarkerOptions.newInstance();
-		// Don't show markers so they don't overlap our markers. BUT this means origin
-		// and destination of route will not have markers when they are not manufacturer
-		// locations
-		markerOptions.setVisible(false);
-		options.setMarkerOptions(markerOptions);
-
-		// TODO show/hide directions by showing/hiding the Element passed to setPanel
-		// TODO create an Element?
-		//options.setPanel(<some Element>);
-		
-		// TODO set polyline options if we don't like the defaults
-		
-		// Don't show an info window when markers are clicked. Maybe unnecessary if we
-		// are not displaying markers.
-		options.setSuppressInfoWindows(true);
-		
-		// Only show the first route. We are only getting one because I've called 
-		// setProvideRouteAlternatives(false) in making the DirectionsRequest object
-		options.setHideRouteList(true);
-		options.setRouteIndex(0);
-		
-		final DirectionsRenderer directionsDisplay = DirectionsRenderer.newInstance(options);
-				
-		// TODO add a way for the user to select if route will be optimized or not.
-		// Currently optimizing all the routes.
-		DirectionsRequest request = Directions.getDirectionsRequestFromRoute(route, true); 
-		
-		DirectionsService service = DirectionsService.newInstance();
-		
-		System.out.println("Making directions request");
-		service.route(request, new DirectionsResultHandler() {
-				@Override
-				public void onCallback(DirectionsResult result,
-						DirectionsStatus status) {
-					if (status == DirectionsStatus.OK) {
-						System.out.println("Received route");
-						// Displays the polyline on the map, but not the directions
-						directionsDisplay.setDirections(result);
-
-						// Parsing the directions manually since I don't have an Element
-						// for displaying them
-						List<String> htmlDirections = new ArrayList<String>();
-						JsArray<DirectionsRoute> routes = result.getRoutes();
-						// We are only producing one route
-						DirectionsRoute route = routes.get(0);
-						JsArray<DirectionsLeg> legs = route.getLegs();
-												
-						for (int i = 0; i < legs.length(); i++) {
-							DirectionsLeg leg = legs.get(i);
-							JsArray<DirectionsStep> steps = leg.getSteps();
-							for (int j = 0; j < steps.length(); j++) {
-								DirectionsStep step = steps.get(j);
-								htmlDirections.add(step.getInstructions());
-							}
-						}
-						
-						// TODO display directions
-						
-					} else if (status == DirectionsStatus.ZERO_RESULTS) {
-						// TODO display message to user saying invalid start and/or end
-						// location provided, and let them try again.
-						System.out.println("Zero results from directions request");
-					} else {
-						System.err.println("Direction result not received. Direction " +
-								"status was: " + status.value());
-						// TODO let user try again?
-					}
-				}
-		});
-		System.out.println("Returning from displayRoute");
-	}
-
-	public void clearRoute() {
-		if (directionsRenderer != null) {
-			directionsRenderer.setMap(null);
-		}
-	}
-
 }

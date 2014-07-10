@@ -139,11 +139,9 @@ public class RoutePanel extends LayoutPanel {
 				getLocations();
 				
 				if (checkLocationAddresses()) {
-					theUIController.addDirectionsPanel();
 					Route route = new Route(startDestination.getLocationAddress(),
 							endDestination.getLocationAddress(), midPoints);
-					theUIController.showRoute(route);
-									
+					theUIController.getDirections(route);									
 				}
 				
 				else {
@@ -189,8 +187,7 @@ public class RoutePanel extends LayoutPanel {
 		}
 		return true;	
 		
-	}
-	
+	}	
 	private void addNewLocation() {
 		RouteLocationPanel newLocation = new RouteLocationPanel(theAppDataController, "Add A Manufacturer Location", true, this);
 		locationPanels.add(newLocation);

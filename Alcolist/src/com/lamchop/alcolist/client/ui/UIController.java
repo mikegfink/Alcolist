@@ -133,19 +133,18 @@ public class UIController implements UIUpdateInterface {
 		
 	}
 	
-	public void addDirectionsPanel() {
-		uiPanel.showDirectionsPanel(new DirectionsPanel());
-		
-	}
+//	public void addDirectionsPanel() {
+//		uiPanel.showDirectionsPanel(new DirectionsPanel());
+//		
+//	}
 	
 	public void hideRoutePanel() {
-
 		uiPanel.hideRoutePanel();
 		showList();
 	}
 	
-	public void showRoute(Route route) {
-		uiPanel.showRoute(route);
+	public void getDirections(Route route) {
+		uiPanel.getDirections(route);
 	}
 	
 	public void hideRoute() {
