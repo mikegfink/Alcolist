@@ -36,6 +36,7 @@ public class UIController implements UIUpdateInterface {
 		ListPanel listPanel = new ListPanel(theAppDataController, this);
 		Legend legend = new Legend(theAppDataController);
 		MakeRouteButton makeRouteButton = new MakeRouteButton(this);
+//		RoutePanel routePanel = new RoutePanel(theAppDataController, this);
 		uiPanel = new UI(adminPanel, userPanel, viewPanel, listPanel, legend, makeRouteButton);
 		
 		initMap();
