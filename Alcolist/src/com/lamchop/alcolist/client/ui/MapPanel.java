@@ -182,8 +182,14 @@ public class MapPanel extends LayoutPanel {
 			LatLng southWest = LatLng.newInstance(minLat, minLng);
 			LatLng northEast = LatLng.newInstance(maxLat + latSpan * border, maxLng);
 			LatLngBounds bounds = LatLngBounds.newInstance(southWest, northEast);
-			LatLng centre = bounds.getCenter();
-
+			double centreLat = (maxLat + minLat) / 2;
+			double centreLng = bounds.getCenter().getLongitude() - 
+					(50 - (((double) percentage) / 2)) / 100 * lngSpan;
+//			System.out.println("New centre: " + centreLng);
+//			System.out.println("Old centre: " + bounds.getCenter().getLongitude());
+			
+			LatLng centre = LatLng.newInstance(centreLat, centreLng);
+			
 			theMapWidget.getMapWidget().setCenter(centre);
 			theMapWidget.getMapWidget().fitBounds(bounds);
 		} else {
@@ -193,10 +199,10 @@ public class MapPanel extends LayoutPanel {
 			LatLngBounds oneResultBounds = theMapWidget.getMapWidget().getBounds();
 			LatLng ne = oneResultBounds.getNorthEast();
 			LatLng sw = oneResultBounds.getSouthWest();
-			double centerLat = maxLat;
-			double centerLng = maxLng - (50 - (((double) percentage) / 2)) / 100 *
+			double oneCenterLat = maxLat;
+			double oneCenterLng = maxLng - (50 - (((double) percentage) / 2)) / 100 *
 					Math.abs(ne.getLongitude() - sw.getLongitude());
-			oneResultCentre = LatLng.newInstance(centerLat, centerLng);
+			oneResultCentre = LatLng.newInstance(oneCenterLat, oneCenterLng);
 			theMapWidget.getMapWidget().setCenter(oneResultCentre);
 		}
 		if (theMapWidget.getMapWidget().getZoom() > MAX_MAP_ZOOM) {

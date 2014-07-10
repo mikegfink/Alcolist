@@ -22,23 +22,23 @@ public interface Images extends ClientBundle {
 	@Source("facebookShare.png")
 	ImageResource facebookShare();
 
-	@Source("expandDark.png")
-	ImageResource expandDark();
+	@Source("listDown2.png")
+	ImageResource listDown();
 
-	@Source("expandLight.png")
-	ImageResource expandLight();
+	@Source("listUp2.png")
+	ImageResource listUp();
 
-	@Source("maximizeLight.png")
-	ImageResource maximizeLight();
+	@Source("maximizeUp.png")
+	ImageResource maximizeUp();
 
-	@Source("maximizeDark.png")
-	ImageResource maximizeDark();
+	@Source("maximizeDown.png")
+	ImageResource maximizeDown();
 
-	@Source("minimizeLight.png")
-	ImageResource minimizeLight();
+	@Source("minimizeUp.png")
+	ImageResource minimizeUp();
 
-	@Source("minimizeDark.png")
-	ImageResource minimizeDark();
+	@Source("minimizeDown.png")
+	ImageResource minimizeDown();
 
 	@Source("starFull.png")
 	ImageResource starFull();

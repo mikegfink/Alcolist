@@ -17,9 +17,9 @@ public class PlacesAdder {
 	private static final String PLACE_PREFIX = "https://maps.googleapis.com/maps/api/place/";
 	private static final String DETAILS_PREFIX_FOR_JSON = "details/json?";
 	private static final String SEARCH_PREFIX_FOR_JSON = "nearbysearch/json?";
-	//private static final String API_KEY = "AIzaSyCk0q9Lk0DUIsZFYQFyRXxDQ_UqnjqbXlg";
+	private static final String API_KEY = "AIzaSyCk0q9Lk0DUIsZFYQFyRXxDQ_UqnjqbXlg";
 	//private static final String API_KEY = "AIzaSyBcZ7-MM_f_wu9jzveXCfNUJycr4gc_HxY";
-	private static final String API_KEY = "AIzaSyAh7We3t3S443OsQSiogLWqyOSHPoTFeko";
+	//private static final String API_KEY = "AIzaSyAh7We3t3S443OsQSiogLWqyOSHPoTFeko";
 	// Testing(1,2) and production(3) keys.
 	private static final int SEARCH_RADIUS_METERS = 8000;
 
@@ -65,8 +65,8 @@ public class PlacesAdder {
 
 		JSONObject searchResultAsJSON = (JSONObject) JSONValue.parse(searchResult);
 		if (!searchResultAsJSON.get("status").equals("OK")) {
-			System.out.println("Status was: " + searchResultAsJSON.get("status").toString()
-					+ " for: " + shortName);
+//			System.out.println("Status was: " + searchResultAsJSON.get("status").toString()
+//					+ " for: " + shortName);
 			manufacturer.setWebsite("");
 			return;
 		}
@@ -92,7 +92,7 @@ public class PlacesAdder {
 
 		// Get the result
 		JSONObject detailResponseInJSON = (JSONObject) detailResultAsJSON.get("result");
-		System.out.println(manufacturer.getName());
+		//System.out.println(manufacturer.getName());
 		//System.out.println(detailResponseInJSON.toJSONString());
 
 		String website = (String) detailResponseInJSON.get("website");
@@ -100,7 +100,7 @@ public class PlacesAdder {
 		if (website != null) {
 			manufacturer.setWebsite(website);
 			//GWT.log("Website added to: " + manufacturer.getName() + " as: " + website);
-			System.out.println("Website is: " + website);
+			//System.out.println("Website is: " + website);
 		} else {
 			manufacturer.setWebsite("");
 		}
