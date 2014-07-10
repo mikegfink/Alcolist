@@ -11,6 +11,7 @@ import com.google.gwt.maps.client.events.MouseEvent;
 import com.google.gwt.maps.client.events.click.ClickMapEvent;
 import com.google.gwt.maps.client.events.click.ClickMapHandler;
 import com.google.gwt.maps.client.mvc.MVCArray;
+import com.google.gwt.maps.client.overlays.Animation;
 import com.google.gwt.maps.client.overlays.Circle;
 import com.google.gwt.maps.client.overlays.CircleOptions;
 import com.google.gwt.maps.client.overlays.InfoWindow;
@@ -37,6 +38,7 @@ import com.lamchop.alcolist.shared.Route;
 
 public class MapPanel extends LayoutPanel {
 
+	private static final double POSITION_ACCURACY = 0.0002;
 	private static final int DEFAULT_MAP_VIEW_PCT = 55;
 	private AlcolistMapWidget theMapWidget;
 	private List<Marker> theMarkers;
@@ -46,6 +48,7 @@ public class MapPanel extends LayoutPanel {
 	private Circle circle;
 	private boolean LoggedIn;
 	private DirectionsRenderer directionsRenderer;
+	private Marker bouncingMarker;
 
 	public MapPanel(UIController theUIController) {
 		theMarkers = new ArrayList<Marker>();
@@ -69,6 +72,10 @@ public class MapPanel extends LayoutPanel {
 			public void onEvent(ClickMapEvent event) {
 				if (infoWindow != null)
 					infoWindow.close();
+				if (bouncingMarker != null) {
+					bouncingMarker.setAnimation(Animation.STOPANIMATION);
+					bouncingMarker = null;
+				}
 				
 				GWT.log("clicked on latlng=" + event.getMouseEvent().getLatLng());
 			}
@@ -110,6 +117,10 @@ public class MapPanel extends LayoutPanel {
 					@Override
 					public void onEvent(ClickMapEvent event) {
 						drawInfoWindow(marker, nextManufacturer, event.getMouseEvent());
+						if (bouncingMarker!=null){
+							bouncingMarker.setAnimation(Animation.STOPANIMATION);
+							bouncingMarker = null;
+						}	
 					}
 				});
 			}
@@ -256,6 +267,25 @@ public class MapPanel extends LayoutPanel {
 	public void showLoggedOut() {
 		infoWindow.close();
 		LoggedIn = false;
+	}
+	
+	public void bounceMarker(Manufacturer manufacturer) {
+		for(Marker marker: theMarkers) {
+			if (isSameLocation(marker.getPosition(), manufacturer.getLatLng())) {
+				if (bouncingMarker != null) {
+					bouncingMarker.setAnimation(Animation.STOPANIMATION);
+				}
+				bouncingMarker = marker;
+				bouncingMarker.setAnimation(Animation.BOUNCE);
+			}
+		}
+	}
+	
+	private boolean isSameLocation(LatLng pos1, LatLng pos2) {
+		return Math.abs(pos1.getLatitude() - pos2.getLatitude()) <= POSITION_ACCURACY 
+				&& Math.abs(pos1.getLongitude() - pos2.getLongitude()) <= POSITION_ACCURACY;
+		
+		
 	}
 
 	public void displayRoute(Route route, Element directionsPanel) {

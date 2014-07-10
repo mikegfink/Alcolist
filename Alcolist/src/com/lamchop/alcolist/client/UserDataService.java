@@ -7,7 +7,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.lamchop.alcolist.shared.Rating;
 import com.lamchop.alcolist.shared.Review;
 import com.lamchop.alcolist.shared.Route;
-import com.lamchop.alcolist.shared.Visited;
 
 
 @RemoteServiceRelativePath("userData") // Refers to servlet. See web.xml
@@ -29,7 +28,5 @@ public interface UserDataService extends RemoteService {
 	public List<Rating> getRatings(String userID);
 	public List<Review> getReviews(String userID);
 	public List<Route> getRoutes(String userID);
-	// TODO Is it better if this returns a list manufacturers instead?
-	public Visited getVisited(String userID);
 }
 

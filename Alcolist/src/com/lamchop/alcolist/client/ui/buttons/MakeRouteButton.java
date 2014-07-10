@@ -17,6 +17,7 @@ public class MakeRouteButton extends Button {
 			@Override
 			public void onClick(ClickEvent event) {
 				theUIController.addRoutePanel();
+				
 			}
 			
 		});

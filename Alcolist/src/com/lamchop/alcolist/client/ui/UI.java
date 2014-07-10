@@ -227,4 +227,9 @@ public class UI extends LayoutPanel {
 	public void hideRoute() {
 		mapPanel.clearRoute();
 	}
+	
+	public void selectOnMap(Manufacturer manufacturer){
+		mapPanel.bounceMarker(manufacturer);
+	}
+
 }

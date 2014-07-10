@@ -79,6 +79,7 @@ public class UIController implements UIUpdateInterface {
 		uiPanel.updateList(manufacturers);	
 		
 		if (firstTime) {
+//			uiPanel.initRoutePanel(manufacturers);
 			showList();
 		}
 		
@@ -148,6 +149,10 @@ public class UIController implements UIUpdateInterface {
 	
 	public void hideRoute() {
 		uiPanel.hideRoute();
+	}
+	
+	public void selectOnMap(Manufacturer manufacturer) {
+		uiPanel.selectOnMap(manufacturer);
 	}
 	
 }
