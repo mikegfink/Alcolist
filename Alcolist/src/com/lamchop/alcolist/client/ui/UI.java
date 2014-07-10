@@ -5,11 +5,14 @@ import static com.google.gwt.dom.client.Style.Unit.PX;
 
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.lamchop.alcolist.client.UserData;
+import com.lamchop.alcolist.client.resources.Images;
 import com.lamchop.alcolist.shared.Manufacturer;
 
 public class UI extends LayoutPanel {
@@ -20,8 +23,8 @@ public class UI extends LayoutPanel {
 	//private static final int ANIMATE_DURATION = 300;
 	private static final double TITLE_TOP_PCT = 0;
 	private static final double TITLE_HEIGHT_PCT = 10;
-	private static final double TITLE_WIDTH_PCT = 60;
-	private static final double TITLE_LEFT_PCT = 20;
+	private static final double TITLE_WIDTH_PCT = 80;
+	private static final double TITLE_LEFT_PCT = 0;
 	private static final double LEGEND_LEFT_PCT = 5;
 	private static final double LEGEND_WIDTH_PIXELS = 80;
 	private static final double LEGEND_TOP_PCT = 25;
@@ -31,20 +34,22 @@ public class UI extends LayoutPanel {
 	private static final double ADMIN_RIGHT_PCT = 3;
 	private static final double ADMIN_WIDTH_PCT = 15;
 	private static final double USERPANEL_HEIGHT_PCT = 10;
-	private static final double USERPANEL_TOP_PCT = 0;
+	private static final double USERPANEL_TOP_PCT = 1;
 	private static final double USERPANEL_RIGHT_PCT = 0;
 	private static final double USERPANEL_WIDTH_PCT = 50;
-	private static final double LIST_TOP_PCT = 10;
+	private static final double LIST_TOP_PCT = 12;
 	private static final double LIST_HEIGHT_PCT = 80;
-	private static final double VIEWPANEL_TOP_PCT = 10;
+	private static final double VIEWPANEL_TOP_PCT = 12;
 	private static final double VIEWPANEL_HEIGHT_PIXELS = 98;
 	private static final double VIEWPANEL_LEFT_PCT = 5;
 	private static final double VIEWPANEL_WIDTH_PIXELS = 34;
 	
+	
 	// FIELDS
+	private static Images images = GWT.create(Images.class);
 	private MapPanel mapPanel;
 	private ListPanel listPanel;
-	private Label title; // TODO: Replace with Title class or Image
+	private TitleBar title; // TODO: Replace with Title class or Image
 	private AdminPanel adminPanel;
 	private ViewPanel viewPanel;
 	private Legend legend;
@@ -68,7 +73,11 @@ public class UI extends LayoutPanel {
 	}
 
 	private void createChildren() {
-		title = new Label("The Alcolist");
+		title = new TitleBar();
+		int newWidth = (int) (images.titleImage().getWidth() * Window.getClientHeight() * 
+				TITLE_HEIGHT_PCT / (images.titleImage().getHeight() * 100));
+		int newHeight = (int) (Window.getClientHeight() * TITLE_HEIGHT_PCT / 100);
+		title.setPixelSize(newWidth, newHeight);
 
 	}
 
@@ -77,8 +86,8 @@ public class UI extends LayoutPanel {
 		this.add(mapPanel);
 		
 		this.add(title);
-		title.addStyleName("title");
-		title.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+//		title.addStyleName("title");
+//		title.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		this.add(adminPanel);
 		this.add(viewPanel);
 		this.add(userPanel);
