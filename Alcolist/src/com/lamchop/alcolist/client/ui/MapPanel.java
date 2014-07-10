@@ -5,14 +5,11 @@ import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArray;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.maps.client.base.LatLngBounds;
 import com.google.gwt.maps.client.events.MouseEvent;
 import com.google.gwt.maps.client.events.click.ClickMapEvent;
 import com.google.gwt.maps.client.events.click.ClickMapHandler;
-import com.google.gwt.maps.client.mvc.MVCArray;
 import com.google.gwt.maps.client.overlays.Animation;
 import com.google.gwt.maps.client.overlays.Circle;
 import com.google.gwt.maps.client.overlays.CircleOptions;
@@ -21,7 +18,6 @@ import com.google.gwt.maps.client.overlays.InfoWindowOptions;
 import com.google.gwt.maps.client.overlays.Marker;
 import com.google.gwt.maps.client.overlays.MarkerImage;
 import com.google.gwt.maps.client.overlays.MarkerOptions;
-import com.google.gwt.maps.client.overlays.Polyline;
 import com.google.gwt.maps.client.overlays.PolylineOptions;
 import com.google.gwt.maps.client.services.DirectionsLeg;
 import com.google.gwt.maps.client.services.DirectionsRenderer;
@@ -33,8 +29,6 @@ import com.google.gwt.maps.client.services.DirectionsRoute;
 import com.google.gwt.maps.client.services.DirectionsService;
 import com.google.gwt.maps.client.services.DirectionsStatus;
 import com.google.gwt.maps.client.services.DirectionsStep;
-import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.lamchop.alcolist.client.resources.Images;
@@ -240,7 +234,7 @@ public class MapPanel extends LayoutPanel {
 		if (theMapWidget.getMapWidget().getZoom() > MAX_MAP_ZOOM) {
 			theMapWidget.getMapWidget().setZoom(MAX_MAP_ZOOM);
 		}
-		
+
 	}
 
 	private void clearMarkers() {
@@ -311,7 +305,6 @@ public class MapPanel extends LayoutPanel {
 	}
 
 	public void displayRoute(Route route) {
-		System.out.println("calling displayRoute");
 		DirectionsRendererOptions options = DirectionsRendererOptions.newInstance();
 	
 		options.setDraggable(false);
@@ -329,6 +322,8 @@ public class MapPanel extends LayoutPanel {
 		//options.setPanel(<some Element>);
 		
 		// TODO set polyline options if we don't like the defaults
+		PolylineOptions polylineOptions = PolylineOptions.newInstance();
+		options.setPolylineOptions(polylineOptions);
 		
 		// Don't show an info window when markers are clicked. Maybe unnecessary if we
 		// are not displaying markers.
@@ -347,13 +342,11 @@ public class MapPanel extends LayoutPanel {
 		
 		DirectionsService service = DirectionsService.newInstance();
 		
-		System.out.println("Making directions request");
 		service.route(request, new DirectionsResultHandler() {
 				@Override
 				public void onCallback(DirectionsResult result,
 						DirectionsStatus status) {
 					if (status == DirectionsStatus.OK) {
-						System.out.println("Received route");
 						// Displays the polyline on the map, but not the directions
 						directionsDisplay.setDirections(result);
 
@@ -387,7 +380,6 @@ public class MapPanel extends LayoutPanel {
 					}
 				}
 		});
-		System.out.println("Returning from displayRoute");
 	}
 
 	public void clearRoute() {

@@ -30,6 +30,7 @@ public class Directions {
 		request.setWaypoints(waypoints);
 		request.setProvideRouteAlternatives(false);
 		request.setTravelMode(TravelMode.DRIVING);
+		request.setRegion("CA");
 		
 		return request;
 	}
