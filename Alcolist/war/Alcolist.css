@@ -60,7 +60,24 @@
 	width:200px;
 	padding:2px;
 	font-style: italic;
-	font-colour:grey;
+	background: #FFFFCC;
+}
+
+.gwt-SuggestBox-setLocation {
+	border: 0px;
+	width:200px;
+	padding:2px;
+	font-style: normal;
+	background: white;
+}
+
+.gwt-SuggestBox-locationInvalid {
+	border: 2px;
+	border-color: red;
+	width:200px;
+	padding:2px;
+	font-style: normal;
+	background: red;
 }
 
 .gwt-Button-addLocation {

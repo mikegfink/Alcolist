@@ -107,7 +107,7 @@ public class SearchPanel extends LayoutPanel{
 						showClearSearchButton();
 				}
 				if (event.getNativeKeyCode() == KeyCodes.KEY_BACKSPACE || event.getNativeKeyCode() == KeyCodes.KEY_DELETE ) {
-					if (textBox.getText() == null) {
+					if (textBox.getText().equals("")) {
 						hideClearSearchButton();
 					}
 				}

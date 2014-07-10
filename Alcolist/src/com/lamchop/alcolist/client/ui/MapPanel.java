@@ -259,9 +259,7 @@ public class MapPanel extends LayoutPanel {
 	
 	private boolean isSameLocation(LatLng pos1, LatLng pos2) {
 		return Math.abs(pos1.getLatitude() - pos2.getLatitude()) <= POSITION_ACCURACY 
-				&& Math.abs(pos1.getLongitude() - pos2.getLongitude()) <= POSITION_ACCURACY;
-		
-		
+				&& Math.abs(pos1.getLongitude() - pos2.getLongitude()) <= POSITION_ACCURACY;	
 	}
 
 }

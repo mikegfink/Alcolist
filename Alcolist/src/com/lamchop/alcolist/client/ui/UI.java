@@ -15,6 +15,8 @@ import com.lamchop.alcolist.shared.Manufacturer;
 
 public class UI extends LayoutPanel {
 	
+	private static final int ROUTE_PANEL_LEFT_PCT = 5;
+	private static final int ROUTE_PANEL_WIDTH_PIXELS = 350;
 	// CONSTANTS
 	private static final int HIDE_MAP_VALUE = 50;
 	private static final int HIDE_LIST_VALUE = 0;
@@ -53,8 +55,8 @@ public class UI extends LayoutPanel {
 	private MakeRouteButton makeRouteButton;
 	private RoutePanel routePanel;
 	
-	public UI(AdminPanel adminPanel, UserPanel userPanel, ViewPanel viewPanel, 
-			ListPanel listPanel, Legend legend, MakeRouteButton makeRouteButton) {
+	public UI(AdminPanel adminPanel, UserPanel userPanel, ViewPanel viewPanel, ListPanel listPanel, 
+			Legend legend, MakeRouteButton makeRouteButton) {
 		this.mapPanel = null;
 		this.adminPanel = adminPanel;
 		this.userPanel = userPanel;
@@ -62,6 +64,7 @@ public class UI extends LayoutPanel {
 		this.listPanel = listPanel;
 		this.legend = legend;
 		this.makeRouteButton = makeRouteButton;
+//		this.routePanel = routePanel;
 	}
 
 	public void init(MapPanel mapPanel) {
@@ -113,6 +116,7 @@ public class UI extends LayoutPanel {
 		setWidgetLeftWidth(makeRouteButton, 2, PCT, 10, PCT);
 		
 		hideChild(listPanel);
+//		hideChild(routePanel);
 		//hideChild(adminPanel);
 				
 		mapPanel.setSize("100%", "100%");
@@ -190,10 +194,10 @@ public class UI extends LayoutPanel {
 	}
 	
 	public void showRoutePanel(RoutePanel aRoutePanel) {
-		this.routePanel = aRoutePanel;
-		add(aRoutePanel);
-		setWidgetTopHeight(aRoutePanel, LIST_TOP_PCT, PCT, LIST_HEIGHT_PCT, PCT);
-		setWidgetLeftWidth(aRoutePanel, 5, PCT, 35, PCT);
+		routePanel = aRoutePanel;
+		add(routePanel);
+		setWidgetTopHeight(routePanel, LIST_TOP_PCT, PCT, LIST_HEIGHT_PCT, PCT);
+		setWidgetLeftWidth(routePanel, ROUTE_PANEL_LEFT_PCT, PCT, ROUTE_PANEL_WIDTH_PIXELS, PX);
 		
 		hideChild(makeRouteButton);
 		legend.setVisible(false);
