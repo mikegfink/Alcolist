@@ -24,8 +24,7 @@ ImportService {
 
 	@Override
 	public int importData() {
-		Importer.importData(dataBC);
-		return 385; //Temporary solution
+		return Importer.importData(dataBC);		
 	}
 
 	@Override
