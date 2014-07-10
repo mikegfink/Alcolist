@@ -140,6 +140,7 @@ public class RoutePanel extends LayoutPanel {
 				
 				if (checkLocationAddresses()) {
 					theUIController.addDirectionsPanel();
+					// Stuff below added by Alison. Please change as needed!
 					Route route = new Route(startDestination.getLocationAddress(),
 							endDestination.getLocationAddress(), midPoints);
 					theUIController.showRoute(route);

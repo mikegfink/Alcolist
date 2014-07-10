@@ -34,9 +34,21 @@ public class Route implements Serializable {
 		// be used explicitly in our code.
 	}
 
-	public Route(String userID, String routeName, List<String> midpoints) {
+	// Use this constructor when the user is not logged in  and you don't want to store 
+	// the route.
+	public Route(String start, String end, List<String> midpoints) {
+		this.userID = null;
+		this.routeName = "";
+		this.start = start;
+		this.end = end;
+		this.midpoints = midpoints;
+	}
+	public Route(String userID, String routeName, String start, String end, 
+			List<String> midpoints) {
 		this.userID = userID;
 		this.routeName = routeName;
+		this.start = start;
+		this.end = end;
 		this.midpoints = midpoints;
 	}
 	
