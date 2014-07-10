@@ -107,6 +107,7 @@ public class RoutePanel extends LayoutPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				theUIController.addDirectionsPanel();
+				// For testing:
 				theUIController.showRoute(route, null);
 				
 			}

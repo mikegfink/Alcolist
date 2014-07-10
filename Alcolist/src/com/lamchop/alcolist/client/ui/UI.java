@@ -220,8 +220,8 @@ public class UI extends LayoutPanel {
 		
 	}
 
-	public void showRoute(Route route, Element directionsPanel) {
-		mapPanel.displayRoute(route, directionsPanel);
+	public void showRoute(Route route, Element directionsElement) {
+		mapPanel.displayRoute(route, directionsElement);
 	}
 	
 	public void hideRoute() {

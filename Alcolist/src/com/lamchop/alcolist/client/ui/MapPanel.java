@@ -288,7 +288,7 @@ public class MapPanel extends LayoutPanel {
 		
 	}
 
-	public void displayRoute(Route route, Element directionsPanel) {
+	public void displayRoute(Route route, Element directionsElement) {
 		DirectionsRendererOptions options = DirectionsRendererOptions.newInstance();
 	
 		options.setDraggable(false);
@@ -304,7 +304,7 @@ public class MapPanel extends LayoutPanel {
 		// Element in which to display the directions
 		// TODO show/hide directions by showing/hiding the Element passed to setPanel
 		// TODO create an Element?
-		options.setPanel(directionsPanel);
+		options.setPanel(directionsElement);
 		
 		// TODO set polyline options?
 		
