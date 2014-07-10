@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JsArray;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.maps.client.base.LatLngBounds;
@@ -21,13 +23,16 @@ import com.google.gwt.maps.client.overlays.MarkerImage;
 import com.google.gwt.maps.client.overlays.MarkerOptions;
 import com.google.gwt.maps.client.overlays.Polyline;
 import com.google.gwt.maps.client.overlays.PolylineOptions;
+import com.google.gwt.maps.client.services.DirectionsLeg;
 import com.google.gwt.maps.client.services.DirectionsRenderer;
 import com.google.gwt.maps.client.services.DirectionsRendererOptions;
 import com.google.gwt.maps.client.services.DirectionsRequest;
 import com.google.gwt.maps.client.services.DirectionsResult;
 import com.google.gwt.maps.client.services.DirectionsResultHandler;
+import com.google.gwt.maps.client.services.DirectionsRoute;
 import com.google.gwt.maps.client.services.DirectionsService;
 import com.google.gwt.maps.client.services.DirectionsStatus;
+import com.google.gwt.maps.client.services.DirectionsStep;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
@@ -128,14 +133,6 @@ public class MapPanel extends LayoutPanel {
 		calculateViewForMap(DEFAULT_MAP_VIEW_PCT);
 		
 		// TODO: Remove this when possible, if possible.
-	}
-	
-	public void overlayPolyline(MVCArray<LatLng> polylinePath) {
-		PolylineOptions options = PolylineOptions.newInstance();
-		// TODO set some options?
-		options.setPath(polylinePath);
-		Polyline polyline = Polyline.newInstance(options);
-		polyline.setMap(theMapWidget.getMapWidget());
 	}
 
 	protected void drawInfoWindow(Marker marker, Manufacturer manufacturer, MouseEvent mouseEvent) {
@@ -288,7 +285,7 @@ public class MapPanel extends LayoutPanel {
 		
 	}
 
-	public void displayRoute(Route route, Element directionsElement) {
+	public void displayRoute(Route route) {
 		DirectionsRendererOptions options = DirectionsRendererOptions.newInstance();
 	
 		options.setDraggable(false);
@@ -300,11 +297,10 @@ public class MapPanel extends LayoutPanel {
 		// locations
 		markerOptions.setVisible(false);
 		options.setMarkerOptions(markerOptions);
-		
-		// Element in which to display the directions
+
 		// TODO show/hide directions by showing/hiding the Element passed to setPanel
 		// TODO create an Element?
-		options.setPanel(directionsElement);
+		//options.setPanel(??);
 		
 		// TODO set polyline options?
 		
@@ -318,6 +314,7 @@ public class MapPanel extends LayoutPanel {
 		options.setRouteIndex(0);
 		
 		final DirectionsRenderer directionsDisplay = DirectionsRenderer.newInstance(options);
+		final List<String> htmlDirections = new ArrayList<String>();
 		
 		// TODO add a way for the user to select if route will be optimized or not.
 		// Currently optimizing all the routes.
@@ -330,14 +327,33 @@ public class MapPanel extends LayoutPanel {
 				public void onCallback(DirectionsResult result,
 						DirectionsStatus status) {
 					if (status == DirectionsStatus.OK) {
+						// Displays the polyline on the map, but not the directions
 						directionsDisplay.setDirections(result);
+
+						// Parsing the directions manually
+						JsArray<DirectionsRoute> routes = result.getRoutes();
+						// We are only producing one route
+						DirectionsRoute route = routes.get(0);
+						JsArray<DirectionsLeg> legs = route.getLegs();
+												
+						for (int i = 0; i < legs.length(); i++) {
+							DirectionsLeg leg = legs.get(i);
+							JsArray<DirectionsStep> steps = leg.getSteps();
+							for (int j = 0; j < steps.length(); j++) {
+								DirectionsStep step = steps.get(j);
+								htmlDirections.add(step.getInstructions());
+							}
+						}
+					} else if (status == DirectionsStatus.ZERO_RESULTS) {
+						// TODO display message to user saying invalid start and/or end
+						// location provided, and let them try again
 					} else {
 						System.err.println("Direction result not received. Direction " +
 								"status was: " + status.value());
 					}
 				}
 		});
-		
+		// TODO: do something with directions strings
 	}
 
 	public void clearRoute() {

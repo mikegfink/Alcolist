@@ -68,7 +68,9 @@ public class RoutePanel extends LayoutPanel {
 		List<String> waypoints = new ArrayList<String>();
 		waypoints.add(BackyardVineyards);
 		waypoints.add(FirstROW);
-		route = new Route(BomberBrewing, BlackwoodLane, waypoints);
+		//route = new Route(BomberBrewing, BlackwoodLane, waypoints);
+		// Testing invalid locations
+		route = new Route("noaethu", "notehu", waypoints);
 	}
 	
 	private void initDefaultView() {
@@ -108,7 +110,7 @@ public class RoutePanel extends LayoutPanel {
 			public void onClick(ClickEvent event) {
 				theUIController.addDirectionsPanel();
 				// For testing:
-				theUIController.showRoute(route, null);
+				theUIController.showRoute(route);
 				
 			}
 			

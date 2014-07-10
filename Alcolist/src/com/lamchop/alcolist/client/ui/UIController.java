@@ -143,8 +143,8 @@ public class UIController implements UIUpdateInterface {
 		showList();
 	}
 	
-	public void showRoute(Route route, Element directionsElement) {
-		uiPanel.showRoute(route, directionsElement);
+	public void showRoute(Route route) {
+		uiPanel.showRoute(route);
 	}
 	
 	public void hideRoute() {
