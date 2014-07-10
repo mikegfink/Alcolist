@@ -133,11 +133,6 @@ public class UIController implements UIUpdateInterface {
 		
 	}
 	
-//	public void addDirectionsPanel() {
-//		uiPanel.showDirectionsPanel(new DirectionsPanel());
-//		
-//	}
-	
 	public void hideRoutePanel() {
 		uiPanel.hideRoutePanel();
 		showList();

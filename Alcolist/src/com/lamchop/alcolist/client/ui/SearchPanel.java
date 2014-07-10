@@ -19,17 +19,22 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.lamchop.alcolist.client.AppDataController;
+import com.lamchop.alcolist.client.ui.buttons.CloseButton;
 
 import static com.google.gwt.dom.client.Style.Unit.PCT;
 import static com.google.gwt.dom.client.Style.Unit.PX;
 
 public class SearchPanel extends LayoutPanel{
+	private static final int SUGGEST_BOX_WIDTH_PX = 256;
 	private static final int CLEARSEARCH_HIDDEN_WIDTH_PX = 0;
-	private static final int CLEARSEARCH_WIDTH_PX = 20;
-	private static final int CLEARSEARCH_LEFT_PX = 230;
+	private static final int CLEARSEARCH_WIDTH_PX = 26;
+	private static final int CLEARSEARCH_LEFT_PX = SUGGEST_BOX_WIDTH_PX - 
+			CLEARSEARCH_WIDTH_PX - 5;
+	private static final int CLEARSEARCH_TOP_PX = 4;
+	private static final int CLEARSEARCH_HEIGHT_PX = 26;
 	private static final int CLEARSEARCH_CENTRE_PX = 4;
 	private static final int SEARCHBUTTON_WIDTH_PX = 75;
-	private static final int SUGGEST_BOX_WIDTH_PX = 256;
+	
 	private static final int SEARCH_BAR_LEFT_PX = 0;
 	
 	
@@ -50,7 +55,7 @@ public class SearchPanel extends LayoutPanel{
 		textBox = new SuggestBox();
 		textBox.addStyleDependentName("search");
 		searchButton = new Button();
-		clearSearchButton = new PushButton();
+		clearSearchButton = new CloseButton();
 		searchBar = new LayoutPanel();
 		placeSearchWidgets();
 		addSearchHandlers();
@@ -60,7 +65,8 @@ public class SearchPanel extends LayoutPanel{
 	private void placeSearchWidgets() {
 		searchButton.setText("Search");
 		this.add(searchButton);
-		this.setWidgetLeftWidth(searchButton, SUGGEST_BOX_WIDTH_PX, PX, SEARCHBUTTON_WIDTH_PX, PX);
+		this.setWidgetLeftWidth(searchButton, SUGGEST_BOX_WIDTH_PX, PX, 
+				SEARCHBUTTON_WIDTH_PX, PX);
 		
 		addSearchBar();
 		
@@ -75,9 +81,9 @@ public class SearchPanel extends LayoutPanel{
 		searchBar.add(textBox);
 		
 		searchBar.add(clearSearchButton);
-		clearSearchButton.setText("X");
 		
-		searchBar.setWidgetTopBottom(clearSearchButton, CLEARSEARCH_CENTRE_PX, PX, CLEARSEARCH_CENTRE_PX, PX);
+		searchBar.setWidgetTopHeight(clearSearchButton, CLEARSEARCH_TOP_PX, PX, 
+				CLEARSEARCH_HEIGHT_PX, PX);
 		hideClearSearchButton();
 		
 		searchBar.addStyleName("listPanel");
@@ -136,8 +142,7 @@ public class SearchPanel extends LayoutPanel{
 	
 	private void clearSearch() {
 		textBox.setText("");
-		theAppDataController.removeSearch();
-		
+		theAppDataController.removeSearch();	
 	}
 	
 	private void showClearSearchButton() {

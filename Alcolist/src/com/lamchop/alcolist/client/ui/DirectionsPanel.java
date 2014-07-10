@@ -1,9 +1,14 @@
 package com.lamchop.alcolist.client.ui;
 
+import static com.google.gwt.dom.client.Style.Unit.PX;
+import static com.google.gwt.dom.client.Style.Unit.PCT;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.JsArray;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.maps.client.services.DirectionsLeg;
 import com.google.gwt.maps.client.services.DirectionsRenderer;
 import com.google.gwt.maps.client.services.DirectionsRendererOptions;
@@ -14,22 +19,80 @@ import com.google.gwt.maps.client.services.DirectionsRoute;
 import com.google.gwt.maps.client.services.DirectionsService;
 import com.google.gwt.maps.client.services.DirectionsStatus;
 import com.google.gwt.maps.client.services.DirectionsStep;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.LayoutPanel;
+import com.google.gwt.user.client.ui.PushButton;
+import com.google.gwt.user.client.ui.ScrollPanel;
+import com.lamchop.alcolist.client.ui.buttons.CloseButton;
 import com.lamchop.alcolist.shared.Route;
 
 public class DirectionsPanel extends LayoutPanel {
+	
+	private static final int CLOSE_TOP_PX = 4;
+	private static final int CLOSE_HEIGHT_PX = 26;
+	private static final int CLOSE_WIDTH_PX = 26;
+	private static final int DIR_TOP_PX = 34;
+	private static final int DIR_HEIGHT_PCT = 100;
+	private static final int DIR_WIDTH_PCT = 100;
+	private static final int DIR_LEFT_PX = 0;
+	private static final int TITLE_WIDTH_PCT = 90;
+	private static final int TITLE_HEIGHT_PX = 26;
+	private static final int TITLE_TOP_PX = 4;
+	private static final int TITLE_LEFT_PX = 4;
 	
 	private final AlcolistMapWidget theMapWidget;
 	private final DirectionsRenderer directionsRenderer;
 	private DirectionsRendererOptions options;
 	private final UI ui;
+	private PushButton closeButton;
+	private ScrollPanel directionsDisplay;
+	private HTML titleBar;
 
-	public DirectionsPanel(AlcolistMapWidget theMapWidget, UI ui) {
+	public DirectionsPanel(AlcolistMapWidget theMapWidget, final UI ui) {
 		this.ui = ui;
 		this.theMapWidget = theMapWidget;
+		
+		createChildren();
+		addChildren();	
+		setupChildren();
+
+		this.getElement().getStyle().setBackgroundColor("#FFFFFF");
 		options = DirectionsRendererOptions.newInstance();
 		setDirectionsOptions();
 		directionsRenderer = DirectionsRenderer.newInstance(options);
+	}
+
+	private void setupChildren() {
+		setWidgetTopHeight(directionsDisplay, DIR_TOP_PX, PX, DIR_HEIGHT_PCT, PCT);
+		setWidgetLeftWidth(directionsDisplay, DIR_LEFT_PX, PX, DIR_WIDTH_PCT, PCT);
+		
+		setWidgetTopHeight(titleBar, TITLE_TOP_PX, PX, TITLE_HEIGHT_PX, PX);
+		setWidgetLeftWidth(titleBar, TITLE_LEFT_PX, PX, TITLE_WIDTH_PCT, PCT);
+		
+		setupCloseButton();
+	}
+
+	private void addChildren() {
+		add(titleBar);
+		add(directionsDisplay);
+		add(closeButton);
+	}
+
+	private void createChildren() {
+		directionsDisplay = new ScrollPanel();
+		titleBar = new HTML("<b>Directions</b>");
+		closeButton = new CloseButton();
+	}
+
+	private void setupCloseButton() {
+		
+		setWidgetTopHeight(closeButton, CLOSE_TOP_PX, PX, CLOSE_HEIGHT_PX, PX);
+		setWidgetRightWidth(closeButton, CLOSE_TOP_PX, PX, CLOSE_WIDTH_PX, PX);
+		closeButton.addClickHandler(new ClickHandler() {
+		    public void onClick(ClickEvent event) {
+		        ui.hideRoute();
+		    }
+		});
 	}
 	
 	public void displayRoute(Route route) {		
@@ -69,14 +132,14 @@ public class DirectionsPanel extends LayoutPanel {
 		//options.setInfoWindow(??)
 		//rendererOptions.setMarkerOptions(??)
 		// Element in which to display the directions 
-		 options.setPanel(getElement());
+		 options.setPanel(directionsDisplay.getElement());
 		// TODO show/hide directions by showing/hiding the Element passed to setPanel
 		// TODO set polyline options
 		
 		// TODO change this if we want text to display when markers are clicked. Must set
 		// an InfoWindow to display the information with options.setInfoWindow
 		options.setSuppressInfoWindows(true);
-		options.setSuppressMarkers(true);
+		options.setSuppressMarkers(false);
 		
 		// We are only getting one route because I've called 
 		// setProvideRouteAlternatives(false) in making the DirectionsRequest object

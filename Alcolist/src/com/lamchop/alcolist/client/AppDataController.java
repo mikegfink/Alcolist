@@ -222,7 +222,8 @@ public class AppDataController {
 
 	public void removeSearch() {
 		searchText = null;
-		filter();
+		if (displayList.size() != allManufacturers.size())
+			filter();
 	}
 
 	public void showNearMe() {
