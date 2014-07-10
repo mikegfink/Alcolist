@@ -29,6 +29,11 @@ public class Route implements Serializable {
 	/** List of address strings for additional locations to visit on the route */
 	private List<String> midpoints;
 	
+	public Route() {
+		// Zero argument default constructor required by Serializable. Does not need to ever
+		// be used explicitly in our code.
+	}
+	
 	public Route(String start, String end, List<String> midpoints) {
 		this.start = start;
 		this.end = end;

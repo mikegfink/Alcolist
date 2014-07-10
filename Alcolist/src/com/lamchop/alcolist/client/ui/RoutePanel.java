@@ -1,11 +1,15 @@
 package com.lamchop.alcolist.client.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.lamchop.alcolist.client.AppDataController;
+import com.lamchop.alcolist.shared.Route;
 
 import static com.google.gwt.dom.client.Style.Unit.PCT;
 import static com.google.gwt.dom.client.Style.Unit.PX;
@@ -21,6 +25,7 @@ public class RoutePanel extends LayoutPanel {
 	private int numberLocations;
 	private UIController theUIController;
 	private Button cancelButton;
+	private Route route;
 
 	public RoutePanel(AppDataController theAppDataController, UIController theUIController) {
 		this.theAppDataController = theAppDataController;
@@ -53,6 +58,17 @@ public class RoutePanel extends LayoutPanel {
 		numberLocations = 2; 
 		
 		addClickHandlers();
+		
+		// For testing:
+		String PatriciaHotel = "403 East Hastings Street, Vancouver, BC V6A 1P7, Canada";
+		String BomberBrewing = "1488 Adanac Street, Vancouver, BC V5L 2C3, Canada";
+		String FirstROW = "2762 190 Street, Surrey, BC V3S 3W6, Canada";
+		String BackyardVineyards = "3033 232 Street, Langley, BC V2Z 2J1, Canada";
+		String BlackwoodLane = "25180 8 Avenue, Aldergrove, BC V4W 2G8, Canada";
+		List<String> waypoints = new ArrayList<String>();
+		waypoints.add(BackyardVineyards);
+		waypoints.add(FirstROW);
+		route = new Route(BomberBrewing, BlackwoodLane, waypoints);
 	}
 	
 	private void initDefaultView() {
@@ -91,6 +107,7 @@ public class RoutePanel extends LayoutPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				theUIController.addDirectionsPanel();
+				theUIController.showRoute(route, null);
 				
 			}
 			

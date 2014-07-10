@@ -289,30 +289,30 @@ public class MapPanel extends LayoutPanel {
 	}
 
 	public void displayRoute(Route route, Element directionsPanel) {
-		// TODO 
 		DirectionsRendererOptions options = DirectionsRendererOptions.newInstance();
-		
-		// TODO should they be draggable? Then we need to change the stored route so the user
-		// would get the same route displayed next time
+	
 		options.setDraggable(false);
 		options.setMap(theMapWidget.getMapWidget());
 		
-		// InfoWindow where text info is rendered when a marker is clicked
-		//options.setInfoWindow(??)
-		//rendererOptions.setMarkerOptions(??)
+		MarkerOptions markerOptions = MarkerOptions.newInstance();
+		// Don't show markers so they don't overlap our markers. BUT this means origin
+		// and destination of route will not have markers when they are not manufacturer
+		// locations
+		markerOptions.setVisible(false);
+		options.setMarkerOptions(markerOptions);
 		
 		// Element in which to display the directions
 		// TODO show/hide directions by showing/hiding the Element passed to setPanel
+		// TODO create an Element?
 		options.setPanel(directionsPanel);
 		
+		// TODO set polyline options?
 		
-		// TODO set polyline options
-		
-		// TODO change this if we want text to display when markers are clicked. Must set
-		// an InfoWindow to display the information with options.setInfoWindow
+		// Don't show an info window when markers are clicked. Maybe unnecessary if we
+		// are not displaying markers.
 		options.setSuppressInfoWindows(true);
 		
-		// We are only getting one route because I've called 
+		// Only show the first route. We are only getting one anyway because I've called 
 		// setProvideRouteAlternatives(false) in making the DirectionsRequest object
 		options.setHideRouteList(true);
 		options.setRouteIndex(0);

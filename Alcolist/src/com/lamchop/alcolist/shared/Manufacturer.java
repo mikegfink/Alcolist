@@ -30,7 +30,6 @@ public class Manufacturer implements Serializable {
 	private double latitude;
 	@Persistent
 	private double longitude;
-	// TODO: make persistent if it works.
 	@Persistent
 	private String formattedAddress;
 	
