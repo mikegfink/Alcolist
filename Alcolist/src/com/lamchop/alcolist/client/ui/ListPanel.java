@@ -83,8 +83,8 @@ public class ListPanel extends LayoutPanel {
 			}
 		});
 		add(nearMeButton);
-		this.setWidgetTopHeight(nearMeButton, 3, PX, 32, PX);
-		this.setWidgetLeftWidth(nearMeButton, 70, PCT, 32, PX);
+		this.setWidgetTopHeight(nearMeButton, 0, PX, 33, PX);
+		this.setWidgetLeftWidth(nearMeButton, 65, PCT, 33, PX);
 		
 
 		addDataProvider();

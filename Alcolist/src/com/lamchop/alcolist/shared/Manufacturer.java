@@ -109,7 +109,7 @@ public class Manufacturer implements Serializable {
 	}
 	
 	public String getFullAddress() {
-		return streetAddress + ", " + city + ", " + province;
+		return streetAddress.trim() + ", " + city.trim() + ", " + province.trim();
 	}
 	
 	public void setFormattedAddress(String formattedAddress) {
@@ -147,6 +147,11 @@ public class Manufacturer implements Serializable {
 	}
 	
 	public void addRating(int rating) {
+		this.sumRatings += rating;
+		this.numRatings += 1;
+	}
+	
+	public void addRating(long rating) {
 		this.sumRatings += rating;
 		this.numRatings += 1;
 	}

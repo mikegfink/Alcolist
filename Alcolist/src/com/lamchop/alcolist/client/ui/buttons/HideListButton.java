@@ -12,7 +12,7 @@ public class HideListButton extends ToggleButton {
 private static Images images = GWT.create(Images.class);
 	
 	public HideListButton(UIController theUIController) {
-		super(new Image(images.minimizeLight()), new Image(images.minimizeDark()));
+		super(new Image(images.minimizeUp()), new Image(images.minimizeDown()));
 		this.addClickHandler(new ViewHandler(theUIController));
 	}
 }

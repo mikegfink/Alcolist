@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Importer {
 
-	public static void importData(String website) {
+	public static int importData(String website) {
 		List<Manufacturer> importedManufacturers = new ArrayList<Manufacturer>();
 		// Get CSV file from website
 		// url streaming from Stack Exchange: (http://stackoverflow.com/questions/238547/)
@@ -51,10 +51,14 @@ public class Importer {
 			}
 		}
 		JDOHandler handler = new JDOHandler();
-		//latLongAdder.makeGeocodeRequest(importedManufacturers);
+		int repeats = 0;
 		for (Manufacturer nextManufacturer : importedManufacturers) {
+			if (importedManufacturers.contains(nextManufacturer)) {
+				repeats++;
+			}
 			handler.storeItem(nextManufacturer);
 		}
+		return importedManufacturers.size() - repeats;
 	}
 	
 	private static boolean isValidManufacturer(Manufacturer manufacturer) {
@@ -124,7 +128,7 @@ public class Importer {
 					string.substring(7, 11);
 		} else if (string != "") {
 			// Only print an error message when a phone number is present but not in expected format
-			System.err.println("Phone number not in expected form: " + string);
+			//System.err.println("Phone number not in expected form: " + string);
 			// Don't return phone numbers that are less than 7 characters
 			if (string.length() < 7) {
 				result = "";

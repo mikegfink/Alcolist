@@ -12,7 +12,7 @@ public class HideMapButton extends ToggleButton {
 private static Images images = GWT.create(Images.class);
 	
 	public HideMapButton(UIController theUIController) {
-		super(new Image(images.maximizeLight()), new Image(images.maximizeDark()));
+		super(new Image(images.maximizeUp()), new Image(images.maximizeDown()));
 		this.addClickHandler(new ViewHandler(theUIController));
 	}
 }

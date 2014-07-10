@@ -26,6 +26,7 @@ public class MapPanel extends LayoutPanel {
 
 	private static final double POSITION_ACCURACY = 0.0002;
 	private static final int DEFAULT_MAP_VIEW_PCT = 55;
+	private static final int MAX_MAP_ZOOM = 15;
 	private AlcolistMapWidget theMapWidget;
 	private List<Marker> theMarkers;
 	private Images images = GWT.create(Images.class);
@@ -77,6 +78,7 @@ public class MapPanel extends LayoutPanel {
 		MarkerImage distilleryIcon = MarkerImage.newInstance(distillery.getUrl());
 
 		for (final Manufacturer nextManufacturer: manufacturers) {
+			
 			String licenseType = nextManufacturer.getType();
 
 			LatLng location = nextManufacturer.getLatLng();
@@ -110,8 +112,7 @@ public class MapPanel extends LayoutPanel {
 			}
 		}
 		calculateViewForMap(DEFAULT_MAP_VIEW_PCT);
-		
-		// TODO: Remove this when possible, if possible.
+		// Not sure if still needed.
 	}
 
 	protected void drawInfoWindow(Marker marker, Manufacturer manufacturer, MouseEvent mouseEvent) {
@@ -132,11 +133,11 @@ public class MapPanel extends LayoutPanel {
 
 	private boolean isValidLatLng(LatLng location) {
 
-		boolean notZeroLat = location.getLatitude() > 0.5 || 
-				location.getLatitude() < -0.1;
+		boolean notZeroLat = location.getLatitude() > 0.05 || 
+				location.getLatitude() < -0.05;
 
-		boolean notZeroLng = location.getLongitude() > 0.5 ||
-				location.getLongitude() < -0.1;
+		boolean notZeroLng = location.getLongitude() > 0.05 ||
+				location.getLongitude() < -0.05;
 
 		return (notZeroLat || notZeroLng);
 
@@ -183,18 +184,42 @@ public class MapPanel extends LayoutPanel {
 		double latSpan = Math.abs((maxLat - minLat));
 		double border = .1; 
 		
-		if (percentage > MIN_VIEW_PERCENT) {			
-			lngSpan = (lngSpan / percentage) * 100;
-			minLng = maxLng - lngSpan;
+		if (latSpan != 0 || lngSpan != 0) {
+			if (percentage > MIN_VIEW_PERCENT) {			
+				lngSpan = (lngSpan / percentage) * 100;
+				minLng = maxLng - lngSpan;
+			}
+
+			LatLng southWest = LatLng.newInstance(minLat, minLng);
+			LatLng northEast = LatLng.newInstance(maxLat + latSpan * border, maxLng);
+			LatLngBounds bounds = LatLngBounds.newInstance(southWest, northEast);
+			double centreLat = (maxLat + minLat) / 2;
+			double centreLng = bounds.getCenter().getLongitude() - 
+					(50 - (((double) percentage) / 2)) / 100 * lngSpan;
+//			System.out.println("New centre: " + centreLng);
+//			System.out.println("Old centre: " + bounds.getCenter().getLongitude());
+			
+			LatLng centre = LatLng.newInstance(centreLat, centreLng);
+			
+			theMapWidget.getMapWidget().setCenter(centre);
+			theMapWidget.getMapWidget().fitBounds(bounds);
+		} else {
+			theMapWidget.getMapWidget().setZoom(MAX_MAP_ZOOM);
+			LatLng oneResultCentre = LatLng.newInstance(maxLat, maxLng);
+			theMapWidget.getMapWidget().setCenter(oneResultCentre);
+			LatLngBounds oneResultBounds = theMapWidget.getMapWidget().getBounds();
+			LatLng ne = oneResultBounds.getNorthEast();
+			LatLng sw = oneResultBounds.getSouthWest();
+			double oneCenterLat = maxLat;
+			double oneCenterLng = maxLng - (50 - (((double) percentage) / 2)) / 100 *
+					Math.abs(ne.getLongitude() - sw.getLongitude());
+			oneResultCentre = LatLng.newInstance(oneCenterLat, oneCenterLng);
+			theMapWidget.getMapWidget().setCenter(oneResultCentre);
 		}
-
-		LatLng southWest = LatLng.newInstance(minLat, minLng);
-		LatLng northEast = LatLng.newInstance(maxLat + latSpan * border, maxLng);
-		LatLngBounds bounds = LatLngBounds.newInstance(southWest, northEast);
-		LatLng centre = bounds.getCenter();
-
-		theMapWidget.getMapWidget().setCenter(centre);
-		theMapWidget.getMapWidget().fitBounds(bounds);
+		if (theMapWidget.getMapWidget().getZoom() > MAX_MAP_ZOOM) {
+			theMapWidget.getMapWidget().setZoom(MAX_MAP_ZOOM);
+		}
+		
 	}
 
 	private void clearMarkers() {
@@ -241,7 +266,9 @@ public class MapPanel extends LayoutPanel {
 	}
 	
 	public void showLoggedOut() {
-		infoWindow.close();
+		if (infoWindow != null) {
+			infoWindow.close();
+		}
 		LoggedIn = false;
 	}
 	
