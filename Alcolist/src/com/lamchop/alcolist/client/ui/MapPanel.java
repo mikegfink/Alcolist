@@ -310,11 +310,7 @@ public class MapPanel extends LayoutPanel {
 				&& Math.abs(pos1.getLongitude() - pos2.getLongitude()) <= POSITION_ACCURACY;	
 	}
 
-	// Returns false if route was invalid
-	public Boolean displayRoute(Route route) {
-		// Can't use boolean because must be final
-		final List<Boolean> validRouteIndicator = new ArrayList<Boolean>();
-		
+	public void displayRoute(Route route) {
 		DirectionsRendererOptions options = DirectionsRendererOptions.newInstance();
 	
 		options.setDraggable(false);
@@ -356,7 +352,6 @@ public class MapPanel extends LayoutPanel {
 				public void onCallback(DirectionsResult result,
 						DirectionsStatus status) {
 					if (status == DirectionsStatus.OK) {
-						validRouteIndicator.add(Boolean.TRUE);
 						// Displays the polyline on the map, but not the directions
 						directionsDisplay.setDirections(result);
 
@@ -376,12 +371,10 @@ public class MapPanel extends LayoutPanel {
 							}
 						}
 					} else if (status == DirectionsStatus.ZERO_RESULTS) {
-						validRouteIndicator.add(Boolean.FALSE);
 						// TODO display message to user saying invalid start and/or end
 						// location provided, and let them try again.
 						System.out.println("Zero results from directions request");
 					} else {
-						validRouteIndicator.add(Boolean.FALSE);
 						System.err.println("Direction result not received. Direction " +
 								"status was: " + status.value());
 						// TODO let user try again?
@@ -389,7 +382,6 @@ public class MapPanel extends LayoutPanel {
 				}
 		});
 		// TODO: do something with directions strings so we can display the directions.
-		return validRouteIndicator.get(0);
 	}
 
 	public void clearRoute() {

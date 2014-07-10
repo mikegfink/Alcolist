@@ -142,10 +142,7 @@ public class RoutePanel extends LayoutPanel {
 					theUIController.addDirectionsPanel();
 					Route route = new Route(startDestination.getLocationAddress(),
 							endDestination.getLocationAddress(), midPoints);
-					Boolean success = theUIController.showRoute(route);
-					if (!success) {
-						promptUserError();
-					}
+					theUIController.showRoute(route);
 									
 				}
 				

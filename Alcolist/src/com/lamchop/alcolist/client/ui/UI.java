@@ -232,8 +232,8 @@ public class UI extends LayoutPanel {
 		
 	}
 
-	public Boolean showRoute(Route route) {
-		return mapPanel.displayRoute(route);
+	public void showRoute(Route route) {
+		mapPanel.displayRoute(route);
 	}
 	
 	public void hideRoute() {
