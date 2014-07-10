@@ -144,8 +144,8 @@ public class UIController implements UIUpdateInterface {
 		showList();
 	}
 	
-	public void showRoute(Route route) {
-		uiPanel.showRoute(route);
+	public Boolean showRoute(Route route) {
+		return uiPanel.showRoute(route);
 	}
 	
 	public void hideRoute() {
