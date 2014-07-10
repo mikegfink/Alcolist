@@ -37,6 +37,7 @@ public class AppDataController {
 		appData = new AppData();
 		this.theUI = theUI;
 		displayList = new ArrayList<Manufacturer>();
+		allManufacturers = new ArrayList<Manufacturer>();
 		myLocation = null;
 		nearMe = false;
 		firstNearMe = true;
@@ -128,6 +129,8 @@ public class AppDataController {
 
 	private void clearManufacturers() {
 		appData.clearManufacturers();
+		allManufacturers.clear();
+		displayList.clear();
 	}
 
 	private void updateAppDataManufacturers(List<Manufacturer> manufacturers) {		

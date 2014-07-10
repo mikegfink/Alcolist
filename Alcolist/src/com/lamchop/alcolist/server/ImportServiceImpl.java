@@ -1,7 +1,9 @@
 package com.lamchop.alcolist.server;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -21,8 +23,9 @@ ImportService {
 	private String dataBC = "http://www.pssg.gov.bc.ca/lclb/docs-forms/web_all.csv";
 
 	@Override
-	public void importData() {
+	public int importData() {
 		Importer.importData(dataBC);
+		return 385; //Temporary solution
 	}
 
 	@Override
@@ -32,32 +35,21 @@ ImportService {
 
 	@Override
 	public Pair geocodeData() {
-		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
-		List<Manufacturer> manufacturers = new ArrayList<Manufacturer>(); 
-
-		try {
-			Query q = pm.newQuery(Manufacturer.class);
-			manufacturers = (List<Manufacturer>) q.execute();
-
-		} catch (Exception e) {
-			GWT.log(e.getMessage());
-		} finally {
-			pm.close();
-		}
-		//List<Manufacturer> manufacturers = getStoredManufacturers();
+		List<Manufacturer> manufacturers = getStoredManufacturers();
+		// Shuffling to reduce the collection of unprocessed items.
+//		long seed = System.nanoTime();
+//		Collections.shuffle(manufacturers, new Random(seed));
+		
 		System.out.println("Stored manufacturers: " + manufacturers.size());
 		
 		List<Manufacturer> manufacturerBatch = new ArrayList<Manufacturer>();
 		int count = 0;
 		// Adding ungeocoded manufacturers to the batch.
-		for (Manufacturer currentManufacturer : manufacturers) {
-			if (currentManufacturer.getCity().equals("Prince Rupert") ||
-					currentManufacturer.getCity().equals("Christina Lake")) {
-				System.out.println(currentManufacturer.getLatitude() + " and lng: " + 
-						currentManufacturer.getLongitude());
-			}
-			if (!isValidLatLng(currentManufacturer)) {
-				manufacturerBatch.add(currentManufacturer);
+		for (Manufacturer current : manufacturers) {
+			if (!isValidLatLng(current)) {
+				System.out.println(current.getName() + current.getLatitude() + " and lng: " + 
+						current.getLongitude());
+				manufacturerBatch.add(current);
 				count++;
 			}
 			if (count > BATCH_SIZE) {
@@ -65,15 +57,25 @@ ImportService {
 			}
 		}
 
+//		for (int i = minIndex; i < manufacturers.size(); i++) {
+//			Manufacturer current = manufacturers.get(i);
+//			System.out.println(current.getName() + current.getLatitude() + " and lng: " + 
+//					current.getLongitude());
+//			if (!isValidLatLng(current)) {
+//				manufacturerBatch.add(current);
+//				count++;
+//			}
+//			if (count > BATCH_SIZE) {
+//				break;
+//			}
+//		}
+
 		LatLongAdder.makeGeocodeRequest(manufacturerBatch);
 		JDOHandler handler = new JDOHandler();
 		for (Manufacturer nextManufacturer : manufacturerBatch) {
 			// For testing logic without using geocoding.
 			//nextManufacturer.setLatLng(10, -10);
-			if (nextManufacturer.getCity().equals("Prince Rupert")) {
-				System.out.println(nextManufacturer.getLatitude() + " and lng: " + 
-						nextManufacturer.getLongitude());
-			}
+			
 			handler.storeItem(nextManufacturer);
 		}
 		return new Pair(manufacturers.size(), manufacturerBatch.size());
@@ -109,18 +111,16 @@ ImportService {
 	@Override
 	public Pair addPlaceData() {
 		List<Manufacturer> manufacturers = getStoredManufacturers();
-		
 		List<Manufacturer> manufacturerBatch = new ArrayList<Manufacturer>();
+		
+		System.out.println("Stored manufacturers: " + manufacturers.size());
 		int count = 0;
-		int completed = 0;
 		// Adding unplaced manufacturers to the batch.
 		for (Manufacturer currentManufacturer : manufacturers) {
 			if (noWebsite(currentManufacturer) && isValidLatLng(currentManufacturer)) {
 				manufacturerBatch.add(currentManufacturer);
 				count++;
-			} else { 
-				 
-			}
+			} 
 			if (count > BATCH_SIZE) {
 				break;
 			}
@@ -130,9 +130,12 @@ ImportService {
 		JDOHandler handler = new JDOHandler();
 		for (Manufacturer nextManufacturer : manufacturerBatch) {
 			handler.storeItem(nextManufacturer);
-			completed++;
+			if (nextManufacturer.getCity().equals("Christina Lake")) {
+				System.out.println("In storing: " + nextManufacturer.getName() + nextManufacturer.getLatitude() + " and lng: " + 
+						nextManufacturer.getLongitude());
+			}
 		}
-		GWT.log("Completed was: " + completed);
+
 		return new Pair(manufacturers.size(), manufacturerBatch.size());
 	}
 

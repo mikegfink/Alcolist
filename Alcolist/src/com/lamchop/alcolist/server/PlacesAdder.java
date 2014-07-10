@@ -18,27 +18,16 @@ public class PlacesAdder {
 	private static final String DETAILS_PREFIX_FOR_JSON = "details/json?";
 	private static final String SEARCH_PREFIX_FOR_JSON = "nearbysearch/json?";
 	//private static final String API_KEY = "AIzaSyCk0q9Lk0DUIsZFYQFyRXxDQ_UqnjqbXlg";
+	//private static final String API_KEY = "AIzaSyBcZ7-MM_f_wu9jzveXCfNUJycr4gc_HxY";
 	private static final String API_KEY = "AIzaSyAh7We3t3S443OsQSiogLWqyOSHPoTFeko";
-	// Testing(1) and production(2) keys.
+	// Testing(1,2) and production(3) keys.
 	private static final int SEARCH_RADIUS_METERS = 8000;
 
 	public PlacesAdder() {
 	}
 
 	public static void makePlaceRequest(List<Manufacturer> manufacturers) {
-		int batch = 0;
 		for (Manufacturer currentManufacturer: manufacturers) {
-			// TODO: Might not need a batch size in place requests.
-			batch++;
-			if (batch >= 10) {
-				try {
-					TimeUnit.MILLISECONDS.sleep(1100);
-					// This is here because of the Geocoder request limit.
-				} catch (InterruptedException e) {
-					GWT.log("Sleep interrupted" + e.getMessage());
-				}
-				batch = 0;
-			}
 			try {
 				searchPlace(currentManufacturer);
 
@@ -68,17 +57,21 @@ public class PlacesAdder {
 		//manufacturer.setFormattedAddress(result);
 		// build a JSON object
 
+		if (manufacturer.getName().equals("Mission Hill Winery")) {
+			System.out.println(manufacturer.getName() + manufacturer.getLatitude() + " and lng: " + 
+					manufacturer.getLongitude());
+			System.out.println(searchResult);
+		}
+
 		JSONObject searchResultAsJSON = (JSONObject) JSONValue.parse(searchResult);
 		if (!searchResultAsJSON.get("status").equals("OK")) {
-			//			System.out.println("Status was: " + searchResultAsJSON.get("status").toString()
-			//					+ " for: " + shortName);
-			//			System.out.println("Lat: " + manufacturer.getLatitude() +
-			//					" lng: " + manufacturer.getLongitude());
+			System.out.println("Status was: " + searchResultAsJSON.get("status").toString()
+					+ " for: " + shortName);
 			manufacturer.setWebsite("");
 			return;
 		}
 
-		// get the first result
+		// Get the first result
 		JSONArray searchResultsAsJSONArray = (JSONArray) searchResultAsJSON.get("results");
 		JSONObject searchResponseInJSON = (JSONObject) searchResultsAsJSONArray.get(0);
 
@@ -86,6 +79,7 @@ public class PlacesAdder {
 
 		String detailParams = "placeid=" + placeID;
 
+		//Request the details
 		String detailResult = makeRequest(DETAILS_PREFIX_FOR_JSON, detailParams);
 
 		JSONObject detailResultAsJSON = (JSONObject) JSONValue.parse(detailResult);
@@ -96,30 +90,60 @@ public class PlacesAdder {
 			return;
 		}
 
-		// get the result
+		// Get the result
 		JSONObject detailResponseInJSON = (JSONObject) detailResultAsJSON.get("result");
+		System.out.println(manufacturer.getName());
+		//System.out.println(detailResponseInJSON.toJSONString());
 
 		String website = (String) detailResponseInJSON.get("website");
-		manufacturer.setWebsite(website);
+
 		if (website != null) {
-			GWT.log("Website added to: " + manufacturer.getName() + " as: " + website);
+			manufacturer.setWebsite(website);
+			//GWT.log("Website added to: " + manufacturer.getName() + " as: " + website);
+			System.out.println("Website is: " + website);
+		} else {
+			manufacturer.setWebsite("");
 		}
 
-		Object rating = detailResponseInJSON.get("rating");
+		Number rating = (Number) detailResponseInJSON.get("rating");
 		if (rating != null) {
-			int ratingValue = (int) (long) (Math.round((Double) rating));
-			manufacturer.addRating(ratingValue);
-			GWT.log("Rating added to: " + manufacturer.getName() + " as: " + ratingValue + "/" + rating);
+			long ratingValue;
+			System.out.println(rating.getClass());
+			
+//			if (rating.getClass() == Long.class ||
+//					rating.getClass() == Integer.class) {
+//				ratingValue = (Long) rating;
+//			} else if (rating.getClass() == Double.class) {
+//				ratingValue = (Math.round((Double) rating));
+//			} else if (rating.getClass() == Float.class) {
+//				ratingValue = (long) (Math.round((Float) rating));
+//			} else {
+//				ratingValue = (Long) rating;
+//			}
+//			manufacturer.addRating(ratingValue);
+			//GWT.log("Rating added to: " + manufacturer.getName() + " as: " + ratingValue + "/" + rating);
 		}
+
+		String formattedAddress = (String) detailResponseInJSON.get("formatted_address");
+
+		JSONObject geometryInJSON = (JSONObject) detailResponseInJSON.get("geometry");
+		JSONObject locationInJSON = (JSONObject) geometryInJSON.get("location");
+
+		double lat = (double) locationInJSON.get("lat");
+		double lng = (double) locationInJSON.get("lng");
+		
+//		System.out.println("Original Address was: " + manufacturer.getFormattedAddress());
+//		System.out.println("New Address is: " + formattedAddress);
+//		System.out.println("Old loc is: " + manufacturer.getLatitude() + ", " + manufacturer.getLongitude());
+//		System.out.println("New loc is: " + lat + ", " + lng);	
+		
+		manufacturer.setLatLng(lat, lng);
+		manufacturer.setFormattedAddress(formattedAddress);
 	}
 
 	private static String makeRequest(String requestType, String parameters) throws Exception {
 		String request = PLACE_PREFIX +	requestType;
 		request += parameters + "&key=" + URLEncoder.encode(API_KEY, "UTF-8");
-
-		// For testing without api key
-		//			String request = GEOCODER_REQUEST_PREFIX_FOR_JSON;
-		//			request += URLEncoder.encode(address, "UTF-8");
 
 		URL placesURL = new URL(request);
 

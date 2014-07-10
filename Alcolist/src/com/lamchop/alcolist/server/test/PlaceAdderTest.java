@@ -48,6 +48,7 @@ public class PlaceAdderTest {
 		
 		importService.importData();
 		
+		// Runs one batch of geocoding and placing.
 		Pair geocoded = importService.geocodeData();				
 		Pair placed = importService.addPlaceData();
 		System.out.println("Geocoded is: " + geocoded.getBatch());

@@ -16,12 +16,16 @@ public class AdminHandler implements ClickHandler {
 	private AppDataController appDataController;
 	private Integer totalManufacturers;
 	private Integer completedManufacturers;
+	private int loadedManufacturers;
+	private int retries;
 
 	public AdminHandler(AppDataController appDataController) {
 		super();
 		this.appDataController = appDataController;
 		totalManufacturers = 0;
 		completedManufacturers = 0;
+		loadedManufacturers = 0;
+		retries = 4;
 	}
 
 	@Override
@@ -51,12 +55,13 @@ public class AdminHandler implements ClickHandler {
 	}
 
 	private void importData() {
-		AdminHandler.importService.importData(new AsyncCallback<Void>() {
+		AdminHandler.importService.importData(new AsyncCallback<Integer>() {
 			public void onFailure(Throwable error) {
 				handleError(error);
 			}
 
-			public void onSuccess(Void result) {
+			public void onSuccess(Integer result) {
+				totalManufacturers = result;
 				geocodeData();
 			}
 		});
@@ -70,11 +75,16 @@ public class AdminHandler implements ClickHandler {
 
 			public void onSuccess(Pair result) {
 				completedManufacturers += result.getBatch();
-				if (result.getTotal() > totalManufacturers) {
-					totalManufacturers = result.getTotal();
+				loadedManufacturers = result.getTotal();				
+				System.out.println(completedManufacturers + " out of " + totalManufacturers);
+				System.out.println(loadedManufacturers + " loaded in last RPC call");
+				
+				if (result.getBatch() == 0) {
+					retries--;
 				}
-				System.out.println(completedManufacturers + " out of: " + totalManufacturers);
-				if (completedManufacturers >= totalManufacturers) {
+				
+				if (completedManufacturers >= totalManufacturers ||
+						retries <= 0) {
 					GWT.log("Completed place requests on all Manufacturers.");
 					appDataController.initManufacturers();
 				} else {					
@@ -89,26 +99,32 @@ public class AdminHandler implements ClickHandler {
 
 	private void geocodeData() {
 		AdminHandler.importService.geocodeData(new AsyncCallback<Pair>() {
+
 			public void onFailure(Throwable error) {
 				handleError(error);
 			}
 
 			public void onSuccess(Pair result) {
 				completedManufacturers += result.getBatch();
-				if (result.getTotal() > totalManufacturers) {
-					totalManufacturers = result.getTotal();
+				loadedManufacturers = result.getTotal();				
+				System.out.println(completedManufacturers + " out of " + totalManufacturers);
+				System.out.println(loadedManufacturers + " loaded in last RPC call");
+				
+				if (result.getBatch() == 0) {
+					retries--;
 				}
-				System.out.println(completedManufacturers + " out of: " + totalManufacturers);
-				if (completedManufacturers >= 385) {		
+				
+				if (completedManufacturers >= totalManufacturers ||
+						retries <= 0) {		
 					completedManufacturers = 0;
+					retries = 4;
 					// Should go to PlaceData methods
-					appDataController.initManufacturers();
-					//getPlaceData();
+					//appDataController.initManufacturers();
+					getPlaceData();
 				} else {					
 					// MessageBox? with result
 					geocodeData();
 				}
-
 			}
 		});
 	}

@@ -13,10 +13,13 @@ import org.junit.Test;
 
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.lamchop.alcolist.client.AdminHandler;
 import com.lamchop.alcolist.server.ImportServiceImpl;
 import com.lamchop.alcolist.server.ManufacturerServiceImpl;
 import com.lamchop.alcolist.server.PMF;
 import com.lamchop.alcolist.shared.Manufacturer;
+import com.lamchop.alcolist.shared.Pair;
 
 public class LatLongAdderTest {
 	private final LocalServiceTestHelper helper =  
@@ -46,20 +49,24 @@ public class LatLongAdderTest {
 		List<Manufacturer> all;
 		double latitude;
 		double longitude;
+		int minIndex = 0;
+		Pair geocoded;
 		
 		// Uncomment the following lines to run the tests properly. Commented out to avoid
 		// accidentally using up our geocoding and import limits.
-		// importService.importData();
-		  
-		//pair geocoded = importService.geocodeData();
-		//int total = geocoded.getTotal();				
-		//System.out.println("Geocoded is: " + geocoded.getBatch());
-		//System.out.println("Total is: " + total);			
-
+		importService.importData();
+		
 		all = manufacturerService.getManufacturers();
 		// Make sure we have the data
-		assertTrue(all.size() > 350);
+		assertTrue(all.size() >= 385);
+		  
+		while (minIndex < all.size()) {
+			geocoded = importService.geocodeData();	
+			System.out.println(minIndex);
+			minIndex += geocoded.getBatch();
+		}
 		
+		all = manufacturerService.getManufacturers();
 		for (Manufacturer next : all) {
 			// Test that latitude and longitude have been changed from initial value 0.
 			// All locations are in BC, so none should have latitude or longitude 0.

@@ -7,7 +7,7 @@ import com.lamchop.alcolist.shared.Pair;
 @RemoteServiceRelativePath("import") // Refers to servlet. See web.xml
 public interface ImportService extends RemoteService {
 
-	public void importData();
+	public int importData();
 	public void deleteData();
 	public Pair geocodeData();
 	public Pair addPlaceData();

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Importer {
 
-	public static void importData(String website) {
+	public static int importData(String website) {
 		List<Manufacturer> importedManufacturers = new ArrayList<Manufacturer>();
 		// Get CSV file from website
 		// url streaming from Stack Exchange: (http://stackoverflow.com/questions/238547/)
@@ -51,10 +51,14 @@ public class Importer {
 			}
 		}
 		JDOHandler handler = new JDOHandler();
-		//latLongAdder.makeGeocodeRequest(importedManufacturers);
+		int repeats = 0;
 		for (Manufacturer nextManufacturer : importedManufacturers) {
+			if (importedManufacturers.contains(nextManufacturer)) {
+				repeats++;
+			}
 			handler.storeItem(nextManufacturer);
 		}
+		return importedManufacturers.size() - repeats;
 	}
 	
 	private static boolean isValidManufacturer(Manufacturer manufacturer) {

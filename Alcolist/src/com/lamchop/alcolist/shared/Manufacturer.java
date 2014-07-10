@@ -151,6 +151,11 @@ public class Manufacturer implements Serializable {
 		this.numRatings += 1;
 	}
 	
+	public void addRating(long rating) {
+		this.sumRatings += rating;
+		this.numRatings += 1;
+	}
+	
 	public void removeRating(int rating) {
 		this.numRatings -= 1;
 		this.sumRatings -= rating;
