@@ -16,7 +16,7 @@ public class UserPanel extends LayoutPanel {
 	private static final double LOG_WIDTH_PIXELS = 66; 
 	private static final double LOG_TOP_PCT = 3; 
 	private static final double LOG_HEIGHT_PIXELS = 31; 
-	private static final double GREET_RIGHT_PCT = 30;
+	private static final double GREET_RIGHT_PCT = 15;
 	private static final double GREET_TOP_PCT = 3;
 	private static final double HIDE_PCT = 0;
 	private static final double GREET_WIDTH_PIXELS = 100;

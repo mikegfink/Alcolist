@@ -91,7 +91,7 @@ public class UIController implements UIUpdateInterface {
 
 	@Override
 	public void update(UserData userData) {
-		if (!userData.isDefault()) {
+		if (theAppDataController.isUserLoggedIn()) {
 			uiPanel.showLoggedIn(userData);
 		}
 		else {
@@ -105,7 +105,7 @@ public class UIController implements UIUpdateInterface {
 	}
 
 	public void showReviewPanel(Manufacturer manufacturer) {
-		new ReviewPanel(manufacturer, theAppDataController).center();
+		new ReviewPanel(manufacturer, theAppDataController, this).center();
 	}
 	
 	// Really sad about this. Will try to refactor it out.

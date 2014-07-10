@@ -17,8 +17,8 @@ public class PlacesAdder {
 	private static final String PLACE_PREFIX = "https://maps.googleapis.com/maps/api/place/";
 	private static final String DETAILS_PREFIX_FOR_JSON = "details/json?";
 	private static final String SEARCH_PREFIX_FOR_JSON = "nearbysearch/json?";
-	private static final String API_KEY = "AIzaSyCk0q9Lk0DUIsZFYQFyRXxDQ_UqnjqbXlg";
-	//private static final String API_KEY = "AIzaSyBcZ7-MM_f_wu9jzveXCfNUJycr4gc_HxY";
+	//private static final String API_KEY = "AIzaSyCk0q9Lk0DUIsZFYQFyRXxDQ_UqnjqbXlg";
+	private static final String API_KEY = "AIzaSyBcZ7-MM_f_wu9jzveXCfNUJycr4gc_HxY";
 	//private static final String API_KEY = "AIzaSyAh7We3t3S443OsQSiogLWqyOSHPoTFeko";
 	// Testing(1,2) and production(3) keys.
 	private static final int SEARCH_RADIUS_METERS = 8000;
@@ -92,36 +92,27 @@ public class PlacesAdder {
 
 		// Get the result
 		JSONObject detailResponseInJSON = (JSONObject) detailResultAsJSON.get("result");
-		//System.out.println(manufacturer.getName());
-		//System.out.println(detailResponseInJSON.toJSONString());
 
 		String website = (String) detailResponseInJSON.get("website");
 
 		if (website != null) {
 			manufacturer.setWebsite(website);
-			//GWT.log("Website added to: " + manufacturer.getName() + " as: " + website);
-			//System.out.println("Website is: " + website);
 		} else {
 			manufacturer.setWebsite("");
 		}
 
 		Number rating = (Number) detailResponseInJSON.get("rating");
 		if (rating != null) {
-			long ratingValue;
-			System.out.println(rating.getClass());
-			
-//			if (rating.getClass() == Long.class ||
-//					rating.getClass() == Integer.class) {
-//				ratingValue = (Long) rating;
-//			} else if (rating.getClass() == Double.class) {
-//				ratingValue = (Math.round((Double) rating));
-//			} else if (rating.getClass() == Float.class) {
-//				ratingValue = (long) (Math.round((Float) rating));
-//			} else {
-//				ratingValue = (Long) rating;
-//			}
-//			manufacturer.addRating(ratingValue);
-			//GWT.log("Rating added to: " + manufacturer.getName() + " as: " + ratingValue + "/" + rating);
+			long ratingValue;			
+			if (rating.getClass() == Long.class) {
+				ratingValue = (Long) rating;
+				manufacturer.addRating(ratingValue);
+			} else if (rating.getClass() == Double.class) {
+				ratingValue = (Math.round((Double) rating));
+				manufacturer.addRating(ratingValue);
+			} else {
+				GWT.log("Rating was" + rating.toString());
+			}
 		}
 
 		String formattedAddress = (String) detailResponseInJSON.get("formatted_address");

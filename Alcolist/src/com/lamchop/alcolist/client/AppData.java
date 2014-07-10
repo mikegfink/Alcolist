@@ -30,7 +30,7 @@ final class AppData {
 	}
 
 	public Boolean isLoggedIn() {
-		return userData.isDefault();
+		return !userData.isDefault();
 	}
 
 	public UserData getUserData() {
