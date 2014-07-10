@@ -311,6 +311,7 @@ public class MapPanel extends LayoutPanel {
 	}
 
 	public void displayRoute(Route route) {
+		System.out.println("calling displayRoute");
 		DirectionsRendererOptions options = DirectionsRendererOptions.newInstance();
 	
 		options.setDraggable(false);
@@ -339,24 +340,26 @@ public class MapPanel extends LayoutPanel {
 		options.setRouteIndex(0);
 		
 		final DirectionsRenderer directionsDisplay = DirectionsRenderer.newInstance(options);
-		final List<String> htmlDirections = new ArrayList<String>();
-		
+				
 		// TODO add a way for the user to select if route will be optimized or not.
 		// Currently optimizing all the routes.
 		DirectionsRequest request = Directions.getDirectionsRequestFromRoute(route, true); 
 		
 		DirectionsService service = DirectionsService.newInstance();
 		
+		System.out.println("Making directions request");
 		service.route(request, new DirectionsResultHandler() {
 				@Override
 				public void onCallback(DirectionsResult result,
 						DirectionsStatus status) {
 					if (status == DirectionsStatus.OK) {
+						System.out.println("Received route");
 						// Displays the polyline on the map, but not the directions
 						directionsDisplay.setDirections(result);
 
 						// Parsing the directions manually since I don't have an Element
 						// for displaying them
+						List<String> htmlDirections = new ArrayList<String>();
 						JsArray<DirectionsRoute> routes = result.getRoutes();
 						// We are only producing one route
 						DirectionsRoute route = routes.get(0);
@@ -370,6 +373,9 @@ public class MapPanel extends LayoutPanel {
 								htmlDirections.add(step.getInstructions());
 							}
 						}
+						
+						// TODO display directions
+						
 					} else if (status == DirectionsStatus.ZERO_RESULTS) {
 						// TODO display message to user saying invalid start and/or end
 						// location provided, and let them try again.
@@ -381,7 +387,7 @@ public class MapPanel extends LayoutPanel {
 					}
 				}
 		});
-		// TODO: do something with directions strings so we can display the directions.
+		System.out.println("Returning from displayRoute");
 	}
 
 	public void clearRoute() {
