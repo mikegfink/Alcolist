@@ -83,6 +83,9 @@ public class DirectionsPanel extends LayoutPanel {
 
 		setWidgetTopHeight(titleBar, TITLE_TOP_PX, PX, TITLE_HEIGHT_PX, PX);
 		setWidgetLeftWidth(titleBar, TITLE_LEFT_PX, PX, TITLE_WIDTH_PCT, PCT);
+		
+		setWidgetTopHeight(saveButton, SAVE_TOP_PX, PX, 0, PX);
+		setWidgetRightWidth(saveButton, SAVE_RIGHT_PX, PX, 0, PX);
 
 		setupCloseButton();
 		//setupSaveButton();

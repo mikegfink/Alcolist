@@ -85,6 +85,7 @@ public class FacebookHandler implements ClickHandler {
 		} else if (sender.getClass() == FacebookShareButton.class) {
 			FacebookShareButton facebookShare = (FacebookShareButton) sender;
 			if (facebookShare.getReview() != null && facebookShare.getRating() != null) {
+				System.out.println("Both review and rating exist.");
 				shareWithFacebook(facebookShare.getReview(), facebookShare.getRating(),
 						facebookShare.getManufacturer());
 			} else if (facebookShare.getReview() != null) {
@@ -106,6 +107,7 @@ public class FacebookHandler implements ClickHandler {
 			Manufacturer manufacturer) {
 		String post = review.getReview() + "/n" + "I give this place: " + 
 			rating.getRating() + " stars out of 5.";
+		System.out.println(post);
 		sendToFacebook(post, manufacturer);	
 	}
 	
@@ -237,6 +239,7 @@ public class FacebookHandler implements ClickHandler {
 		authorizeFacebook(req, new Callback<String, Throwable>() {
 			public void onSuccess(String token) {
 				appToken = token;
+				System.out.println(post + "in post authorization");
 				makeGraphRequest(post, manufacturer);
 			}
 
@@ -260,7 +263,7 @@ public class FacebookHandler implements ClickHandler {
 		String params = "message="
 				+ URL.encodeQueryString(message) +
 				"&link=" + URL.encodeQueryString(website);
-		//TODO: Bring the manufacturer in and use the website as the url. 
+		System.out.println("built params: " + params);
 
 		String requestData = "access_token=" + appToken;
 
