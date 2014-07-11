@@ -155,7 +155,7 @@ public class DirectionsPanel extends LayoutPanel {
 							"status was: " + status.value() + "</br> Click anywhere to close."));
 					error.setAutoHideEnabled(true);
 					error.center();
-					ui.hideRoute();
+//					ui.hideRoute();
 				}
 			}
 		});

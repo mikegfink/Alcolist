@@ -27,6 +27,7 @@
 	background: white;
 	moz-box-shadow: 0 0 30px 5px #999;
 	webkit-box-shadow: 0 0 30px 5px #999;
+	padding: 0px;
 }
 
 .locationTextBox {
@@ -73,7 +74,7 @@
 }
 
 .gwt-SuggestBox-locationInvalid {
-	border: inset 10px;
+	border: inset 2px;
 	border-color: red;
 	width:200px;
 	padding:2px;

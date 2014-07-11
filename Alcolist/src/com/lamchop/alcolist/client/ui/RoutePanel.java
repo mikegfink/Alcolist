@@ -7,8 +7,10 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.shared.Route;
@@ -136,8 +138,13 @@ public class RoutePanel extends LayoutPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				getLocations();
+				if (checkStartAndEnd()) {
+					startDestination.checkValidity();
+					endDestination.checkValidity();
+					promptStartAndEndError();
+				}
 				
-				if (checkLocationAddresses()) {
+				else if (checkLocationAddresses()) {
 					Route route = new Route(startDestination.getLocationAddress(),
 							endDestination.getLocationAddress(), midPoints);
 					theUIController.getDirections(route);									
@@ -147,8 +154,7 @@ public class RoutePanel extends LayoutPanel {
 					for (RouteLocationPanel panel: locationPanels){
 						panel.checkValidity();
 					}
-					startDestination.checkValidity();
-					endDestination.checkValidity();
+					
 					promptUserError();
 				}
 				
@@ -178,8 +184,6 @@ public class RoutePanel extends LayoutPanel {
 	}
 	
 	private boolean checkLocationAddresses() {
-		if (startAddress == null || endAddress == null)
-			return false;
 		for (String address: midPoints) {
 			if (address == null)
 				return false;
@@ -187,6 +191,26 @@ public class RoutePanel extends LayoutPanel {
 		return true;	
 		
 	}	
+	
+	private boolean checkStartAndEnd() {
+		return (startAddress == null || endAddress == null);
+
+	}
+	
+	private void promptStartAndEndError() {
+		PopupPanel error = new PopupPanel();
+		error.setWidget(new HTML("Please enter a start and end Location" ));
+		error.setAutoHideEnabled(true);
+		error.center();
+	}
+	
+	private void promptUserError() {
+		PopupPanel error = new PopupPanel();
+		error.setWidget(new HTML("Additional locations must be manufacturers" ));
+		error.setAutoHideEnabled(true);
+		error.center();
+	}
+	
 	private void addNewLocation() {
 		RouteLocationPanel newLocation = new RouteLocationPanel(theAppDataController, "Add A Manufacturer Location", true, this);
 		locationPanels.add(newLocation);
@@ -214,9 +238,7 @@ public class RoutePanel extends LayoutPanel {
 		return numberWidgetsAbove * (PANEL_PADDING +LOCATION_PANEL_HEIGHT_PX) + DISTANCE_FROM_TOP_PX;
 	}
 	
-	private void promptUserError() {
-		Window.alert("One or more locations are invalid");
-	}
+
 	
 	public void removeLocationPanel(RouteLocationPanel panel) {
 		locationPanels.remove(panel);
