@@ -9,11 +9,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
-import com.google.gwt.user.client.ui.SuggestBox;
 import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.shared.Route;
-import com.lamchop.alcolist.shared.Manufacturer;
-
 import static com.google.gwt.dom.client.Style.Unit.PCT;
 import static com.google.gwt.dom.client.Style.Unit.PX;
 
@@ -36,11 +33,9 @@ public class RoutePanel extends LayoutPanel {
 	private List<RouteLocationPanel> locationPanels;
 	private Button addAnotherLocationButton;
 	private Button getRouteButton;
-	private Button saveRouteButton;
 	private AppDataController theAppDataController;
 	private UIController theUIController;
 	private Button cancelButton;
-	private Route route;
 	private String startAddress;
 	private String endAddress;
 	private List<String> midPoints;
@@ -215,7 +210,7 @@ public class RoutePanel extends LayoutPanel {
 	}
 	
 	private void promptUserError() {
-		Window.alert("One or more locations are invalid");
+		Window.alert("One or more locations are ");
 	}
 	
 	public void removeLocationPanel(RouteLocationPanel panel) {
