@@ -70,12 +70,15 @@ public class ReviewPanel extends PopupPanel {
 		createElements();
 		addElements();
 		setWidget(display);
-
+		
 		// TODO Consider not using null
 		if (review != null) {
-			showReview();
+			showReview();		
+		} else if (loggedIn) {
+			showEditReview();	
 		} else {
-			showEditReview();			
+			int height = INFO_HEIGHT_PX + 10;
+			this.setSize("360px", height + "px");
 		}
 		layoutBase();
 	}
@@ -115,6 +118,11 @@ public class ReviewPanel extends PopupPanel {
 		display.add(shareButton);
 		display.add(infoPanel);
 		display.add(closeButton);
+		
+		hideChild(saveButton);
+		hideChild(shareButton);
+		hideChild(reviewBox);
+		hideChild(editButton);
 	}
 
 	private void showEditReview() {
@@ -130,7 +138,12 @@ public class ReviewPanel extends PopupPanel {
 
 	private void setReviewPanelSize() {
 		String width = "460px";
-		int reviewLines = review.getReview().length() / 55 + 1;
+		int reviewLines;
+		if (review != null) {
+			reviewLines = review.getReview().length() / TEXT_CHAR_WIDTH + 1;
+		} else {
+			reviewLines = 1;
+		}
 		int reviewHeight = reviewLines * FONT_HEIGHT;
 		int reviewDisplayHeight = reviewHeight;
 		int displayHeight = reviewDisplayHeight + INFO_HEIGHT_PX + SHARE_HEIGHT_PX + 30;
@@ -139,13 +152,14 @@ public class ReviewPanel extends PopupPanel {
 	}
 
 	private void showReview() {
-		reviewText.setText(review.getReview());
-		editButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				showEditReview();				
-			}
-		});
-
+		
+		if (loggedIn) {
+			editButton.addClickHandler(new ClickHandler() {
+				public void onClick(ClickEvent event) {
+					showEditReview();				
+				}
+			});
+		}
 		showReviewDisplay();
 		setReviewPanelSize();
 	}
@@ -168,16 +182,18 @@ public class ReviewPanel extends PopupPanel {
 		hideChild(saveButton);
 		hideChild(reviewBox);
 
-		display.setWidgetBottomHeight(shareButton, SHARE_BOT_PCT, PCT, SHARE_HEIGHT_PX, PX);
-		display.setWidgetRightWidth(shareButton, SHARE_RIGHT_PX, PX, SHARE_WIDTH_PX, PX);
-
 		display.setWidgetTopHeight(reviewText, TEXT_BOX_TOP, PX, TEXT_BOX_HEIGHT, PCT);
 		display.setWidgetLeftWidth(reviewText, TEXT_BOX_LEFT, PCT, TEXT_BOX_WIDTH, PCT);
 
-		display.setWidgetBottomHeight(editButton, EDIT_SAVE_BUTTON_BOT, PCT, 
-				EDIT_SAVE_BUTON_HEIGHT, PX);
-		display.setWidgetRightWidth(editButton, EDIT_SAVE_BUTTON_RIGHT, PCT, 
-				EDIT_SAVE_BUTTON_WIDTH, PX);
+		if (loggedIn) {
+			display.setWidgetBottomHeight(shareButton, SHARE_BOT_PCT, PCT, SHARE_HEIGHT_PX, PX);
+			display.setWidgetRightWidth(shareButton, SHARE_RIGHT_PX, PX, SHARE_WIDTH_PX, PX);
+			
+			display.setWidgetBottomHeight(editButton, EDIT_SAVE_BUTTON_BOT, PCT, 
+					EDIT_SAVE_BUTON_HEIGHT, PX);
+			display.setWidgetRightWidth(editButton, EDIT_SAVE_BUTTON_RIGHT, PCT, 
+					EDIT_SAVE_BUTTON_WIDTH, PX);
+		}
 	}
 
 	private void initSaveButton(final Manufacturer manufacturer,
@@ -186,6 +202,7 @@ public class ReviewPanel extends PopupPanel {
 		saveButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				review = appDataController.addReview(reviewBox.getText(), manufacturer.getID());
+				reviewText.setText(review.getReview());
 				showReview();				
 			}
 		});

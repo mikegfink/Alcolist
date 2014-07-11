@@ -7,8 +7,8 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.lamchop.alcolist.client.resources.Images;
+import com.lamchop.alcolist.client.ui.buttons.DirectionsButton;
 import com.lamchop.alcolist.client.ui.buttons.ReviewButton;
-import com.lamchop.alcolist.client.ui.buttons.RouteButton;
 import com.lamchop.alcolist.client.ui.buttons.StarRating;
 import com.lamchop.alcolist.shared.Manufacturer;
 
@@ -66,8 +66,12 @@ public class MarkerWindow extends VerticalPanel {
 		add(rating);		
 	}
 	private void setupLoggedIn() {
+		DirectionsButton directions = new DirectionsButton(theUIController);
+		
+		
 		rating.add(new ReviewButton(manufacturer, theUIController));
-		rating.add(new RouteButton());	
+		rating.add(directions);	
+		
 		
 		StarRating starRating = new StarRating(manufacturer, theUIController);
 		add(starRating);

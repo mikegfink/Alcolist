@@ -59,8 +59,6 @@ public class ListPanel extends LayoutPanel {
 	private UIController theUIController;
 	private NearMeButton nearMeButton;
 	private Manufacturer showingInfo;
-	
-
 
 	public ListPanel(final AppDataController theAppDataController, UIController theUIController) {
 		DataGridResource resource = GWT.create(DataGridResource.class);
@@ -72,24 +70,6 @@ public class ListPanel extends LayoutPanel {
 		searchPanel = new SearchPanel(theAppDataController);
 		add(searchPanel);
 		this.setWidgetTopHeight(searchPanel, 0, PCT, 35, PX);
-	
-		
-		nearMeButton = new NearMeButton(theAppDataController);
-		nearMeButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				
-				if (nearMeButton.isDown()) {
-					theAppDataController.showNearMe();
-				}
-				else {
-					theAppDataController.clearNearMe();
-				}
-			}
-		});
-		add(nearMeButton);
-		this.setWidgetTopHeight(nearMeButton, 0, PX, 33, PX);
-		this.setWidgetLeftWidth(nearMeButton, 65, PCT, 33, PX);
-		
 
 		addDataProvider();
 		list = dataProvider.getList();
@@ -220,9 +200,10 @@ public class ListPanel extends LayoutPanel {
 		    	  if (extraInfo.getValue(object) == "<<")
 		    		  showingInfo = null;
 		    	  
-		    	  else showingInfo = object;
-		    	  
-		    	  //TODO add popup!
+		    	  else {
+		    		  showingInfo = object;
+		    		  theUIController.showReviewPanel(showingInfo);
+		    	  }
 		      }
 		    });
 //		
