@@ -29,6 +29,7 @@ public class UserPanel extends LayoutPanel {
 	private static final double HIDE_PCT = 0;
 	private static final double GREET_WIDTH_PX = 100;
 	private static final double GREET_HEIGHT_PCT = 90;
+	
 		
 	private FacebookLoginButton loginButton;
 	private FacebookLogoutButton logoutButton;

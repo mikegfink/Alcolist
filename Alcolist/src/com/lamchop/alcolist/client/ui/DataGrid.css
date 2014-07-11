@@ -15,7 +15,8 @@
 
 .dataGridLastColumn {
   border-right: 1px solid black;
-  padding-right: 2px;
+  padding-right: 5px;
+  padding-left: 0px;
 }
 
 .dataGridEvenRow {
