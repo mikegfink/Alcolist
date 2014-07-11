@@ -13,11 +13,15 @@ public class SavedRoutesPopup extends PopupPanel {
 	
 	private CellList<String> routeList;
 	private List<Route> routes;
+	private List<String> routeNames;
 	
 	
 	public SavedRoutesPopup(AppDataController theAppDataController) {
 		routeList = new CellList<String>(new ClickableTextCell());
-		
+//		routes = theAppDataController.getRoutes();
+		for (Route route:routes)
+			routeNames.add(route.getRouteName());
+		routeList.setRowData(0, routeNames);
 		
 	}
 }
