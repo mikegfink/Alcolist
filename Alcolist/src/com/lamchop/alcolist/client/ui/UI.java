@@ -245,8 +245,9 @@ public class UI extends LayoutPanel {
 	public void hideRoute() {
 		directionsPanel.clearRoute();
 		hideChild(directionsPanel);
-		toggleViewButtons(HIDE_LIST_VALUE);		
 		showControls();
+		changeListView(DIRECTIONS_LEFT_PCT, HIDE_LIST_VALUE);	
+		toggleViewButtons(HIDE_LIST_VALUE);		
 	}
 	
 	public void selectOnMap(Manufacturer manufacturer){

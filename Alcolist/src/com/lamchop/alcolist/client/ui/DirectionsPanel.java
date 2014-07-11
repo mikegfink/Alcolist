@@ -9,6 +9,7 @@ import java.util.List;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.maps.client.overlays.MarkerOptions;
 import com.google.gwt.maps.client.services.DirectionsLeg;
 import com.google.gwt.maps.client.services.DirectionsRenderer;
 import com.google.gwt.maps.client.services.DirectionsRendererOptions;
@@ -138,7 +139,10 @@ public class DirectionsPanel extends LayoutPanel {
 		
 		// TODO change this if we want text to display when markers are clicked. Must set
 		// an InfoWindow to display the information with options.setInfoWindow
-		options.setSuppressInfoWindows(true);
+		MarkerOptions markerOptions = MarkerOptions.newInstance();
+		markerOptions.setVisible(false);
+		options.setMarkerOptions(markerOptions);
+		options.setSuppressInfoWindows(false);
 		options.setSuppressMarkers(false);
 		
 		// We are only getting one route because I've called 
