@@ -67,7 +67,7 @@ public class UserData {
 		// If route ID already exists replace it, otherwise new route.
 		// How is this going to work?
 		for (Route aRoute : routes) {
-			if (aRoute.getID().equals(route.getID())) {
+			if (aRoute.getRouteName().equals(route.getRouteName())) {
 				routes.remove(aRoute);
 				routes.add(route);
 				return;

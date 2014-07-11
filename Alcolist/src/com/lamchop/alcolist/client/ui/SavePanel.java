@@ -32,6 +32,7 @@ public class SavePanel extends PopupPanel {
 		closeButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				SavePanel.this.hide();
+				System.out.println("Panel should have hidden after closing.");
 			}
 		});
 		
@@ -43,11 +44,11 @@ public class SavePanel extends PopupPanel {
 		Button name = new Button("Create Route");
 		display.add(name);
 		display.setWidgetTopHeight(name, CloseButton.TOP_PX, PX, CloseButton.HEIGHT_PX, PX);
-		display.setWidgetLeftWidth(name, 264, PX, 86, PX);
+		display.setWidgetLeftWidth(name, 232, PX, 86, PX);
 		name.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				saveRoute();
-				SavePanel.this.hide();
+				saveRoute();				
+				System.out.println("Panel should have hidden after saving.");
 			}
 		});
 		
@@ -61,6 +62,11 @@ public class SavePanel extends PopupPanel {
 	}
 	
 	private void saveRoute() {
-		appDataController.addRoute(route, namingBox.getText());
+		System.out.println(namingBox.getText());
+		if (namingBox.getText() != null && !namingBox.getText().isEmpty()) {
+			appDataController.addRoute(route, namingBox.getText());
+			System.out.println("Tried to save.");
+		}
+		hide();
 	}
 }
