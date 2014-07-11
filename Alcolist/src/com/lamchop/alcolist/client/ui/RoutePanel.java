@@ -67,8 +67,8 @@ public class RoutePanel extends LayoutPanel {
 		getRouteButton = new Button();
 		getRouteButton.setText("Get Route");
 		
-		saveRouteButton = new Button();
-		saveRouteButton.setText("Save Route");
+//		saveRouteButton = new Button();
+//		saveRouteButton.setText("Save Route");
 		
 		cancelButton = new Button();
 		cancelButton.setText("Cancel");

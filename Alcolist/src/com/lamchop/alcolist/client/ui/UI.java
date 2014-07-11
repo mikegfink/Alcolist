@@ -274,7 +274,8 @@ public class UI extends LayoutPanel {
 		add(routePanel);
 		setWidgetTopHeight(routePanel, LIST_TOP_PCT, PCT, LIST_HEIGHT_PCT, PCT);
 		setWidgetLeftWidth(routePanel, ROUTE_PANEL_LEFT_PCT, PCT, ROUTE_PANEL_WIDTH_PIXELS, PX);
-
+		
+		hideChild(directionsPanel);
 		hideChild(makeRouteButton);
 		hideChild(searchPanel);
 		hideChild(nearMeButton);
