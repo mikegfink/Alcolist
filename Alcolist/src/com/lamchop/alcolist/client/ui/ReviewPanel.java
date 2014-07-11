@@ -18,6 +18,7 @@ import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.client.ui.buttons.CloseButton;
 import com.lamchop.alcolist.client.ui.buttons.FacebookShareButton;
 import com.lamchop.alcolist.shared.Manufacturer;
+import com.lamchop.alcolist.shared.Rating;
 import com.lamchop.alcolist.shared.Review;
 
 public class ReviewPanel extends PopupPanel { 
@@ -55,6 +56,7 @@ public class ReviewPanel extends PopupPanel {
 	private CloseButton closeButton;
 	private InfoPanel infoPanel;
 	private UIController uiController;
+	private Rating rating;
 
 
 	public ReviewPanel(final Manufacturer manufacturer, 
@@ -65,6 +67,8 @@ public class ReviewPanel extends PopupPanel {
 		this.appDataController = appDataController;
 		this.uiController = uiController;
 		review = appDataController.getReview(manufacturer.getID());
+		rating = appDataController.getRating(manufacturer.getID());
+		
 
 		createElements();
 		addElements();
@@ -151,7 +155,7 @@ public class ReviewPanel extends PopupPanel {
 	}
 
 	private void showReview() {
-
+		reviewText.setText(review.getReview());
 		if (appDataController.isUserLoggedIn()) {
 			editButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
@@ -186,7 +190,7 @@ public class ReviewPanel extends PopupPanel {
 		display.setWidgetLeftWidth(reviewText, TEXT_BOX_LEFT, PCT, TEXT_BOX_WIDTH, PCT);
 
 		if (appDataController.isUserLoggedIn() ) {
-			if (!review.getReview().isEmpty()) {
+			if (!review.getReview().isEmpty() || rating != null) {
 				display.setWidgetBottomHeight(shareButton, SHARE_BOT_PCT, PCT, SHARE_HEIGHT_PX, PX);
 				display.setWidgetRightWidth(shareButton, SHARE_RIGHT_PX, PX, SHARE_WIDTH_PX, PX);
 			}

@@ -105,7 +105,7 @@ public class FacebookHandler implements ClickHandler {
 
 	private void shareWithFacebook(Review review, Rating rating,
 			Manufacturer manufacturer) {
-		String post = review.getReview() + "/n" + "I give this place: " + 
+		String post = review.getReview() + "\n" + "I give this place: " + 
 			rating.getRating() + " stars out of 5.";
 		System.out.println(post);
 		sendToFacebook(post, manufacturer);	
