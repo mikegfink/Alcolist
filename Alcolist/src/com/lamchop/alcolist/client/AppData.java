@@ -73,15 +73,14 @@ final class AppData {
 		return review;
 	}
 	
-	public Rating addRating(String manID, int ratingValue) {
-		Rating rating = new Rating(userData.getUserID(), manID, ratingValue);
-		userData.add(rating);
+	public Rating addRating(Manufacturer manufacturer, int ratingValue) {
+		Rating rating = new Rating(userData.getUserID(), manufacturer.getID(), ratingValue);
+		Rating oldRating = userData.add(rating);
+		if (oldRating != null) {
+			manufacturer.removeRating(oldRating.getRating());			
+		}
+		manufacturer.addRating(ratingValue);		
 		return rating;
-	}
-	
-	public Route addRoute(String[] legs) {
-		// TODO: Is this needed? Parameter probably will change etc depending on implementation
-		return null;
 	}
 
 	public void clearManufacturers() {
@@ -94,5 +93,36 @@ final class AppData {
 
 	public Rating getRating(String manID) {
 		return userData.findRating(manID);
+	}
+
+	public List<Route> getRoutes() {
+		return userData.getRoutes();
+	}
+	
+	public List<Manufacturer> getVisited() {
+		List<Rating> ratings = userData.getRatings();
+		List<Review> reviews = userData.getReviews();
+		
+		List<String> manIDs = new ArrayList<String>();
+		List<Manufacturer> visited = new ArrayList<Manufacturer>();
+		
+		for (Rating rating : ratings) {
+			manIDs.add(rating.getManufacturerID());
+		}
+		
+		for (Review review : reviews) {
+			if (!manIDs.contains(review.getManufacturerID())) {
+				manIDs.add(review.getManufacturerID());
+			}
+		}
+		
+		for (String manID : manIDs) {
+			for (Manufacturer manufacturer : manufacturers) {
+				if (manID.equals(manufacturer.getID())) {
+					visited.add(manufacturer);
+				}
+			}
+		}
+		return visited;
 	}
 }

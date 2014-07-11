@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.lamchop.alcolist.client.MyLocation;
 import com.lamchop.alcolist.client.UserData;
 import com.lamchop.alcolist.client.ui.buttons.MakeRouteButton;
 import com.lamchop.alcolist.client.resources.Images;

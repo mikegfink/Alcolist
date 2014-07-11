@@ -1,4 +1,4 @@
-package com.lamchop.alcolist.client.ui;
+package com.lamchop.alcolist.client;
 
 import com.google.gwt.core.client.JsArray;
 

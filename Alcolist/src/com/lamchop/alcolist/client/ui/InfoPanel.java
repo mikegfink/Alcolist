@@ -110,7 +110,7 @@ public class InfoPanel extends LayoutPanel {
 		add(basicRating);
 		if (loggedIn)
 			add(starRating);
-		if (!website.getHref().equals("")) 
+		if (website!=null && !website.getHref().equals("")) 
 			add(website);
 		add(address);
 	}

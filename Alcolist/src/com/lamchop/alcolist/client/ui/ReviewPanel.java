@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.lamchop.alcolist.client.AppDataController;
+import com.lamchop.alcolist.client.ui.buttons.CloseButton;
 import com.lamchop.alcolist.client.ui.buttons.FacebookShareButton;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Review;
@@ -51,7 +52,7 @@ public class ReviewPanel extends PopupPanel {
 	private Manufacturer manufacturer;
 	private AppDataController appDataController;
 	private Button editButton;
-	private Button closeButton;
+	private CloseButton closeButton;
 	private InfoPanel infoPanel;
 	private UIController uiController;
 	private boolean loggedIn;
@@ -69,7 +70,7 @@ public class ReviewPanel extends PopupPanel {
 		createElements();
 		addElements();
 		setWidget(display);
-		showInfoPanel();
+		layoutBase();
 		// TODO Consider not using null
 		if (review != null) {
 			showReview();
@@ -78,10 +79,14 @@ public class ReviewPanel extends PopupPanel {
 		}
 	}
 
-	private void showInfoPanel() {
+	private void layoutBase() {
 		display.setWidgetTopHeight(infoPanel, INFO_TOP_PCT, PCT, INFO_HEIGHT_PX, PX);
 		display.setWidgetLeftWidth(infoPanel, INFO_LEFT_PX, PX, INFO_WIDTH_PCT, PCT);
 		
+		display.setWidgetTopHeight(closeButton, CloseButton.TOP_PX, PCT, 
+				CloseButton.HEIGHT_PX, PX);
+		display.setWidgetRightWidth(closeButton, CloseButton.RIGHT_PX, PX, 
+				CloseButton.WIDTH_PX, PCT);		
 	}
 
 	private void createElements() {
@@ -91,9 +96,18 @@ public class ReviewPanel extends PopupPanel {
 		shareButton = new FacebookShareButton(manufacturer, appDataController);
 		saveButton = new Button("Save");
 		editButton = new Button("Edit");
-		closeButton = new Button("X");
-		reviewBox = new TextArea();
-		
+		closeButton = new CloseButton();
+		reviewBox = new TextArea();		
+	}
+	
+	private void addElements() {
+		display.add(reviewBox);
+		display.add(saveButton);
+		display.add(reviewText);
+		display.add(editButton);
+		display.add(shareButton);
+		display.add(infoPanel);
+		display.add(closeButton);
 	}
 
 	private void showEditReview() {
@@ -157,15 +171,6 @@ public class ReviewPanel extends PopupPanel {
 				EDIT_SAVE_BUTON_HEIGHT, PX);
 		display.setWidgetRightWidth(editButton, EDIT_SAVE_BUTTON_RIGHT, PCT, 
 				EDIT_SAVE_BUTTON_WIDTH, PX);
-	}
-
-	private void addElements() {
-		display.add(reviewBox);
-		display.add(saveButton);
-		display.add(reviewText);
-		display.add(editButton);
-		display.add(shareButton);
-		display.add(infoPanel);
 	}
 
 	private void initSaveButton(final Manufacturer manufacturer,

@@ -8,10 +8,10 @@ import com.lamchop.alcolist.client.resources.Images;
 public class CloseButton extends PushButton {
 	private static Images images = GWT.create(Images.class);
 
-	private static final int TOP_PX = 4;
-	private static final int HEIGHT_PX = 26;
-	private static final int WIDTH_PX = 26;
-	private static final int RIGHT_PX = 4;
+	public static final int TOP_PX = 4;
+	public static final int HEIGHT_PX = 26;
+	public static final int WIDTH_PX = 26;
+	public static final int RIGHT_PX = 4;
 	
 	public CloseButton() {
 		super(new Image(images.closeUp()), new Image(images.closeDown()));

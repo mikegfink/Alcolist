@@ -24,6 +24,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.lamchop.alcolist.client.Directions;
 import com.lamchop.alcolist.client.ui.buttons.CloseButton;
 import com.lamchop.alcolist.shared.Route;
 
