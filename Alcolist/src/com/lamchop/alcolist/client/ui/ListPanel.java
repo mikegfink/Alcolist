@@ -233,8 +233,8 @@ public class ListPanel extends LayoutPanel {
 //			  }
 //			});
 
-		listGrid.setColumnWidth(0,  "50%");
-		listGrid.setColumnWidth(3,  "10%");
+		listGrid.setColumnWidth(0,  "60%");
+		listGrid.setColumnWidth(3,  "7%");
 		
 		listGrid.addColumn(nameColumn, "Manufacturer Name");
 		listGrid.addColumn(cityColumn, "City");

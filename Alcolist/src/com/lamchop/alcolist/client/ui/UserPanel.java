@@ -5,13 +5,19 @@ import static com.google.gwt.dom.client.Style.Unit.PX;
 
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
+import com.google.gwt.user.client.ui.PushButton;
 import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.client.UserData;
 import com.lamchop.alcolist.client.ui.buttons.FacebookLoginButton;
 import com.lamchop.alcolist.client.ui.buttons.FacebookLogoutButton;
+import com.lamchop.alcolist.client.ui.buttons.SavedRoutesButton;
 
 public class UserPanel extends LayoutPanel {
 	
+	private static final int ROUTES_TOP_PCT = 3;
+	private static final int ROUTES_HEIGHT_PX = 31;
+	private static final int ROUTES_WIDTH_PX = 40;
+	private static final int ROUTES_RIGHT_PCT = 40;
 	private static final double LOG_RIGHT_PCT = 5;
 	private static final double LOG_WIDTH_PIXELS = 66; 
 	private static final double LOG_TOP_PCT = 3; 
@@ -25,23 +31,38 @@ public class UserPanel extends LayoutPanel {
 	private FacebookLoginButton loginButton;
 	private FacebookLogoutButton logoutButton;
 	private Label greeting;
+	private SavedRoutesButton routeDropdown;
 	
-	public UserPanel(AppDataController theAppDataController) {
+	public UserPanel(AppDataController theAppDataController, UIController theUIController) {
 		// TODO Auto-generated constructor stub
 		loginButton = new FacebookLoginButton(theAppDataController);
 		logoutButton = new FacebookLogoutButton(theAppDataController);
 		greeting = new Label();
+		routeDropdown = new SavedRoutesButton(theAppDataController, theUIController);
+		
 		
 		this.add(loginButton);
 		this.add(logoutButton);
 		this.add(greeting);
+		this.add(routeDropdown);
 	}
 
 	public void showLoggedOut() {
 		// TODO Auto-generated method stub
 		hideLogoutButton();
 		hideUserPanel();
+		hideRouteDropdown();
 		showLoginButton();
+	}
+	
+	private void hideRouteDropdown() {
+		setWidgetRightWidth(routeDropdown, ROUTES_RIGHT_PCT, PCT, HIDE_PCT, PCT);
+		setWidgetTopHeight(routeDropdown, ROUTES_TOP_PCT, PCT, HIDE_PCT, PCT);
+	}
+	
+	private void showRouteDropdown() {
+		setWidgetRightWidth(routeDropdown, ROUTES_RIGHT_PCT, PCT, ROUTES_WIDTH_PX, PX);
+		setWidgetTopHeight(routeDropdown, ROUTES_TOP_PCT, PCT, ROUTES_HEIGHT_PX, PX);
 	}
 
 	private void hideLogoutButton() {
@@ -66,6 +87,7 @@ public class UserPanel extends LayoutPanel {
 		// TODO Auto-generated method stub
 		hideLoginButton();
 		showLogoutButton();
+		showRouteDropdown();
 		showUserPanel(userData.getName());
 	}
 	

@@ -25,31 +25,32 @@ public class UI extends LayoutPanel {
 	private static final int HIDE_MAP_VALUE = 50;
 	private static final int HIDE_LIST_VALUE = 0;
 	//private static final int ANIMATE_DURATION = 300;
-	private static final int TITLE_TOP_PCT = 0;
-	private static final int TITLE_HEIGHT_PCT = 10;
+
 	private static final int TITLE_WIDTH_PCT = 40;
-	private static final int TITLE_LEFT_PCT = 0;
-	private static final int LEGEND_LEFT_PCT = 5;
-	private static final int LEGEND_WIDTH_PIXELS = 80;
-	private static final int LEGEND_TOP_PCT = 25;
-	private static final int LEGEND_HEIGHT_PIXELS = 170;
-	private static final int ADMIN_BOT_PCT = 3;
-	private static final int ADMIN_HEIGHT_PCT = 7;
-	private static final int ADMIN_RIGHT_PCT = 3;
-	private static final int ADMIN_WIDTH_PCT = 15;
-	private static final int USERPANEL_HEIGHT_PCT = 10;
-	private static final int USERPANEL_TOP_PCT = 1;
-	private static final int USERPANEL_RIGHT_PCT = 0;
-	private static final int USERPANEL_WIDTH_PCT = 50;
-	private static final int LIST_TOP_PCT = 12;
-	private static final int LIST_HEIGHT_PCT = 80;
-	private static final int VIEWPANEL_TOP_PCT = 12;
-	private static final int VIEWPANEL_HEIGHT_PIXELS = 98;
-	private static final int VIEWPANEL_LEFT_PCT = 5;
-	private static final int VIEWPANEL_WIDTH_PIXELS = 34;
 	private static final int DIRECTIONS_LEFT_PCT = 5;
 	private static final int DIRECTIONS_WIDTH_PCT = 35;
 	private static final int DEFAULT_MAP_WIDTH = 53;
+	private static final double TITLE_TOP_PCT = 0;
+	private static final double TITLE_HEIGHT_PCT = 10;
+	private static final double TITLE_LEFT_PCT = 0;
+	private static final double LEGEND_LEFT_PCT = 5;
+	private static final double LEGEND_WIDTH_PIXELS = 32;
+	private static final double LEGEND_TOP_PCT = 25;
+	private static final double LEGEND_HEIGHT_PIXELS = 170;
+	private static final double ADMIN_BOT_PCT = 3;
+	private static final double ADMIN_HEIGHT_PCT = 7;
+	private static final double ADMIN_RIGHT_PCT = 3;
+	private static final double ADMIN_WIDTH_PCT = 15;
+	private static final double USERPANEL_HEIGHT_PCT = 10;
+	private static final double USERPANEL_TOP_PCT = 1;
+	private static final double USERPANEL_RIGHT_PCT = 0;
+	private static final double USERPANEL_WIDTH_PCT = 50;
+	private static final double LIST_TOP_PCT = 12;
+	private static final double LIST_HEIGHT_PCT = 80;
+	private static final double VIEWPANEL_TOP_PCT = 12;
+	private static final double VIEWPANEL_HEIGHT_PIXELS = 98;
+	private static final double VIEWPANEL_LEFT_PCT = 5;
+	private static final double VIEWPANEL_WIDTH_PIXELS = 34;
 	
 	
 	// FIELDS
@@ -173,6 +174,7 @@ public class UI extends LayoutPanel {
 		userPanel.showLoggedIn(userData);
 		listPanel.showLoggedIn();
 		mapPanel.showLoggedIn();
+		
 		// Maybe some other things need to change here too as it develops.
 	}
 	
