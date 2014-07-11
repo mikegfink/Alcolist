@@ -217,6 +217,7 @@ public class UI extends LayoutPanel {
 		mapPanel.showLoggedOut();
 		hideChild(visitedButton);
 		hideChild(adminPanel);
+		directionsPanel.onLoggedOut();
 	}
 
 	public void showLoggedIn(UserData userData){

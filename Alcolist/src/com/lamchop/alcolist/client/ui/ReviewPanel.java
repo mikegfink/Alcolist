@@ -55,7 +55,7 @@ public class ReviewPanel extends PopupPanel {
 	private CloseButton closeButton;
 	private InfoPanel infoPanel;
 	private UIController uiController;
-	private boolean loggedIn;
+
 
 	public ReviewPanel(final Manufacturer manufacturer, 
 			final AppDataController appDataController, UIController uiController) {	
@@ -64,7 +64,6 @@ public class ReviewPanel extends PopupPanel {
 		this.manufacturer = manufacturer;
 		this.appDataController = appDataController;
 		this.uiController = uiController;
-		this.loggedIn = appDataController.isUserLoggedIn();
 		review = appDataController.getReview(manufacturer.getID());
 
 		createElements();
@@ -74,7 +73,7 @@ public class ReviewPanel extends PopupPanel {
 		// TODO Consider not using null
 		if (review != null) {
 			showReview();		
-		} else if (loggedIn) {
+		} else if (appDataController.isUserLoggedIn()) {
 			showEditReview();	
 		} else {
 			int height = INFO_HEIGHT_PX + 10;
@@ -101,7 +100,7 @@ public class ReviewPanel extends PopupPanel {
 
 	private void createElements() {
 		display = new LayoutPanel();
-		infoPanel = new InfoPanel(manufacturer, uiController, loggedIn);
+		infoPanel = new InfoPanel(manufacturer, uiController, appDataController.isUserLoggedIn());
 		reviewText = new HTML();
 		shareButton = new FacebookShareButton(manufacturer, appDataController);
 		saveButton = new Button("Save");
@@ -153,7 +152,7 @@ public class ReviewPanel extends PopupPanel {
 
 	private void showReview() {
 
-		if (loggedIn) {
+		if (appDataController.isUserLoggedIn()) {
 			editButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					showEditReview();				
@@ -186,7 +185,7 @@ public class ReviewPanel extends PopupPanel {
 		display.setWidgetTopHeight(reviewText, TEXT_BOX_TOP, PX, TEXT_BOX_HEIGHT, PCT);
 		display.setWidgetLeftWidth(reviewText, TEXT_BOX_LEFT, PCT, TEXT_BOX_WIDTH, PCT);
 
-		if (loggedIn ) {
+		if (appDataController.isUserLoggedIn() ) {
 			if (!review.getReview().isEmpty()) {
 				display.setWidgetBottomHeight(shareButton, SHARE_BOT_PCT, PCT, SHARE_HEIGHT_PX, PX);
 				display.setWidgetRightWidth(shareButton, SHARE_RIGHT_PX, PX, SHARE_WIDTH_PX, PX);

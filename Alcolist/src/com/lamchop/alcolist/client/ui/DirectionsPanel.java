@@ -121,7 +121,8 @@ public class DirectionsPanel extends LayoutPanel {
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					new SavePanel(route, appDataController).showRelativeTo(closeButton);
-					saveButton.removeFromParent();
+					setWidgetTopHeight(saveButton, SAVE_TOP_PX, PX, 0, PX);
+					setWidgetRightWidth(saveButton, SAVE_RIGHT_PX, PX, 0, PX);
 				}
 			});
 		}
@@ -189,6 +190,12 @@ public class DirectionsPanel extends LayoutPanel {
 		if (options != null) {
 			options.setMap(null);
 			directionsRenderer.setOptions(options);
+		}
+	}
+	
+	public void onLoggedOut() {
+		if (!appDataController.isUserLoggedIn()) {
+			saveButton.removeFromParent();
 		}
 	}
 }
