@@ -59,7 +59,7 @@ public class ReviewPanel extends PopupPanel {
 
 	public ReviewPanel(final Manufacturer manufacturer, 
 			final AppDataController appDataController, UIController uiController) {	
-		
+
 		super(true);
 		this.manufacturer = manufacturer;
 		this.appDataController = appDataController;
@@ -70,23 +70,30 @@ public class ReviewPanel extends PopupPanel {
 		createElements();
 		addElements();
 		setWidget(display);
-		layoutBase();
+
 		// TODO Consider not using null
 		if (review != null) {
 			showReview();
 		} else {
 			showEditReview();			
 		}
+		layoutBase();
 	}
 
 	private void layoutBase() {
 		display.setWidgetTopHeight(infoPanel, INFO_TOP_PCT, PCT, INFO_HEIGHT_PX, PX);
 		display.setWidgetLeftWidth(infoPanel, INFO_LEFT_PX, PX, INFO_WIDTH_PCT, PCT);
-		
+
 		display.setWidgetTopHeight(closeButton, CloseButton.TOP_PX, PCT, 
 				CloseButton.HEIGHT_PX, PX);
 		display.setWidgetRightWidth(closeButton, CloseButton.RIGHT_PX, PX, 
-				CloseButton.WIDTH_PX, PCT);		
+				CloseButton.WIDTH_PX, PX);	
+
+		closeButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				hide();			
+			}
+		});
 	}
 
 	private void createElements() {
@@ -99,7 +106,7 @@ public class ReviewPanel extends PopupPanel {
 		closeButton = new CloseButton();
 		reviewBox = new TextArea();		
 	}
-	
+
 	private void addElements() {
 		display.add(reviewBox);
 		display.add(saveButton);
@@ -147,7 +154,7 @@ public class ReviewPanel extends PopupPanel {
 		hideChild(shareButton);
 		hideChild(reviewText);
 		hideChild(editButton);
-		
+
 		display.setWidgetBottomHeight(saveButton, EDIT_SAVE_BUTTON_BOT, PCT, 
 				EDIT_SAVE_BUTON_HEIGHT, PX);
 		display.setWidgetRightWidth(saveButton, EDIT_SAVE_BUTTON_RIGHT, PCT, 
@@ -160,7 +167,7 @@ public class ReviewPanel extends PopupPanel {
 	private void showReviewDisplay() {
 		hideChild(saveButton);
 		hideChild(reviewBox);
-		
+
 		display.setWidgetBottomHeight(shareButton, SHARE_BOT_PCT, PCT, SHARE_HEIGHT_PX, PX);
 		display.setWidgetRightWidth(shareButton, SHARE_RIGHT_PX, PX, SHARE_WIDTH_PX, PX);
 
@@ -193,7 +200,7 @@ public class ReviewPanel extends PopupPanel {
 			reviewBox.setText(review.getReview());
 		}
 	}
-	
+
 	public void hideChild(Widget widgetToHide){
 		display.setWidgetTopHeight(widgetToHide, widgetToHide.getAbsoluteTop(), PX, 0, PCT);
 		display.setWidgetLeftWidth(widgetToHide, widgetToHide.getAbsoluteLeft(), PX, 0, PCT);		
@@ -206,6 +213,4 @@ public class ReviewPanel extends PopupPanel {
 	public void setReview(Review review) {
 		this.review = review;
 	}
-	
-	
 }

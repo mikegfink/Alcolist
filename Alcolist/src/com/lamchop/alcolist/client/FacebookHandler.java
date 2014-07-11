@@ -51,11 +51,11 @@ public class FacebookHandler implements ClickHandler {
 
 	// This scope allows the app to post to the User's timeline.
 	private static final String FACEBOOK_PUBLISH_SCOPE = "publish_actions";
-	
+
 	private static final String USER_ID = "id";
-	
+
 	private static final String USER_NAME = "name";
-	
+
 	private static final String APP_URL = "http://alcolist-test.appspot.com";
 
 	// Use the implementation of Auth intended to be used in the GWT client app.
@@ -83,7 +83,9 @@ public class FacebookHandler implements ClickHandler {
 			logout();
 		} else if (sender.getClass() == FacebookShareButton.class) {
 			FacebookShareButton facebookShare = (FacebookShareButton) sender;
-			shareWithFacebook(facebookShare.getReview(), facebookShare.getManufacturer());
+			if (facebookShare.getReview() != null) {
+				shareWithFacebook(facebookShare.getReview(), facebookShare.getManufacturer());
+			}
 		}
 	}
 
@@ -107,7 +109,7 @@ public class FacebookHandler implements ClickHandler {
 		// TODO: Consider extending AuthRequest to include display=popup in the parameters.
 		// Facebook expects a comma-delimited list of scopes
 		.withScopeDelimiter(","); // Probably can delete this line
-		
+
 		authorizeFacebook(req, new Callback<String, Throwable>() {
 			@Override
 			public void onSuccess(String token) {
@@ -136,7 +138,7 @@ public class FacebookHandler implements ClickHandler {
 		if (appToken == null) {
 			login();
 		}
-		
+
 		Method method = RequestBuilder.GET;
 		RequestBuilder builder;
 		final String id = "me";		
@@ -157,14 +159,14 @@ public class FacebookHandler implements ClickHandler {
 			public void onSuccess(JSONObject result) {
 				JSONValue jsonUserID = result.get(USER_ID);
 				JSONString userID = jsonUserID.isString();
-				
+
 				JSONValue jsonUserName = result.get(USER_NAME);
 				JSONString userName = jsonUserName.isString();
-				
+
 				theAppDataController.initUserData(userID.stringValue(), userName.stringValue());
 			}
 		};
-		
+
 		makeRequest(builder, requestData, callback);
 	}
 
@@ -220,18 +222,18 @@ public class FacebookHandler implements ClickHandler {
 			}
 		});
 	}
-	
+
 	private void makeGraphRequest(String toShare, Manufacturer manufacturer) {
 		Method method = RequestBuilder.POST;
 		RequestBuilder builder;
 		final String id = "me/feed/";	
 		String message = "My Review of: " + manufacturer.getName() + "\n" + toShare;
-		
+
 		String params = "message="
 				+ URL.encodeQueryString(message) +
 				"&link=" + URL.encodeQueryString(APP_URL);
 		//TODO: Bring the manufacturer in and use the website as the url. 
-		
+
 		String requestData = "access_token=" + appToken;
 
 		if (params != null) {
@@ -249,10 +251,10 @@ public class FacebookHandler implements ClickHandler {
 				GWT.log("Supposedly worked with post id: " + result.toString());
 			}
 		};
-		
+
 		makeRequest(builder, requestData, callback);
 	}
-	
+
 	private void handleError(Throwable error) {
 		GWT.log(error.getMessage());
 	}

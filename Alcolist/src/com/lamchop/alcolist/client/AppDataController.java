@@ -346,4 +346,8 @@ public class AppDataController {
 	private void handleError(Throwable error) {
 		GWT.log(error.getMessage());
 	}
+	
+	public List<Route> getRoutes() {
+		return appData.getRoutes();
+	}
 }

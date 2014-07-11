@@ -43,6 +43,7 @@ public class InfoPanel extends LayoutPanel {
 	private HorizontalPanel basicRating;
 	private Anchor website;
 	private boolean loggedIn;
+	private String link;
 	static private Images images = GWT.create(Images.class);
 
 
@@ -52,7 +53,12 @@ public class InfoPanel extends LayoutPanel {
 
 		name = new HTML("<b>" + manufacturer.getName() + "</b>");
 		address	= new HTML(manufacturer.getFormattedAddress());
-		website = new Anchor("Visit Website", false, manufacturer.getWebsite(), "_blank");
+		if (manufacturer.getWebsite() == null) {
+			link = "";
+		} else {
+			link = manufacturer.getWebsite();
+		}
+		website = new Anchor("Visit Website", false, link, "_blank");
 		basicRating = new HorizontalPanel();
 
 		setupBasicRating(manufacturer);
@@ -96,21 +102,18 @@ public class InfoPanel extends LayoutPanel {
 		setWidgetTopHeight(address, ADDRESS_TOP_PCT, PCT, ADDRESS_HEIGHT_PX, PX);
 		setWidgetLeftWidth(address, ADDRESS_LEFT_PX, PX, ADDRESS_WIDTH_PX, PX);
 		
-		if (!website.getHref().equals("")) {
+		if (!link.equals("")) {
 			setWidgetBottomHeight(website, WEBSITE_BOTTOM_PCT, PCT, WEBSITE_HEIGHT_PX, PX);
 			setWidgetLeftWidth(website, WEBSITE_LEFT_PX, PX, WEBSITE_WIDTH_EM, Unit.EM);
 		}
 	}
-
-
-
 
 	private void addChildren() {
 		add(name);
 		add(basicRating);
 		if (loggedIn)
 			add(starRating);
-		if (website!=null && !website.getHref().equals("")) 
+		if (!link.equals("")) 
 			add(website);
 		add(address);
 	}

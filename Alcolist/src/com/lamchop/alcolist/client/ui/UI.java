@@ -242,6 +242,8 @@ public class UI extends LayoutPanel {
 	public void showRoute() {		
 		setWidgetTopHeight(directionsPanel, LIST_TOP_PCT, PCT, LIST_HEIGHT_PCT, PCT);
 		setWidgetLeftWidth(directionsPanel, DIRECTIONS_LEFT_PCT, PCT, DIRECTIONS_WIDTH_PCT, PCT);
+		
+		// TODO: Zoom map to include starting point. Start point is in RoutePanel.
 		this.remove(routePanel);
 	}
 	
