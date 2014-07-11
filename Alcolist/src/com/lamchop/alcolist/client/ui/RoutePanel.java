@@ -7,6 +7,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.lamchop.alcolist.client.AppDataController;
@@ -18,9 +19,9 @@ import static com.google.gwt.dom.client.Style.Unit.PX;
 
 public class RoutePanel extends LayoutPanel {
 	
+	private static final int LABEL_HEIGHT_PX = 15;
 	private static final int GETROUTEBUTTON_WIDTH_PX = 75;
 	private static final int CANCELBUTTON_WIDTH_PX = 57;
-	private static final int ADDLOCATION_LEFT_POSITION_PX = 250;
 	private static final int ADDLOCATION_BUTTON_WIDTH_PX = 92;
 	private static final int PANEL_PADDING = 20;
 	private static final int LOCATION_PANEL_WIDTH_PX = 310;
@@ -44,6 +45,8 @@ public class RoutePanel extends LayoutPanel {
 	private String endAddress;
 	private List<String> midPoints;
 	private boolean canAddLocation;
+	private Label startLocationLabel;
+	private Label endLocationLabel;
 
 	public RoutePanel(AppDataController theAppDataController, UIController theUIController) {
 		this.theAppDataController = theAppDataController;
@@ -69,12 +72,19 @@ public class RoutePanel extends LayoutPanel {
 		
 		cancelButton = new Button();
 		cancelButton.setText("Cancel");
+		
+		startLocationLabel = new Label("Start Location:");
+		startLocationLabel.addStyleDependentName("locations");
+		endLocationLabel = new Label("End Location:");
+		endLocationLabel.addStyleDependentName("locations");
 
 		this.add(startDestination);
 		this.add(endDestination);
 		this.add(addAnotherLocationButton);
 		this.add(getRouteButton);
 		this.add(cancelButton);
+		this.add(startLocationLabel);
+		this.add(endLocationLabel);
 
 		initDefaultView();
 		
@@ -83,12 +93,19 @@ public class RoutePanel extends LayoutPanel {
 	}
 	
 	private void initDefaultView() {
+		this.setWidgetTopHeight(startLocationLabel, DISTANCE_FROM_TOP_PX - LABEL_HEIGHT_PX, PX, LABEL_HEIGHT_PX, PX);
+		this.setWidgetRightWidth(startLocationLabel, AGAINST_EDGE, PX, LOCATION_PANEL_WIDTH_PX, PX);
+		
 		this.setWidgetTopHeight(startDestination, DISTANCE_FROM_TOP_PX, PX, LOCATION_PANEL_HEIGHT_PX, PX);
 		this.setWidgetRightWidth(startDestination, AGAINST_EDGE, PX, LOCATION_PANEL_WIDTH_PX, PX);
 		
+		
 		int height = PANEL_PADDING + DISTANCE_FROM_TOP_PX + LOCATION_PANEL_HEIGHT_PX;
 		this.setWidgetTopHeight(endDestination, height, PX, LOCATION_PANEL_HEIGHT_PX, PX);
-		this.setWidgetRightWidth(endDestination, 0, PX, LOCATION_PANEL_WIDTH_PX, PX);
+		this.setWidgetRightWidth(endDestination, AGAINST_EDGE, PX, LOCATION_PANEL_WIDTH_PX, PX);
+		
+		this.setWidgetTopHeight(endLocationLabel, height - LABEL_HEIGHT_PX, PX, LABEL_HEIGHT_PX, PX);
+		this.setWidgetRightWidth(endLocationLabel, 0, PX, LOCATION_PANEL_WIDTH_PX, PX);
 		
 		height = height + PANEL_PADDING + LOCATION_PANEL_HEIGHT_PX;
 		this.setWidgetTopHeight(addAnotherLocationButton, height, PX, LOCATION_PANEL_HEIGHT_PX, PX);

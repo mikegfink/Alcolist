@@ -41,6 +41,7 @@ import com.google.gwt.view.client.SelectionModel;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.client.ui.buttons.NearMeButton;
+import com.lamchop.alcolist.client.ui.buttons.VisitedButton;
 import com.lamchop.alcolist.shared.Manufacturer;
 
 public class ListPanel extends LayoutPanel {
@@ -58,6 +59,8 @@ public class ListPanel extends LayoutPanel {
 	private Manufacturer currentSelected;
 	private UIController theUIController;
 	private Manufacturer showingInfo;
+	private VisitedButton visitedButton;
+	
 
 	public ListPanel(final AppDataController theAppDataController, UIController theUIController) {
 		DataGridResource resource = GWT.create(DataGridResource.class);

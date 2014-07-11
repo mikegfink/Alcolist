@@ -52,7 +52,7 @@ public class UI extends LayoutPanel {
 	private static final double USERPANEL_RIGHT_PCT = 0;
 	private static final double USERPANEL_WIDTH_PCT = 50;
 	private static final double LIST_TOP_PCT = 18;
-	private static final double LIST_HEIGHT_PCT = 80;
+	private static final double LIST_HEIGHT_PCT = 73;
 	private static final double VIEWPANEL_TOP_PCT = 18;
 	private static final double VIEWPANEL_HEIGHT_PIXELS = 98;
 	private static final double VIEWPANEL_LEFT_PCT = 5;

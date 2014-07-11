@@ -30,6 +30,7 @@ public class AppDataController {
 	private boolean nearMe;
 	private boolean firstNearMe;
 	private MultiWordSuggestOracle routeOracle; 
+	private boolean visited;
 
 	public AppDataController(UIUpdateInterface theUI) {
 		appData = new AppData();
@@ -39,6 +40,7 @@ public class AppDataController {
 		myLocation = null;
 		nearMe = false;
 		firstNearMe = true;
+		visited = false;
 	}
 
 	public void createOracle() {
@@ -221,6 +223,30 @@ public class AppDataController {
 		if (displayList.size() != allManufacturers.size())
 			filter();
 	}
+	
+	public void showVisited() {
+		visited = true;
+		filter();
+	}
+	
+	public void clearVisited() {
+		visited = false;
+		filter();
+	}
+	
+	private void visitedList() {
+		Iterator<Manufacturer> iter = displayList.iterator();
+		while (iter.hasNext()) {
+			Manufacturer m = iter.next();
+			if (!isVisited(m)) {
+				iter.remove();
+			}
+		}
+	}
+	
+	private boolean isVisited(Manufacturer m) {
+		return (getRating(m.getID()) != null || getReview(m.getID()) != null);
+	}
 
 	public void showNearMe() {
 		if (firstNearMe) {
@@ -288,6 +314,9 @@ public class AppDataController {
 		}
 		if (nearMe) {
 			nearMeList();
+		}
+		if (visited) {
+			visitedList();
 		}
 
 		theUI.update(displayList);

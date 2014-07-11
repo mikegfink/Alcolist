@@ -47,7 +47,20 @@ public class UIController implements UIUpdateInterface {
 		Legend legend = new Legend(theAppDataController);
 		MakeRouteButton makeRouteButton = new MakeRouteButton(this);
 		SearchPanel searchPanel = new SearchPanel(theAppDataController);
-		VisitedButton visitedButton = new VisitedButton(theAppDataController);
+		
+		final VisitedButton visitedButton = new VisitedButton(theAppDataController);
+		visitedButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if (visitedButton.isDown()) {
+					theAppDataController.showVisited();
+				}
+				else {
+					theAppDataController.clearVisited();
+				}
+			}		
+		});
+		
 		final NearMeButton nearMeButton = new NearMeButton(theAppDataController);
 		nearMeButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -178,6 +191,6 @@ public class UIController implements UIUpdateInterface {
 	}
 	
 	public void showSavedRoutes(int x, int y) {
-		new SavedRoutesPopup(theAppDataController).setPopupPosition(x, y);
+		new SavedRoutesPopup(theAppDataController, this).setPopupPosition(x, y);
 	}
 }
