@@ -41,6 +41,7 @@ import com.google.gwt.view.client.SelectionModel;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.client.ui.buttons.NearMeButton;
+import com.lamchop.alcolist.client.ui.buttons.VisitedButton;
 import com.lamchop.alcolist.shared.Manufacturer;
 
 public class ListPanel extends LayoutPanel {
@@ -59,6 +60,7 @@ public class ListPanel extends LayoutPanel {
 	private UIController theUIController;
 	private NearMeButton nearMeButton;
 	private Manufacturer showingInfo;
+	private VisitedButton visitedButton;
 	
 
 
@@ -73,6 +75,25 @@ public class ListPanel extends LayoutPanel {
 		add(searchPanel);
 		this.setWidgetTopHeight(searchPanel, 0, PCT, 35, PX);
 	
+		visitedButton = new VisitedButton(theAppDataController);
+		visitedButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				if (visitedButton.isDown()) {
+					theAppDataController.showVisited();
+				}
+				
+				else {
+					theAppDataController.clearVisited();
+				}
+				
+			}
+			
+		});
+		add(visitedButton);
+		this.setWidgetTopHeight(visitedButton, 0, PX, 33, PX);
+		this.setWidgetLeftWidth(visitedButton, 80, PCT, 33, PX);
 		
 		nearMeButton = new NearMeButton(theAppDataController);
 		nearMeButton.addClickHandler(new ClickHandler() {
