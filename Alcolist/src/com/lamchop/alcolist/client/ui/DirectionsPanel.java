@@ -121,6 +121,7 @@ public class DirectionsPanel extends LayoutPanel {
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					new SavePanel(route, appDataController).showRelativeTo(saveButton);
+					saveButton.removeFromParent();
 				}
 			});
 		}

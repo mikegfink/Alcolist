@@ -15,7 +15,7 @@ public class SavedRoutesButton extends PushButton{
 			public void onClick(ClickEvent event) {
 			    int x = findXPosition();
 			    int y = findYPosition();
-				theUIController.showSavedRoutes( x, y);	
+				theUIController.showSavedRoutes(x, y);	
 			}
 		});
 	}

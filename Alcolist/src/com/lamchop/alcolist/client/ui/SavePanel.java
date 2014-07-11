@@ -55,7 +55,9 @@ public class SavePanel extends PopupPanel {
 		
 		setWidget(display);
 		display.setPixelSize(384, 35);
+		namingBox.setFocus(true);
 		this.setGlassEnabled(true);
+
 	}
 	
 	private void saveRoute() {

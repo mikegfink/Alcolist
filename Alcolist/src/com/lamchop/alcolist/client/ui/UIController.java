@@ -196,6 +196,8 @@ public class UIController implements UIUpdateInterface {
 	}
 	
 	public void showSavedRoutes(int x, int y) {
-		new SavedRoutesPopup(theAppDataController, this).setPopupPosition(x, y);
+		SavedRoutesPopup savedRoutes = new SavedRoutesPopup(theAppDataController, this);
+		savedRoutes.setPopupPosition(x, y);
+		savedRoutes.show();		
 	}
 }
