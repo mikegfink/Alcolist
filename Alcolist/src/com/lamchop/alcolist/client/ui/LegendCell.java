@@ -16,13 +16,13 @@ public class LegendCell extends AbstractCell<String>{
 		if (value == null)
 			return;
 		sb.appendHtmlConstant("<table>");
-		sb.appendHtmlConstant("<tr><td rowspan = '2'>");
+		sb.appendHtmlConstant("<tr><td rowspan = '1'>");
 		if (value.equals("Brewery"))
-			sb.appendHtmlConstant(new Image(images.brewery()).toString());
+			sb.appendHtmlConstant(new Image(images.breweryLegend()).toString());
 		if (value.equals("Winery"))
-			sb.appendHtmlConstant(new Image(images.winery()).toString());
+			sb.appendHtmlConstant(new Image(images.wineryLegend()).toString());
 		if (value.equals("Distillery"))
-			sb.appendHtmlConstant(new Image(images.distillery()).toString());	
+			sb.appendHtmlConstant(new Image(images.distilleryLegend()).toString());	
 		sb.appendHtmlConstant("</td></tr></table>");
 		
 	}

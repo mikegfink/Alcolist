@@ -11,6 +11,7 @@ import com.lamchop.alcolist.client.MyLocation;
 import com.lamchop.alcolist.client.UserData;
 import com.lamchop.alcolist.client.ui.buttons.MakeRouteButton;
 import com.lamchop.alcolist.client.ui.buttons.NearMeButton;
+import com.lamchop.alcolist.client.ui.buttons.VisitedButton;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Route;
 
@@ -45,6 +46,8 @@ public class UIController implements UIUpdateInterface {
 		ListPanel listPanel = new ListPanel(theAppDataController, this);
 		Legend legend = new Legend(theAppDataController);
 		MakeRouteButton makeRouteButton = new MakeRouteButton(this);
+		SearchPanel searchPanel = new SearchPanel(theAppDataController);
+		VisitedButton visitedButton = new VisitedButton(theAppDataController);
 		final NearMeButton nearMeButton = new NearMeButton(theAppDataController);
 		nearMeButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -58,7 +61,7 @@ public class UIController implements UIUpdateInterface {
 		});
 //		RoutePanel routePanel = new RoutePanel(theAppDataController, this);
 		uiPanel = new UI(adminPanel, userPanel, viewPanel, listPanel, legend, 
-				makeRouteButton, nearMeButton);
+				makeRouteButton, nearMeButton, searchPanel, visitedButton);
 	}
 	
 	public void initMap() {
@@ -79,17 +82,20 @@ public class UIController implements UIUpdateInterface {
 		uiPanel.toggleViewButtons(DEFAULT_LIST_WIDTH);
 		uiPanel.changeListView(DEFAULT_LIST_LEFT, DEFAULT_LIST_WIDTH);		
 		uiPanel.changeMapView(DEFAULT_MAP_WIDTH);
+		uiPanel.moveSearch(DEFAULT_LIST_LEFT);
 	}
 	
 	public void hideList() {
 		uiPanel.toggleViewButtons(HIDE_LIST_VALUE);
 		uiPanel.changeListView(DEFAULT_LIST_LEFT, HIDE_LIST_VALUE);		
 		uiPanel.changeMapView(BIG_MAP_WIDTH);
+		uiPanel.moveSearch(DEFAULT_LIST_LEFT);
 	}
 	
 	public void hideMap() {
 		uiPanel.toggleViewButtons(BIG_LIST_WIDTH);
 		uiPanel.changeListView(BIG_LIST_LEFT, BIG_LIST_WIDTH);	
+		uiPanel.moveSearch(BIG_LIST_LEFT);
 	}
 	
 	@Override

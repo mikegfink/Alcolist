@@ -52,7 +52,7 @@ public class Legend extends LayoutPanel {
 		
 		legend.addColumn(icons);
 		legend.setRowData(0, TYPES);
-		legend.setSize("32px", "100px");
+		legend.setSize("32px", "98px");
 		add(legend);
 		
 		final SingleSelectionModel<String> selectionModel = addSelectionHandler();

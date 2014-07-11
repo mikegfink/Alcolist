@@ -6,12 +6,21 @@ import com.google.gwt.resources.client.ImageResource;
 public interface Images extends ClientBundle {
 	@Source("winery.png")
 	ImageResource winery();
+	
+	@Source("wineryLegend.png")
+	ImageResource wineryLegend();
 
 	@Source("distillery.png")
 	ImageResource distillery();
+	
+	@Source("distilleryLegend.png")
+	ImageResource distilleryLegend();
 
 	@Source("brewery.png")
 	ImageResource brewery();
+	
+	@Source("breweryLegend.png")
+	ImageResource breweryLegend();
 
 	@Source("facebookLogin.png")
 	ImageResource facebookLogin();
@@ -42,9 +51,15 @@ public interface Images extends ClientBundle {
 
 	@Source("starFull.png")
 	ImageResource starFull();
-
+	
 	@Source("starEmpty.png")
 	ImageResource starEmpty();
+	
+	@Source("starBlueDown.png")
+	ImageResource starBlueDown();
+	
+	@Source("starBlueUp.png")
+	ImageResource starBlueUp();
 
 	@Source("nearMeDown.png")
 	ImageResource nearMeDown();

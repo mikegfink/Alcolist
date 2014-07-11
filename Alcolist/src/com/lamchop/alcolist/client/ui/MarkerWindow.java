@@ -42,8 +42,8 @@ public class MarkerWindow extends VerticalPanel {
 
 	private void setupName() {
 		if (manufacturer.getWebsite() != null && !manufacturer.getWebsite().isEmpty()) {
-			nameAsLink = new Anchor("<b>" + manufacturer.getName() + "</b>", false, 
-					manufacturer.getWebsite(), "_blank");
+			nameAsLink = new Anchor("<span style='color: Cornflower blue'><b>" + manufacturer.getName() 
+					+ "</b></font>", true, manufacturer.getWebsite(), "_blank");
 			add(nameAsLink);
 		} else {
 			name = new HTML("<b>" + manufacturer.getName() + "</b>");

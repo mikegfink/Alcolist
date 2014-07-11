@@ -15,14 +15,16 @@ import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.lamchop.alcolist.client.MyLocation;
 import com.lamchop.alcolist.client.UserData;
+import com.lamchop.alcolist.client.ui.buttons.DirectionsButton;
 import com.lamchop.alcolist.client.ui.buttons.MakeRouteButton;
 import com.lamchop.alcolist.client.ui.buttons.NearMeButton;
+import com.lamchop.alcolist.client.ui.buttons.VisitedButton;
 import com.lamchop.alcolist.client.resources.Images;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Route;
 
 public class UI extends LayoutPanel {
-	
+
 	private static final int ROUTE_PANEL_LEFT_PCT = 5;
 	private static final int ROUTE_PANEL_WIDTH_PIXELS = 350;
 	// CONSTANTS
@@ -39,7 +41,7 @@ public class UI extends LayoutPanel {
 	private static final double TITLE_LEFT_PCT = 0;
 	private static final double LEGEND_LEFT_PCT = 5;
 	private static final double LEGEND_WIDTH_PIXELS = 32;
-	private static final double LEGEND_TOP_PCT = 25;
+	private static final double LEGEND_TOP_PCT = 32;
 	private static final double LEGEND_HEIGHT_PIXELS = 170;
 	private static final double ADMIN_BOT_PCT = 3;
 	private static final double ADMIN_HEIGHT_PCT = 7;
@@ -49,18 +51,26 @@ public class UI extends LayoutPanel {
 	private static final double USERPANEL_TOP_PCT = 1;
 	private static final double USERPANEL_RIGHT_PCT = 0;
 	private static final double USERPANEL_WIDTH_PCT = 50;
-	private static final double LIST_TOP_PCT = 12;
+	private static final double LIST_TOP_PCT = 18;
 	private static final double LIST_HEIGHT_PCT = 80;
-	private static final double VIEWPANEL_TOP_PCT = 12;
+	private static final double VIEWPANEL_TOP_PCT = 18;
 	private static final double VIEWPANEL_HEIGHT_PIXELS = 98;
 	private static final double VIEWPANEL_LEFT_PCT = 5;
-	private static final double VIEWPANEL_WIDTH_PIXELS = 34;
-	private static final double ROUTE_BUTTON_TOP_PCT = 0;
-	private static final double ROUTE_BUTTON_LEFT_PCT = 0;
-	private static final double NEAR_BUTTON_TOP_PCT = 0;
-	private static final double NEAR_BUTTON_LEFT_PCT = 0;
-	
-	
+	private static final double VIEWPANEL_WIDTH_PIXELS = 34;	
+	private static final double SEARCH_WIDTH_PX = 332;
+	private static final double SEARCH_HEIGHT_PX = 34;
+	private static final double SEARCH_LEFT_PCT = 5;
+	private static final double SEARCH_TOP_PCT = 12;
+	private static final double NEAR_BUTTON_TOP_PCT = 12;
+	private static final double NEAR_BUTTON_LEFT_PX = (Window.getClientWidth() / 100 *
+			SEARCH_LEFT_PCT) + SEARCH_WIDTH_PX;
+	private static final double ROUTE_BUTTON_TOP_PCT = 12; 
+	private static final double ROUTE_BUTTON_LEFT_PX = NEAR_BUTTON_LEFT_PX + 
+			NearMeButton.WIDTH_PX + NearMeButton.RIGHT_PX;
+	private static final double VISITED_LEFT_PX = ROUTE_BUTTON_LEFT_PX + 
+			VisitedButton.WIDTH_PX + VisitedButton.RIGHT_PX;
+	private static final double VISITED_TOP_PCT = 12;
+
 	// FIELDS
 	private static Images images = GWT.create(Images.class);
 	private MapPanel mapPanel;
@@ -74,9 +84,14 @@ public class UI extends LayoutPanel {
 	private RoutePanel routePanel;
 	private DirectionsPanel directionsPanel;
 	private NearMeButton nearMeButton;
-	
-	public UI(AdminPanel adminPanel, UserPanel userPanel, ViewPanel viewPanel, ListPanel listPanel, 
-			Legend legend, MakeRouteButton makeRouteButton, NearMeButton nearMeButton) {
+	private SearchPanel searchPanel;
+	private VisitedButton visitedButton;
+
+	public UI(AdminPanel adminPanel, UserPanel userPanel, ViewPanel viewPanel, 
+			ListPanel listPanel, Legend legend, MakeRouteButton makeRouteButton, 
+			NearMeButton nearMeButton, SearchPanel searchPanel, 
+			VisitedButton visitedButton) {
+
 		this.mapPanel = null;
 		this.adminPanel = adminPanel;
 		this.userPanel = userPanel;
@@ -85,12 +100,13 @@ public class UI extends LayoutPanel {
 		this.legend = legend;
 		this.makeRouteButton = makeRouteButton;
 		this.nearMeButton = nearMeButton;
-//		this.routePanel = routePanel;
+		this.searchPanel = searchPanel;	
+		this.visitedButton = visitedButton;
 	}
 
 	public void init(MapPanel mapPanel) {
 		this.mapPanel = mapPanel;
-		
+
 		createChildren();		
 		addChildren();
 		layoutChildren();
@@ -102,13 +118,13 @@ public class UI extends LayoutPanel {
 				TITLE_HEIGHT_PCT / (images.titleImage().getHeight() * 100));
 		int newHeight = (int) (Window.getClientHeight() * TITLE_HEIGHT_PCT / 100);
 		title.setPixelSize(newWidth, newHeight);
-		
+
 		directionsPanel = new DirectionsPanel(mapPanel.getMapWidget(), this);
 	}
 
 	private void addChildren() {
 		this.add(mapPanel);
-		
+
 		this.add(title);
 		this.add(adminPanel);
 		this.add(viewPanel);
@@ -118,55 +134,58 @@ public class UI extends LayoutPanel {
 		this.add(makeRouteButton);
 		this.add(directionsPanel);
 		this.add(nearMeButton);
-		
+		this.add(searchPanel);
+		this.add(visitedButton);		
 	}		
 
 	private void layoutChildren() {
 		// All the magic numbers live here.
 		setWidgetTopHeight(title, TITLE_TOP_PCT, PCT, TITLE_HEIGHT_PCT, PCT);
 		setWidgetLeftWidth(title, TITLE_LEFT_PCT, PCT, TITLE_WIDTH_PCT, PCT);
-		
+
 		setWidgetTopHeight(legend, LEGEND_TOP_PCT, PCT, LEGEND_HEIGHT_PIXELS, PX);
 		setWidgetLeftWidth(legend, LEGEND_LEFT_PCT, PCT, LEGEND_WIDTH_PIXELS, PX);
-		
+
 		setWidgetBottomHeight(adminPanel, ADMIN_BOT_PCT, PCT, ADMIN_HEIGHT_PCT, PCT);
 		setWidgetRightWidth(adminPanel, ADMIN_RIGHT_PCT, PCT, ADMIN_WIDTH_PCT, PCT);
-		
+
 		setWidgetTopHeight(userPanel, USERPANEL_TOP_PCT, PCT, USERPANEL_HEIGHT_PCT, PCT);
 		setWidgetRightWidth(userPanel, USERPANEL_RIGHT_PCT, PCT, USERPANEL_WIDTH_PCT, PCT);
-		
+
 		setWidgetTopHeight(viewPanel, VIEWPANEL_TOP_PCT, PCT, VIEWPANEL_HEIGHT_PIXELS, PX);
 		setWidgetLeftWidth(viewPanel, VIEWPANEL_LEFT_PCT, PCT, VIEWPANEL_WIDTH_PIXELS, PX);
-		
+
 		setWidgetTopHeight(makeRouteButton, ROUTE_BUTTON_TOP_PCT, PCT, 
 				MakeRouteButton.HEIGHT_PX, PX);
-		setWidgetLeftWidth(makeRouteButton, ROUTE_BUTTON_LEFT_PCT, PCT, 
+		setWidgetLeftWidth(makeRouteButton, ROUTE_BUTTON_LEFT_PX, PX, 
 				MakeRouteButton.WIDTH_PX, PX);
-		
+
 		setWidgetTopHeight(nearMeButton, NEAR_BUTTON_TOP_PCT, PCT, 
 				NearMeButton.HEIGHT_PX, PX);
-		setWidgetLeftWidth(nearMeButton, NEAR_BUTTON_LEFT_PCT, PCT, 
+		setWidgetLeftWidth(nearMeButton, NEAR_BUTTON_LEFT_PX, PX, 
 				NearMeButton.WIDTH_PX, PX);
-		
-//		setWidgetTopHeight(searchPanel, NEAR_BUTTON_TOP_PCT, PCT, 
-//				NearMeButton.HEIGHT_PX, PX);
-//		setWidgetLeftWidth(searchPanel, NEAR_BUTTON_LEFT_PCT, PCT, 
-//				NearMeButton.WIDTH_PX, PX);
-		
-		
-	
+
+		setWidgetTopHeight(visitedButton, VISITED_TOP_PCT, PCT, 
+				NearMeButton.HEIGHT_PX, PX);
+		setWidgetLeftWidth(visitedButton, VISITED_LEFT_PX, PX, 
+				NearMeButton.WIDTH_PX, PX);
+
+		setWidgetTopHeight(searchPanel, SEARCH_TOP_PCT, PCT, SEARCH_HEIGHT_PX, PX);
+		setWidgetLeftWidth(searchPanel, SEARCH_LEFT_PCT, PCT, SEARCH_WIDTH_PX, PX);
+
+
 		hideChild(directionsPanel);
 		hideChild(listPanel);
-//		hideChild(routePanel);
+		//		hideChild(routePanel);
 		//hideChild(adminPanel);
-				
+
 		mapPanel.setSize("100%", "100%");
 	}
-	
+
 	public void changeListView(int leftEdgePct, int widthPct) {
 		setWidgetLeftWidth(listPanel, leftEdgePct, PCT, widthPct, PCT);
 		setWidgetTopHeight(listPanel, LIST_TOP_PCT, PCT, LIST_HEIGHT_PCT, PCT);
-		
+
 		this.setWidgetLeftWidth(viewPanel, leftEdgePct + widthPct, PCT, 
 				viewPanel.getOffsetWidth(), PX);
 		this.setWidgetLeftWidth(legend, leftEdgePct + widthPct, PCT, 
@@ -175,46 +194,48 @@ public class UI extends LayoutPanel {
 		// This has been pretty annoying.
 		//this.animate(ANIMATE_DURATION);
 	}
-	
+
 	public void updateList(List<Manufacturer> manufacturers) {
 		listPanel.addData(manufacturers);
 	}
-	
+
 	public void changeMapView(int pctViewAreaCoverage) {
 		mapPanel.calculateViewForMap(pctViewAreaCoverage);
 	}
-	
+
 	public void updateMap(List<Manufacturer> manufacturers) {
 		mapPanel.triggerResize();
 		mapPanel.populateMap(manufacturers);
 	}
-	
+
 	public void showLoggedOut() {
 		userPanel.showLoggedOut();
 		listPanel.showLoggedOut();
 		mapPanel.showLoggedOut();
+		hideChild(visitedButton);
 	}
-	
+
 	public void showLoggedIn(UserData userData){
 		userPanel.showLoggedIn(userData);
 		listPanel.showLoggedIn();
 		mapPanel.showLoggedIn();
-		
+		showChild(visitedButton, VisitedButton.HEIGHT_PX, VisitedButton.WIDTH_PX);
+
 		// Maybe some other things need to change here too as it develops.
 	}
-	
+
 	public void hideChild(Widget widgetToHide){
 		setWidgetTopHeight(widgetToHide, widgetToHide.getAbsoluteTop(), PX, 0, PCT);
 		setWidgetLeftWidth(widgetToHide, widgetToHide.getAbsoluteLeft(), PX, 0, PCT);		
 	}
-	
+
 	// Intended for use to show adminPanel if user is an admin. Possibly additional menus
 	// for userData
-	public void showChild(Widget widgetToShow, int heightPercent, int widthPercent){
+	public void showChild(Widget widgetToShow, int heightPixels, int widthPixels){
 		setWidgetTopHeight(widgetToShow, widgetToShow.getAbsoluteTop(), PX, 
-				heightPercent, PCT);
+				heightPixels, PX);
 		setWidgetLeftWidth(widgetToShow, widgetToShow.getAbsoluteLeft(), PX, 
-				widthPercent, PCT);
+				widthPixels, PX);
 	}
 
 	public void toggleViewButtons(int listWidth) {
@@ -230,47 +251,60 @@ public class UI extends LayoutPanel {
 	public void showNearMeCircle(MyLocation myLocation) {
 		mapPanel.displayNearMe(myLocation);		
 	}
-	
+
 	public void hideNearMeCircle() {
 		mapPanel.clearNearMe();
 	}
-	
+
 	public void showRoutePanel(RoutePanel aRoutePanel) {
 		routePanel = aRoutePanel;
 		add(routePanel);
 		setWidgetTopHeight(routePanel, LIST_TOP_PCT, PCT, LIST_HEIGHT_PCT, PCT);
 		setWidgetLeftWidth(routePanel, ROUTE_PANEL_LEFT_PCT, PCT, ROUTE_PANEL_WIDTH_PIXELS, PX);
-		
+
 		hideChild(makeRouteButton);
+		hideChild(searchPanel);
+		hideChild(nearMeButton);
 		legend.setVisible(false);
 		viewPanel.setVisible(false);
-		
+
 	}
-	
+
 	public void hideRoutePanel() {
 		this.remove(routePanel);
-		showControls();		
+		makeRouteButton.setDown(false);
+		showControls();	
 	}
 
 	private void showControls() {
 		viewPanel.setVisible(true);
 		legend.setVisible(true);
-		setWidgetTopHeight(makeRouteButton, 2, PCT, 6, PCT);
-		setWidgetLeftWidth(makeRouteButton, 2, PCT, 10, PCT);
+		setWidgetTopHeight(makeRouteButton, ROUTE_BUTTON_TOP_PCT, PCT, 
+				MakeRouteButton.HEIGHT_PX, PX);
+		setWidgetLeftWidth(makeRouteButton, ROUTE_BUTTON_LEFT_PX, PX, 
+				MakeRouteButton.WIDTH_PX, PX);
+
+		setWidgetTopHeight(nearMeButton, NEAR_BUTTON_TOP_PCT, PCT, 
+				NearMeButton.HEIGHT_PX, PX);
+		setWidgetLeftWidth(nearMeButton, NEAR_BUTTON_LEFT_PX, PX, 
+				NearMeButton.WIDTH_PX, PX);
+
+		setWidgetTopHeight(searchPanel, SEARCH_TOP_PCT, PCT, SEARCH_HEIGHT_PX, PX);
+		setWidgetLeftWidth(searchPanel, SEARCH_LEFT_PCT, PCT, SEARCH_WIDTH_PX, PX);
 	}
-	
+
 	public void getDirections(Route route) {
 		directionsPanel.displayRoute(route);
 	}
-	
+
 	public void showRoute() {		
 		setWidgetTopHeight(directionsPanel, LIST_TOP_PCT, PCT, LIST_HEIGHT_PCT, PCT);
 		setWidgetLeftWidth(directionsPanel, DIRECTIONS_LEFT_PCT, PCT, DIRECTIONS_WIDTH_PCT, PCT);
-		
+
 		// TODO: Zoom map to include starting point. Start point is in RoutePanel.
 		this.remove(routePanel);
 	}
-	
+
 	public void hideRoute() {
 		directionsPanel.clearRoute();
 		hideChild(directionsPanel);
@@ -278,9 +312,30 @@ public class UI extends LayoutPanel {
 		changeListView(DIRECTIONS_LEFT_PCT, HIDE_LIST_VALUE);	
 		toggleViewButtons(HIDE_LIST_VALUE);		
 	}
-	
+
 	public void selectOnMap(Manufacturer manufacturer){
 		mapPanel.bounceMarker(manufacturer);
+	}
+
+	public void moveSearch(int defaultListLeft) {
+
+		double nearLeft = (Window.getClientWidth() / 100 * defaultListLeft)	+ SEARCH_WIDTH_PX;
+		double routeLeft = nearLeft + NearMeButton.WIDTH_PX + NearMeButton.RIGHT_PX;
+		double visLeft = routeLeft + VisitedButton.WIDTH_PX + VisitedButton.RIGHT_PX;
+
+		setWidgetTopHeight(searchPanel, SEARCH_TOP_PCT, PCT, SEARCH_HEIGHT_PX, PX);
+		setWidgetLeftWidth(searchPanel, defaultListLeft, PCT, SEARCH_WIDTH_PX, PX);
+
+		setWidgetTopHeight(makeRouteButton, ROUTE_BUTTON_TOP_PCT, PCT, 
+				MakeRouteButton.HEIGHT_PX, PX);
+		setWidgetLeftWidth(makeRouteButton, routeLeft, PX, MakeRouteButton.WIDTH_PX, PX);
+
+		setWidgetTopHeight(nearMeButton, NEAR_BUTTON_TOP_PCT, PCT, NearMeButton.HEIGHT_PX, PX);
+		setWidgetLeftWidth(nearMeButton, nearLeft, PX, NearMeButton.WIDTH_PX, PX);
+
+		setWidgetTopHeight(visitedButton, VISITED_TOP_PCT, PCT, VisitedButton.HEIGHT_PX, PX);
+		setWidgetLeftWidth(visitedButton, visLeft, PX, VisitedButton.WIDTH_PX, PX);
+
 	}
 
 }

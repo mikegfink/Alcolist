@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.client.ui.buttons.CloseButton;
+import com.lamchop.alcolist.client.ui.buttons.SearchButton;
 
 import static com.google.gwt.dom.client.Style.Unit.PCT;
 import static com.google.gwt.dom.client.Style.Unit.PX;
@@ -33,14 +34,13 @@ public class SearchPanel extends LayoutPanel{
 	private static final int CLEARSEARCH_TOP_PX = 4;
 	private static final int CLEARSEARCH_HEIGHT_PX = 26;
 	private static final int CLEARSEARCH_CENTRE_PX = 4;
-	private static final int SEARCHBUTTON_WIDTH_PX = 75;
 
 	private static final int SEARCH_BAR_LEFT_PX = 0;
 
 
 	private MultiWordSuggestOracle oracle;
 	private AppDataController theAppDataController;
-	private Button searchButton;
+	private SearchButton searchButton;
 	private SuggestBox textBox;
 	private CloseButton clearSearchButton;
 	private LayoutPanel searchBar;
@@ -54,7 +54,7 @@ public class SearchPanel extends LayoutPanel{
 	private void initSearchWidgets() {
 		textBox = new SuggestBox();
 		textBox.addStyleDependentName("search");
-		searchButton = new Button();
+		searchButton = new SearchButton();
 		clearSearchButton = new CloseButton();
 		searchBar = new LayoutPanel();
 		placeSearchWidgets();
@@ -63,10 +63,9 @@ public class SearchPanel extends LayoutPanel{
 
 
 	private void placeSearchWidgets() {
-		searchButton.setText("Search");
 		this.add(searchButton);
 		this.setWidgetLeftWidth(searchButton, SUGGEST_BOX_WIDTH_PX, PX, 
-				SEARCHBUTTON_WIDTH_PX, PX);
+				SearchButton.WIDTH_PX, PX);
 
 		addSearchBar();
 

@@ -57,7 +57,6 @@ public class ListPanel extends LayoutPanel {
 	private Column<Manufacturer, String> extraInfo;
 	private Manufacturer currentSelected;
 	private UIController theUIController;
-	private NearMeButton nearMeButton;
 	private Manufacturer showingInfo;
 
 	public ListPanel(final AppDataController theAppDataController, UIController theUIController) {
@@ -66,10 +65,6 @@ public class ListPanel extends LayoutPanel {
 		listGrid.setEmptyTableWidget(new Label("No Results Found"));
 		
 		this.theUIController = theUIController;
-		
-		searchPanel = new SearchPanel(theAppDataController);
-		add(searchPanel);
-		this.setWidgetTopHeight(searchPanel, 0, PCT, 35, PX);
 
 		addDataProvider();
 		list = dataProvider.getList();
@@ -89,7 +84,7 @@ public class ListPanel extends LayoutPanel {
 	    addSelectionModel();
 	    
 
-		this.setWidgetBottomHeight(listGrid, 0, PCT, 90, PCT);
+		this.setWidgetBottomHeight(listGrid, 0, PCT, 100, PCT);
 
 	}
 
