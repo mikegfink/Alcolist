@@ -3,6 +3,7 @@ package com.lamchop.alcolist.client.ui;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -34,7 +35,8 @@ public class Legend extends LayoutPanel {
 		//to get rid of popup labels
 	    addMouseOutHandler();
 	    
-		legend = new CellTable<String>();
+	    CellTableResource resource = GWT.create(CellTableResource.class);
+		legend = new CellTable<String>(3, resource);
 		this.theAppDataController = theAppDataController;
 		legendLabel = new PopupPanel();
 		init();
@@ -50,6 +52,7 @@ public class Legend extends LayoutPanel {
 		
 		legend.addColumn(icons);
 		legend.setRowData(0, TYPES);
+		legend.setSize("32px", "100px");
 		add(legend);
 		
 		final SingleSelectionModel<String> selectionModel = addSelectionHandler();

@@ -131,12 +131,10 @@ public class RouteLocationPanel extends LayoutPanel {
 		
 		textBox.addKeyDownHandler(new KeyDownHandler() {
 		      public void onKeyDown(KeyDownEvent event) {
-		        if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+		        if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER || event.getNativeKeyCode() == KeyCodes.KEY_TAB) {
 		        	findLocationAddress(textBox.getValue());
 		        	textBox.removeStyleDependentName("locationInvalid");
-		        	textBox.addStyleDependentName("setLocation");
-		        	Window.alert("enter");
-		        		
+		        	textBox.addStyleDependentName("setLocation");       		
 		        }
 		      }
 		});

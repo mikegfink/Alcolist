@@ -15,6 +15,7 @@
 
 .dataGridLastColumn {
   border-right: 1px solid black;
+  padding-right: 2px;
 }
 
 .dataGridEvenRow {
@@ -56,6 +57,7 @@
 .dataGridSelectedRowCell {
   border: selectionBorderWidth solid #628cd5;
 }
+
 
 
 

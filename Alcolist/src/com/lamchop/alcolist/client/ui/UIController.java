@@ -31,7 +31,7 @@ public class UIController implements UIUpdateInterface {
 		theAppDataController = new AppDataController(this);	
 
 		AdminPanel adminPanel = new AdminPanel(theAppDataController);
-		UserPanel userPanel = new UserPanel(theAppDataController);
+		UserPanel userPanel = new UserPanel(theAppDataController, this);
 		ViewPanel viewPanel = new ViewPanel(this);
 		ListPanel listPanel = new ListPanel(theAppDataController, this);
 		Legend legend = new Legend(theAppDataController);
@@ -146,4 +146,7 @@ public class UIController implements UIUpdateInterface {
 		uiPanel.selectOnMap(manufacturer);
 	}
 	
+	public void showSavedRoutes(int x, int y) {
+		new SavedRoutesPopup(theAppDataController).setPopupPosition(x, y);
+	}
 }

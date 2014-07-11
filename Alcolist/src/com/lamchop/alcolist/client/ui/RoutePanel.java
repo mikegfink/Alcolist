@@ -18,32 +18,14 @@ import static com.google.gwt.dom.client.Style.Unit.PX;
 public class RoutePanel extends LayoutPanel {
 	
 	private static final int GETROUTEBUTTON_WIDTH_PX = 75;
-
-
 	private static final int CANCELBUTTON_WIDTH_PX = 57;
-
-
 	private static final int ADDLOCATION_LEFT_POSITION_PX = 250;
-
-
 	private static final int ADDLOCATION_BUTTON_WIDTH_PX = 92;
-
-
 	private static final int PANEL_PADDING = 20;
-
-
 	private static final int LOCATION_PANEL_WIDTH_PX = 310;
-
-
 	private static final int AGAINST_EDGE = 0;
-
-
 	private static final int DISTANCE_FROM_TOP_PX = 50;
-
-
 	private static final int LOCATION_PANEL_HEIGHT_PX = 30;
-
-
 	private static final int MAX_LOCATIONS = 10;
 	
 	

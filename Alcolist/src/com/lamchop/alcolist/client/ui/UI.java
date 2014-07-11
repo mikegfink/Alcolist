@@ -29,7 +29,7 @@ public class UI extends LayoutPanel {
 	private static final double TITLE_WIDTH_PCT = 80;
 	private static final double TITLE_LEFT_PCT = 0;
 	private static final double LEGEND_LEFT_PCT = 5;
-	private static final double LEGEND_WIDTH_PIXELS = 80;
+	private static final double LEGEND_WIDTH_PIXELS = 32;
 	private static final double LEGEND_TOP_PCT = 25;
 	private static final double LEGEND_HEIGHT_PIXELS = 170;
 	private static final double ADMIN_BOT_PCT = 3;
@@ -167,6 +167,7 @@ public class UI extends LayoutPanel {
 		userPanel.showLoggedIn(userData);
 		listPanel.showLoggedIn();
 		mapPanel.showLoggedIn();
+		
 		// Maybe some other things need to change here too as it develops.
 	}
 	
