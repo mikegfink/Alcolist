@@ -84,11 +84,8 @@ public class FacebookHandler implements ClickHandler {
 		} else if (sender.getClass() == FacebookShareButton.class) {
 			FacebookShareButton facebookShare = (FacebookShareButton) sender;
 			shareWithFacebook(facebookShare.getReview(), facebookShare.getManufacturer());
-
 		}
 	}
-
-	
 
 	private void logout() {
 		Auth.get().clearAllTokens();
@@ -120,8 +117,8 @@ public class FacebookHandler implements ClickHandler {
 			}
 
 			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Error:\n" + caught.getMessage()); // TODO: Replace with handleError that does something useful
+			public void onFailure(Throwable reason) {
+				handleError(reason);
 			}
 		});
 	}
@@ -154,7 +151,7 @@ public class FacebookHandler implements ClickHandler {
 
 		final Callback<JSONObject, Throwable> callback = new Callback<JSONObject, Throwable>() {
 			public void onFailure(Throwable reason) {
-				Window.alert(reason.getMessage());
+				handleError(reason);
 			}
 
 			public void onSuccess(JSONObject result) {
@@ -219,7 +216,7 @@ public class FacebookHandler implements ClickHandler {
 			}
 
 			public void onFailure(Throwable reason) {
-				GWT.log(reason.getMessage());
+				handleError(reason);
 			}
 		});
 	}
@@ -245,7 +242,7 @@ public class FacebookHandler implements ClickHandler {
 
 		final Callback<JSONObject, Throwable> callback = new Callback<JSONObject, Throwable>() {
 			public void onFailure(Throwable reason) {
-				GWT.log(reason.getMessage());
+				handleError(reason);
 			}
 
 			public void onSuccess(JSONObject result) {
@@ -254,5 +251,9 @@ public class FacebookHandler implements ClickHandler {
 		};
 		
 		makeRequest(builder, requestData, callback);
+	}
+	
+	private void handleError(Throwable error) {
+		GWT.log(error.getMessage());
 	}
 }
