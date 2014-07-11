@@ -198,7 +198,8 @@ public class DirectionsPanel extends LayoutPanel {
 	
 	public void onLoggedOut() {
 		if (!appDataController.isUserLoggedIn()) {
-			saveButton.removeFromParent();
+			setWidgetTopHeight(saveButton, SAVE_TOP_PX, PX, 0, PX);
+			setWidgetRightWidth(saveButton, SAVE_RIGHT_PX, PX, 0, PX);
 		}
 	}
 }
