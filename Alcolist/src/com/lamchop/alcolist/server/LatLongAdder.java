@@ -21,8 +21,8 @@ public class LatLongAdder {
 	private static final String GEOCODER_REQUEST_PREFIX_FOR_JSON = "https://maps.googleapis.com/maps/api/geocode/json?";
 	//private static final String API_KEY = "AIzaSyCk0q9Lk0DUIsZFYQFyRXxDQ_UqnjqbXlg";
 	//private static final String API_KEY = "AIzaSyBcZ7-MM_f_wu9jzveXCfNUJycr4gc_HxY";
-	private static final String API_KEY = "AIzaSyCts_tPtnix5B3ve3Kb7GuD4oPHcufRqoM";
-	//private static final String API_KEY = "AIzaSyAh7We3t3S443OsQSiogLWqyOSHPoTFeko";
+	//private static final String API_KEY = "AIzaSyCts_tPtnix5B3ve3Kb7GuD4oPHcufRqoM";
+	private static final String API_KEY = "AIzaSyAh7We3t3S443OsQSiogLWqyOSHPoTFeko";
 	// Test(1, 2, 3) production(4) keys.
 	
 	public LatLongAdder() {

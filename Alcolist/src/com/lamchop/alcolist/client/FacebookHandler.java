@@ -25,6 +25,7 @@ import com.lamchop.alcolist.client.ui.buttons.FacebookLoginButton;
 import com.lamchop.alcolist.client.ui.buttons.FacebookLogoutButton;
 import com.lamchop.alcolist.client.ui.buttons.FacebookShareButton;
 import com.lamchop.alcolist.shared.Manufacturer;
+import com.lamchop.alcolist.shared.Rating;
 import com.lamchop.alcolist.shared.Review;
 
 
@@ -83,10 +84,33 @@ public class FacebookHandler implements ClickHandler {
 			logout();
 		} else if (sender.getClass() == FacebookShareButton.class) {
 			FacebookShareButton facebookShare = (FacebookShareButton) sender;
-			if (facebookShare.getReview() != null) {
+			if (facebookShare.getReview() != null && facebookShare.getRating() != null) {
+				shareWithFacebook(facebookShare.getReview(), facebookShare.getRating(),
+						facebookShare.getManufacturer());
+			} else if (facebookShare.getReview() != null) {
 				shareWithFacebook(facebookShare.getReview(), facebookShare.getManufacturer());
+			} else if (facebookShare.getRating() != null) {
+				shareWithFacebook(facebookShare.getRating(), facebookShare.getManufacturer());
 			}
 		}
+	}
+
+	private void shareWithFacebook(Rating rating, Manufacturer manufacturer) {
+		String post = "I give this place: " + rating.getRating() + " stars out of 5.";
+		
+		sendToFacebook(post, manufacturer);
+		
+	}
+
+	private void shareWithFacebook(Review review, Rating rating,
+			Manufacturer manufacturer) {
+		String post = review.getReview() + "/n" + "I give this place: " + 
+			rating.getRating() + " stars out of 5.";
+		sendToFacebook(post, manufacturer);	
+	}
+	
+	private void shareWithFacebook(final Review review, final Manufacturer manufacturer) {
+		sendToFacebook(review.getReview(), manufacturer);
 	}
 
 	private void logout() {
@@ -203,7 +227,7 @@ public class FacebookHandler implements ClickHandler {
 	 * @param review  The content to share on Facebook
 	 * @param manufacturer 
 	 */
-	private void shareWithFacebook(final Review review, final Manufacturer manufacturer) {
+	private void sendToFacebook(final String post, final Manufacturer manufacturer) {
 		final AuthRequest req = new AuthRequest(FACEBOOK_AUTH_URL, FACEBOOK_CLIENT_ID)
 		.withScopes(FACEBOOK_PUBLISH_SCOPE)
 		// Facebook expects a comma-delimited list of scopes
@@ -213,7 +237,7 @@ public class FacebookHandler implements ClickHandler {
 		authorizeFacebook(req, new Callback<String, Throwable>() {
 			public void onSuccess(String token) {
 				appToken = token;
-				makeGraphRequest(review.getReview(), manufacturer);
+				makeGraphRequest(post, manufacturer);
 			}
 
 			public void onFailure(Throwable reason) {
@@ -227,10 +251,15 @@ public class FacebookHandler implements ClickHandler {
 		RequestBuilder builder;
 		final String id = "me/feed/";	
 		String message = "My Review of: " + manufacturer.getName() + "\n" + toShare;
-
+		String website;
+		if (!manufacturer.getWebsite().isEmpty()) {
+			website = manufacturer.getWebsite();
+		} else {
+			website = APP_URL;
+		}
 		String params = "message="
 				+ URL.encodeQueryString(message) +
-				"&link=" + URL.encodeQueryString(APP_URL);
+				"&link=" + URL.encodeQueryString(website);
 		//TODO: Bring the manufacturer in and use the website as the url. 
 
 		String requestData = "access_token=" + appToken;

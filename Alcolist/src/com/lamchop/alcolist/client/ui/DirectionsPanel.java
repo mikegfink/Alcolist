@@ -120,7 +120,7 @@ public class DirectionsPanel extends LayoutPanel {
 			setWidgetRightWidth(saveButton, SAVE_RIGHT_PX, PX, SAVE_WIDTH_PX, PX);
 			saveButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					new SavePanel(route, appDataController).showRelativeTo(saveButton);
+					new SavePanel(route, appDataController).showRelativeTo(closeButton);
 					saveButton.removeFromParent();
 				}
 			});
@@ -150,7 +150,7 @@ public class DirectionsPanel extends LayoutPanel {
 					error.setWidget(new HTML("Direction result not received. Direction " +
 							"status was: " + status.value() + "</br> Click anywhere to close."));
 					error.setAutoHideEnabled(true);
-					error.show();
+					error.center();
 					ui.hideRoute();
 				}
 			}
