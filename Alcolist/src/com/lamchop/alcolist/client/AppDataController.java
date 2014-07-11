@@ -5,11 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.maps.client.base.LatLng;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
-import com.lamchop.alcolist.client.ui.MyLocation;
 import com.lamchop.alcolist.client.ui.UIUpdateInterface;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Rating;
@@ -18,7 +15,6 @@ import com.lamchop.alcolist.shared.Route;
 
 public class AppDataController {
 
-	private static final int METER_TO_LATLNG = 10000;
 	private AppData appData;
 	private UIUpdateInterface theUI;
 	private static final UserDataServiceAsync 
@@ -72,10 +68,10 @@ public class AppDataController {
 	// the server
 	public void initUserData(String userID, String userName) {
 		appData.newUserData(userID, userName);
-		getRatings(userID);
+		retrieveRatings(userID);
 	}
 
-	private void getRatings(final String userID) {
+	private void retrieveRatings(final String userID) {
 		userDataService.getRatings(userID, (new AsyncCallback<List<Rating>>() {
 			public void onFailure(Throwable error) {
 				handleError(error);
@@ -83,12 +79,12 @@ public class AppDataController {
 
 			public void onSuccess(List<Rating> result) {
 				updateUserDataRatings(result);
-				getReviews(userID);
+				retrieveReviews(userID);
 			}
 		}));
 	}
 
-	private void getReviews(final String userID) {
+	private void retrieveReviews(final String userID) {
 		userDataService.getReviews(userID, (new AsyncCallback<List<Review>>() {
 			public void onFailure(Throwable error) {
 				handleError(error);
@@ -96,12 +92,12 @@ public class AppDataController {
 
 			public void onSuccess(List<Review> result) {
 				updateUserDataReviews(result);
-				getRoutes(userID);
+				retrieveRoutes(userID);
 			}
 		}));
 	}
 
-	private void getRoutes(final String userID) {
+	private void retrieveRoutes(final String userID) {
 		userDataService.getRoutes(userID, (new AsyncCallback<List<Route>>() {
 			public void onFailure(Throwable error) {
 				handleError(error);
@@ -342,18 +338,30 @@ public class AppDataController {
 		return review;
 	}
 
-	public void addRating(int ratingValue, final String manID) {
-		Rating rating = appData.addRating(manID, ratingValue);
-		GWT.log("Rating was: " + rating.getRating() + " for ID: " + manID);
+	public void addRating(int ratingValue, final Manufacturer manufacturer) {
+		Rating rating = appData.addRating(manufacturer, ratingValue);
+		GWT.log("Rating was: " + rating.getRating() + " for ID: " + manufacturer);
+			
 		userDataService.addRating(rating, (new AsyncCallback<Void>() {
 			public void onFailure(Throwable error) {
 				handleError(error);
 			}
 
 			public void onSuccess(Void result) {
-				GWT.log("Rating: added successfully for: Manufacturer ID: " + manID);
+				GWT.log("Rating: added successfully for: Manufacturer ID: " + manufacturer);
 			}
-		}));		
+		}));	
+		
+		manufacturerService.addManufacturer(manufacturer, (new AsyncCallback<Void>() {
+			public void onFailure(Throwable error) {
+				handleError(error);
+				GWT.log("Manufacturer: " + manufacturer.getName() + " failed to update.");
+			}
+
+			public void onSuccess(Void result) {
+				GWT.log("Manufacturer: " + manufacturer.getName() + " stored successfully.");
+			}
+		}));
 	}
 
 	public Review getReview(String manID) {
@@ -366,5 +374,9 @@ public class AppDataController {
 
 	private void handleError(Throwable error) {
 		GWT.log(error.getMessage());
+	}
+	
+	public List<Route> getRoutes() {
+		return appData.getRoutes();
 	}
 }

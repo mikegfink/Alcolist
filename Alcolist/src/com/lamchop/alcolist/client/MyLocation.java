@@ -1,4 +1,4 @@
-package com.lamchop.alcolist.client.ui;
+package com.lamchop.alcolist.client;
 
 import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.shared.GWT;
@@ -8,7 +8,6 @@ import com.google.gwt.geolocation.client.Position.Coordinates;
 import com.google.gwt.geolocation.client.PositionError;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.user.client.Window;
-import com.lamchop.alcolist.client.AppDataController;
 
 public class MyLocation {
 	private Geolocation geolocation;
@@ -21,8 +20,7 @@ public class MyLocation {
 		this.appDataController = appDataController;
 		myLocation = null;
 		geolocation = Geolocation.getIfSupported();
-		if (geolocation == null)
-		{
+		if (geolocation == null) {
 			Window.alert("Sorry your browser doesn't support Geolocation.");
 		}
 		else {
@@ -31,12 +29,10 @@ public class MyLocation {
 	}
 
 	public void findLocation() {
-		geolocation.getCurrentPosition(new Callback<Position, PositionError>()
-				{
+		geolocation.getCurrentPosition(new Callback<Position, PositionError>() {
 
 			@Override
-			public void onSuccess(Position result)
-			{
+			public void onSuccess(Position result) {
 				Coordinates myCoords = result.getCoordinates(); 
 				accuracyInMeters = myCoords.getAccuracy();
 				myLocation = LatLng.newInstance(myCoords.getLatitude(), myCoords.getLongitude());
@@ -44,17 +40,16 @@ public class MyLocation {
 			}
 
 			@Override
-			public void onFailure(PositionError reason)
-			{
+			public void onFailure(PositionError reason)	{
 				GWT.log(reason.getMessage());
 			}
-				});
+		});
 	}
-	
+
 	public LatLng getMyLocation() {
 		return myLocation;
 	}
-	
+
 	public double getAccuracyInMeters() {
 		return accuracyInMeters;
 	}

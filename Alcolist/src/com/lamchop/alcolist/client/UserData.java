@@ -17,7 +17,7 @@ public class UserData {
 	private List<Rating> ratings;
 	private List<Review> reviews;
 	private List<Route> routes;
-	
+
 	public UserData() {
 		this.userID = DEFAULT_USERID;
 		name = DEFAULT_NAME;
@@ -26,17 +26,17 @@ public class UserData {
 		routes = new ArrayList<Route>();
 	}
 	
-	public void add(Rating rating) {
+	public Rating add(Rating rating) {
 		// If manufacturer has a rating, replace it, otherwise add it.
 		for (Rating aRating : ratings) {
 			if (aRating.getManufacturerID().equals(rating.getManufacturerID())) {
 				ratings.remove(aRating);
 				ratings.add(rating);
-				return;
+				return aRating;
 			}
 		}
-		ratings.add(rating);
-		
+		ratings.add(rating);	
+		return null;
 	}
 	
 	public void remove(Rating rating) {
@@ -136,4 +136,15 @@ public class UserData {
 		}	
 		return null;
 	}
+	
+	public List<Route> getRoutes() {
+		return routes;
+	}
+	public List<Rating> getRatings() {
+		return ratings;
+	}
+	public List<Review> getReviews() {
+		return reviews;
+	}
+	
 }

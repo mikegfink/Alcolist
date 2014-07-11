@@ -3,9 +3,14 @@ package com.lamchop.alcolist.client.ui;
 
 import java.util.List;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.lamchop.alcolist.client.AppDataController;
+import com.lamchop.alcolist.client.MyLocation;
 import com.lamchop.alcolist.client.UserData;
 import com.lamchop.alcolist.client.ui.buttons.MakeRouteButton;
+import com.lamchop.alcolist.client.ui.buttons.NearMeButton;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Route;
 
@@ -29,16 +34,31 @@ public class UIController implements UIUpdateInterface {
 		firstTime = true;
 		theAppDataController = new AppDataController(this);	
 
+		createUI();
+		initMap();
+	}
+
+	private void createUI() {
 		AdminPanel adminPanel = new AdminPanel(theAppDataController);
 		UserPanel userPanel = new UserPanel(theAppDataController, this);
 		ViewPanel viewPanel = new ViewPanel(this);
 		ListPanel listPanel = new ListPanel(theAppDataController, this);
 		Legend legend = new Legend(theAppDataController);
 		MakeRouteButton makeRouteButton = new MakeRouteButton(this);
+		final NearMeButton nearMeButton = new NearMeButton(theAppDataController);
+		nearMeButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if (nearMeButton.isDown()) {
+					theAppDataController.showNearMe();
+				}
+				else {
+					theAppDataController.clearNearMe();
+				}
+			}
+		});
 //		RoutePanel routePanel = new RoutePanel(theAppDataController, this);
-		uiPanel = new UI(adminPanel, userPanel, viewPanel, listPanel, legend, makeRouteButton);
-		
-		initMap();
+		uiPanel = new UI(adminPanel, userPanel, viewPanel, listPanel, legend, 
+				makeRouteButton, nearMeButton);
 	}
 	
 	public void initMap() {
@@ -105,7 +125,11 @@ public class UIController implements UIUpdateInterface {
 	}
 
 	public void showReviewPanel(Manufacturer manufacturer) {
-		new ReviewPanel(manufacturer, theAppDataController, this).center();
+		int left = 35 + Window.getClientWidth() * (DEFAULT_LIST_LEFT + DEFAULT_LIST_WIDTH) / 100;
+		int top = Window.getClientHeight() * 35 / 100;
+		ReviewPanel reviewPanel = new ReviewPanel(manufacturer, theAppDataController, this);
+		reviewPanel.setPopupPosition(left, top);
+		reviewPanel.show();
 	}
 	
 	// Really sad about this. Will try to refactor it out.

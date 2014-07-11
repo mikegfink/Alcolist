@@ -63,7 +63,6 @@ public class ListPanel extends LayoutPanel {
 	private VisitedButton visitedButton;
 	
 
-
 	public ListPanel(final AppDataController theAppDataController, UIController theUIController) {
 		DataGridResource resource = GWT.create(DataGridResource.class);
 		listGrid = new DataGrid<Manufacturer>(PAGESIZE, resource);
@@ -241,9 +240,10 @@ public class ListPanel extends LayoutPanel {
 		    	  if (extraInfo.getValue(object) == "<<")
 		    		  showingInfo = null;
 		    	  
-		    	  else showingInfo = object;
-		    	  
-		    	  //TODO add popup!
+		    	  else {
+		    		  showingInfo = object;
+		    		  theUIController.showReviewPanel(showingInfo);
+		    	  }
 		      }
 		    });
 //		

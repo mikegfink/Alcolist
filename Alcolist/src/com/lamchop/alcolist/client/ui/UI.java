@@ -6,13 +6,17 @@ import static com.google.gwt.dom.client.Style.Unit.PX;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.lamchop.alcolist.client.MyLocation;
 import com.lamchop.alcolist.client.UserData;
 import com.lamchop.alcolist.client.ui.buttons.MakeRouteButton;
+import com.lamchop.alcolist.client.ui.buttons.NearMeButton;
 import com.lamchop.alcolist.client.resources.Images;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Route;
@@ -51,6 +55,10 @@ public class UI extends LayoutPanel {
 	private static final double VIEWPANEL_HEIGHT_PIXELS = 98;
 	private static final double VIEWPANEL_LEFT_PCT = 5;
 	private static final double VIEWPANEL_WIDTH_PIXELS = 34;
+	private static final double ROUTE_BUTTON_TOP_PCT = 0;
+	private static final double ROUTE_BUTTON_LEFT_PCT = 0;
+	private static final double NEAR_BUTTON_TOP_PCT = 0;
+	private static final double NEAR_BUTTON_LEFT_PCT = 0;
 	
 	
 	// FIELDS
@@ -65,9 +73,10 @@ public class UI extends LayoutPanel {
 	private MakeRouteButton makeRouteButton;
 	private RoutePanel routePanel;
 	private DirectionsPanel directionsPanel;
+	private NearMeButton nearMeButton;
 	
 	public UI(AdminPanel adminPanel, UserPanel userPanel, ViewPanel viewPanel, ListPanel listPanel, 
-			Legend legend, MakeRouteButton makeRouteButton) {
+			Legend legend, MakeRouteButton makeRouteButton, NearMeButton nearMeButton) {
 		this.mapPanel = null;
 		this.adminPanel = adminPanel;
 		this.userPanel = userPanel;
@@ -75,6 +84,7 @@ public class UI extends LayoutPanel {
 		this.listPanel = listPanel;
 		this.legend = legend;
 		this.makeRouteButton = makeRouteButton;
+		this.nearMeButton = nearMeButton;
 //		this.routePanel = routePanel;
 	}
 
@@ -107,8 +117,9 @@ public class UI extends LayoutPanel {
 		this.add(listPanel);
 		this.add(makeRouteButton);
 		this.add(directionsPanel);
+		this.add(nearMeButton);
 		
-	}
+	}		
 
 	private void layoutChildren() {
 		// All the magic numbers live here.
@@ -127,8 +138,22 @@ public class UI extends LayoutPanel {
 		setWidgetTopHeight(viewPanel, VIEWPANEL_TOP_PCT, PCT, VIEWPANEL_HEIGHT_PIXELS, PX);
 		setWidgetLeftWidth(viewPanel, VIEWPANEL_LEFT_PCT, PCT, VIEWPANEL_WIDTH_PIXELS, PX);
 		
-		setWidgetTopHeight(makeRouteButton, 2, PCT, 6, PCT);
-		setWidgetLeftWidth(makeRouteButton, 2, PCT, 10, PCT);
+		setWidgetTopHeight(makeRouteButton, ROUTE_BUTTON_TOP_PCT, PCT, 
+				MakeRouteButton.HEIGHT_PX, PX);
+		setWidgetLeftWidth(makeRouteButton, ROUTE_BUTTON_LEFT_PCT, PCT, 
+				MakeRouteButton.WIDTH_PX, PX);
+		
+		setWidgetTopHeight(nearMeButton, NEAR_BUTTON_TOP_PCT, PCT, 
+				NearMeButton.HEIGHT_PX, PX);
+		setWidgetLeftWidth(nearMeButton, NEAR_BUTTON_LEFT_PCT, PCT, 
+				NearMeButton.WIDTH_PX, PX);
+		
+//		setWidgetTopHeight(searchPanel, NEAR_BUTTON_TOP_PCT, PCT, 
+//				NearMeButton.HEIGHT_PX, PX);
+//		setWidgetLeftWidth(searchPanel, NEAR_BUTTON_LEFT_PCT, PCT, 
+//				NearMeButton.WIDTH_PX, PX);
+		
+		
 	
 		hideChild(directionsPanel);
 		hideChild(listPanel);
@@ -241,6 +266,8 @@ public class UI extends LayoutPanel {
 	public void showRoute() {		
 		setWidgetTopHeight(directionsPanel, LIST_TOP_PCT, PCT, LIST_HEIGHT_PCT, PCT);
 		setWidgetLeftWidth(directionsPanel, DIRECTIONS_LEFT_PCT, PCT, DIRECTIONS_WIDTH_PCT, PCT);
+		
+		// TODO: Zoom map to include starting point. Start point is in RoutePanel.
 		this.remove(routePanel);
 	}
 	

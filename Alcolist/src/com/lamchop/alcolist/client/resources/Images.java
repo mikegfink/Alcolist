@@ -55,10 +55,40 @@ public interface Images extends ClientBundle {
 	@Source("titleImage.png")
 	ImageResource titleImage();
 	
+	@Source("reviewDown.png")
+	ImageResource reviewDown();
+	
+	@Source("reviewUp.png")
+	ImageResource reviewUp();
+	
+	@Source("routesDown.png")
+	ImageResource routesDown();
+	
+	@Source("routesUp.png")
+	ImageResource routesUp();
+	
+	@Source("searchUp.png")
+	ImageResource searchUp();
+	
+	@Source("searchDown.png")
+	ImageResource searchDown();
+	
+	@Source("moreInfoDown.png")
+	ImageResource moreInfoDown();
+	
+	@Source("moreInfoUp.png")
+	ImageResource moreInfoUp();
+
+	@Source("closeUp3.png")
+	ImageResource closeUp();
+	
 	@Source("closeDown2.png")
 	ImageResource closeDown();
 	
-	@Source("closeUp3.png")
-	ImageResource closeUp();
+	@Source("directionsUp.png")
+	ImageResource directionsUp();
+	
+	@Source("directionsDown.png")
+	ImageResource directionsDown();
 }
 

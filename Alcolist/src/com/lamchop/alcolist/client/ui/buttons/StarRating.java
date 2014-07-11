@@ -37,11 +37,13 @@ public class StarRating extends Composite {
 
 	private String manID;
 
+	private Manufacturer manufacturer;
+
 	private static final int STAR_COUNT = 5;
 
 	public StarRating(Manufacturer manufacturer, UIController theUIController) {
 		this.manID = manufacturer.getID();
-
+		this.manufacturer = manufacturer;
 		this.appDataController = theUIController.getTheAppDataController();
 		getRating();
 
@@ -109,7 +111,7 @@ public class StarRating extends Composite {
 	}
 
 	public void setRating(int value) {
-		appDataController.addRating(value, manID);
+		appDataController.addRating(value, manufacturer);
 		getRating();
 		starValue = rating.getRating();		
 		displayRating(starValue);

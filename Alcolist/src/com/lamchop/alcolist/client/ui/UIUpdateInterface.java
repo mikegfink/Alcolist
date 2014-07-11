@@ -2,6 +2,7 @@ package com.lamchop.alcolist.client.ui;
 
 import java.util.List;
 
+import com.lamchop.alcolist.client.MyLocation;
 import com.lamchop.alcolist.client.UserData;
 import com.lamchop.alcolist.shared.Manufacturer;
 
