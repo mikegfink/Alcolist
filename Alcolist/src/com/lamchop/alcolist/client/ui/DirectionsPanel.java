@@ -58,6 +58,7 @@ public class DirectionsPanel extends LayoutPanel {
 	private HTML titleBar;
 	private AppDataController appDataController;
 	private Button saveButton;
+	private Button deleteButton;
 	private Route theRoute;
 
 	public DirectionsPanel(AlcolistMapWidget theMapWidget, final UI ui, 
@@ -96,6 +97,7 @@ public class DirectionsPanel extends LayoutPanel {
 		add(directionsDisplay);
 		add(closeButton);
 		add(saveButton);
+		add(deleteButton);
 	}
 
 	private void createChildren() {
@@ -103,6 +105,7 @@ public class DirectionsPanel extends LayoutPanel {
 		titleBar = new HTML("<b>Directions</b>");
 		closeButton = new CloseButton();
 		saveButton = new Button("Save");
+		deleteButton = new Button("Delete");
 	}
 
 	private void setupCloseButton() {

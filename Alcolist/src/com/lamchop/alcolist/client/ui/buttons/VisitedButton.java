@@ -29,7 +29,7 @@ public class VisitedButton extends ToggleButton {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				label = new PopupPanel();
-		        label.setWidget(new HTML("Near Me" ));
+		        label.setWidget(new HTML("Visited" ));
 				label.setAutoHideEnabled(true);
 				int x = findXPosition();
 			    int y = findYPosition();
