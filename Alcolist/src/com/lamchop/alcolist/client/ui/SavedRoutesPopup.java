@@ -24,12 +24,12 @@ public class SavedRoutesPopup extends PopupPanel {
 		this.theUIController = theUIController;
 		routeList = new CellList<String>(new ClickableTextCell());
 		
-		//routes = theAppDataController.getRoutes();
+		routes = theAppDataController.getRoutes();
 		routeNames = new ArrayList<String>();
 		for (Route route: routes)
 			routeNames.add(route.getRouteName());
 		routeList.setRowData(0, routeNames);
-		this.add(routeList);
+		setWidget(routeList);
 		routeList.setSize("100%", "100%");
 		
 		addClickHandler();

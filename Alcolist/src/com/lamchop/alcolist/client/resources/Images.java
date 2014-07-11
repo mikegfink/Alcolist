@@ -70,10 +70,10 @@ public interface Images extends ClientBundle {
 	@Source("titleImage.png")
 	ImageResource titleImage();
 	
-	@Source("reviewDown.png")
+	@Source("reviewUp.png")
 	ImageResource reviewDown();
 	
-	@Source("reviewUp.png")
+	@Source("reviewDown.png")
 	ImageResource reviewUp();
 	
 	@Source("routesDown.png")
@@ -100,10 +100,10 @@ public interface Images extends ClientBundle {
 	@Source("closeDown2.png")
 	ImageResource closeDown();
 	
-	@Source("directionsUp.png")
+	@Source("directionsDown.png")
 	ImageResource directionsUp();
 	
-	@Source("directionsDown.png")
+	@Source("directionsUp.png")
 	ImageResource directionsDown();
 }
 

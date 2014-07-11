@@ -32,6 +32,14 @@ final class AppData {
 	public Boolean isLoggedIn() {
 		return !userData.isDefault();
 	}
+	
+	public void setAdmin(boolean isAdmin) {
+		userData.setAdmin(isAdmin);
+	}
+	
+	public boolean isAdmin() {
+		return userData.isAdmin();
+	}
 
 	public UserData getUserData() {
 		return userData;
@@ -97,32 +105,5 @@ final class AppData {
 
 	public List<Route> getRoutes() {
 		return userData.getRoutes();
-	}
-	
-	public List<Manufacturer> getVisited() {
-		List<Rating> ratings = userData.getRatings();
-		List<Review> reviews = userData.getReviews();
-		
-		List<String> manIDs = new ArrayList<String>();
-		List<Manufacturer> visited = new ArrayList<Manufacturer>();
-		
-		for (Rating rating : ratings) {
-			manIDs.add(rating.getManufacturerID());
-		}
-		
-		for (Review review : reviews) {
-			if (!manIDs.contains(review.getManufacturerID())) {
-				manIDs.add(review.getManufacturerID());
-			}
-		}
-		
-		for (String manID : manIDs) {
-			for (Manufacturer manufacturer : manufacturers) {
-				if (manID.equals(manufacturer.getID())) {
-					visited.add(manufacturer);
-				}
-			}
-		}
-		return visited;
 	}
 }

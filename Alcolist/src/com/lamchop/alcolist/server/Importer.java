@@ -51,14 +51,14 @@ public class Importer {
 			}
 		}
 		JDOHandler handler = new JDOHandler();
-		int repeats = 0;
+		List<Manufacturer> completed = new ArrayList<Manufacturer>();
 		for (Manufacturer nextManufacturer : importedManufacturers) {
-			if (importedManufacturers.contains(nextManufacturer)) {
-				repeats++;
+			if (!completed.contains(nextManufacturer)) {
+				completed.add(nextManufacturer);
 			}
 			handler.storeItem(nextManufacturer);
 		}
-		return importedManufacturers.size() - repeats;
+		return completed.size();
 	}
 	
 	private static boolean isValidManufacturer(Manufacturer manufacturer) {

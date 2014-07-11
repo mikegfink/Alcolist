@@ -5,6 +5,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.lamchop.alcolist.client.resources.Images;
 import com.lamchop.alcolist.client.ui.buttons.DirectionsButton;
@@ -12,9 +13,11 @@ import com.lamchop.alcolist.client.ui.buttons.ReviewButton;
 import com.lamchop.alcolist.client.ui.buttons.StarRating;
 import com.lamchop.alcolist.shared.Manufacturer;
 
+import static com.google.gwt.dom.client.Style.Unit.PX;
+
 public class MarkerWindow extends VerticalPanel {
 	
-	private static final int MARKER_WINDOW_WIDTH = 150;
+	private static final int MARKER_WINDOW_WIDTH = 250;
 	private Anchor nameAsLink;
 	private HTML name;
 	private HTML address;
@@ -37,7 +40,8 @@ public class MarkerWindow extends VerticalPanel {
 			setupLoggedIn();
 		}
 		
-		add(address);		
+		add(address);
+		this.setWidth(MARKER_WINDOW_WIDTH + "px");
 	}
 
 	private void setupName() {
@@ -67,12 +71,13 @@ public class MarkerWindow extends VerticalPanel {
 	}
 	private void setupLoggedIn() {
 		DirectionsButton directions = new DirectionsButton(theUIController);
+		ReviewButton review = new ReviewButton(manufacturer, theUIController);
+		review.getElement().getStyle().setPaddingLeft(3, PX);
+		review.getElement().getStyle().setPaddingRight(3, PX);
 		
-		
-		rating.add(new ReviewButton(manufacturer, theUIController));
+		rating.add(review);
 		rating.add(directions);	
-		
-		
+
 		StarRating starRating = new StarRating(manufacturer, theUIController);
 		add(starRating);
 	}

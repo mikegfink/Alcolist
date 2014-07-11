@@ -39,7 +39,7 @@ public class ReviewPanel extends PopupPanel {
 	private static final int EDIT_SAVE_BUTTON_RIGHT = 0;
 	private static final int EDIT_SAVE_BUTON_HEIGHT = 27;
 	private static final int EDIT_SAVE_BUTTON_BOT = 3;
-	private static final int TEXT_VISIBLE_LINES = 3;
+	private static final int TEXT_VISIBLE_LINES = 5;
 	private static final int TEXT_CHAR_WIDTH = 63;
 	private static final int FONT_HEIGHT = 12;
 
@@ -70,7 +70,7 @@ public class ReviewPanel extends PopupPanel {
 		createElements();
 		addElements();
 		setWidget(display);
-		
+
 		// TODO Consider not using null
 		if (review != null) {
 			showReview();		
@@ -118,7 +118,7 @@ public class ReviewPanel extends PopupPanel {
 		display.add(shareButton);
 		display.add(infoPanel);
 		display.add(closeButton);
-		
+
 		hideChild(saveButton);
 		hideChild(shareButton);
 		hideChild(reviewBox);
@@ -133,7 +133,7 @@ public class ReviewPanel extends PopupPanel {
 	}
 
 	private void setEditPanelSize() {
-		this.setSize("460px", "335px");
+		this.setSize("460px", "260px");
 	}
 
 	private void setReviewPanelSize() {
@@ -152,7 +152,7 @@ public class ReviewPanel extends PopupPanel {
 	}
 
 	private void showReview() {
-		
+
 		if (loggedIn) {
 			editButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
@@ -173,9 +173,10 @@ public class ReviewPanel extends PopupPanel {
 				EDIT_SAVE_BUTON_HEIGHT, PX);
 		display.setWidgetRightWidth(saveButton, EDIT_SAVE_BUTTON_RIGHT, PCT, 
 				EDIT_SAVE_BUTTON_WIDTH, PX);
-
+	
 		display.setWidgetTopHeight(reviewBox, TEXT_BOX_TOP, PX, TEXT_BOX_HEIGHT, PCT);
 		display.setWidgetLeftWidth(reviewBox, TEXT_BOX_LEFT, PCT, TEXT_BOX_WIDTH, PCT);
+		reviewBox.setFocus(true);
 	}
 
 	private void showReviewDisplay() {
@@ -185,10 +186,11 @@ public class ReviewPanel extends PopupPanel {
 		display.setWidgetTopHeight(reviewText, TEXT_BOX_TOP, PX, TEXT_BOX_HEIGHT, PCT);
 		display.setWidgetLeftWidth(reviewText, TEXT_BOX_LEFT, PCT, TEXT_BOX_WIDTH, PCT);
 
-		if (loggedIn) {
-			display.setWidgetBottomHeight(shareButton, SHARE_BOT_PCT, PCT, SHARE_HEIGHT_PX, PX);
-			display.setWidgetRightWidth(shareButton, SHARE_RIGHT_PX, PX, SHARE_WIDTH_PX, PX);
-			
+		if (loggedIn ) {
+			if (!review.getReview().isEmpty()) {
+				display.setWidgetBottomHeight(shareButton, SHARE_BOT_PCT, PCT, SHARE_HEIGHT_PX, PX);
+				display.setWidgetRightWidth(shareButton, SHARE_RIGHT_PX, PX, SHARE_WIDTH_PX, PX);
+			}
 			display.setWidgetBottomHeight(editButton, EDIT_SAVE_BUTTON_BOT, PCT, 
 					EDIT_SAVE_BUTON_HEIGHT, PX);
 			display.setWidgetRightWidth(editButton, EDIT_SAVE_BUTTON_RIGHT, PCT, 

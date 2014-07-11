@@ -269,5 +269,10 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 		}
 		return routes;
 	}	
+	
+	@Override
+	public Boolean isAdmin(String userID) {
+		return (userID.equals("10101003768931021"));
+	}
 }
 

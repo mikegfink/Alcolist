@@ -39,10 +39,7 @@ public class UI extends LayoutPanel {
 	private static final double TITLE_TOP_PCT = 0;
 	private static final double TITLE_HEIGHT_PCT = 10;
 	private static final double TITLE_LEFT_PCT = 0;
-	private static final double LEGEND_LEFT_PCT = 5;
-	private static final double LEGEND_WIDTH_PIXELS = 32;
-	private static final double LEGEND_TOP_PCT = 32;
-	private static final double LEGEND_HEIGHT_PIXELS = 170;
+	
 	private static final double ADMIN_BOT_PCT = 3;
 	private static final double ADMIN_HEIGHT_PCT = 7;
 	private static final double ADMIN_RIGHT_PCT = 3;
@@ -50,13 +47,20 @@ public class UI extends LayoutPanel {
 	private static final double USERPANEL_HEIGHT_PCT = 10;
 	private static final double USERPANEL_TOP_PCT = 1;
 	private static final double USERPANEL_RIGHT_PCT = 0;
-	private static final double USERPANEL_WIDTH_PCT = 50;
+	private static final double USERPANEL_WIDTH_PCT = 40;
 	private static final double LIST_TOP_PCT = 18;
 	private static final double LIST_HEIGHT_PCT = 73;
 	private static final double VIEWPANEL_TOP_PCT = 18;
 	private static final double VIEWPANEL_HEIGHT_PIXELS = 98;
 	private static final double VIEWPANEL_LEFT_PCT = 5;
-	private static final double VIEWPANEL_WIDTH_PIXELS = 34;	
+	private static final double VIEWPANEL_WIDTH_PIXELS = 34;
+	
+	private static final double LEGEND_LEFT_PCT = 5;
+	private static final double LEGEND_WIDTH_PIXELS = 34;
+	private static final double LEGEND_TOP_PX = (Window.getClientHeight() / 100 *
+			LIST_TOP_PCT) + VIEWPANEL_HEIGHT_PIXELS + 5;
+	private static final double LEGEND_HEIGHT_PIXELS = 170;
+	
 	private static final double SEARCH_WIDTH_PX = 332;
 	private static final double SEARCH_HEIGHT_PX = 34;
 	private static final double SEARCH_LEFT_PCT = 5;
@@ -68,7 +72,7 @@ public class UI extends LayoutPanel {
 	private static final double ROUTE_BUTTON_LEFT_PX = NEAR_BUTTON_LEFT_PX + 
 			NearMeButton.WIDTH_PX + NearMeButton.RIGHT_PX;
 	private static final double VISITED_LEFT_PX = ROUTE_BUTTON_LEFT_PX + 
-			VisitedButton.WIDTH_PX + VisitedButton.RIGHT_PX;
+			VisitedButton.WIDTH_PX + VisitedButton.RIGHT_PX + 1;
 	private static final double VISITED_TOP_PCT = 12;
 
 	// FIELDS
@@ -102,11 +106,12 @@ public class UI extends LayoutPanel {
 		this.nearMeButton = nearMeButton;
 		this.searchPanel = searchPanel;	
 		this.visitedButton = visitedButton;
+		
 	}
 
-	public void init(MapPanel mapPanel) {
+	public void init(MapPanel mapPanel, DirectionsPanel directionsPanel) {
 		this.mapPanel = mapPanel;
-
+		this.directionsPanel = directionsPanel;
 		createChildren();		
 		addChildren();
 		layoutChildren();
@@ -117,9 +122,7 @@ public class UI extends LayoutPanel {
 		int newWidth = (int) (images.titleImage().getWidth() * Window.getClientHeight() * 
 				TITLE_HEIGHT_PCT / (images.titleImage().getHeight() * 100));
 		int newHeight = (int) (Window.getClientHeight() * TITLE_HEIGHT_PCT / 100);
-		title.setPixelSize(newWidth, newHeight);
-
-		directionsPanel = new DirectionsPanel(mapPanel.getMapWidget(), this);
+		title.setPixelSize(newWidth, newHeight);	
 	}
 
 	private void addChildren() {
@@ -143,7 +146,7 @@ public class UI extends LayoutPanel {
 		setWidgetTopHeight(title, TITLE_TOP_PCT, PCT, TITLE_HEIGHT_PCT, PCT);
 		setWidgetLeftWidth(title, TITLE_LEFT_PCT, PCT, TITLE_WIDTH_PCT, PCT);
 
-		setWidgetTopHeight(legend, LEGEND_TOP_PCT, PCT, LEGEND_HEIGHT_PIXELS, PX);
+		setWidgetTopHeight(legend, LEGEND_TOP_PX, PX, LEGEND_HEIGHT_PIXELS, PX);
 		setWidgetLeftWidth(legend, LEGEND_LEFT_PCT, PCT, LEGEND_WIDTH_PIXELS, PX);
 
 		setWidgetBottomHeight(adminPanel, ADMIN_BOT_PCT, PCT, ADMIN_HEIGHT_PCT, PCT);
@@ -166,18 +169,18 @@ public class UI extends LayoutPanel {
 				NearMeButton.WIDTH_PX, PX);
 
 		setWidgetTopHeight(visitedButton, VISITED_TOP_PCT, PCT, 
-				NearMeButton.HEIGHT_PX, PX);
+				VisitedButton.HEIGHT_PX, PX);
 		setWidgetLeftWidth(visitedButton, VISITED_LEFT_PX, PX, 
-				NearMeButton.WIDTH_PX, PX);
+				VisitedButton.WIDTH_PX, PX);
 
 		setWidgetTopHeight(searchPanel, SEARCH_TOP_PCT, PCT, SEARCH_HEIGHT_PX, PX);
 		setWidgetLeftWidth(searchPanel, SEARCH_LEFT_PCT, PCT, SEARCH_WIDTH_PX, PX);
 
-
+		hideChild(visitedButton);
 		hideChild(directionsPanel);
 		hideChild(listPanel);
 		//		hideChild(routePanel);
-		//hideChild(adminPanel);
+		hideChild(adminPanel);
 
 		mapPanel.setSize("100%", "100%");
 	}
@@ -213,15 +216,24 @@ public class UI extends LayoutPanel {
 		listPanel.showLoggedOut();
 		mapPanel.showLoggedOut();
 		hideChild(visitedButton);
+		hideChild(adminPanel);
 	}
 
 	public void showLoggedIn(UserData userData){
 		userPanel.showLoggedIn(userData);
 		listPanel.showLoggedIn();
 		mapPanel.showLoggedIn();
-		showChild(visitedButton, VisitedButton.HEIGHT_PX, VisitedButton.WIDTH_PX);
+		setWidgetTopHeight(visitedButton, VISITED_TOP_PCT, PCT, VisitedButton.HEIGHT_PX, PX);
+		
+		double nearLeft = searchPanel.getAbsoluteLeft()	+ SEARCH_WIDTH_PX; 
+		double routeLeft = nearLeft + NearMeButton.WIDTH_PX + NearMeButton.RIGHT_PX;
+		double visLeft = routeLeft + VisitedButton.WIDTH_PX + VisitedButton.RIGHT_PX;
+		setWidgetLeftWidth(visitedButton, visLeft, PX, VisitedButton.WIDTH_PX, PX);
 
-		// Maybe some other things need to change here too as it develops.
+		if (userData.isAdmin()) {
+			setWidgetBottomHeight(adminPanel, ADMIN_BOT_PCT, PCT, ADMIN_HEIGHT_PCT, PCT);
+			setWidgetRightWidth(adminPanel, ADMIN_RIGHT_PCT, PCT, ADMIN_WIDTH_PCT, PCT);
+		}
 	}
 
 	public void hideChild(Widget widgetToHide){
@@ -306,6 +318,7 @@ public class UI extends LayoutPanel {
 	}
 
 	public void hideRoute() {
+		makeRouteButton.setDown(false);
 		directionsPanel.clearRoute();
 		hideChild(directionsPanel);
 		showControls();
@@ -317,14 +330,15 @@ public class UI extends LayoutPanel {
 		mapPanel.bounceMarker(manufacturer);
 	}
 
-	public void moveSearch(int defaultListLeft) {
-
-		double nearLeft = (Window.getClientWidth() / 100 * defaultListLeft)	+ SEARCH_WIDTH_PX;
-		double routeLeft = nearLeft + NearMeButton.WIDTH_PX + NearMeButton.RIGHT_PX;
-		double visLeft = routeLeft + VisitedButton.WIDTH_PX + VisitedButton.RIGHT_PX;
+	public void moveSearch(int defaultListLeft, boolean loggedIn) {
 
 		setWidgetTopHeight(searchPanel, SEARCH_TOP_PCT, PCT, SEARCH_HEIGHT_PX, PX);
 		setWidgetLeftWidth(searchPanel, defaultListLeft, PCT, SEARCH_WIDTH_PX, PX);
+		forceLayout();
+
+		double nearLeft = searchPanel.getAbsoluteLeft()	+ SEARCH_WIDTH_PX; 
+		double routeLeft = nearLeft + NearMeButton.WIDTH_PX + NearMeButton.RIGHT_PX;
+		double visLeft = routeLeft + VisitedButton.WIDTH_PX + VisitedButton.RIGHT_PX;
 
 		setWidgetTopHeight(makeRouteButton, ROUTE_BUTTON_TOP_PCT, PCT, 
 				MakeRouteButton.HEIGHT_PX, PX);
@@ -333,8 +347,12 @@ public class UI extends LayoutPanel {
 		setWidgetTopHeight(nearMeButton, NEAR_BUTTON_TOP_PCT, PCT, NearMeButton.HEIGHT_PX, PX);
 		setWidgetLeftWidth(nearMeButton, nearLeft, PX, NearMeButton.WIDTH_PX, PX);
 
-		setWidgetTopHeight(visitedButton, VISITED_TOP_PCT, PCT, VisitedButton.HEIGHT_PX, PX);
-		setWidgetLeftWidth(visitedButton, visLeft, PX, VisitedButton.WIDTH_PX, PX);
+		if (loggedIn) {
+			setWidgetTopHeight(visitedButton, VISITED_TOP_PCT, PCT, VisitedButton.HEIGHT_PX, PX);
+			setWidgetLeftWidth(visitedButton, visLeft, PX, VisitedButton.WIDTH_PX, PX);
+		} else {
+			hideChild(visitedButton);
+		}
 
 	}
 

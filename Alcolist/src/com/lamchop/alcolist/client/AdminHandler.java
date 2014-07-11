@@ -62,6 +62,7 @@ public class AdminHandler implements ClickHandler {
 
 			public void onSuccess(Integer result) {
 				totalManufacturers = result;
+				System.out.println("Total manufacturers was: " + result);
 				geocodeData();
 			}
 		});
@@ -76,8 +77,8 @@ public class AdminHandler implements ClickHandler {
 			public void onSuccess(Pair result) {
 				completedManufacturers += result.getBatch();
 				loadedManufacturers = result.getTotal();				
-//				System.out.println(completedManufacturers + " out of " + totalManufacturers);
-//				System.out.println(loadedManufacturers + " loaded in last RPC call");
+				System.out.println(completedManufacturers + " out of " + totalManufacturers);
+				System.out.println(loadedManufacturers + " loaded in last RPC call");
 				
 				if (result.getBatch() == 0) {
 					retries--;

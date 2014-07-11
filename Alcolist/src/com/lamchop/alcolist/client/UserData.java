@@ -17,6 +17,7 @@ public class UserData {
 	private List<Rating> ratings;
 	private List<Review> reviews;
 	private List<Route> routes;
+	private boolean isAdmin;
 
 	public UserData() {
 		this.userID = DEFAULT_USERID;
@@ -24,6 +25,7 @@ public class UserData {
 		ratings = new ArrayList<Rating>();
 		reviews = new ArrayList<Review>();
 		routes = new ArrayList<Route>();
+		isAdmin = false;
 	}
 	
 	public Rating add(Rating rating) {
@@ -145,6 +147,15 @@ public class UserData {
 	}
 	public List<Review> getReviews() {
 		return reviews;
+	}
+	
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	public boolean isAdmin() {
+		// TODO Auto-generated method stub
+		return isAdmin;
 	}
 	
 }

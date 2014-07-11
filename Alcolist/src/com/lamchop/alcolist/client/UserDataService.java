@@ -28,5 +28,6 @@ public interface UserDataService extends RemoteService {
 	public List<Rating> getRatings(String userID);
 	public List<Review> getReviews(String userID);
 	public List<Route> getRoutes(String userID);
+	public Boolean isAdmin(String userID);
 }
 

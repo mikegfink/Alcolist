@@ -11,15 +11,12 @@ public class SavedRoutesButton extends PushButton{
 	public SavedRoutesButton(AppDataController theAppDataController, final UIController theUIController) {
 		this.setText("See Routes");
 		this.addClickHandler(new ClickHandler() {
-
 			@Override
 			public void onClick(ClickEvent event) {
 			    int x = findXPosition();
 			    int y = findYPosition();
-				theUIController.showSavedRoutes( x, y);
-				
+				theUIController.showSavedRoutes( x, y);	
 			}
-			
 		});
 	}
 	

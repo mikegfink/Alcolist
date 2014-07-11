@@ -159,7 +159,6 @@ public class FacebookHandler implements ClickHandler {
 			public void onSuccess(JSONObject result) {
 				JSONValue jsonUserID = result.get(USER_ID);
 				JSONString userID = jsonUserID.isString();
-
 				JSONValue jsonUserName = result.get(USER_NAME);
 				JSONString userName = jsonUserName.isString();
 

@@ -105,6 +105,19 @@ public class AppDataController {
 
 			public void onSuccess(List<Route> result) {
 				updateUserDataRoutes(result);
+				retrieveAdmin(userID);
+			}
+		}));
+	}
+	
+	private void retrieveAdmin(final String userID) {
+		userDataService.isAdmin(userID, (new AsyncCallback<Boolean>() {
+			public void onFailure(Throwable error) {
+				handleError(error);
+			}
+
+			public void onSuccess(Boolean result) {
+				appData.setAdmin(result);
 				sendUserDataToUI();
 			}
 		}));
@@ -173,7 +186,8 @@ public class AppDataController {
 	}
 
 	public void clearUserData() {		
-		appData.clearUserData();	
+		appData.clearUserData();
+		clearVisited();
 		sendUserDataToUI();
 	}	
 
@@ -348,7 +362,7 @@ public class AppDataController {
 			}
 
 			public void onSuccess(Void result) {
-				GWT.log("Rating: added successfully for: Manufacturer ID: " + manufacturer);
+				GWT.log("Rating added successfully for: Manufacturer ID: " + manufacturer);
 			}
 		}));	
 		
@@ -378,5 +392,22 @@ public class AppDataController {
 	
 	public List<Route> getRoutes() {
 		return appData.getRoutes();
+	}
+
+	public void addRoute(Route theRoute, String routeName) {
+		theRoute.setRouteName(routeName);
+		theRoute.setUserID(appData.getUserData().getUserID());
+		
+		appData.addRoute(theRoute);
+		userDataService.addRoute(theRoute, (new AsyncCallback<Void>() {
+			public void onFailure(Throwable error) {
+				handleError(error);
+			}
+
+			public void onSuccess(Void result) {
+				GWT.log("Route added successfully");
+			}
+		}));	
+		
 	}
 }

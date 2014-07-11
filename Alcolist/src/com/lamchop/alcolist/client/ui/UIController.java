@@ -72,6 +72,8 @@ public class UIController implements UIUpdateInterface {
 				}
 			}
 		});
+		
+		
 //		RoutePanel routePanel = new RoutePanel(theAppDataController, this);
 		uiPanel = new UI(adminPanel, userPanel, viewPanel, listPanel, legend, 
 				makeRouteButton, nearMeButton, searchPanel, visitedButton);
@@ -85,7 +87,10 @@ public class UIController implements UIUpdateInterface {
 	}
 	
 	public void initUIPanel(MapPanel theMapPanel) {
-		uiPanel.init(theMapPanel);
+		
+		DirectionsPanel directionsPanel = new DirectionsPanel(theMapPanel.getMapWidget(), 
+				uiPanel, theAppDataController);
+		uiPanel.init(theMapPanel, directionsPanel);
 		uiPanel.showLoggedOut();
 		
 		theAppDataController.initManufacturers();
@@ -95,20 +100,20 @@ public class UIController implements UIUpdateInterface {
 		uiPanel.toggleViewButtons(DEFAULT_LIST_WIDTH);
 		uiPanel.changeListView(DEFAULT_LIST_LEFT, DEFAULT_LIST_WIDTH);		
 		uiPanel.changeMapView(DEFAULT_MAP_WIDTH);
-		uiPanel.moveSearch(DEFAULT_LIST_LEFT);
+		uiPanel.moveSearch(DEFAULT_LIST_LEFT, theAppDataController.isUserLoggedIn());
 	}
 	
 	public void hideList() {
 		uiPanel.toggleViewButtons(HIDE_LIST_VALUE);
 		uiPanel.changeListView(DEFAULT_LIST_LEFT, HIDE_LIST_VALUE);		
 		uiPanel.changeMapView(BIG_MAP_WIDTH);
-		uiPanel.moveSearch(DEFAULT_LIST_LEFT);
+		uiPanel.moveSearch(DEFAULT_LIST_LEFT, theAppDataController.isUserLoggedIn());
 	}
 	
 	public void hideMap() {
 		uiPanel.toggleViewButtons(BIG_LIST_WIDTH);
 		uiPanel.changeListView(BIG_LIST_LEFT, BIG_LIST_WIDTH);	
-		uiPanel.moveSearch(BIG_LIST_LEFT);
+		uiPanel.moveSearch(BIG_LIST_LEFT, theAppDataController.isUserLoggedIn());
 	}
 	
 	@Override

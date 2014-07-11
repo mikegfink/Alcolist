@@ -184,7 +184,7 @@ public class ListPanel extends LayoutPanel {
 			@Override
 			public String getValue(Manufacturer object) {
 				if (object.equals(showingInfo))
-					return "<<";
+					return ">>";
 				
 				else return ">>";
 			}

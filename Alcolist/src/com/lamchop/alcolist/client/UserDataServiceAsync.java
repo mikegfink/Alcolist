@@ -20,4 +20,5 @@ public interface UserDataServiceAsync {
 	void getRatings(String userID, AsyncCallback<List<Rating>> async);
 	void getReviews(String userID, AsyncCallback<List<Review>> async);
 	void getRoutes(String userID, AsyncCallback<List<Route>> async);
+	void isAdmin(String userID, AsyncCallback<Boolean> async);
 }

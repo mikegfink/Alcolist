@@ -64,9 +64,9 @@ public class StarRating extends Composite {
 
 		displayRating(starValue);
 
-		getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+		//getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		getElement().getStyle().setCursor(Cursor.POINTER);
-		getElement().getStyle().setPadding(2, Unit.PX);
+		//getElement().getStyle().setPadding(2, Unit.PX);
 
 		sinkEvents(Event.ONMOUSEMOVE | Event.ONMOUSEOUT | Event.ONMOUSEDOWN);
 
