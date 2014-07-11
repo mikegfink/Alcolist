@@ -413,5 +413,14 @@ public class AppDataController {
 	
 	public void removeRoute(Route route) {
 		appData.removeRoute(route);
+		userDataService.removeRoute(route, (new AsyncCallback<Void>() {
+			public void onFailure(Throwable error) {
+				handleError(error);
+			}
+
+			public void onSuccess(Void result) {
+				GWT.log("Route deleted successfully");
+			}
+		}));
 	}
 }

@@ -68,5 +68,6 @@ public class SavePanel extends PopupPanel {
 			System.out.println("Tried to save.");
 		}
 		hide();
+		hide();
 	}
 }

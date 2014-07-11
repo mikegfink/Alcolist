@@ -125,6 +125,9 @@ public class DirectionsPanel extends LayoutPanel {
 	public void displayRoute(final Route route) {	
 		this.theRoute = route;
 		if(appDataController.isUserLoggedIn() && (route.getRouteName().equals(""))) {
+			setWidgetTopHeight(deleteButton, SAVE_TOP_PX, PX, 0, PX);
+			setWidgetRightWidth(deleteButton, SAVE_RIGHT_PX, PX, 0, PX);
+			
 			setWidgetTopHeight(saveButton, SAVE_TOP_PX, PX, SAVE_HEIGHT_PX, PX);
 			setWidgetRightWidth(saveButton, SAVE_RIGHT_PX, PX, SAVE_WIDTH_PX, PX);
 			saveButton.addClickHandler(new ClickHandler() {
@@ -137,12 +140,17 @@ public class DirectionsPanel extends LayoutPanel {
 		}
 		
 		if(appDataController.isUserLoggedIn() && !(route.getRouteName().equals(""))) {
+			setWidgetTopHeight(saveButton, SAVE_TOP_PX, PX, 0, PX);
+			setWidgetRightWidth(saveButton, SAVE_RIGHT_PX, PX, 0, PX);
+			
 			setWidgetTopHeight(deleteButton, SAVE_TOP_PX, PX, SAVE_HEIGHT_PX, PX);
-			setWidgetRightWidth(deleteButton, SAVE_RIGHT_PX, PX, SAVE_WIDTH_PX, PX);
+			setWidgetRightWidth(deleteButton, SAVE_RIGHT_PX + 15, PX, SAVE_WIDTH_PX, PX);
 			deleteButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					appDataController.removeRoute(route);
-					ui.hideRoute();
+					setWidgetTopHeight(deleteButton, SAVE_TOP_PX, PX, 0, PX);
+					setWidgetRightWidth(deleteButton, SAVE_RIGHT_PX, PX, 0, PX);
+					ui.hideRoute();	
 				}
 			});
 		}
@@ -218,6 +226,9 @@ public class DirectionsPanel extends LayoutPanel {
 		if (!appDataController.isUserLoggedIn()) {
 			setWidgetTopHeight(saveButton, SAVE_TOP_PX, PX, 0, PX);
 			setWidgetRightWidth(saveButton, SAVE_RIGHT_PX, PX, 0, PX);
+			
+			setWidgetTopHeight(deleteButton, SAVE_TOP_PX, PX, 0, PX);
+			setWidgetRightWidth(deleteButton, SAVE_RIGHT_PX, PX, 0, PX);
 		}
 	}
 }
