@@ -410,4 +410,8 @@ public class AppDataController {
 		}));	
 		
 	}
+	
+	public void removeRoute(Route route) {
+		appData.removeRoute(route);
+	}
 }

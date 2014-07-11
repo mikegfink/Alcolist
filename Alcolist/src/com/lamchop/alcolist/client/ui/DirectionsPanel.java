@@ -58,7 +58,7 @@ public class DirectionsPanel extends LayoutPanel {
 	private HTML titleBar;
 	private AppDataController appDataController;
 	private Button saveButton;
-//	private Button deleteButton;
+	private Button deleteButton;
 	private Route theRoute;
 
 	public DirectionsPanel(AlcolistMapWidget theMapWidget, final UI ui, 
@@ -87,6 +87,9 @@ public class DirectionsPanel extends LayoutPanel {
 		
 		setWidgetTopHeight(saveButton, SAVE_TOP_PX, PX, 0, PX);
 		setWidgetRightWidth(saveButton, SAVE_RIGHT_PX, PX, 0, PX);
+		
+		setWidgetTopHeight(deleteButton, SAVE_TOP_PX, PX, 0, PX);
+		setWidgetRightWidth(deleteButton, SAVE_RIGHT_PX, PX, 0, PX);
 
 		setupCloseButton();
 		//setupSaveButton();
@@ -97,7 +100,7 @@ public class DirectionsPanel extends LayoutPanel {
 		add(directionsDisplay);
 		add(closeButton);
 		add(saveButton);
-//		add(deleteButton);
+		add(deleteButton);
 	}
 
 	private void createChildren() {
@@ -105,7 +108,7 @@ public class DirectionsPanel extends LayoutPanel {
 		titleBar = new HTML("<b>Directions</b>");
 		closeButton = new CloseButton();
 		saveButton = new Button("Save");
-//		deleteButton = new Button("Delete");
+		deleteButton = new Button("Delete");
 	}
 
 	private void setupCloseButton() {
@@ -133,15 +136,16 @@ public class DirectionsPanel extends LayoutPanel {
 			});
 		}
 		
-//		if(appDataController.isUserLoggedIn() && !(route.getRouteName().equals(""))) {
-//			setWidgetTopHeight(deleteButton, SAVE_TOP_PX, PX, SAVE_HEIGHT_PX, PX);
-//			setWidgetRightWidth(deleteButton, SAVE_RIGHT_PX, PX, SAVE_WIDTH_PX, PX);
-//			saveButton.addClickHandler(new ClickHandler() {
-//				public void onClick(ClickEvent event) {
-//					
-//				}
-//			});
-//		}
+		if(appDataController.isUserLoggedIn() && !(route.getRouteName().equals(""))) {
+			setWidgetTopHeight(deleteButton, SAVE_TOP_PX, PX, SAVE_HEIGHT_PX, PX);
+			setWidgetRightWidth(deleteButton, SAVE_RIGHT_PX, PX, SAVE_WIDTH_PX, PX);
+			deleteButton.addClickHandler(new ClickHandler() {
+				public void onClick(ClickEvent event) {
+					appDataController.removeRoute(route);
+					ui.hideRoute();
+				}
+			});
+		}
 		
 		
 		// TODO add a way for the user to select if route will be optimized or not.
