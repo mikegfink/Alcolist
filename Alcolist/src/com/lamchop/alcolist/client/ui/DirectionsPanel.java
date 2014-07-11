@@ -118,7 +118,7 @@ public class DirectionsPanel extends LayoutPanel {
 
 	public void displayRoute(final Route route) {	
 		this.theRoute = route;
-		if(appDataController.isUserLoggedIn()) {
+		if(appDataController.isUserLoggedIn() && (route.getRouteName().equals(""))) {
 			setWidgetTopHeight(saveButton, SAVE_TOP_PX, PX, SAVE_HEIGHT_PX, PX);
 			setWidgetRightWidth(saveButton, SAVE_RIGHT_PX, PX, SAVE_WIDTH_PX, PX);
 			saveButton.addClickHandler(new ClickHandler() {
@@ -155,7 +155,7 @@ public class DirectionsPanel extends LayoutPanel {
 							"status was: " + status.value() + "</br> Click anywhere to close."));
 					error.setAutoHideEnabled(true);
 					error.center();
-					ui.hideRoute();
+//					ui.hideRoute();
 				}
 			}
 		});
