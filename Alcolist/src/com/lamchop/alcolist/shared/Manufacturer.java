@@ -32,12 +32,10 @@ public class Manufacturer implements Serializable {
 	private double longitude;
 	@Persistent
 	private String formattedAddress;
-	
-
 	@Persistent
 	private String phoneNumber;
 	@Persistent
-	private String type; // TODO make this an enum of 4 types later: Winery, Brewery, Distillery, Other
+	private String type;
 	@Persistent
 	private int sumRatings;
 	@Persistent
@@ -180,7 +178,7 @@ public class Manufacturer implements Serializable {
 		this.website = website;
 	}
 
-	// Extra Methods just for testing. Needed because LatLng is not usable on the server side
+	// Extra Methods for testing. Needed because LatLng is not usable on the server side
 	public double getLatitude() {
 		return latitude;
 	}

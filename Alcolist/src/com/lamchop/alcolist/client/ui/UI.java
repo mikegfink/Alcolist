@@ -6,16 +6,11 @@ import static com.google.gwt.dom.client.Style.Unit.PX;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.lamchop.alcolist.client.MyLocation;
 import com.lamchop.alcolist.client.UserData;
-import com.lamchop.alcolist.client.ui.buttons.DirectionsButton;
 import com.lamchop.alcolist.client.ui.buttons.MakeRouteButton;
 import com.lamchop.alcolist.client.ui.buttons.NearMeButton;
 import com.lamchop.alcolist.client.ui.buttons.VisitedButton;
@@ -27,15 +22,12 @@ public class UI extends LayoutPanel {
 
 	private static final int ROUTE_PANEL_LEFT_PCT = 5;
 	private static final int ROUTE_PANEL_WIDTH_PIXELS = 350;
-	// CONSTANTS
 	private static final int HIDE_MAP_VALUE = 50;
 	private static final int HIDE_LIST_VALUE = 0;
-	//private static final int ANIMATE_DURATION = 300;
 
 	private static final int TITLE_WIDTH_PCT = 40;
 	private static final int DIRECTIONS_LEFT_PCT = 5;
 	private static final int DIRECTIONS_WIDTH_PCT = 35;
-	private static final int DEFAULT_MAP_WIDTH = 53;
 	private static final double TITLE_TOP_PCT = 0;
 	private static final double TITLE_HEIGHT_PCT = 10;
 	private static final double TITLE_LEFT_PCT = 0;
@@ -75,7 +67,6 @@ public class UI extends LayoutPanel {
 			VisitedButton.WIDTH_PX + VisitedButton.RIGHT_PX + 1;
 	private static final double VISITED_TOP_PCT = 12;
 
-	// FIELDS
 	private static Images images = GWT.create(Images.class);
 	private MapPanel mapPanel;
 	private ListPanel listPanel;
@@ -179,7 +170,6 @@ public class UI extends LayoutPanel {
 		hideChild(visitedButton);
 		hideChild(directionsPanel);
 		hideChild(listPanel);
-		//		hideChild(routePanel);
 		hideChild(adminPanel);
 
 		mapPanel.setSize("100%", "100%");
@@ -194,8 +184,6 @@ public class UI extends LayoutPanel {
 		this.setWidgetLeftWidth(legend, leftEdgePct + widthPct, PCT, 
 				LEGEND_WIDTH_PIXELS, PX);
 
-		// This has been pretty annoying.
-		//this.animate(ANIMATE_DURATION);
 	}
 
 	public void updateList(List<Manufacturer> manufacturers) {

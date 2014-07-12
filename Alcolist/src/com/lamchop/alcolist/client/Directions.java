@@ -7,8 +7,6 @@ import com.google.gwt.maps.client.services.DirectionsWaypoint;
 import com.google.gwt.maps.client.services.TravelMode;
 import com.lamchop.alcolist.shared.Route;
 
-// TODO relocate/rename?
-// Playing around with directions. Not sure where to put this stuff
 public class Directions {
 	
 	// Returns a directions query to be sent to the DirectionsService

@@ -42,14 +42,7 @@ public class LatLongAdder {
 				batch = 0;
 			}			
 			try {
-//				if (currentManufacturer.getCity().equals("Prince Rupert")||
-//						currentManufacturer.getCity().equals("Christina Lake")) {
-//					System.out.println("In staging: " + currentManufacturer.getName() + currentManufacturer.getLatitude() + " and lng: " + 
-//							currentManufacturer.getLongitude());
-//				}
 				getLatLong(currentManufacturer);
-				
-
 			} catch (Exception e) {
 				GWT.log(e.getMessage());;
 			}
@@ -64,14 +57,7 @@ public class LatLongAdder {
 		request += URLEncoder.encode(address, "UTF-8") + "&key=" + 
 				URLEncoder.encode(API_KEY, "UTF-8");
 
-		// For testing without api key
-		//		String request = GEOCODER_REQUEST_PREFIX_FOR_JSON;
-		//		request += URLEncoder.encode(address, "UTF-8");
-
 		String result = makeRequest(request);
-		// TODO: Debugging for live. Remove when safe to do so.
-		//System.out.println("Address is: " + address);
-		//manufacturer.setFormattedAddress(result);
 		// build a JSON object
 		boolean geocodeSuccess = parseJSON(manufacturer, ACCEPT_IN_LOCALITY, result);	
 		if (geocodeSuccess)
@@ -153,9 +139,6 @@ public class LatLongAdder {
 
 		double lat = (double) locationInJSON.get("lat");
 		double lng = (double) locationInJSON.get("lng");
-
-//		System.out.println("Original Address was: " + manufacturer.getFullAddress());
-//		System.out.println("Address was: " + formattedAddress);
 
 		manufacturer.setLatLng(lat, lng);
 		manufacturer.setFormattedAddress(formattedAddress);

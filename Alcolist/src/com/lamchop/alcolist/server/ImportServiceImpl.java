@@ -1,9 +1,7 @@
 package com.lamchop.alcolist.server;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -35,9 +33,6 @@ ImportService {
 	@Override
 	public Pair geocodeData() {
 		List<Manufacturer> manufacturers = getStoredManufacturers();
-		// Shuffling to reduce the collection of unprocessed items.
-//		long seed = System.nanoTime();
-//		Collections.shuffle(manufacturers, new Random(seed));
 		
 		System.out.println("Stored manufacturers: " + manufacturers.size());
 		
@@ -56,25 +51,9 @@ ImportService {
 			}
 		}
 
-//		for (int i = minIndex; i < manufacturers.size(); i++) {
-//			Manufacturer current = manufacturers.get(i);
-//			System.out.println(current.getName() + current.getLatitude() + " and lng: " + 
-//					current.getLongitude());
-//			if (!isValidLatLng(current)) {
-//				manufacturerBatch.add(current);
-//				count++;
-//			}
-//			if (count > BATCH_SIZE) {
-//				break;
-//			}
-//		}
-
 		LatLongAdder.makeGeocodeRequest(manufacturerBatch);
 		JDOHandler handler = new JDOHandler();
 		for (Manufacturer nextManufacturer : manufacturerBatch) {
-			// For testing logic without using geocoding.
-			//nextManufacturer.setLatLng(10, -10);
-			
 			handler.storeItem(nextManufacturer);
 		}
 		return new Pair(manufacturers.size(), manufacturerBatch.size());

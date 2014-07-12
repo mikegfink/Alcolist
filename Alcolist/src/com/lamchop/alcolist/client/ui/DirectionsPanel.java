@@ -3,23 +3,16 @@ package com.lamchop.alcolist.client.ui;
 import static com.google.gwt.dom.client.Style.Unit.PX;
 import static com.google.gwt.dom.client.Style.Unit.PCT;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.gwt.core.client.JsArray;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.maps.client.overlays.MarkerOptions;
-import com.google.gwt.maps.client.services.DirectionsLeg;
 import com.google.gwt.maps.client.services.DirectionsRenderer;
 import com.google.gwt.maps.client.services.DirectionsRendererOptions;
 import com.google.gwt.maps.client.services.DirectionsRequest;
 import com.google.gwt.maps.client.services.DirectionsResult;
 import com.google.gwt.maps.client.services.DirectionsResultHandler;
-import com.google.gwt.maps.client.services.DirectionsRoute;
 import com.google.gwt.maps.client.services.DirectionsService;
 import com.google.gwt.maps.client.services.DirectionsStatus;
-import com.google.gwt.maps.client.services.DirectionsStep;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.LayoutPanel;
@@ -58,7 +51,6 @@ public class DirectionsPanel extends LayoutPanel {
 	private HTML titleBar;
 	private AppDataController appDataController;
 	private Button saveButton;
-//	private Button deleteButton;
 	private Route theRoute;
 
 	public DirectionsPanel(AlcolistMapWidget theMapWidget, final UI ui, 
@@ -89,7 +81,6 @@ public class DirectionsPanel extends LayoutPanel {
 		setWidgetRightWidth(saveButton, SAVE_RIGHT_PX, PX, 0, PX);
 
 		setupCloseButton();
-		//setupSaveButton();
 	}
 
 	private void addChildren() {
@@ -97,7 +88,6 @@ public class DirectionsPanel extends LayoutPanel {
 		add(directionsDisplay);
 		add(closeButton);
 		add(saveButton);
-//		add(deleteButton);
 	}
 
 	private void createChildren() {
@@ -105,7 +95,6 @@ public class DirectionsPanel extends LayoutPanel {
 		titleBar = new HTML("<b>Directions</b>");
 		closeButton = new CloseButton();
 		saveButton = new Button("Save");
-//		deleteButton = new Button("Delete");
 	}
 
 	private void setupCloseButton() {
@@ -133,17 +122,6 @@ public class DirectionsPanel extends LayoutPanel {
 			});
 		}
 		
-//		if(appDataController.isUserLoggedIn() && !(route.getRouteName().equals(""))) {
-//			setWidgetTopHeight(deleteButton, SAVE_TOP_PX, PX, SAVE_HEIGHT_PX, PX);
-//			setWidgetRightWidth(deleteButton, SAVE_RIGHT_PX, PX, SAVE_WIDTH_PX, PX);
-//			saveButton.addClickHandler(new ClickHandler() {
-//				public void onClick(ClickEvent event) {
-//					
-//				}
-//			});
-//		}
-		
-		
 		// TODO add a way for the user to select if route will be optimized or not.
 		// Currently optimizing all the routes.
 		options.setMap(theMapWidget.getMapWidget());
@@ -163,13 +141,11 @@ public class DirectionsPanel extends LayoutPanel {
 				} else {
 					System.err.println("Direction result not received. Direction " +
 							"status was: " + status.value());
-					//TODO: Display error popup
 					PopupPanel error = new PopupPanel();
 					error.setWidget(new HTML("Direction result not received. Direction " +
 							"status was: " + status.value() + "</br> Click anywhere to close."));
 					error.setAutoHideEnabled(true);
 					error.center();
-//					ui.hideRoute();
 				}
 			}
 		});
@@ -177,20 +153,9 @@ public class DirectionsPanel extends LayoutPanel {
 	}
 
 	private void setDirectionsOptions() {
-		// TODO should they be draggable? Then we need to change the stored route so the user
-		// would get the same route displayed next time
 		options.setDraggable(false);
 		options.setMap(theMapWidget.getMapWidget());
-		// InfoWindow where text info is rendered when a marker is clicked
-		//options.setInfoWindow(??)
-		//rendererOptions.setMarkerOptions(??)
-		// Element in which to display the directions 
 		options.setPanel(directionsDisplay.getElement());
-		// TODO show/hide directions by showing/hiding the Element passed to setPanel
-		// TODO set polyline options
-
-		// TODO change this if we want text to display when markers are clicked. Must set
-		// an InfoWindow to display the information with options.setInfoWindow
 		MarkerOptions markerOptions = MarkerOptions.newInstance();
 		markerOptions.setVisible(false);
 		options.setMarkerOptions(markerOptions);
@@ -217,42 +182,3 @@ public class DirectionsPanel extends LayoutPanel {
 		}
 	}
 }
-
-//System.out.println("Making directions request");
-//service.route(request, new DirectionsResultHandler() {
-//		@Override
-//		public void onCallback(DirectionsResult result,
-//				DirectionsStatus status) {
-//			if (status == DirectionsStatus.OK) {
-//				System.out.println("Received route");
-//				// Displays the polyline on the map, but not the directions
-//				directionsDisplay.setDirections(result);
-//
-//				// Parsing the directions manually since I don't have an Element
-//				// for displaying them
-//				List<String> htmlDirections = new ArrayList<String>();
-//				JsArray<DirectionsRoute> routes = result.getRoutes();
-//				// We are only producing one route
-//				DirectionsRoute route = routes.get(0);
-//				JsArray<DirectionsLeg> legs = route.getLegs();
-//										
-//				for (int i = 0; i < legs.length(); i++) {
-//					DirectionsLeg leg = legs.get(i);
-//					JsArray<DirectionsStep> steps = leg.getSteps();
-//					for (int j = 0; j < steps.length(); j++) {
-//						DirectionsStep step = steps.get(j);
-//						htmlDirections.add(step.getInstructions());
-//					}
-//				}
-//				
-//				// TODO display directions
-//				
-//			} else if (status == DirectionsStatus.ZERO_RESULTS) {
-//				// TODO display message to user saying invalid start and/or end
-//				// location provided, and let them try again.
-//				System.out.println("Zero results from directions request");
-//			} else {
-//				System.err.println("Direction result not received. Direction " +
-//						"status was: " + status.value());
-//				// TODO let user try again?
-//			}

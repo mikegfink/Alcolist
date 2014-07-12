@@ -1,28 +1,18 @@
 package com.lamchop.alcolist.client.ui;
 
-import java.util.List;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.LayoutPanel;
-import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
-import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.SuggestBox;
-import com.google.gwt.user.client.ui.TextBox;
 import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.client.ui.buttons.CloseButton;
 import com.lamchop.alcolist.client.ui.buttons.SearchButton;
 
-import static com.google.gwt.dom.client.Style.Unit.PCT;
 import static com.google.gwt.dom.client.Style.Unit.PX;
 
 public class SearchPanel extends LayoutPanel{
@@ -33,12 +23,10 @@ public class SearchPanel extends LayoutPanel{
 			CLEARSEARCH_WIDTH_PX - 5;
 	private static final int CLEARSEARCH_TOP_PX = 4;
 	private static final int CLEARSEARCH_HEIGHT_PX = 26;
-	private static final int CLEARSEARCH_CENTRE_PX = 4;
 
 	private static final int SEARCH_BAR_LEFT_PX = 0;
 
 
-	private MultiWordSuggestOracle oracle;
 	private AppDataController theAppDataController;
 	private SearchButton searchButton;
 	private SuggestBox textBox;
@@ -111,8 +99,7 @@ public class SearchPanel extends LayoutPanel{
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
 				if (textBox.getText() != null) {
-					//if (clearSearchButton.getOffsetWidth() == 0)
-						showClearSearchButton();
+					showClearSearchButton();
 				}
 				if (event.getNativeKeyCode() == KeyCodes.KEY_BACKSPACE || event.getNativeKeyCode() == KeyCodes.KEY_DELETE ) {
 					if (textBox.getText().equals("")) {

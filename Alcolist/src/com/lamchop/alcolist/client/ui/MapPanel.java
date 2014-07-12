@@ -197,8 +197,6 @@ public class MapPanel extends LayoutPanel {
 			double centreLat = (maxLat + minLat) / 2;
 			double centreLng = bounds.getCenter().getLongitude() - 
 					(50 - (((double) percentage) / 2)) / 100 * lngSpan;
-//			System.out.println("New centre: " + centreLng);
-//			System.out.println("Old centre: " + bounds.getCenter().getLongitude());
 			
 			LatLng centre = LatLng.newInstance(centreLat, centreLng);
 			
@@ -262,7 +260,6 @@ public class MapPanel extends LayoutPanel {
 	}
 
 	public void showLoggedIn() {
-		// TODO Auto-generated method stub
 		LoggedIn = true;
 	}
 	

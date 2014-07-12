@@ -13,18 +13,14 @@ import org.junit.Test;
 
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.lamchop.alcolist.client.AdminHandler;
 import com.lamchop.alcolist.server.ImportServiceImpl;
 import com.lamchop.alcolist.server.ManufacturerServiceImpl;
-import com.lamchop.alcolist.server.PMF;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Pair;
 
 public class LatLongAdderTest {
 	private final LocalServiceTestHelper helper =  
 			new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());  
-	private PersistenceManager pm;
 	private ImportServiceImpl importService;
 	private ManufacturerServiceImpl manufacturerService;
 
@@ -45,15 +41,12 @@ public class LatLongAdderTest {
 	 */
 	@Test
 	public void testGeocoding() {
-		pm = PMF.getPMF().getPersistenceManager();
 		List<Manufacturer> all;
 		double latitude;
 		double longitude;
 		int minIndex = 0;
 		Pair geocoded;
 		
-		// Uncomment the following lines to run the tests properly. Commented out to avoid
-		// accidentally using up our geocoding and import limits.
 		importService.importData();
 		
 		all = manufacturerService.getManufacturers();

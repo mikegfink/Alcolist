@@ -2,7 +2,6 @@ package com.lamchop.alcolist.client.ui.buttons;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
-import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -64,9 +63,7 @@ public class StarRating extends Composite {
 
 		displayRating(starValue);
 
-		//getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		getElement().getStyle().setCursor(Cursor.POINTER);
-		//getElement().getStyle().setPadding(2, Unit.PX);
 
 		sinkEvents(Event.ONMOUSEMOVE | Event.ONMOUSEOUT | Event.ONMOUSEDOWN);
 

@@ -16,7 +16,6 @@ import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestC
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.lamchop.alcolist.server.PMF;
 import com.lamchop.alcolist.server.UserDataServiceImpl;
-import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Route;
 
 public class RouteTest {
@@ -24,7 +23,6 @@ public class RouteTest {
 			new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
 	private PersistenceManager pm;
 	private UserDataServiceImpl userService;
-	private Manufacturer manufacturer;
 			
 	@Before
 	public void setUp() {
@@ -132,8 +130,6 @@ public class RouteTest {
 	@Test
 	public void testAddInvalidRoute() {
 		
-		String userID = "123"; // random 
-		String routeName = "Test";
 		String initialStartAddress = "1441 Cartwright St, Vancouver, BC, Canada";
 		String endAddress = "15 W 8th Ave, Vancouver, BC, Canada";
 		List<String> initialMidpointAddresses = new ArrayList<String>();

@@ -28,7 +28,7 @@ public class MyLocation {
 		}
 	}
 
-	public void findLocation() {
+	private void findLocation() {
 		geolocation.getCurrentPosition(new Callback<Position, PositionError>() {
 
 			@Override

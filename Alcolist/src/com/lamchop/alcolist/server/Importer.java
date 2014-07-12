@@ -127,8 +127,6 @@ public class Importer {
 			result = string.substring(0, 3) + "-" + string.substring(4, 7) + "-" + 
 					string.substring(7, 11);
 		} else if (string != "") {
-			// Only print an error message when a phone number is present but not in expected format
-			//System.err.println("Phone number not in expected form: " + string);
 			// Don't return phone numbers that are less than 7 characters
 			if (string.length() < 7) {
 				result = "";

@@ -51,10 +51,6 @@ public class PlacesAdder {
 		String searchParams = location + radius + name;
 
 		String searchResult = makeRequest(SEARCH_PREFIX_FOR_JSON, searchParams);
-		// TODO: Debugging for live. Remove when safe to do so.
-		//System.out.println("Address is: " + address);
-		//manufacturer.setFormattedAddress(result);
-		// build a JSON object
 
 		if (manufacturer.getName().equals("Mission Hill Winery")) {
 			System.out.println(manufacturer.getName() + manufacturer.getLatitude() + " and lng: " + 
@@ -64,8 +60,6 @@ public class PlacesAdder {
 
 		JSONObject searchResultAsJSON = (JSONObject) JSONValue.parse(searchResult);
 		if (!searchResultAsJSON.get("status").equals("OK")) {
-//			System.out.println("Status was: " + searchResultAsJSON.get("status").toString()
-//					+ " for: " + shortName);
 			manufacturer.setWebsite("");
 			return;
 		}
@@ -121,11 +115,6 @@ public class PlacesAdder {
 
 		double lat = (double) locationInJSON.get("lat");
 		double lng = (double) locationInJSON.get("lng");
-		
-//		System.out.println("Original Address was: " + manufacturer.getFormattedAddress());
-//		System.out.println("New Address is: " + formattedAddress);
-//		System.out.println("Old loc is: " + manufacturer.getLatitude() + ", " + manufacturer.getLongitude());
-//		System.out.println("New loc is: " + lat + ", " + lng);	
 		
 		manufacturer.setLatLng(lat, lng);
 		manufacturer.setFormattedAddress(formattedAddress);

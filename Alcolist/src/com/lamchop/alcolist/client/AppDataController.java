@@ -64,8 +64,6 @@ public class AppDataController {
 		return null;
 	}
 	
-	// TODO: Request rework of UserData storage so that we receive a UserData object from 
-	// the server
 	public void initUserData(String userID, String userName) {
 		appData.newUserData(userID, userName);
 		retrieveRatings(userID);
@@ -140,7 +138,6 @@ public class AppDataController {
 			appData.addRoute(route);
 		}
 	}
-	// TODO: All methods above hopefully collapsed into one if UserDataServices are reworked
 
 	public void initManufacturers() {		
 		manufacturerService.getManufacturers(new AsyncCallback<List<Manufacturer>>() {
@@ -171,10 +168,6 @@ public class AppDataController {
 	private void updateAppDataManufacturers(List<Manufacturer> manufacturers) {		
 		clearManufacturers();
 		appData.add(manufacturers);
-	}
-
-	private void updateAppDataUserData(UserData userData) {		
-		appData.setUserData(userData);
 	}
 
 	public void sendManufacturersToUI() {		

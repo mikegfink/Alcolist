@@ -6,7 +6,6 @@ import static com.google.gwt.dom.client.Style.Unit.PX;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
-import com.google.gwt.user.client.ui.PushButton;
 import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.client.UserData;
 import com.lamchop.alcolist.client.ui.buttons.FacebookLoginButton;
@@ -37,7 +36,6 @@ public class UserPanel extends LayoutPanel {
 	private SavedRoutesButton routeDropdown;
 	
 	public UserPanel(AppDataController theAppDataController, UIController theUIController) {
-		// TODO Auto-generated constructor stub
 		loginButton = new FacebookLoginButton(theAppDataController);
 		logoutButton = new FacebookLogoutButton(theAppDataController);
 		greeting = new Label();
@@ -51,7 +49,6 @@ public class UserPanel extends LayoutPanel {
 	}
 
 	public void showLoggedOut() {
-		// TODO Auto-generated method stub
 		hideLogoutButton();
 		hideUserPanel();
 		hideRouteDropdown();
@@ -87,7 +84,6 @@ public class UserPanel extends LayoutPanel {
 	}
 	
 	public void showLoggedIn(UserData userData) {
-		// TODO Auto-generated method stub
 		hideLoginButton();
 		showLogoutButton();
 		showRouteDropdown();

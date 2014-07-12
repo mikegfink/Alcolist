@@ -15,6 +15,5 @@ public class CloseButton extends PushButton {
 	
 	public CloseButton() {
 		super(new Image(images.closeUp()), new Image(images.closeDown()));
-		//this.setPixelSize(WIDTH_PX, HEIGHT_PX);
 	}
 }

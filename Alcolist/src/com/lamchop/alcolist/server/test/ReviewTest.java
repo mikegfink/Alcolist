@@ -20,7 +20,6 @@ import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Review;
 
 public class ReviewTest {
-	private static final double DELTA = 1.0e-6; // margin of error for comparing doubles
 	private final LocalServiceTestHelper helper =  
 			new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
 	private PersistenceManager pm;

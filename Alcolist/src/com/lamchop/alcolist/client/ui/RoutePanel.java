@@ -5,14 +5,12 @@ import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 
 import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.SuggestBox;
 import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.shared.Route;
 import static com.google.gwt.dom.client.Style.Unit.PCT;
@@ -65,9 +63,6 @@ public class RoutePanel extends LayoutPanel {
 		
 		getRouteButton = new Button();
 		getRouteButton.setText("Get Route");
-		
-//		saveRouteButton = new Button();
-//		saveRouteButton.setText("Save Route");
 		
 		cancelButton = new Button();
 		cancelButton.setText("Cancel");

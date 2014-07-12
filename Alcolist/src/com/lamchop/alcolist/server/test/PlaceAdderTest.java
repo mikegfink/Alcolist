@@ -22,7 +22,6 @@ public class PlaceAdderTest {
 
 	private final LocalServiceTestHelper helper =  
 			new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());  
-	private PersistenceManager pm;
 	private ImportServiceImpl importService;
 	private ManufacturerServiceImpl manufacturerService;
 		
@@ -41,7 +40,6 @@ public class PlaceAdderTest {
 	
 	@Test
 	public void testplaceAdding() {
-		pm = PMF.getPMF().getPersistenceManager();
 		List<Manufacturer> all;
 		double latitude;
 		double longitude;

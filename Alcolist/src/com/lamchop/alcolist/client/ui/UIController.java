@@ -5,13 +5,7 @@ import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.client.MyLocation;
 import com.lamchop.alcolist.client.UserData;
@@ -34,7 +28,6 @@ public class UIController implements UIUpdateInterface {
 	private UI uiPanel;
 	private MapsLoader mapsLoader;
 	private AppDataController theAppDataController;
-	private PopupPanel nearMeLabel;
 
 	private boolean firstTime;
 
@@ -80,9 +73,6 @@ public class UIController implements UIUpdateInterface {
 			}
 		});
 
-		
-		
-//		RoutePanel routePanel = new RoutePanel(theAppDataController, this);
 		uiPanel = new UI(adminPanel, userPanel, viewPanel, listPanel, legend, 
 				makeRouteButton, nearMeButton, searchPanel, visitedButton);
 	}
@@ -129,7 +119,6 @@ public class UIController implements UIUpdateInterface {
 		uiPanel.updateList(manufacturers);	
 		
 		if (firstTime) {
-//			uiPanel.initRoutePanel(manufacturers);
 			showList();
 		}
 		

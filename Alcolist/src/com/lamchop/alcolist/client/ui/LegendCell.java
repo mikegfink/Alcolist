@@ -4,7 +4,6 @@ import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.ToggleButton;
 import com.lamchop.alcolist.client.resources.Images;
 
 public class LegendCell extends AbstractCell<String>{

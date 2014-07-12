@@ -9,7 +9,6 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.lamchop.alcolist.client.AppDataController;
-import com.lamchop.alcolist.shared.Review;
 import com.lamchop.alcolist.shared.Route;
 
 public class SavedRoutesPopup extends PopupPanel {

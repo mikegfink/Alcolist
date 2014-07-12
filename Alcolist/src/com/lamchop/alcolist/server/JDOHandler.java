@@ -23,7 +23,7 @@ public class JDOHandler {
 			q.setFilter("id == searchID");
 			q.declareParameters("String searchID");
 			List<Manufacturer> queryResult = (List<Manufacturer>) q.execute(id);
-			if (queryResult.size() == 1) { // TODO
+			if (queryResult.size() == 1) {
 				manufacturer = queryResult.get(0);
 			}
 		} catch (JDOObjectNotFoundException e) {
@@ -57,33 +57,8 @@ public class JDOHandler {
 		}
 	}
 
-//	// Item passed must not be a detached copy
-//	public void deleteItem(Object item) {
-//		if (!isStorageType(item)) {
-//			System.err.println("Wrong item type to store in datastore: " + item.toString());
-//			return;
-//		}		
-//		PersistenceManager pm = PMF.getPMF().getPersistenceManager();		
-//		Transaction tx = pm.currentTransaction();
-//		try {
-//			tx.begin();
-//			pm.deletePersistent(item);
-//			tx.commit();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			if (tx.isActive()) {
-//				// Roll back the transaction if an error occurred before it could be committed.
-//				System.err.println("Rolling back transaction. Item not added.");
-//				tx.rollback();
-//			}
-//			pm.close();
-//		}	
-//	}
-	
 	private static boolean isStorageType(Object item) {
 		Object itemClass = item.getClass();
-		// If new classes are created to be stored in the datastore, add them below.
 		return itemClass.equals(Manufacturer.class) || itemClass.equals(Rating.class) ||
 				itemClass.equals(Review.class) || itemClass.equals(Route.class);
 	}

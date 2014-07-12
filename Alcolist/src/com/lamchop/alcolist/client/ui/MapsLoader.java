@@ -29,10 +29,7 @@ public class MapsLoader {
 	    loadLibraries.add(LoadLibrary.ADSENSE);
 	    loadLibraries.add(LoadLibrary.DRAWING);
 	    loadLibraries.add(LoadLibrary.GEOMETRY);
-	    //loadLibraries.add(LoadLibrary.PANORAMIO);
 	    loadLibraries.add(LoadLibrary.PLACES);
-	    //loadLibraries.add(LoadLibrary.WEATHER);
-	    //loadLibraries.add(LoadLibrary.VISUALIZATION);
 
 	    Runnable onLoad = new Runnable() {
 
@@ -46,7 +43,7 @@ public class MapsLoader {
 	    LoadApi.go(onLoad, loadLibraries, sensor) ;
 	    
 	  }
-	public void draw() {
+	private void draw() {
 		theMapWidget = new AlcolistMapWidget();
 		theMap.add(theMapWidget);
 		theMap.setMapWidget(theMapWidget);

@@ -10,8 +10,6 @@ import com.lamchop.alcolist.server.Parser;
 /** Test the Parser class */
 public class ParserTest {
 
-	private Parser parser;
-	
 	/**
 	 * Initialize parser for the tests. 
 	 */

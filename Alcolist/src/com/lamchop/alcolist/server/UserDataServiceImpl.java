@@ -47,7 +47,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 			q.declareParameters("String searchID");
 			List<Rating> queryResult = (List<Rating>) q.execute(ratingID);
 		
-			if (queryResult.size() == 1) { // TODO
+			if (queryResult.size() == 1) {
 				previousRating = queryResult.get(0);
 				// this will not change manufacturer in the datastore because it is a detached copy.
 				manufacturer.removeRating(previousRating.getRating());
@@ -92,7 +92,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 			q.declareParameters("String searchID");
 			List<Rating> queryResult = (List<Rating>) q.execute(ratingID);
 			
-			if (queryResult.size() != 1) { // TODO)
+			if (queryResult.size() != 1) {
 				System.err.println("Error finding rating in the datastore. Rating not deleted");
 				return;
 			}
@@ -136,7 +136,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 			q.declareParameters("String searchID");
 			List<Review> queryResult = (List<Review>) q.execute(reviewID);
 			
-			if (queryResult.size() == 1) { // TODO
+			if (queryResult.size() == 1) {
 				storedReview = queryResult.get(0);
 				pm.deletePersistent(storedReview);
 			} else {
@@ -181,7 +181,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 			q.declareParameters("Long searchID");
 			List<Route> queryResult = (List<Route>) q.execute(routeID);
 			
-			if (queryResult.size() == 1) { // TODO
+			if (queryResult.size() == 1) {
 				storedRoute = queryResult.get(0);
 				pm.deletePersistent(storedRoute);
 			} else {
@@ -249,7 +249,6 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 	
 	@Override
 	public List<Route> getRoutes(String userID) {
-		// TODO Auto-generated method stub
 		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
 		List<Route> routes = new ArrayList<Route>();
 		

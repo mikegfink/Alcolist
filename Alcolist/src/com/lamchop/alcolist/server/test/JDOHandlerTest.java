@@ -55,4 +55,5 @@ public class JDOHandlerTest {
 		assertTrue(storedMan != null);
 		assertEquals(manufacturer1.getID(), storedMan.getID());
 	}
+
 }

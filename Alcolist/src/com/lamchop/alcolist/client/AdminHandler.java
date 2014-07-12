@@ -108,8 +108,6 @@ public class AdminHandler implements ClickHandler {
 			public void onSuccess(Pair result) {
 				completedManufacturers += result.getBatch();
 				loadedManufacturers = result.getTotal();				
-//				System.out.println(completedManufacturers + " out of " + totalManufacturers);
-//				System.out.println(loadedManufacturers + " loaded in last RPC call");
 				
 				if (result.getBatch() == 0) {
 					retries--;
@@ -120,7 +118,6 @@ public class AdminHandler implements ClickHandler {
 					completedManufacturers = 0;
 					retries = 4;
 					// Should go to PlaceData methods
-					//appDataController.initManufacturers();
 					getPlaceData();
 				} else {					
 					// MessageBox? with result
