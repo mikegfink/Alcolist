@@ -59,6 +59,7 @@ ImportService {
 		return new Pair(manufacturers.size(), manufacturerBatch.size());
 	}
 
+	@SuppressWarnings("unchecked")
 	private List<Manufacturer> getStoredManufacturers() {
 		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
 		List<Manufacturer> manufacturers = new ArrayList<Manufacturer>(); 

@@ -106,6 +106,7 @@ public class Legend extends LayoutPanel {
 
 	private void addPopupLabels() {
 		legend.addRowHoverHandler(new RowHoverEvent.Handler() {
+			@SuppressWarnings("unchecked")
 			@Override
 			public void onRowHover(RowHoverEvent event) {
 				int row = event.getHoveringRow().getRowIndex();

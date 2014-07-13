@@ -25,8 +25,8 @@ public class MarkerWindow extends VerticalPanel {
 	private HorizontalPanel rating;
 	static private Images images = GWT.create(Images.class);
 
-	public MarkerWindow(Manufacturer manufacturer,
-			UIController theUIController, boolean loggedIn) {
+	public MarkerWindow(Manufacturer manufacturer, UIController theUIController, 
+			boolean loggedIn) {
 		this.manufacturer = manufacturer;
 		this.theUIController = theUIController;
 		setupName();

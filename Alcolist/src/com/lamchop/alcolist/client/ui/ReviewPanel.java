@@ -53,9 +53,12 @@ public class ReviewPanel extends PopupPanel {
 	private Button editButton;
 	private CloseButton closeButton;
 	private InfoPanel infoPanel;
-	private UIController uiController;
 	private Rating rating;
-
+	
+	//TODO: Refactor StarRating and uiController to decouple StarRating from the 
+	// 		AppDataController. UIController will be needed here once that is done.
+	@SuppressWarnings("unused")
+	private UIController uiController;
 
 	public ReviewPanel(final Manufacturer manufacturer, 
 			final AppDataController appDataController, UIController uiController) {	
@@ -67,12 +70,11 @@ public class ReviewPanel extends PopupPanel {
 		review = appDataController.getReview(manufacturer.getID());
 		rating = appDataController.getRating(manufacturer.getID());
 		
-
 		createElements();
 		addElements();
 		setWidget(display);
 
-		// TODO Consider not using null
+		// TODO: Consider not using null
 		if (review != null) {
 			showReview();		
 		} else if (appDataController.isUserLoggedIn()) {

@@ -9,6 +9,7 @@ import javax.jdo.annotations.IdentityType;
 
 import com.google.gwt.maps.client.base.LatLng;
 
+@SuppressWarnings("serial")
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 public class Manufacturer implements Serializable {
 

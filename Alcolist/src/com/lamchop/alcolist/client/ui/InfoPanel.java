@@ -48,7 +48,8 @@ public class InfoPanel extends LayoutPanel {
 	static private Images images = GWT.create(Images.class);
 
 
-	public InfoPanel(Manufacturer manufacturer, AppDataController appDataController, boolean loggedIn) {
+	public InfoPanel(Manufacturer manufacturer, AppDataController appDataController, 
+			boolean loggedIn) {
 		this.starRating = new StarRating(manufacturer, appDataController);
 		this.loggedIn = loggedIn;
 

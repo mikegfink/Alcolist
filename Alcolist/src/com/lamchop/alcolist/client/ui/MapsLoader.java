@@ -20,8 +20,7 @@ public class MapsLoader {
 	}
 	
 	public void loadMapApi(final UIController theUIController) {
-	    
-		
+	    	
 		boolean sensor = true;
 
 	    // load all the libs for use in the maps

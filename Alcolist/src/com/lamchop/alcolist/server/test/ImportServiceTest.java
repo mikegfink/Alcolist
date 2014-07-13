@@ -67,6 +67,7 @@ public class ImportServiceTest {
 	/**
 	 * Test that all of the manufacturers are added.
 	 */
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testImportCorrectNumber() {
 		List<Manufacturer> all;

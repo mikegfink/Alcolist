@@ -14,6 +14,7 @@ import com.lamchop.alcolist.shared.Route;
 
 public class JDOHandler {
 	
+	@SuppressWarnings("unchecked")
 	public Manufacturer getManufacturerById(String id) {
 		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
 		Query q;

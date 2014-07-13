@@ -16,7 +16,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.client.resources.Images;
-import com.lamchop.alcolist.client.ui.UIController;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Rating;
 

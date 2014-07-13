@@ -152,7 +152,9 @@ public class UIController implements UIUpdateInterface {
 		reviewPanel.show();
 	}
 	
-	// Really sad about this. Will try to refactor it out.
+	// TODO: try to refactor this out - Issue is that StarRating needs the appdatacontroller.
+	// Could e.g. make the star rating in this class and pass it to the mappanel when a user
+	// logs in. Or have a method in this class called getStarRating which does the same instead.
 	public AppDataController getTheAppDataController() {
 		return theAppDataController;
 	}

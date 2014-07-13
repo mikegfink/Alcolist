@@ -69,7 +69,6 @@ public class SearchPanel extends LayoutPanel{
 
 		searchBar.add(clearSearchButton);
 
-
 		searchBar.setWidgetTopHeight(clearSearchButton, CLEARSEARCH_TOP_PX, PX, 
 				CLEARSEARCH_HEIGHT_PX, PX);
 		searchBar.setWidgetLeftWidth(clearSearchButton, CLEARSEARCH_LEFT_PX, PX, 
@@ -78,7 +77,6 @@ public class SearchPanel extends LayoutPanel{
 
 		searchBar.addStyleName("listPanel");
 	}
-
 
 	private void addSearchHandlers() {
 		searchButton.addClickHandler(new ClickHandler() {

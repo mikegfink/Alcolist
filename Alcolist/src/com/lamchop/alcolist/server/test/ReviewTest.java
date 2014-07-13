@@ -44,6 +44,7 @@ public class ReviewTest {
 	}
 		
 	/** Test that a revew can be added and deleted */
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testAddAndDelete() {
 		handler.storeItem(manufacturer);

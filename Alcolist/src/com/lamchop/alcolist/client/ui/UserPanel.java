@@ -50,7 +50,7 @@ public class UserPanel extends LayoutPanel {
 
 	public void showLoggedOut() {
 		hideLogoutButton();
-		hideUserPanel();
+		hideGreeting();
 		hideRouteDropdown();
 		showLoginButton();
 	}
@@ -70,8 +70,7 @@ public class UserPanel extends LayoutPanel {
 		setWidgetTopHeight(logoutButton, LOG_TOP_PCT, PCT, HIDE_PCT, PCT);
 	}
 	
-	private void hideUserPanel() {
-		// Going to change as details get placed
+	private void hideGreeting() {
 		greeting.setText("");
 		setWidgetRightWidth(greeting, GREET_RIGHT_PX, PX, HIDE_PCT, PCT);
 		setWidgetTopHeight(greeting, GREET_TOP_PCT, PCT, HIDE_PCT, PCT);
@@ -87,7 +86,7 @@ public class UserPanel extends LayoutPanel {
 		hideLoginButton();
 		showLogoutButton();
 		showRouteDropdown();
-		showUserPanel(userData.getName());
+		showGreeting(userData.getName());
 	}
 	
 	private void hideLoginButton() {
@@ -100,7 +99,7 @@ public class UserPanel extends LayoutPanel {
 		setWidgetTopHeight(logoutButton, LOG_TOP_PCT, PCT, LOG_HEIGHT_PX, PX);
 	}
 	
-	private void showUserPanel(String userName) {
+	private void showGreeting(String userName) {
 		String hello = "Hi " + userName;
 		
 		greeting.setText(hello); 

@@ -47,6 +47,7 @@ public class RatingTest {
 	}
 		
 	/** Test that a rating can be added and deleted */
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testAddAndDelete() {
 		handler.storeItem(manufacturer);
@@ -225,6 +226,7 @@ public class RatingTest {
 	}
 	
 	/** Test that deleting a rating after the manufacturer has been deleted still deletes the rating */
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testDeletedManufacturer() {
 		handler.storeItem(manufacturer);

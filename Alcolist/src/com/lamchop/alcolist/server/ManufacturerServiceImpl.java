@@ -13,9 +13,11 @@ import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Rating;
 import com.lamchop.alcolist.shared.Review;
 
+@SuppressWarnings("serial")
 public class ManufacturerServiceImpl  extends RemoteServiceServlet implements 
 		ManufacturerService {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Manufacturer> getManufacturers() {
 
@@ -44,6 +46,7 @@ public class ManufacturerServiceImpl  extends RemoteServiceServlet implements
 		handler.storeItem(manufacturer);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void removeManufacturer(Manufacturer manufacturer) {
 		String manufacturerID = manufacturer.getID();

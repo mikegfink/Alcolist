@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import javax.jdo.PersistenceManager;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +12,6 @@ import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestC
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.lamchop.alcolist.server.ImportServiceImpl;
 import com.lamchop.alcolist.server.ManufacturerServiceImpl;
-import com.lamchop.alcolist.server.PMF;
 import com.lamchop.alcolist.shared.Manufacturer;
 import com.lamchop.alcolist.shared.Pair;
 

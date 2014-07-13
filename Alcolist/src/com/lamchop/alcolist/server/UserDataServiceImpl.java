@@ -15,15 +15,18 @@ import com.lamchop.alcolist.shared.Review;
 import com.lamchop.alcolist.shared.Route;
 
 // TODO refactor this class
+@SuppressWarnings("serial")
 public class UserDataServiceImpl extends RemoteServiceServlet implements 
 		UserDataService {
 	
+	private static final String ADMIN_ID = "10101003768931021";
 	private JDOHandler handler;
 	
 	public UserDataServiceImpl() {
 		this.handler = new JDOHandler();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void addRating(Rating rating) {
 		String manufacturerID = rating.getManufacturerID();
@@ -70,6 +73,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 		handler.storeItem(rating);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void removeRating(Rating rating) {
 		String manufacturerID = rating.getManufacturerID();
@@ -121,6 +125,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 		handler.storeItem(review);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void removeReview(Review review) {
 		// Can't delete detached copy of review directly.
@@ -166,6 +171,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void removeRoute(Route route) {
 		// Can't delete detached copy of route directly.
@@ -200,6 +206,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Rating> getRatings(String userID) {
 		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
@@ -223,6 +230,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 		return ratings;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Review> getReviews(String userID) {
 
@@ -247,6 +255,7 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 		return reviews;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Route> getRoutes(String userID) {
 		PersistenceManager pm = PMF.getPMF().getPersistenceManager();
@@ -271,7 +280,8 @@ public class UserDataServiceImpl extends RemoteServiceServlet implements
 	
 	@Override
 	public Boolean isAdmin(String userID) {
-		return (userID.equals("10101003768931021"));
+		
+		return (userID.equals(ADMIN_ID));
 	}
 }
 

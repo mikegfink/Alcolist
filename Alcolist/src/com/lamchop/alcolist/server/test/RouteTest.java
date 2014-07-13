@@ -38,6 +38,7 @@ public class RouteTest {
 	}
 		
 	/** Test that a route can be added and deleted */
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testAddAndDelete() {
 		
@@ -127,6 +128,7 @@ public class RouteTest {
 	}
 	
 	/** Test that a route is not added if it lacks a user id or name */
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testAddInvalidRoute() {
 		

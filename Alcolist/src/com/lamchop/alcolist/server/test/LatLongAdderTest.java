@@ -5,8 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import javax.jdo.PersistenceManager;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,11 +45,11 @@ public class LatLongAdderTest {
 		int minIndex = 0;
 		Pair geocoded;
 		
-		importService.importData();
+		int total = importService.importData();
 		
 		all = manufacturerService.getManufacturers();
 		// Make sure we have the data
-		assertTrue(all.size() >= 385);
+		assertTrue(all.size() >= total);
 		  
 		while (minIndex < all.size()) {
 			geocoded = importService.geocodeData();	

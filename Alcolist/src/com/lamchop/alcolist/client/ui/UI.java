@@ -133,7 +133,6 @@ public class UI extends LayoutPanel {
 	}		
 
 	private void layoutChildren() {
-		// All the magic numbers live here.
 		setWidgetTopHeight(title, TITLE_TOP_PCT, PCT, TITLE_HEIGHT_PCT, PCT);
 		setWidgetLeftWidth(title, TITLE_LEFT_PCT, PCT, TITLE_WIDTH_PCT, PCT);
 
@@ -229,7 +228,7 @@ public class UI extends LayoutPanel {
 	}
 
 	// Intended for use to show adminPanel if user is an admin. Possibly additional menus
-	// for userData
+	// for userData. Is buggy due to non forced layouts, prefer other methods at the moment.
 	public void showChild(Widget widgetToShow, int heightPixels, int widthPixels){
 		setWidgetTopHeight(widgetToShow, widgetToShow.getAbsoluteTop(), PX, 
 				heightPixels, PX);

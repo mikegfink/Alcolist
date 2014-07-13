@@ -2,6 +2,7 @@ package com.lamchop.alcolist.shared;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class Pair implements Serializable {
 	private int total;
 	private int batch;
