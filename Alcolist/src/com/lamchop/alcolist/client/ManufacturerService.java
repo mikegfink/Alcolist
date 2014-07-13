@@ -12,7 +12,6 @@ public interface ManufacturerService extends RemoteService {
 	// Overwrites if manufacturer with the same name and postal code already exists
 	// in the datastore.
 	public void addManufacturer(Manufacturer manufacturer);
-	// Also removes all ratings and reviews of manufacturer. Easy to change if
-	// you don't want this to happen!
+	// Also removes all ratings and reviews of manufacturer. 
 	public void removeManufacturer(Manufacturer manufacturer);
 }

@@ -15,7 +15,6 @@ public class AlcolistMapWidget extends Composite {
 	private final LayoutPanel pWidget;
 	private MapWidget mapWidget;
 
-
 	@Override 
 	protected void onLoad() {
 		super.onLoad();
@@ -26,13 +25,11 @@ public class AlcolistMapWidget extends Composite {
 		initWidget(pWidget);
 		pWidget.setSize("100%", "100%");
 		draw();
-
 	}
 
 	private void draw() {
 		pWidget.clear();
 		drawMap();
-
 	}
 
 	private void drawMap() {

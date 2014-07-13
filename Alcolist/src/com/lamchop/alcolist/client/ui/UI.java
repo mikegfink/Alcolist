@@ -201,7 +201,6 @@ public class UI extends LayoutPanel {
 
 	public void showLoggedOut() {
 		userPanel.showLoggedOut();
-		listPanel.showLoggedOut();
 		mapPanel.showLoggedOut();
 		hideChild(visitedButton);
 		hideChild(adminPanel);
@@ -210,7 +209,6 @@ public class UI extends LayoutPanel {
 
 	public void showLoggedIn(UserData userData){
 		userPanel.showLoggedIn(userData);
-		listPanel.showLoggedIn();
 		mapPanel.showLoggedIn();
 		setWidgetTopHeight(visitedButton, VISITED_TOP_PCT, PCT, VisitedButton.HEIGHT_PX, PX);
 		

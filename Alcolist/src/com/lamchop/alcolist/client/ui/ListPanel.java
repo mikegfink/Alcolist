@@ -65,7 +65,6 @@ public class ListPanel extends LayoutPanel {
 		
 	    addSelectionModel();
 	    
-
 		this.setWidgetBottomHeight(listGrid, 0, PCT, 100, PCT);
 
 	}
@@ -78,7 +77,6 @@ public class ListPanel extends LayoutPanel {
 		        currentSelected = selectionModel.getSelectedObject();
 		        if (currentSelected != null)
 		        	theUIController.selectOnMap(currentSelected);
- 
 		      }  
 		    });
 	}
@@ -100,7 +98,6 @@ public class ListPanel extends LayoutPanel {
 			}
 		};
 			
-
 		// add sort function to main column
 		nameColumn.setSortable(true);
 		sortHandler.setComparator(nameColumn, new Comparator<Manufacturer>() {
@@ -127,7 +124,6 @@ public class ListPanel extends LayoutPanel {
 				return m1.getCity().compareTo(m2.getCity());
 			}
 		});
-
 
 		// Make type column
 		typeColumn = 
@@ -211,16 +207,4 @@ public class ListPanel extends LayoutPanel {
 		listGrid.getColumnSortList().push(secondSort);
 		ColumnSortEvent.fire(listGrid,  listGrid.getColumnSortList());
 	}
-	
-
-	public void showLoggedIn() {
-		// TODO Create buttons for add/edit review/rating/routes
-		
-	}
-
-	public void showLoggedOut() {
-		// TODO Remove buttons for ratings/reviews/routes CONSIDER WHAT TO DO ABOUT DIRECTIONS
-		
-	}
-
 }

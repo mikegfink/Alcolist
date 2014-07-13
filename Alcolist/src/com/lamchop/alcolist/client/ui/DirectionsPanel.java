@@ -26,9 +26,6 @@ import com.lamchop.alcolist.shared.Route;
 
 public class DirectionsPanel extends LayoutPanel {
 
-	private static final int CLOSE_TOP_PX = 4;
-	private static final int CLOSE_HEIGHT_PX = 26;
-	private static final int CLOSE_WIDTH_PX = 26;
 	private static final int DIR_TOP_PX = 34;
 	private static final int DIR_HEIGHT_PCT = 100;
 	private static final int DIR_WIDTH_PCT = 100;
@@ -99,8 +96,8 @@ public class DirectionsPanel extends LayoutPanel {
 
 	private void setupCloseButton() {
 
-		setWidgetTopHeight(closeButton, CLOSE_TOP_PX, PX, CLOSE_HEIGHT_PX, PX);
-		setWidgetRightWidth(closeButton, CLOSE_TOP_PX, PX, CLOSE_WIDTH_PX, PX);
+		setWidgetTopHeight(closeButton, CloseButton.TOP_PX, PX, CloseButton.HEIGHT_PX, PX);
+		setWidgetRightWidth(closeButton, CloseButton.TOP_PX, PX, CloseButton.WIDTH_PX, PX);
 		closeButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				ui.hideRoute();

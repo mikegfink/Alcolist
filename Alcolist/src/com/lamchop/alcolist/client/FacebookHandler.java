@@ -46,10 +46,8 @@ public class FacebookHandler implements ClickHandler {
 	// All available scopes are listed here:
 	// http://developers.facebook.com/docs/authentication/permissions/
 	// This scope allows the app to access the user's email address.
+	// NOT CURRENTLY USED: TODO: Implement email functionality.
 	//private static final String FACEBOOK_EMAIL_SCOPE = "email";
-
-	// This scope allows the app to access the user's birthday.
-	//private static final String FACEBOOK_BIRTHDAY_SCOPE = "user_birthday";
 
 	// This scope allows the app to post to the User's timeline.
 	private static final String FACEBOOK_PUBLISH_SCOPE = "publish_actions";

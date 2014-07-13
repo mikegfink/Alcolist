@@ -58,7 +58,7 @@ public class MyLocation {
 		appDataController.firstNearMe();
 	}
 
-	double distFrom(double lat1, double lng1) {
+	public double distFrom(double lat1, double lng1) {
 		double earthRadius = 6371000;
 		double dLat = Math.toRadians(myLocation.getLatitude()-lat1);
 		double dLng = Math.toRadians(myLocation.getLongitude()-lng1);
@@ -72,7 +72,7 @@ public class MyLocation {
 		return dist;
 	}
 
-	boolean isNearMe(double dist) {
+	public boolean isNearMe(double dist) {
 		return dist < NEAR_ME_RADIUS_METERS;			
 	}
 }
