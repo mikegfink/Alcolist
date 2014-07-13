@@ -32,10 +32,11 @@ import com.lamchop.alcolist.shared.Review;
 /**
  * A ClickHandler that Launches the Facebook Login process.
  * @author Michael Fink
- *
+ * Class structure based on example by Marcus Schiesser at:
+ *	http://marcusschiesser.de/2013/01/03/using-the-facebook-graph-api-from-your-gwt-application/
  */
 public class FacebookHandler implements ClickHandler {
-
+	
 	private static final String FACEBOOK_AUTH_URL = "https://www.facebook.com/dialog/oauth";
 
 	// This app's personal client ID assigned by the Facebook Developer App
@@ -45,10 +46,10 @@ public class FacebookHandler implements ClickHandler {
 	// All available scopes are listed here:
 	// http://developers.facebook.com/docs/authentication/permissions/
 	// This scope allows the app to access the user's email address.
-	private static final String FACEBOOK_EMAIL_SCOPE = "email";
+	//private static final String FACEBOOK_EMAIL_SCOPE = "email";
 
 	// This scope allows the app to access the user's birthday.
-	private static final String FACEBOOK_BIRTHDAY_SCOPE = "user_birthday";
+	//private static final String FACEBOOK_BIRTHDAY_SCOPE = "user_birthday";
 
 	// This scope allows the app to post to the User's timeline.
 	private static final String FACEBOOK_PUBLISH_SCOPE = "publish_actions";
@@ -85,7 +86,6 @@ public class FacebookHandler implements ClickHandler {
 		} else if (sender.getClass() == FacebookShareButton.class) {
 			FacebookShareButton facebookShare = (FacebookShareButton) sender;
 			if (facebookShare.getReview() != null && facebookShare.getRating() != null) {
-				System.out.println("Both review and rating exist.");
 				shareWithFacebook(facebookShare.getReview(), facebookShare.getRating(),
 						facebookShare.getManufacturer());
 			} else if (facebookShare.getReview() != null) {
@@ -97,6 +97,7 @@ public class FacebookHandler implements ClickHandler {
 	}
 
 	private void shareWithFacebook(Rating rating, Manufacturer manufacturer) {
+		// Format the post message.
 		String post = "I give this place: " + rating.getRating() + " stars out of 5.";
 		
 		sendToFacebook(post, manufacturer);
@@ -105,6 +106,7 @@ public class FacebookHandler implements ClickHandler {
 
 	private void shareWithFacebook(Review review, Rating rating,
 			Manufacturer manufacturer) {
+		// Format the post meesage.
 		String post = review.getReview() + "\n" + "I give this place: " + 
 			rating.getRating() + " stars out of 5.";
 		System.out.println(post);
@@ -168,12 +170,8 @@ public class FacebookHandler implements ClickHandler {
 		Method method = RequestBuilder.GET;
 		RequestBuilder builder;
 		final String id = "me";		
-		String params = null;
 		String requestData = "access_token=" + appToken;
-		// params might be relevant later.
-		if (params != null) {
-			requestData = requestData + "&" + params;
-		}
+
 		builder = new RequestBuilder(method, "https://graph.facebook.com/"
 				+ id + "?" + requestData);
 

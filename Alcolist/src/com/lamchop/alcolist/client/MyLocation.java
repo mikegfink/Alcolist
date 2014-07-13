@@ -57,4 +57,22 @@ public class MyLocation {
 	private void callFilterNearMe() {
 		appDataController.firstNearMe();
 	}
+
+	double distFrom(double lat1, double lng1) {
+		double earthRadius = 6371000;
+		double dLat = Math.toRadians(myLocation.getLatitude()-lat1);
+		double dLng = Math.toRadians(myLocation.getLongitude()-lng1);
+		double sindLat = Math.sin(dLat / 2);
+		double sindLng = Math.sin(dLng / 2);
+		double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2) * Math.cos(Math.toRadians(lat1)) 
+				* Math.cos(Math.toRadians(myLocation.getLatitude()));
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+		double dist = earthRadius * c;
+	
+		return dist;
+	}
+
+	boolean isNearMe(double dist) {
+		return dist < NEAR_ME_RADIUS_METERS;			
+	}
 }

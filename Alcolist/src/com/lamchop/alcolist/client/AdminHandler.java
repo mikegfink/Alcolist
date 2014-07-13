@@ -11,6 +11,7 @@ import com.lamchop.alcolist.shared.Pair;
 
 public class AdminHandler implements ClickHandler {
 
+	private static final int TOTAL_RETRIES = 4;
 	private static final ImportServiceAsync 
 	importService = GWT.create(ImportService.class);
 	private AppDataController appDataController;
@@ -25,7 +26,7 @@ public class AdminHandler implements ClickHandler {
 		totalManufacturers = 0;
 		completedManufacturers = 0;
 		loadedManufacturers = 0;
-		retries = 4;
+		retries = TOTAL_RETRIES;
 	}
 
 	@Override
@@ -55,6 +56,7 @@ public class AdminHandler implements ClickHandler {
 	}
 
 	private void importData() {
+		// TODO: Create DialogBox to track progress
 		AdminHandler.importService.importData(new AsyncCallback<Integer>() {
 			public void onFailure(Throwable error) {
 				handleError(error);
@@ -62,13 +64,13 @@ public class AdminHandler implements ClickHandler {
 
 			public void onSuccess(Integer result) {
 				totalManufacturers = result;
-				System.out.println("Total manufacturers was: " + result);
 				geocodeData();
 			}
 		});
 	}
 
 	private void getPlaceData() {
+		// TODO: Create DialogBox to track progress
 		AdminHandler.importService.addPlaceData(new AsyncCallback<Pair>() {
 			public void onFailure(Throwable error) {
 				handleError(error);
@@ -89,7 +91,7 @@ public class AdminHandler implements ClickHandler {
 					GWT.log("Completed place requests on all Manufacturers.");
 					appDataController.initManufacturers();
 				} else {					
-					// MessageBox? with result
+					// TODO: Update DialogBox with progress
 					GWT.log("Completed a batch of place requests. Completed is: " + 
 							completedManufacturers + " of " + totalManufacturers);
 					getPlaceData();
@@ -99,6 +101,7 @@ public class AdminHandler implements ClickHandler {
 	}
 
 	private void geocodeData() {
+		// TODO: Create DialogBox to track progress
 		AdminHandler.importService.geocodeData(new AsyncCallback<Pair>() {
 
 			public void onFailure(Throwable error) {
@@ -117,10 +120,9 @@ public class AdminHandler implements ClickHandler {
 						retries <= 0) {		
 					completedManufacturers = 0;
 					retries = 4;
-					// Should go to PlaceData methods
 					getPlaceData();
 				} else {					
-					// MessageBox? with result
+					// TODO: Update DialogBox with progress
 					geocodeData();
 				}
 			}
