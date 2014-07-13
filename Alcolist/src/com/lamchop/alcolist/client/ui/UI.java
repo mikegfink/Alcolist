@@ -70,7 +70,7 @@ public class UI extends LayoutPanel {
 	private static Images images = GWT.create(Images.class);
 	private MapPanel mapPanel;
 	private ListPanel listPanel;
-	private TitleBar title; // TODO: Replace with Title class or Image
+	private TitleBar title;
 	private AdminPanel adminPanel;
 	private ViewPanel viewPanel;
 	private Legend legend;

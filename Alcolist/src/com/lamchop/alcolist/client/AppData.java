@@ -106,4 +106,8 @@ final class AppData {
 	public List<Route> getRoutes() {
 		return userData.getRoutes();
 	}
+	
+	public void removeRoute(Route route) {
+		userData.remove(route);
+	}
 }

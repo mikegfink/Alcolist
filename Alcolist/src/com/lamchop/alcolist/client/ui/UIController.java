@@ -25,10 +25,9 @@ public class UIController implements UIUpdateInterface {
 	private static final int BIG_MAP_WIDTH = 100;
 	private static final int HIDE_LIST_VALUE = 0;
 	
+	
 	private UI uiPanel;
-	private MapsLoader mapsLoader;
 	private AppDataController theAppDataController;
-
 	private boolean firstTime;
 
 	public UIController() {
@@ -43,7 +42,7 @@ public class UIController implements UIUpdateInterface {
 		AdminPanel adminPanel = new AdminPanel(theAppDataController);
 		UserPanel userPanel = new UserPanel(theAppDataController, this);
 		ViewPanel viewPanel = new ViewPanel(this);
-		ListPanel listPanel = new ListPanel(theAppDataController, this);
+		ListPanel listPanel = new ListPanel(this);
 		Legend legend = new Legend(theAppDataController);
 		MakeRouteButton makeRouteButton = new MakeRouteButton(this);
 		SearchPanel searchPanel = new SearchPanel(theAppDataController);
@@ -77,8 +76,8 @@ public class UIController implements UIUpdateInterface {
 				makeRouteButton, nearMeButton, searchPanel, visitedButton);
 	}
 	
-	public void initMap() {
-		mapsLoader = new MapsLoader(this);
+	private void initMap() {
+		MapsLoader mapsLoader = new MapsLoader(this);
 		// This will call initUIPanel once the map api is loaded in order to 
 		// synchronize the loading of the UI
 		mapsLoader.loadMapApi(this);		
@@ -87,7 +86,7 @@ public class UIController implements UIUpdateInterface {
 	public void initUIPanel(MapPanel theMapPanel) {
 		
 		DirectionsPanel directionsPanel = new DirectionsPanel(theMapPanel.getMapWidget(), 
-				uiPanel, theAppDataController);
+				this, theAppDataController);
 		uiPanel.init(theMapPanel, directionsPanel);
 		uiPanel.showLoggedOut();
 		
@@ -186,6 +185,10 @@ public class UIController implements UIUpdateInterface {
 	
 	public void hideRoute() {
 		uiPanel.hideRoute();
+	}
+	
+	public void showRoute() {
+		uiPanel.showRoute();
 	}
 	
 	public void selectOnMap(Manufacturer manufacturer) {

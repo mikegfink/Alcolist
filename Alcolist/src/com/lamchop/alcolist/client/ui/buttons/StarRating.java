@@ -40,10 +40,10 @@ public class StarRating extends Composite {
 
 	private static final int STAR_COUNT = 5;
 
-	public StarRating(Manufacturer manufacturer, UIController theUIController) {
+	public StarRating(Manufacturer manufacturer, AppDataController appDataController) {
 		this.manID = manufacturer.getID();
 		this.manufacturer = manufacturer;
-		this.appDataController = theUIController.getTheAppDataController();
+		this.appDataController = appDataController;
 		getRating();
 
 		container = new HorizontalPanel();

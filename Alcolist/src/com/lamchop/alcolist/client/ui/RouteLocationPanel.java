@@ -44,7 +44,8 @@ public class RouteLocationPanel extends LayoutPanel {
 	private RoutePanel routePanel;
 
 	
-	public RouteLocationPanel(AppDataController theAppDataController, String text, boolean isMidPoint, RoutePanel routePanel) {
+	public RouteLocationPanel(AppDataController theAppDataController, String text, 
+			boolean isMidPoint, RoutePanel routePanel) {
 		this.isMidPoint = isMidPoint;
 		this.theAppDataController = theAppDataController;
 		initRouteWidgets(text);

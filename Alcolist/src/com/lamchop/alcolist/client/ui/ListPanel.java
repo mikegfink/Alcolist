@@ -3,7 +3,6 @@ package com.lamchop.alcolist.client.ui;
 import java.util.Comparator;
 
 import static com.google.gwt.dom.client.Style.Unit.PCT;
-
 import java.util.List;
 
 import com.google.gwt.cell.client.ClickableTextCell;
@@ -24,12 +23,11 @@ import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
-import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.shared.Manufacturer;
 
 public class ListPanel extends LayoutPanel {
 
-	private int PAGESIZE = 10000; // TODO: What about when there are 6000?
+	private int PAGESIZE = 10000;
 	
 	private DataGrid<Manufacturer> listGrid;
 	private ListDataProvider<Manufacturer> dataProvider;
@@ -43,7 +41,7 @@ public class ListPanel extends LayoutPanel {
 	private Manufacturer showingInfo;
 	
 
-	public ListPanel(final AppDataController theAppDataController, UIController theUIController) {
+	public ListPanel(UIController theUIController) {
 		DataGridResource resource = GWT.create(DataGridResource.class);
 		listGrid = new DataGrid<Manufacturer>(PAGESIZE, resource);
 		listGrid.setEmptyTableWidget(new Label("No Results Found"));
@@ -81,7 +79,7 @@ public class ListPanel extends LayoutPanel {
 		    });
 	}
 
-	public void addDataProvider() {
+	private void addDataProvider() {
 		dataProvider = new ListDataProvider<Manufacturer>();
 		dataProvider.addDataDisplay(listGrid);
 	}
