@@ -78,7 +78,7 @@ public class MarkerWindow extends VerticalPanel {
 		rating.add(review);
 		rating.add(directions);	
 
-		StarRating starRating = new StarRating(manufacturer, theUIController);
+		StarRating starRating = new StarRating(manufacturer, theUIController.getTheAppDataController());
 		add(starRating);
 	}
 	

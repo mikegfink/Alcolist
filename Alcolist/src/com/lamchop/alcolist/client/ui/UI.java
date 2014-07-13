@@ -6,16 +6,11 @@ import static com.google.gwt.dom.client.Style.Unit.PX;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.lamchop.alcolist.client.MyLocation;
 import com.lamchop.alcolist.client.UserData;
-import com.lamchop.alcolist.client.ui.buttons.DirectionsButton;
 import com.lamchop.alcolist.client.ui.buttons.MakeRouteButton;
 import com.lamchop.alcolist.client.ui.buttons.NearMeButton;
 import com.lamchop.alcolist.client.ui.buttons.VisitedButton;
@@ -79,7 +74,7 @@ public class UI extends LayoutPanel {
 	private static Images images = GWT.create(Images.class);
 	private MapPanel mapPanel;
 	private ListPanel listPanel;
-	private TitleBar title; // TODO: Replace with Title class or Image
+	private TitleBar title;
 	private AdminPanel adminPanel;
 	private ViewPanel viewPanel;
 	private Legend legend;
@@ -213,7 +208,6 @@ public class UI extends LayoutPanel {
 
 	public void showLoggedOut() {
 		userPanel.showLoggedOut();
-		listPanel.showLoggedOut();
 		mapPanel.showLoggedOut();
 		hideChild(visitedButton);
 		hideChild(adminPanel);
@@ -222,7 +216,6 @@ public class UI extends LayoutPanel {
 
 	public void showLoggedIn(UserData userData){
 		userPanel.showLoggedIn(userData);
-		listPanel.showLoggedIn();
 		mapPanel.showLoggedIn();
 		setWidgetTopHeight(visitedButton, VISITED_TOP_PCT, PCT, VisitedButton.HEIGHT_PX, PX);
 		

@@ -262,7 +262,6 @@ public class MapPanel extends LayoutPanel {
 	}
 
 	public void showLoggedIn() {
-		// TODO Auto-generated method stub
 		LoggedIn = true;
 	}
 	

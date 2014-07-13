@@ -4,8 +4,6 @@ import static com.google.gwt.dom.client.Style.Unit.PX;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.FocusEvent;
-import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
@@ -13,7 +11,6 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
@@ -47,7 +44,8 @@ public class RouteLocationPanel extends LayoutPanel {
 	private RoutePanel routePanel;
 
 	
-	public RouteLocationPanel(AppDataController theAppDataController, String text, boolean isMidPoint, RoutePanel routePanel) {
+	public RouteLocationPanel(AppDataController theAppDataController, String text, 
+			boolean isMidPoint, RoutePanel routePanel) {
 		this.isMidPoint = isMidPoint;
 		this.theAppDataController = theAppDataController;
 		initRouteWidgets(text);
@@ -180,14 +178,6 @@ public class RouteLocationPanel extends LayoutPanel {
 			}
 			
 		});
-		
-//		textBox.getValueBox().addFocusHandler(new FocusHandler() {
-//
-//			@Override
-//			public void onFocus(FocusEvent event) {
-//				textBox.getValueBox().selectAll();		
-//			}
-//	    });
 		
 		textBox.getValueBox().addClickHandler(new ClickHandler() {
 

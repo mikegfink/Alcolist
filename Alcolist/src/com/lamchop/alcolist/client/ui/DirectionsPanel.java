@@ -3,23 +3,16 @@ package com.lamchop.alcolist.client.ui;
 import static com.google.gwt.dom.client.Style.Unit.PX;
 import static com.google.gwt.dom.client.Style.Unit.PCT;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.gwt.core.client.JsArray;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.maps.client.overlays.MarkerOptions;
-import com.google.gwt.maps.client.services.DirectionsLeg;
 import com.google.gwt.maps.client.services.DirectionsRenderer;
 import com.google.gwt.maps.client.services.DirectionsRendererOptions;
 import com.google.gwt.maps.client.services.DirectionsRequest;
 import com.google.gwt.maps.client.services.DirectionsResult;
 import com.google.gwt.maps.client.services.DirectionsResultHandler;
-import com.google.gwt.maps.client.services.DirectionsRoute;
 import com.google.gwt.maps.client.services.DirectionsService;
 import com.google.gwt.maps.client.services.DirectionsStatus;
-import com.google.gwt.maps.client.services.DirectionsStep;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.LayoutPanel;
@@ -52,7 +45,7 @@ public class DirectionsPanel extends LayoutPanel {
 	private final AlcolistMapWidget theMapWidget;
 	private final DirectionsRenderer directionsRenderer;
 	private DirectionsRendererOptions options;
-	private final UI ui;
+	private final UIController uiController;
 	private PushButton closeButton;
 	private ScrollPanel directionsDisplay;
 	private HTML titleBar;
@@ -61,9 +54,9 @@ public class DirectionsPanel extends LayoutPanel {
 	private Button deleteButton;
 	private Route theRoute;
 
-	public DirectionsPanel(AlcolistMapWidget theMapWidget, final UI ui, 
+	public DirectionsPanel(AlcolistMapWidget theMapWidget, final UIController uiController, 
 			AppDataController appDataController) {
-		this.ui = ui;
+		this.uiController = uiController;
 		this.theMapWidget = theMapWidget;
 		this.appDataController = appDataController;
 		theRoute = null;
@@ -92,7 +85,6 @@ public class DirectionsPanel extends LayoutPanel {
 		setWidgetRightWidth(deleteButton, SAVE_RIGHT_PX, PX, 0, PX);
 
 		setupCloseButton();
-		//setupSaveButton();
 	}
 
 	private void addChildren() {
@@ -117,7 +109,7 @@ public class DirectionsPanel extends LayoutPanel {
 		setWidgetRightWidth(closeButton, CLOSE_TOP_PX, PX, CLOSE_WIDTH_PX, PX);
 		closeButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				ui.hideRoute();
+				uiController.hideRoute();
 			}
 		});
 	}
@@ -150,7 +142,7 @@ public class DirectionsPanel extends LayoutPanel {
 					appDataController.removeRoute(route);
 					setWidgetTopHeight(deleteButton, SAVE_TOP_PX, PX, 0, PX);
 					setWidgetRightWidth(deleteButton, SAVE_RIGHT_PX, PX, 0, PX);
-					ui.hideRoute();	
+					uiController.hideRoute();	
 				}
 			});
 		}
@@ -171,7 +163,7 @@ public class DirectionsPanel extends LayoutPanel {
 					DirectionsStatus status) {
 				if (status == DirectionsStatus.OK) {
 					directionsRenderer.setDirections(result);
-					ui.showRoute();
+					uiController.showRoute();
 				} else {
 					System.err.println("Direction result not received. Direction " +
 							"status was: " + status.value());
@@ -232,42 +224,3 @@ public class DirectionsPanel extends LayoutPanel {
 		}
 	}
 }
-
-//System.out.println("Making directions request");
-//service.route(request, new DirectionsResultHandler() {
-//		@Override
-//		public void onCallback(DirectionsResult result,
-//				DirectionsStatus status) {
-//			if (status == DirectionsStatus.OK) {
-//				System.out.println("Received route");
-//				// Displays the polyline on the map, but not the directions
-//				directionsDisplay.setDirections(result);
-//
-//				// Parsing the directions manually since I don't have an Element
-//				// for displaying them
-//				List<String> htmlDirections = new ArrayList<String>();
-//				JsArray<DirectionsRoute> routes = result.getRoutes();
-//				// We are only producing one route
-//				DirectionsRoute route = routes.get(0);
-//				JsArray<DirectionsLeg> legs = route.getLegs();
-//										
-//				for (int i = 0; i < legs.length(); i++) {
-//					DirectionsLeg leg = legs.get(i);
-//					JsArray<DirectionsStep> steps = leg.getSteps();
-//					for (int j = 0; j < steps.length(); j++) {
-//						DirectionsStep step = steps.get(j);
-//						htmlDirections.add(step.getInstructions());
-//					}
-//				}
-//				
-//				// TODO display directions
-//				
-//			} else if (status == DirectionsStatus.ZERO_RESULTS) {
-//				// TODO display message to user saying invalid start and/or end
-//				// location provided, and let them try again.
-//				System.out.println("Zero results from directions request");
-//			} else {
-//				System.err.println("Direction result not received. Direction " +
-//						"status was: " + status.value());
-//				// TODO let user try again?
-//			}

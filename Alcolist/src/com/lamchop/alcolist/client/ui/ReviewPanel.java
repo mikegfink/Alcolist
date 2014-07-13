@@ -104,7 +104,7 @@ public class ReviewPanel extends PopupPanel {
 
 	private void createElements() {
 		display = new LayoutPanel();
-		infoPanel = new InfoPanel(manufacturer, uiController, appDataController.isUserLoggedIn());
+		infoPanel = new InfoPanel(manufacturer, appDataController, appDataController.isUserLoggedIn());
 		reviewText = new HTML();
 		shareButton = new FacebookShareButton(manufacturer, appDataController);
 		saveButton = new Button("Save");
@@ -223,16 +223,8 @@ public class ReviewPanel extends PopupPanel {
 		}
 	}
 
-	public void hideChild(Widget widgetToHide){
+	private void hideChild(Widget widgetToHide){
 		display.setWidgetTopHeight(widgetToHide, widgetToHide.getAbsoluteTop(), PX, 0, PCT);
 		display.setWidgetLeftWidth(widgetToHide, widgetToHide.getAbsoluteLeft(), PX, 0, PCT);		
-	}
-
-	public Review getReview() {
-		return review;
-	}
-
-	public void setReview(Review review) {
-		this.review = review;
 	}
 }

@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.LayoutPanel;
+import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.client.resources.Images;
 import com.lamchop.alcolist.client.ui.buttons.StarRating;
 import com.lamchop.alcolist.shared.Manufacturer;
@@ -47,8 +48,8 @@ public class InfoPanel extends LayoutPanel {
 	static private Images images = GWT.create(Images.class);
 
 
-	public InfoPanel(Manufacturer manufacturer, UIController uiController, boolean loggedIn) {
-		this.starRating = new StarRating(manufacturer, uiController);
+	public InfoPanel(Manufacturer manufacturer, AppDataController appDataController, boolean loggedIn) {
+		this.starRating = new StarRating(manufacturer, appDataController);
 		this.loggedIn = loggedIn;
 
 		name = new HTML("<b>" + manufacturer.getName() + "</b>");

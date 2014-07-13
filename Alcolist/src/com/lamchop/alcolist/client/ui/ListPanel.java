@@ -1,55 +1,34 @@
 package com.lamchop.alcolist.client.ui;
 
 import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
-
 import static com.google.gwt.dom.client.Style.Unit.PCT;
-import static com.google.gwt.dom.client.Style.Unit.PX;
-
 import java.util.List;
 
 import com.google.gwt.cell.client.ClickableTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
-import com.google.gwt.cell.client.TextButtonCell;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.google.gwt.dom.builder.shared.TableCellBuilder;
-import com.google.gwt.dom.builder.shared.TableRowBuilder;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.text.shared.AbstractSafeHtmlRenderer;
 import com.google.gwt.text.shared.SafeHtmlRenderer;
-import com.google.gwt.user.cellview.client.AbstractCellTable;
-import com.google.gwt.user.cellview.client.AbstractCellTableBuilder;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.ColumnSortEvent;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.view.client.ListDataProvider;
-import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.SelectionChangeEvent;
-import com.google.gwt.view.client.SelectionModel;
 import com.google.gwt.view.client.SingleSelectionModel;
-import com.lamchop.alcolist.client.AppDataController;
-import com.lamchop.alcolist.client.ui.buttons.NearMeButton;
-import com.lamchop.alcolist.client.ui.buttons.VisitedButton;
 import com.lamchop.alcolist.shared.Manufacturer;
 
 public class ListPanel extends LayoutPanel {
 
-	private int PAGESIZE = 10000; // TODO: What about when there are 6000?
+	private int PAGESIZE = 10000;
 	
 	private DataGrid<Manufacturer> listGrid;
-	private SearchPanel searchPanel;
 	private ListDataProvider<Manufacturer> dataProvider;
 	private List<Manufacturer> list;
 	private Column<Manufacturer, Manufacturer> nameColumn;
@@ -59,10 +38,9 @@ public class ListPanel extends LayoutPanel {
 	private Manufacturer currentSelected;
 	private UIController theUIController;
 	private Manufacturer showingInfo;
-	private VisitedButton visitedButton;
 	
 
-	public ListPanel(final AppDataController theAppDataController, UIController theUIController) {
+	public ListPanel(UIController theUIController) {
 		DataGridResource resource = GWT.create(DataGridResource.class);
 		listGrid = new DataGrid<Manufacturer>(PAGESIZE, resource);
 		listGrid.setEmptyTableWidget(new Label("No Results Found"));
@@ -104,7 +82,7 @@ public class ListPanel extends LayoutPanel {
 		    });
 	}
 
-	public void addDataProvider() {
+	private void addDataProvider() {
 		dataProvider = new ListDataProvider<Manufacturer>();
 		dataProvider.addDataDisplay(listGrid);
 	}
@@ -204,13 +182,6 @@ public class ListPanel extends LayoutPanel {
 		    	  }
 		      }
 		    });
-//		
-//		extraInfo.setFieldUpdater(new FieldUpdater<Manufacturer, String>() {
-//			  public void update(int index, Manufacturer object, String value) {
-//			    theUIController.showReviewPanel(object);
-//	
-//			  }
-//			});
 
 		listGrid.setColumnWidth(0,  "60%");
 		listGrid.setColumnWidth(3,  "7%");
@@ -239,61 +210,4 @@ public class ListPanel extends LayoutPanel {
 		listGrid.getColumnSortList().push(secondSort);
 		ColumnSortEvent.fire(listGrid,  listGrid.getColumnSortList());
 	}
-	
-
-	public void showLoggedIn() {
-		// TODO Create buttons for add/edit review/rating/routes
-		
-	}
-
-	public void showLoggedOut() {
-		// TODO Remove buttons for ratings/reviews/routes CONSIDER WHAT TO DO ABOUT DIRECTIONS
-		
-	}
-	
-
-	
-//	private class CustomTableBuilder extends AbstractCellTableBuilder<Manufacturer>{
-//	
-//
-//		public CustomTableBuilder(AbstractCellTable<Manufacturer> cellTable) {
-//			super(cellTable);
-//			
-//		}
-//
-//		@Override
-//		protected void buildRowImpl(Manufacturer rowValue, int absRowIndex) {
-//			
-//			
-//			
-//			TableRowBuilder row = startRow();
-//			TableCellBuilder td = row.startTD();
-//	        this.renderCell(td, this.createContext(0), nameColumn, rowValue);
-//	        td.endTD();
-//	        
-//			td = row.startTD();
-//	        this.renderCell(td, this.createContext(1), cityColumn, rowValue);
-//	        td.endTD();
-//	        
-//			td = row.startTD();
-//	        this.renderCell(td, this.createContext(2), typeColumn, rowValue);
-//	        td.endTD();
-//	        
-//	        row.endTR();
-//			
-//	        if (currentSelected != null) {
-//	        	if (currentSelected.equals(rowValue)) {
-//	        		row = startRow();
-//	        		td = row.startTD().colSpan(3);
-//	        		this.renderCell(td,  this.createContext(0), extraInfo, rowValue);
-//	        		td.endTD();
-//	        		row.endTR();
-//	        	}
-//	        }
-//		}
-//		
-//
-//		
-//	}
-
 }

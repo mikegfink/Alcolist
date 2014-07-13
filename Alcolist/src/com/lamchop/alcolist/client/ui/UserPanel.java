@@ -6,7 +6,6 @@ import static com.google.gwt.dom.client.Style.Unit.PX;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
-import com.google.gwt.user.client.ui.PushButton;
 import com.lamchop.alcolist.client.AppDataController;
 import com.lamchop.alcolist.client.UserData;
 import com.lamchop.alcolist.client.ui.buttons.FacebookLoginButton;
